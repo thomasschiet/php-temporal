@@ -122,6 +122,27 @@ final class PlainTime
         );
     }
 
+    /**
+     * Combine this PlainTime with a PlainDate to create a PlainDateTime.
+     *
+     * Corresponds to Temporal.PlainTime.prototype.toPlainDateTime() in the
+     * TC39 proposal.
+     */
+    public function toPlainDateTime(PlainDate $date): PlainDateTime
+    {
+        return new PlainDateTime(
+            $date->year,
+            $date->month,
+            $date->day,
+            $this->hour,
+            $this->minute,
+            $this->second,
+            $this->millisecond,
+            $this->microsecond,
+            $this->nanosecond
+        );
+    }
+
     // -------------------------------------------------------------------------
     // Mutation (returns new instances)
     // -------------------------------------------------------------------------

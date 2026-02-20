@@ -149,6 +149,44 @@ final class ZonedDateTime
         return $this->toPlainDateTime()->toPlainTime();
     }
 
+    /**
+     * Extract the year and month fields as a PlainYearMonth.
+     *
+     * Corresponds to Temporal.ZonedDateTime.prototype.toPlainYearMonth() in
+     * the TC39 proposal.
+     */
+    public function toPlainYearMonth(): PlainYearMonth
+    {
+        return $this->toPlainDate()->toPlainYearMonth();
+    }
+
+    /**
+     * Extract the month and day fields as a PlainMonthDay.
+     *
+     * Corresponds to Temporal.ZonedDateTime.prototype.toPlainMonthDay() in
+     * the TC39 proposal.
+     */
+    public function toPlainMonthDay(): PlainMonthDay
+    {
+        return $this->toPlainDate()->toPlainMonthDay();
+    }
+
+    /**
+     * Return a ZonedDateTime at the start of the current calendar day
+     * (midnight local time) in this timezone.
+     *
+     * Corresponds to Temporal.ZonedDateTime.prototype.startOfDay() in the
+     * TC39 proposal.
+     */
+    public function startOfDay(): self
+    {
+        $pdt = $this->toPlainDateTime();
+        $midnight = new PlainDateTime($pdt->year, $pdt->month, $pdt->day);
+        $instant = $this->timeZone->getInstantFor($midnight);
+
+        return new self($instant->epochNanoseconds, $this->timeZone);
+    }
+
     // -------------------------------------------------------------------------
     // Mutation (returns new instances)
     // -------------------------------------------------------------------------
@@ -161,6 +199,65 @@ final class ZonedDateTime
         $tz = $timeZone instanceof TimeZone ? $timeZone : TimeZone::from($timeZone);
 
         return new self($this->ns, $tz);
+    }
+
+    /**
+     * Return a new ZonedDateTime with the date part replaced.
+     *
+     * The time-of-day and timezone are preserved; the instant is re-derived
+     * from the new date combined with the existing time.
+     *
+     * Corresponds to Temporal.ZonedDateTime.prototype.withPlainDate() in the
+     * TC39 proposal.
+     */
+    public function withPlainDate(PlainDate $date): self
+    {
+        $time = $this->toPlainTime();
+        $pdt = new PlainDateTime(
+            $date->year,
+            $date->month,
+            $date->day,
+            $time->hour,
+            $time->minute,
+            $time->second,
+            $time->millisecond,
+            $time->microsecond,
+            $time->nanosecond
+        );
+        $instant = $this->timeZone->getInstantFor($pdt);
+
+        return new self($instant->epochNanoseconds, $this->timeZone);
+    }
+
+    /**
+     * Return a new ZonedDateTime with the time part replaced.
+     *
+     * The date and timezone are preserved; the instant is re-derived from the
+     * existing date combined with the new time.
+     *
+     * If $time is null, midnight (00:00:00) is used.
+     *
+     * Corresponds to Temporal.ZonedDateTime.prototype.withPlainTime() in the
+     * TC39 proposal.
+     */
+    public function withPlainTime(?PlainTime $time = null): self
+    {
+        $t = $time ?? new PlainTime(0, 0, 0);
+        $date = $this->toPlainDate();
+        $pdt = new PlainDateTime(
+            $date->year,
+            $date->month,
+            $date->day,
+            $t->hour,
+            $t->minute,
+            $t->second,
+            $t->millisecond,
+            $t->microsecond,
+            $t->nanosecond
+        );
+        $instant = $this->timeZone->getInstantFor($pdt);
+
+        return new self($instant->epochNanoseconds, $this->timeZone);
     }
 
     /**

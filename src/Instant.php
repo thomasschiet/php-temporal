@@ -220,6 +220,37 @@ final class Instant
     // -------------------------------------------------------------------------
 
     /**
+     * Convert this Instant to a ZonedDateTime in the given timezone.
+     *
+     * The $options parameter accepts:
+     *  - A TimeZone or timezone ID string (ISO calendar assumed).
+     *  - An array with keys 'timeZone' (required) and 'calendar' (optional,
+     *    only 'iso8601' is supported).
+     *
+     * Corresponds to Temporal.Instant.prototype.toZonedDateTime() in the
+     * TC39 proposal.
+     *
+     * @param TimeZone|string|array{timeZone:TimeZone|string,calendar?:string} $options
+     */
+    public function toZonedDateTime(TimeZone|string|array $options): ZonedDateTime
+    {
+        if (is_array($options)) {
+            $tzValue = $options['timeZone'] ?? throw new \InvalidArgumentException(
+                "toZonedDateTime() options array must include 'timeZone'."
+            );
+            $calendar = $options['calendar'] ?? 'iso8601';
+            if ($calendar !== 'iso8601') {
+                throw new \InvalidArgumentException("Only the 'iso8601' calendar is supported; got '{$calendar}'.");
+            }
+            $tz = $tzValue instanceof TimeZone ? $tzValue : TimeZone::from((string) $tzValue);
+        } else {
+            $tz = $options instanceof TimeZone ? $options : TimeZone::from($options);
+        }
+
+        return ZonedDateTime::fromEpochNanoseconds($this->ns, $tz);
+    }
+
+    /**
      * Convert this Instant to a ZonedDateTime in the given timezone using the
      * ISO 8601 calendar.
      *

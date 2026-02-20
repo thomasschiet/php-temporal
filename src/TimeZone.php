@@ -139,6 +139,187 @@ final class TimeZone
         };
     }
 
+    /**
+     * Returns the UTC offset as a ±HH:MM string (e.g. "+05:30", "-08:00")
+     * for the given Instant.
+     *
+     * Corresponds to Temporal.TimeZone.prototype.getOffsetStringFor() in the
+     * TC39 proposal.
+     */
+    public function getOffsetStringFor(Instant $instant): string
+    {
+        $offsetNs = $this->getOffsetNanosecondsFor($instant);
+        $sign = $offsetNs < 0 ? '-' : '+';
+        $total = abs(intdiv($offsetNs, 1_000_000_000));
+        $hours = intdiv($total, 3_600);
+        $minutes = intdiv($total % 3_600, 60);
+
+        return sprintf('%s%02d:%02d', $sign, $hours, $minutes);
+    }
+
+    /**
+     * Returns all possible Instants for a given PlainDateTime in this timezone.
+     *
+     * For most times, this returns exactly one Instant. During a fall-back
+     * (DST overlap) it returns two Instants (earlier and later). During a
+     * spring-forward gap it returns an empty array.
+     *
+     * Algorithm: collect all UTC offsets that could plausibly apply (by
+     * scanning DST transitions within a 26-hour window), compute one candidate
+     * Instant per offset, and keep only those that survive a round-trip back
+     * to the original local date-time.
+     *
+     * Corresponds to Temporal.TimeZone.prototype.getPossibleInstantsFor() in
+     * the TC39 proposal.
+     *
+     * @return list<Instant>
+     */
+    public function getPossibleInstantsFor(PlainDateTime $dateTime): array
+    {
+        $naiveNs = $this->plainDateTimeToNaiveEpochNs($dateTime);
+        $naiveSec = intdiv($naiveNs, 1_000_000_000);
+
+        // Collect all UTC offsets that could apply near this naive time.
+        // We search transitions within ±26 h of the naive epoch second so
+        // that we capture any DST transition in the vicinity.
+        $offsets = [];
+        $tz = new \DateTimeZone($this->id);
+        $windowStart = $naiveSec - ( 26 * 3_600 );
+        $windowEnd = $naiveSec + ( 26 * 3_600 );
+        $transitions = $tz->getTransitions($windowStart, $windowEnd + 1);
+
+        if ($transitions !== false) {
+            foreach ($transitions as $t) {
+                $offset = (int) $t['offset'];
+                if (!in_array($offset, $offsets, true)) {
+                    $offsets[] = $offset;
+                }
+            }
+        }
+
+        // Always include the offset at the naive second as a fallback.
+        $currentOffset = $this->getOffsetSecondsAtEpoch($naiveSec);
+        if (!in_array($currentOffset, $offsets, true)) {
+            $offsets[] = $currentOffset;
+        }
+
+        // For each candidate offset compute the corresponding UTC instant and
+        // verify that it round-trips back to exactly the requested local time.
+        $results = [];
+
+        foreach ($offsets as $offset) {
+            $candidateNs = $naiveNs - ( $offset * 1_000_000_000 );
+            $roundTrip = $this->getPlainDateTimeFor(Instant::fromEpochNanoseconds($candidateNs));
+
+            if ($this->plainDateTimeToNaiveEpochNs($roundTrip) === $naiveNs) {
+                $results[] = $candidateNs;
+            }
+        }
+
+        sort($results);
+
+        return array_map(static fn(int $ns): Instant => Instant::fromEpochNanoseconds($ns), $results);
+    }
+
+    /**
+     * Returns the next DST transition after $startingPoint, or null if there
+     * are no future transitions (fixed-offset zones and UTC always return null).
+     *
+     * Corresponds to Temporal.TimeZone.prototype.getNextTransition() in the
+     * TC39 proposal.
+     */
+    public function getNextTransition(Instant $startingPoint): ?Instant
+    {
+        // Fixed-offset zones and UTC have no transitions
+        if ($this->id === 'UTC' || preg_match('/^[+-]\d{2}:\d{2}$/', $this->id)) {
+            return null;
+        }
+
+        $tz = new \DateTimeZone($this->id);
+        $epochSeconds = $this->instantToEpochSeconds($startingPoint);
+
+        // Get the current UTC offset so we can detect when it changes.
+        // PHP's getTransitions() prepends an "initial-state" entry at the start
+        // of the search range that does NOT represent a real DST transition.
+        // We skip it by comparing each entry's offset against the known current
+        // offset — a real transition will have a different offset.
+        $currentOffset = $this->getOffsetSecondsAtEpoch($epochSeconds);
+
+        // Search up to ~10 years ahead for the next transition
+        $maxEpochSeconds = $epochSeconds + ( 10 * 366 * 86_400 );
+        $transitions = $tz->getTransitions($epochSeconds + 1, $maxEpochSeconds);
+
+        if ($transitions === false || $transitions === []) {
+            return null;
+        }
+
+        $prevOffset = $currentOffset;
+
+        foreach ($transitions as $transition) {
+            $ts = (int) $transition['ts'];
+            $offset = (int) $transition['offset'];
+
+            if ($ts <= $epochSeconds) {
+                $prevOffset = $offset;
+                continue;
+            }
+
+            if ($offset !== $prevOffset) {
+                // Offset changed: this is a real DST transition.
+                return Instant::fromEpochNanoseconds($ts * 1_000_000_000);
+            }
+
+            // Same offset as before — PHP's prepended initial-state entry; skip.
+            $prevOffset = $offset;
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the previous DST transition strictly before $startingPoint, or
+     * null if there are no prior transitions (fixed-offset zones and UTC).
+     *
+     * Corresponds to Temporal.TimeZone.prototype.getPreviousTransition() in
+     * the TC39 proposal.
+     */
+    public function getPreviousTransition(Instant $startingPoint): ?Instant
+    {
+        // Fixed-offset zones and UTC have no transitions
+        if ($this->id === 'UTC' || preg_match('/^[+-]\d{2}:\d{2}$/', $this->id)) {
+            return null;
+        }
+
+        $tz = new \DateTimeZone($this->id);
+        $epochSeconds = $this->instantToEpochSeconds($startingPoint);
+
+        // Search back ~10 years to find the most recent prior transition.
+        $minEpochSeconds = $epochSeconds - ( 10 * 366 * 86_400 );
+        $transitions = $tz->getTransitions($minEpochSeconds, $epochSeconds);
+
+        if ($transitions === false || $transitions === []) {
+            return null;
+        }
+
+        // Walk backwards through the entries. A real transition is one where
+        // the offset differs from the previous (earlier) entry.
+        for ($i = count($transitions) - 1; $i >= 1; $i--) {
+            $ts = (int) $transitions[$i]['ts'];
+            if ($ts >= $epochSeconds) {
+                continue;
+            }
+
+            $prevOffset = (int) $transitions[$i - 1]['offset'];
+            $thisOffset = (int) $transitions[$i]['offset'];
+
+            if ($thisOffset !== $prevOffset) {
+                return Instant::fromEpochNanoseconds($ts * 1_000_000_000);
+            }
+        }
+
+        return null;
+    }
+
     // -------------------------------------------------------------------------
     // Comparison / equality
     // -------------------------------------------------------------------------

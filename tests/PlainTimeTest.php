@@ -749,4 +749,43 @@ final class PlainTimeTest extends TestCase
         // 7 minutes does not evenly divide 60
         $t->round(['smallestUnit' => 'minute', 'roundingIncrement' => 7]);
     }
+
+    // -------------------------------------------------------------------------
+    // toPlainDateTime()
+    // -------------------------------------------------------------------------
+
+    public function testToPlainDateTimeCombineTimeAndDate(): void
+    {
+        $time = new PlainTime(10, 30, 45);
+        $date = new \Temporal\PlainDate(2024, 3, 15);
+        $pdt = $time->toPlainDateTime($date);
+
+        $this->assertSame(2024, $pdt->year);
+        $this->assertSame(3, $pdt->month);
+        $this->assertSame(15, $pdt->day);
+        $this->assertSame(10, $pdt->hour);
+        $this->assertSame(30, $pdt->minute);
+        $this->assertSame(45, $pdt->second);
+    }
+
+    public function testToPlainDateTimePreservesSubSeconds(): void
+    {
+        $time = new PlainTime(0, 0, 0, 123, 456, 789);
+        $date = new \Temporal\PlainDate(2000, 1, 1);
+        $pdt = $time->toPlainDateTime($date);
+
+        $this->assertSame(0, $pdt->hour);
+        $this->assertSame(123, $pdt->millisecond);
+        $this->assertSame(456, $pdt->microsecond);
+        $this->assertSame(789, $pdt->nanosecond);
+    }
+
+    public function testToPlainDateTimeMidnight(): void
+    {
+        $time = new PlainTime(0, 0, 0);
+        $date = new \Temporal\PlainDate(1970, 1, 1);
+        $pdt = $time->toPlainDateTime($date);
+
+        $this->assertSame('1970-01-01T00:00:00', (string) $pdt);
+    }
 }

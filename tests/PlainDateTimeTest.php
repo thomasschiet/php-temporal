@@ -1029,4 +1029,46 @@ class PlainDateTimeTest extends TestCase
         $result = $dt->round(['smallestUnit' => 'day', 'roundingMode' => 'halfExpand']);
         $this->assertSame('2024-04-01T00:00:00', (string) $result);
     }
+
+    // -------------------------------------------------------------------------
+    // toPlainYearMonth()
+    // -------------------------------------------------------------------------
+
+    public function testToPlainYearMonth(): void
+    {
+        $dt = new PlainDateTime(2024, 3, 15, 10, 30, 0);
+        $pym = $dt->toPlainYearMonth();
+
+        $this->assertSame(2024, $pym->year);
+        $this->assertSame(3, $pym->month);
+    }
+
+    public function testToPlainYearMonthIgnoresTimeAndDay(): void
+    {
+        $dt1 = new PlainDateTime(2024, 6, 1, 0, 0, 0);
+        $dt2 = new PlainDateTime(2024, 6, 30, 23, 59, 59);
+
+        $this->assertTrue($dt1->toPlainYearMonth()->equals($dt2->toPlainYearMonth()));
+    }
+
+    // -------------------------------------------------------------------------
+    // toPlainMonthDay()
+    // -------------------------------------------------------------------------
+
+    public function testToPlainMonthDay(): void
+    {
+        $dt = new PlainDateTime(2024, 7, 4, 15, 0, 0);
+        $pmd = $dt->toPlainMonthDay();
+
+        $this->assertSame(7, $pmd->month);
+        $this->assertSame(4, $pmd->day);
+    }
+
+    public function testToPlainMonthDayIgnoresYearAndTime(): void
+    {
+        $dt1 = new PlainDateTime(2020, 2, 29, 0, 0, 0);
+        $dt2 = new PlainDateTime(2024, 2, 29, 23, 59, 59);
+
+        $this->assertTrue($dt1->toPlainMonthDay()->equals($dt2->toPlainMonthDay()));
+    }
 }

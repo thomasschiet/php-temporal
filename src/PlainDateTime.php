@@ -185,6 +185,28 @@ final class PlainDateTime
         );
     }
 
+    /**
+     * Extract the year and month fields as a PlainYearMonth.
+     *
+     * Corresponds to Temporal.PlainDateTime.prototype.toPlainYearMonth() in
+     * the TC39 proposal.
+     */
+    public function toPlainYearMonth(): PlainYearMonth
+    {
+        return new PlainYearMonth($this->year, $this->month);
+    }
+
+    /**
+     * Extract the month and day fields as a PlainMonthDay.
+     *
+     * Corresponds to Temporal.PlainDateTime.prototype.toPlainMonthDay() in
+     * the TC39 proposal.
+     */
+    public function toPlainMonthDay(): PlainMonthDay
+    {
+        return new PlainMonthDay($this->month, $this->day);
+    }
+
     // -------------------------------------------------------------------------
     // Mutation (returns new instances)
     // -------------------------------------------------------------------------

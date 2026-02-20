@@ -916,4 +916,146 @@ final class ZonedDateTimeTest extends TestCase
         $zdt = ZonedDateTime::from('2024-03-10T12:00:00+00:00[UTC]');
         self::assertSame(24, $zdt->hoursInDay);
     }
+
+    // -------------------------------------------------------------------------
+    // withPlainDate()
+    // -------------------------------------------------------------------------
+
+    public function testWithPlainDateReplacesDate(): void
+    {
+        $zdt = ZonedDateTime::from('2024-03-15T10:30:00+00:00[UTC]');
+        $newDate = new \Temporal\PlainDate(2025, 6, 20);
+        $result = $zdt->withPlainDate($newDate);
+
+        self::assertSame(2025, $result->year);
+        self::assertSame(6, $result->month);
+        self::assertSame(20, $result->day);
+        // Time preserved
+        self::assertSame(10, $result->hour);
+        self::assertSame(30, $result->minute);
+        // Timezone preserved
+        self::assertSame('UTC', $result->timeZone->id);
+    }
+
+    public function testWithPlainDatePreservesSubSeconds(): void
+    {
+        $zdt = ZonedDateTime::from('2024-03-15T10:30:00.123456789+00:00[UTC]');
+        $newDate = new \Temporal\PlainDate(2025, 1, 1);
+        $result = $zdt->withPlainDate($newDate);
+
+        self::assertSame(123, $result->millisecond);
+        self::assertSame(456, $result->microsecond);
+        self::assertSame(789, $result->nanosecond);
+    }
+
+    // -------------------------------------------------------------------------
+    // withPlainTime()
+    // -------------------------------------------------------------------------
+
+    public function testWithPlainTimeReplacesTime(): void
+    {
+        $zdt = ZonedDateTime::from('2024-03-15T10:30:00+00:00[UTC]');
+        $newTime = new \Temporal\PlainTime(15, 45, 30);
+        $result = $zdt->withPlainTime($newTime);
+
+        // Date preserved
+        self::assertSame(2024, $result->year);
+        self::assertSame(3, $result->month);
+        self::assertSame(15, $result->day);
+        // Time replaced
+        self::assertSame(15, $result->hour);
+        self::assertSame(45, $result->minute);
+        self::assertSame(30, $result->second);
+    }
+
+    public function testWithPlainTimeNullDefaultsMidnight(): void
+    {
+        $zdt = ZonedDateTime::from('2024-03-15T10:30:00+00:00[UTC]');
+        $result = $zdt->withPlainTime(null);
+
+        self::assertSame(0, $result->hour);
+        self::assertSame(0, $result->minute);
+        self::assertSame(0, $result->second);
+        self::assertSame(0, $result->nanosecond);
+    }
+
+    public function testWithPlainTimeNoArgDefaultsMidnight(): void
+    {
+        $zdt = ZonedDateTime::from('2024-06-01T12:00:00+00:00[UTC]');
+        $result = $zdt->withPlainTime();
+
+        self::assertSame(2024, $result->year);
+        self::assertSame(6, $result->month);
+        self::assertSame(1, $result->day);
+        self::assertSame(0, $result->hour);
+    }
+
+    // -------------------------------------------------------------------------
+    // toPlainYearMonth()
+    // -------------------------------------------------------------------------
+
+    public function testToPlainYearMonth(): void
+    {
+        $zdt = ZonedDateTime::from('2024-07-04T15:00:00+00:00[UTC]');
+        $pym = $zdt->toPlainYearMonth();
+
+        self::assertSame(2024, $pym->year);
+        self::assertSame(7, $pym->month);
+    }
+
+    // -------------------------------------------------------------------------
+    // toPlainMonthDay()
+    // -------------------------------------------------------------------------
+
+    public function testToPlainMonthDay(): void
+    {
+        $zdt = ZonedDateTime::from('2024-07-04T15:00:00+00:00[UTC]');
+        $pmd = $zdt->toPlainMonthDay();
+
+        self::assertSame(7, $pmd->month);
+        self::assertSame(4, $pmd->day);
+    }
+
+    // -------------------------------------------------------------------------
+    // startOfDay()
+    // -------------------------------------------------------------------------
+
+    public function testStartOfDayUtc(): void
+    {
+        $zdt = ZonedDateTime::from('2024-03-15T10:30:45+00:00[UTC]');
+        $start = $zdt->startOfDay();
+
+        self::assertSame(2024, $start->year);
+        self::assertSame(3, $start->month);
+        self::assertSame(15, $start->day);
+        self::assertSame(0, $start->hour);
+        self::assertSame(0, $start->minute);
+        self::assertSame(0, $start->second);
+        self::assertSame('UTC', $start->timeZone->id);
+    }
+
+    public function testStartOfDayPreservesTimezone(): void
+    {
+        $zdt = ZonedDateTime::from('2024-07-04T15:30:00-04:00[America/New_York]');
+        $start = $zdt->startOfDay();
+
+        self::assertSame(2024, $start->year);
+        self::assertSame(7, $start->month);
+        self::assertSame(4, $start->day);
+        self::assertSame(0, $start->hour);
+        self::assertSame(0, $start->minute);
+        self::assertSame('America/New_York', $start->timeZone->id);
+    }
+
+    public function testStartOfDayAlreadyAtMidnight(): void
+    {
+        // 2024-01-01T00:00:00Z is already midnight UTC; startOfDay() should stay at the same instant.
+        $zdt = ZonedDateTime::from('2024-01-01T00:00:00+00:00[UTC]');
+        $start = $zdt->startOfDay();
+
+        self::assertSame($zdt->epochNanoseconds, $start->epochNanoseconds);
+        self::assertSame(0, $start->hour);
+        self::assertSame(0, $start->minute);
+        self::assertSame(0, $start->second);
+    }
 }

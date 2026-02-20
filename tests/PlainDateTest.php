@@ -717,4 +717,99 @@ class PlainDateTest extends TestCase
         $zdt = $date->toZonedDateTime('UTC');
         $this->assertSame(0, $zdt->epochNanoseconds);
     }
+
+    // -------------------------------------------------------------------------
+    // toPlainDateTime()
+    // -------------------------------------------------------------------------
+
+    public function testToPlainDateTimeWithTime(): void
+    {
+        $date = new PlainDate(2024, 3, 15);
+        $time = new \Temporal\PlainTime(10, 30, 45);
+        $pdt = $date->toPlainDateTime($time);
+
+        $this->assertSame(2024, $pdt->year);
+        $this->assertSame(3, $pdt->month);
+        $this->assertSame(15, $pdt->day);
+        $this->assertSame(10, $pdt->hour);
+        $this->assertSame(30, $pdt->minute);
+        $this->assertSame(45, $pdt->second);
+    }
+
+    public function testToPlainDateTimeWithoutTimeDefaultsMidnight(): void
+    {
+        $date = new PlainDate(2024, 6, 1);
+        $pdt = $date->toPlainDateTime();
+
+        $this->assertSame(2024, $pdt->year);
+        $this->assertSame(6, $pdt->month);
+        $this->assertSame(1, $pdt->day);
+        $this->assertSame(0, $pdt->hour);
+        $this->assertSame(0, $pdt->minute);
+        $this->assertSame(0, $pdt->second);
+    }
+
+    public function testToPlainDateTimeWithNullDefaultsMidnight(): void
+    {
+        $date = new PlainDate(2000, 1, 1);
+        $pdt = $date->toPlainDateTime(null);
+
+        $this->assertSame(0, $pdt->hour);
+        $this->assertSame(0, $pdt->minute);
+        $this->assertSame(0, $pdt->second);
+        $this->assertSame(0, $pdt->nanosecond);
+    }
+
+    public function testToPlainDateTimePreservesSubSeconds(): void
+    {
+        $date = new PlainDate(2024, 1, 1);
+        $time = new \Temporal\PlainTime(12, 0, 0, 123, 456, 789);
+        $pdt = $date->toPlainDateTime($time);
+
+        $this->assertSame(123, $pdt->millisecond);
+        $this->assertSame(456, $pdt->microsecond);
+        $this->assertSame(789, $pdt->nanosecond);
+    }
+
+    // -------------------------------------------------------------------------
+    // toPlainYearMonth()
+    // -------------------------------------------------------------------------
+
+    public function testToPlainYearMonth(): void
+    {
+        $date = new PlainDate(2024, 3, 15);
+        $pym = $date->toPlainYearMonth();
+
+        $this->assertSame(2024, $pym->year);
+        $this->assertSame(3, $pym->month);
+    }
+
+    public function testToPlainYearMonthIgnoresDay(): void
+    {
+        $date1 = new PlainDate(2024, 6, 1);
+        $date2 = new PlainDate(2024, 6, 30);
+
+        $this->assertTrue($date1->toPlainYearMonth()->equals($date2->toPlainYearMonth()));
+    }
+
+    // -------------------------------------------------------------------------
+    // toPlainMonthDay()
+    // -------------------------------------------------------------------------
+
+    public function testToPlainMonthDay(): void
+    {
+        $date = new PlainDate(2024, 3, 15);
+        $pmd = $date->toPlainMonthDay();
+
+        $this->assertSame(3, $pmd->month);
+        $this->assertSame(15, $pmd->day);
+    }
+
+    public function testToPlainMonthDayIgnoresYear(): void
+    {
+        $date1 = new PlainDate(2020, 2, 29);
+        $date2 = new PlainDate(2024, 2, 29);
+
+        $this->assertTrue($date1->toPlainMonthDay()->equals($date2->toPlainMonthDay()));
+    }
 }

@@ -217,6 +217,53 @@ final class PlainDate
     }
 
     /**
+     * Convert this PlainDate to a PlainDateTime by combining it with a time.
+     *
+     * If $time is omitted, midnight (00:00:00) is used.
+     *
+     * Corresponds to Temporal.PlainDate.prototype.toPlainDateTime() in the
+     * TC39 proposal.
+     */
+    public function toPlainDateTime(?PlainTime $time = null): PlainDateTime
+    {
+        $t = $time ?? new PlainTime(0, 0, 0);
+
+        return new PlainDateTime(
+            $this->year,
+            $this->month,
+            $this->day,
+            $t->hour,
+            $t->minute,
+            $t->second,
+            $t->millisecond,
+            $t->microsecond,
+            $t->nanosecond
+        );
+    }
+
+    /**
+     * Extract the year and month fields as a PlainYearMonth.
+     *
+     * Corresponds to Temporal.PlainDate.prototype.toPlainYearMonth() in the
+     * TC39 proposal.
+     */
+    public function toPlainYearMonth(): PlainYearMonth
+    {
+        return new PlainYearMonth($this->year, $this->month);
+    }
+
+    /**
+     * Extract the month and day fields as a PlainMonthDay.
+     *
+     * Corresponds to Temporal.PlainDate.prototype.toPlainMonthDay() in the
+     * TC39 proposal.
+     */
+    public function toPlainMonthDay(): PlainMonthDay
+    {
+        return new PlainMonthDay($this->month, $this->day);
+    }
+
+    /**
      * Returns the number of days since the Unix epoch (1970-01-01).
      */
     public function toEpochDays(): int

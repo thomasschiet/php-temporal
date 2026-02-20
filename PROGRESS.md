@@ -349,6 +349,49 @@ Implemented the `Temporal\Now` utility class and cross-type conversion methods:
 
 **Total: 855 tests passing (+31 new)**
 
+### 16. Missing TC39 API Methods (2026-02-20)
+
+Completed the TC39 Temporal API surface area by adding methods that were missing across
+multiple classes. All new methods include full test coverage (+46 new tests).
+
+#### `PlainDate` — new methods
+- `toPlainDateTime(?PlainTime)` — combine date with time (defaults to midnight)
+- `toPlainYearMonth()` — extract year/month fields as `PlainYearMonth`
+- `toPlainMonthDay()` — extract month/day fields as `PlainMonthDay`
+
+#### `PlainTime` — new methods
+- `toPlainDateTime(PlainDate)` — combine time with a date to produce `PlainDateTime`
+
+#### `PlainDateTime` — new methods
+- `toPlainYearMonth()` — extract year/month fields as `PlainYearMonth`
+- `toPlainMonthDay()` — extract month/day fields as `PlainMonthDay`
+
+#### `ZonedDateTime` — new methods
+- `withPlainDate(PlainDate)` — replace date part while keeping time and timezone
+- `withPlainTime(?PlainTime)` — replace time part while keeping date and timezone
+- `toPlainYearMonth()` — delegates to `toPlainDate()->toPlainYearMonth()`
+- `toPlainMonthDay()` — delegates to `toPlainDate()->toPlainMonthDay()`
+- `startOfDay()` — return the `ZonedDateTime` at midnight of the current calendar day
+
+#### `Instant` — new methods
+- `toZonedDateTime(TimeZone|string|array)` — convert to `ZonedDateTime` (ISO calendar);
+  accepts a timezone directly or an options array with `timeZone` and optional `calendar` key
+
+#### `TimeZone` — new methods
+- `getOffsetStringFor(Instant)` — returns the UTC offset as a `±HH:MM` string
+- `getPossibleInstantsFor(PlainDateTime)` — round-trip verification algorithm:
+  collects all plausible offsets from transitions within ±26 h, tries each candidate,
+  and keeps only those that map back to the original local time;
+  returns `[]` for spring-forward gaps, `[earlier, later]` for fall-back overlaps
+- `getNextTransition(Instant)` — returns the next DST transition after the given instant
+  (null for UTC and fixed-offset zones); correctly skips PHP's prepended initial-state
+  entry by comparing offsets against the known current offset
+- `getPreviousTransition(Instant)` — returns the most recent DST transition before the
+  given instant (null for UTC and fixed-offset zones); walks backward through the
+  transitions array looking for an offset change
+
+**Total: 901 tests passing (+46 new)**
+
 ## Current Task
 
 - All planned tasks complete.

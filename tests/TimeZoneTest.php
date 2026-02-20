@@ -454,4 +454,146 @@ final class TimeZoneTest extends TestCase
         // 12:00 EST = 17:00Z
         self::assertSame(17, (int) gmdate('G', $instant->epochSeconds));
     }
+
+    // -------------------------------------------------------------------------
+    // getOffsetStringFor()
+    // -------------------------------------------------------------------------
+
+    public function testGetOffsetStringForUtc(): void
+    {
+        $tz = TimeZone::from('UTC');
+        $instant = \Temporal\Instant::fromEpochSeconds(0);
+        self::assertSame('+00:00', $tz->getOffsetStringFor($instant));
+    }
+
+    public function testGetOffsetStringForPositiveOffset(): void
+    {
+        $tz = TimeZone::from('+05:30');
+        $instant = \Temporal\Instant::fromEpochSeconds(0);
+        self::assertSame('+05:30', $tz->getOffsetStringFor($instant));
+    }
+
+    public function testGetOffsetStringForNegativeOffset(): void
+    {
+        $tz = TimeZone::from('-08:00');
+        $instant = \Temporal\Instant::fromEpochSeconds(0);
+        self::assertSame('-08:00', $tz->getOffsetStringFor($instant));
+    }
+
+    public function testGetOffsetStringForDstEdt(): void
+    {
+        // Summer in New York (EDT = -04:00)
+        $tz = TimeZone::from('America/New_York');
+        $instant = \Temporal\Instant::from('2024-07-04T12:00:00Z');
+        self::assertSame('-04:00', $tz->getOffsetStringFor($instant));
+    }
+
+    public function testGetOffsetStringForDstEst(): void
+    {
+        // Winter in New York (EST = -05:00)
+        $tz = TimeZone::from('America/New_York');
+        $instant = \Temporal\Instant::from('2024-01-01T12:00:00Z');
+        self::assertSame('-05:00', $tz->getOffsetStringFor($instant));
+    }
+
+    // -------------------------------------------------------------------------
+    // getPossibleInstantsFor()
+    // -------------------------------------------------------------------------
+
+    public function testGetPossibleInstantsForUnambiguousReturnsOne(): void
+    {
+        $tz = TimeZone::from('America/New_York');
+        $pdt = new PlainDateTime(2024, 6, 15, 12, 0, 0);
+        $instants = $tz->getPossibleInstantsFor($pdt);
+        self::assertCount(1, $instants);
+    }
+
+    public function testGetPossibleInstantsForSpringForwardGapReturnsEmpty(): void
+    {
+        // 2024-03-10 02:30 ET doesn't exist (spring-forward gap)
+        $tz = TimeZone::from('America/New_York');
+        $pdt = new PlainDateTime(2024, 3, 10, 2, 30, 0);
+        $instants = $tz->getPossibleInstantsFor($pdt);
+        self::assertCount(0, $instants);
+    }
+
+    public function testGetPossibleInstantsForFallBackOverlapReturnsTwo(): void
+    {
+        // 2024-11-03 01:30 ET is ambiguous (fall-back overlap)
+        $tz = TimeZone::from('America/New_York');
+        $pdt = new PlainDateTime(2024, 11, 3, 1, 30, 0);
+        $instants = $tz->getPossibleInstantsFor($pdt);
+        self::assertCount(2, $instants);
+        // Earlier is EDT (-4h), later is EST (-5h) — differ by 1 hour
+        $diff = $instants[1]->epochSeconds - $instants[0]->epochSeconds;
+        self::assertSame(3600, $diff);
+    }
+
+    public function testGetPossibleInstantsForUtcAlwaysReturnsOne(): void
+    {
+        $tz = TimeZone::from('UTC');
+        $pdt = new PlainDateTime(2024, 3, 10, 2, 30, 0);
+        $instants = $tz->getPossibleInstantsFor($pdt);
+        self::assertCount(1, $instants);
+    }
+
+    // -------------------------------------------------------------------------
+    // getNextTransition() / getPreviousTransition()
+    // -------------------------------------------------------------------------
+
+    public function testGetNextTransitionForFixedOffsetIsNull(): void
+    {
+        $tz = TimeZone::from('+05:30');
+        $instant = \Temporal\Instant::fromEpochSeconds(0);
+        self::assertNull($tz->getNextTransition($instant));
+    }
+
+    public function testGetPreviousTransitionForUtcIsNull(): void
+    {
+        $tz = TimeZone::from('UTC');
+        $instant = \Temporal\Instant::fromEpochSeconds(0);
+        self::assertNull($tz->getPreviousTransition($instant));
+    }
+
+    public function testGetNextTransitionNewYorkSpringForward2024(): void
+    {
+        // From just before the 2024 spring-forward (2024-03-10T07:00:00Z)
+        $tz = TimeZone::from('America/New_York');
+        $before = \Temporal\Instant::from('2024-01-01T00:00:00Z');
+        $next = $tz->getNextTransition($before);
+        self::assertNotNull($next);
+        // Spring-forward 2024 is 2024-03-10T07:00:00Z
+        self::assertSame(1710054000, $next->epochSeconds);
+    }
+
+    public function testGetPreviousTransitionNewYorkFallBack2023(): void
+    {
+        // From 2024-01-01, the previous transition is the 2023 fall-back.
+        // Fall-back 2023: 2:00 AM EDT → 1:00 AM EST on 2023-11-05.
+        // EDT = UTC-4, so 2:00 AM EDT = 06:00 AM UTC = epoch 1699164000.
+        $tz = TimeZone::from('America/New_York');
+        $after = \Temporal\Instant::from('2024-01-01T00:00:00Z');
+        $prev = $tz->getPreviousTransition($after);
+        self::assertNotNull($prev);
+        // Fall-back 2023 is 2023-11-05T06:00:00Z
+        self::assertSame(1699164000, $prev->epochSeconds);
+    }
+
+    public function testGetNextTransitionIsAfterStartingPoint(): void
+    {
+        $tz = TimeZone::from('America/New_York');
+        $start = \Temporal\Instant::from('2024-06-01T00:00:00Z');
+        $next = $tz->getNextTransition($start);
+        self::assertNotNull($next);
+        self::assertGreaterThan($start->epochSeconds, $next->epochSeconds);
+    }
+
+    public function testGetPreviousTransitionIsBeforeStartingPoint(): void
+    {
+        $tz = TimeZone::from('America/New_York');
+        $start = \Temporal\Instant::from('2024-06-01T00:00:00Z');
+        $prev = $tz->getPreviousTransition($start);
+        self::assertNotNull($prev);
+        self::assertLessThan($start->epochSeconds, $prev->epochSeconds);
+    }
 }

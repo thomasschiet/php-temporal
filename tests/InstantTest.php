@@ -337,7 +337,7 @@ final class InstantTest extends TestCase
         $instant = Instant::fromEpochNanoseconds(0);
         $duration = new Duration(hours: 1, minutes: 30);
         $result = $instant->add($duration);
-        self::assertSame(( ( 3_600 ) + ( 30 * 60 ) ) * 1_000_000_000, $result->epochNanoseconds);
+        self::assertSame(( 3_600 + ( 30 * 60 ) ) * 1_000_000_000, $result->epochNanoseconds);
     }
 
     public function test_add_days_as_exact_24h(): void
@@ -717,5 +717,66 @@ final class InstantTest extends TestCase
         self::assertSame(3, $zdt->month);
         self::assertSame(14, $zdt->day);
         self::assertSame(22, $zdt->hour);
+    }
+
+    // -------------------------------------------------------------------------
+    // toZonedDateTime()
+    // -------------------------------------------------------------------------
+
+    public function test_to_zoned_date_time_with_string_timezone(): void
+    {
+        $instant = Instant::fromEpochSeconds(0);
+        $zdt = $instant->toZonedDateTime('UTC');
+
+        self::assertSame(1970, $zdt->year);
+        self::assertSame(1, $zdt->month);
+        self::assertSame(1, $zdt->day);
+        self::assertSame(0, $zdt->hour);
+    }
+
+    public function test_to_zoned_date_time_with_timezone_object(): void
+    {
+        $instant = Instant::from('2024-03-15T12:00:00Z');
+        $tz = \Temporal\TimeZone::from('+05:30');
+        $zdt = $instant->toZonedDateTime($tz);
+
+        self::assertSame(2024, $zdt->year);
+        self::assertSame(3, $zdt->month);
+        self::assertSame(15, $zdt->day);
+        self::assertSame(17, $zdt->hour);
+        self::assertSame(30, $zdt->minute);
+    }
+
+    public function test_to_zoned_date_time_with_options_array(): void
+    {
+        $instant = Instant::from('2024-03-15T12:00:00Z');
+        $zdt = $instant->toZonedDateTime(['timeZone' => 'UTC', 'calendar' => 'iso8601']);
+
+        self::assertSame(2024, $zdt->year);
+        self::assertSame(12, $zdt->hour);
+    }
+
+    public function test_to_zoned_date_time_unsupported_calendar_throws(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $instant = Instant::fromEpochSeconds(0);
+        $instant->toZonedDateTime(['timeZone' => 'UTC', 'calendar' => 'hebrew']);
+    }
+
+    public function test_to_zoned_date_time_missing_timezone_key_throws(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $instant = Instant::fromEpochSeconds(0);
+        $instant->toZonedDateTime([]);
+    }
+
+    public function test_to_zoned_date_time_same_result_as_iso(): void
+    {
+        $instant = Instant::from('2021-08-04T12:30:00Z');
+        $viaISO = $instant->toZonedDateTimeISO('America/New_York');
+        $via = $instant->toZonedDateTime('America/New_York');
+
+        self::assertSame($viaISO->epochNanoseconds, $via->epochNanoseconds);
+        self::assertTrue($viaISO->timeZone->equals($via->timeZone));
     }
 }
