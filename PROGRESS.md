@@ -33,13 +33,27 @@
 - Created `tests/PlainTimeTest.php` — 65 tests, all passing
 - Total: 122 tests, all passing
 
+### 3. PlainDateTime (2026-02-20)
+- Created `src/PlainDateTime.php` — full implementation:
+  - Constructor with validation for all 9 fields (year, month, day + 6 time fields)
+  - `from()` static constructor (accepts string, array, or PlainDateTime)
+  - ISO 8601 datetime string parsing: `YYYY-MM-DDTHH:MM:SS[.fraction]` with extended years and lowercase `t`
+  - `toPlainDate()` / `toPlainTime()` — extract date and time parts
+  - `withPlainDate()` / `withPlainTime()` — replace date or time part
+  - `with()` for field overrides
+  - `add()` / `subtract()` — calendar arithmetic for date parts, nanosecond arithmetic for time parts, with correct day carry-over (uses floor division for negative ns)
+  - `until()` / `since()` — Duration with day + sub-day components, balanced so time part stays within one day
+  - `compare()` / `equals()`
+  - `__toString()` — delegates to `PlainDate::__toString()` + `T` + `PlainTime::__toString()`
+- Created `tests/PlainDateTimeTest.php` — 70 tests, all passing
+- Total: 200 tests, all passing
+
 ## Current Task
 
-- **PlainDateTime**: combination of PlainDate and PlainTime
+- **Duration** — full implementation (years, months, weeks, days, hours, minutes, seconds, etc.)
 
 ## Next Tasks
 
-3. `Duration` — full implementation (years, months, weeks, days, hours, minutes, seconds, etc.)
 4. `Instant` — epoch-based timestamp with nanosecond precision
 5. `ZonedDateTime` — Instant + TimeZone + Calendar
 6. `TimeZone` — IANA time zones via OS
