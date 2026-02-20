@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 use PHPUnit\Framework\TestCase;
 use Temporal\Duration;
+use Temporal\Exception\DateRangeException;
 use Temporal\PlainDate;
 use Temporal\PlainDateTime;
 use Temporal\PlainTime;
@@ -50,19 +51,19 @@ class PlainDateTimeTest extends TestCase
 
     public function testInvalidMonthThrows(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainDateTime(2024, 13, 1);
     }
 
     public function testInvalidMonthZeroThrows(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainDateTime(2024, 0, 1);
     }
 
     public function testInvalidDayThrows(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainDateTime(2024, 2, 30);
     }
 
@@ -74,49 +75,49 @@ class PlainDateTimeTest extends TestCase
 
     public function testInvalidDayInNonLeapYearThrows(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainDateTime(2023, 2, 29);
     }
 
     public function testInvalidHourThrows(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainDateTime(2024, 3, 15, 24);
     }
 
     public function testInvalidMinuteThrows(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainDateTime(2024, 3, 15, 0, 60);
     }
 
     public function testInvalidSecondThrows(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainDateTime(2024, 3, 15, 0, 0, 60);
     }
 
     public function testInvalidMillisecondThrows(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainDateTime(2024, 3, 15, 0, 0, 0, 1000);
     }
 
     public function testInvalidMicrosecondThrows(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainDateTime(2024, 3, 15, 0, 0, 0, 0, 1000);
     }
 
     public function testInvalidNanosecondThrows(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainDateTime(2024, 3, 15, 0, 0, 0, 0, 0, 1000);
     }
 
     public function testNegativeHourThrows(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainDateTime(2024, 3, 15, -1);
     }
 
@@ -724,7 +725,7 @@ class PlainDateTimeTest extends TestCase
 
     public function testAddMonthsOverflowReject(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         $dt = new PlainDateTime(2023, 1, 31, 12, 0, 0);
         $dt->add(['months' => 1], 'reject');
     }
@@ -739,7 +740,7 @@ class PlainDateTimeTest extends TestCase
 
     public function testSubtractMonthsOverflowReject(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         $dt = new PlainDateTime(2023, 3, 31, 12, 0, 0);
         $dt->subtract(['months' => 1], 'reject');
     }

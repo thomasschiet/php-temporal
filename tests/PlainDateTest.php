@@ -6,6 +6,7 @@ namespace Temporal\Tests;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Temporal\Exception\DateRangeException;
 use Temporal\PlainDate;
 
 class PlainDateTest extends TestCase
@@ -40,31 +41,31 @@ class PlainDateTest extends TestCase
 
     public function testConstructorInvalidMonthZero(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainDate(2024, 0, 1);
     }
 
     public function testConstructorInvalidMonthThirteen(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainDate(2024, 13, 1);
     }
 
     public function testConstructorInvalidDayZero(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainDate(2024, 1, 0);
     }
 
     public function testConstructorInvalidDayTooLarge(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainDate(2024, 1, 32);
     }
 
     public function testConstructorInvalidDayForMonth(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainDate(2024, 4, 31); // April has 30 days
     }
 
@@ -76,7 +77,7 @@ class PlainDateTest extends TestCase
 
     public function testConstructorInvalidLeapDay(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainDate(2023, 2, 29); // 2023 is not a leap year
     }
 
@@ -502,7 +503,7 @@ class PlainDateTest extends TestCase
     {
         // Jan 31 + 1 month in common year with reject throws
         $date = new PlainDate(2019, 1, 31);
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         $date->add(['months' => 1], 'reject');
     }
 
@@ -510,7 +511,7 @@ class PlainDateTest extends TestCase
     {
         // Jan 31 + 1 month in non-leap year with reject throws (Feb has 28 days)
         $date = new PlainDate(2023, 1, 31);
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         $date->add(['months' => 1], 'reject');
     }
 
@@ -520,7 +521,7 @@ class PlainDateTest extends TestCase
         // because Jan 31 only needs to fit into 29 days? Actually no —
         // day 31 > 29, so it should still reject in a leap year.
         $date = new PlainDate(2016, 1, 31);
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         $date->add(['months' => 1], 'reject');
     }
 
@@ -537,7 +538,7 @@ class PlainDateTest extends TestCase
     {
         // Jan 31 + 3 months → Apr 30 would constrain; with reject it throws
         $date = new PlainDate(2019, 1, 31);
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         $date->add(['months' => 3], 'reject');
     }
 
@@ -553,7 +554,7 @@ class PlainDateTest extends TestCase
     public function testSubtractMonthOverflowRejectThrows(): void
     {
         $date = new PlainDate(2019, 3, 31);
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         $date->subtract(['months' => 1], 'reject');
     }
 
@@ -589,14 +590,14 @@ class PlainDateTest extends TestCase
     public function testConstructBeyondMaxThrows(): void
     {
         // September 14, +275760 is one day beyond the maximum
-        $this->expectException(\RangeException::class);
+        $this->expectException(DateRangeException::class);
         new PlainDate(275760, 9, 14);
     }
 
     public function testConstructBeyondMinThrows(): void
     {
         // April 18, -271821 is one day before the minimum
-        $this->expectException(\RangeException::class);
+        $this->expectException(DateRangeException::class);
         new PlainDate(-271821, 4, 18);
     }
 
@@ -604,7 +605,7 @@ class PlainDateTest extends TestCase
     {
         // Max-year date + large positive duration throws RangeException
         $maxDate = new PlainDate(275760, 1, 1);
-        $this->expectException(\RangeException::class);
+        $this->expectException(DateRangeException::class);
         $maxDate->add(['months' => 5432, 'weeks' => 5432]);
     }
 
@@ -612,7 +613,7 @@ class PlainDateTest extends TestCase
     {
         // Min-year date + large negative duration throws RangeException
         $minDate = new PlainDate(-271821, 4, 19);
-        $this->expectException(\RangeException::class);
+        $this->expectException(DateRangeException::class);
         $minDate->add(['months' => -5432, 'weeks' => -5432]);
     }
 
@@ -634,13 +635,13 @@ class PlainDateTest extends TestCase
 
     public function testFromEpochDaysBeyondMaxThrows(): void
     {
-        $this->expectException(\RangeException::class);
+        $this->expectException(DateRangeException::class);
         PlainDate::fromEpochDays(PlainDate::MAX_EPOCH_DAYS + 1);
     }
 
     public function testFromEpochDaysBeyondMinThrows(): void
     {
-        $this->expectException(\RangeException::class);
+        $this->expectException(DateRangeException::class);
         PlainDate::fromEpochDays(PlainDate::MIN_EPOCH_DAYS - 1);
     }
 

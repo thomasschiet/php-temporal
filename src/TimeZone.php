@@ -4,7 +4,9 @@ declare(strict_types = 1);
 
 namespace Temporal;
 
-use InvalidArgumentException;
+use Temporal\Exception\AmbiguousTimeException;
+use Temporal\Exception\InvalidOptionException;
+use Temporal\Exception\UnknownTimeZoneException;
 
 /**
  * Represents an IANA time zone or a fixed UTC offset.
@@ -122,7 +124,7 @@ final class TimeZone
 
         // Ambiguous or gap — determine which case
         if ($disambiguation === 'reject') {
-            throw new InvalidArgumentException(
+            throw new AmbiguousTimeException(
                 "The local time is ambiguous or doesn't exist in time zone '{$this->id}'."
             );
         }
@@ -135,7 +137,7 @@ final class TimeZone
             'earlier' => Instant::fromEpochNanoseconds($earlier),
             'later' => Instant::fromEpochNanoseconds($later),
             'compatible' => Instant::fromEpochNanoseconds($later), // gap: push past; overlap: first
-            default => throw new InvalidArgumentException("Unknown disambiguation value: '{$disambiguation}'.")
+            default => throw new InvalidOptionException("Unknown disambiguation value: '{$disambiguation}'.")
         };
     }
 
@@ -351,7 +353,7 @@ final class TimeZone
     private static function validate(string $id): string
     {
         if ($id === '') {
-            throw new InvalidArgumentException('TimeZone ID must not be empty.');
+            throw new UnknownTimeZoneException('TimeZone ID must not be empty.');
         }
 
         // Fixed-offset: ±HH:MM
@@ -369,7 +371,7 @@ final class TimeZone
         try {
             new \DateTimeZone($id);
         } catch (\Exception) {
-            throw new InvalidArgumentException("Unknown or unsupported time zone: '{$id}'.");
+            throw new UnknownTimeZoneException("Unknown or unsupported time zone: '{$id}'.");
         }
 
         return $id;

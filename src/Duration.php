@@ -4,7 +4,11 @@ declare(strict_types = 1);
 
 namespace Temporal;
 
-use InvalidArgumentException;
+use Temporal\Exception\DateRangeException;
+use Temporal\Exception\InvalidDurationException;
+use Temporal\Exception\InvalidOptionException;
+use Temporal\Exception\InvalidTemporalStringException;
+use Temporal\Exception\MissingFieldException;
 
 /**
  * Represents a duration of time with date and time components.
@@ -54,7 +58,7 @@ final class Duration
         }
 
         if ($pos > 0 && $neg > 0) {
-            throw new InvalidArgumentException(
+            throw new InvalidDurationException(
                 'Duration fields must all have the same sign; got mixed positive and negative values.'
             );
         }
@@ -241,14 +245,14 @@ final class Duration
         $unit = $unitOrOptions['unit'] ?? null;
 
         if ($unit === null) {
-            throw new InvalidArgumentException("Duration.total() options must include 'unit'.");
+            throw new MissingFieldException("Duration.total() options must include 'unit'.");
         }
 
         $relativeTo = $unitOrOptions['relativeTo'] ?? null;
 
         if ($relativeTo === null) {
             if (in_array($unit, ['year', 'years', 'month', 'months'], true)) {
-                throw new InvalidArgumentException(
+                throw new MissingFieldException(
                     "Duration.total() requires a 'relativeTo' option when unit is '{$unit}'."
                 );
             }
@@ -275,7 +279,7 @@ final class Duration
             'hour', 'hours' => $ns / ( 3_600 * 1_000_000_000 ),
             'day', 'days' => $ns / ( 86_400 * 1_000_000_000 ),
             'week', 'weeks' => $ns / ( 7 * 86_400 * 1_000_000_000 ),
-            default => throw new InvalidArgumentException("Unknown or unsupported unit for total(): '{$unit}'.")
+            default => throw new InvalidOptionException("Unknown or unsupported unit for total(): '{$unit}'.")
         };
     }
 
@@ -311,7 +315,7 @@ final class Duration
             'week', 'weeks' => $totalDaysFloat / 7.0,
             'month', 'months' => $this->daysToFractionalMonths($totalDaysFloat, $relativeTo),
             'year', 'years' => $this->daysToFractionalYears($totalDaysFloat, $relativeTo),
-            default => throw new InvalidArgumentException("Unknown or unsupported unit for total(): '{$unit}'.")
+            default => throw new InvalidOptionException("Unknown or unsupported unit for total(): '{$unit}'.")
         };
     }
 
@@ -444,7 +448,7 @@ final class Duration
         $smallestUnit = $options['smallestUnit'] ?? null;
 
         if ($smallestUnit === null) {
-            throw new InvalidArgumentException("round() options must include 'smallestUnit'.");
+            throw new MissingFieldException("round() options must include 'smallestUnit'.");
         }
 
         $largestUnit = $options['largestUnit'] ?? null;
@@ -453,7 +457,7 @@ final class Duration
         $relativeTo = $options['relativeTo'] ?? null;
 
         if ((int) $roundingIncrement < 1) {
-            throw new InvalidArgumentException('roundingIncrement must be at least 1.');
+            throw new InvalidOptionException('roundingIncrement must be at least 1.');
         }
 
         // When the duration has calendar units (years/months) and smallestUnit is
@@ -479,7 +483,7 @@ final class Duration
         ];
 
         if ($hasCalendarUnits && in_array($smallestUnit, $subMonthUnits, true) && $largestUnit === null) {
-            throw new \RangeException(
+            throw new DateRangeException(
                 'When the duration has calendar units (years/months), '
                 . "'largestUnit' is required when 'smallestUnit' is '{$smallestUnit}'."
             );
@@ -520,7 +524,7 @@ final class Duration
             $smallestUnit = 'nanosecond';
         } else {
             $largestUnit = (string) (
-                $largestUnitOrOptions['largestUnit'] ?? throw new InvalidArgumentException(
+                $largestUnitOrOptions['largestUnit'] ?? throw new MissingFieldException(
                     'Missing required option: largestUnit.'
                 )
             );
@@ -545,7 +549,7 @@ final class Duration
             'hour', 'hours' => $this->roundToHours(),
             'day', 'days' => $this->roundToDays(),
             'week', 'weeks' => $this->roundToWeeks(),
-            default => throw new InvalidArgumentException("Unknown or unsupported unit for round(): '{$smallestUnit}'.")
+            default => throw new InvalidOptionException("Unknown or unsupported unit for round(): '{$smallestUnit}'.")
         };
     }
 
@@ -593,7 +597,7 @@ final class Duration
             'millisecond', 'milliseconds' => $totalDaysFloat * 86_400_000.0,
             'microsecond', 'microseconds' => $totalDaysFloat * 86_400_000_000.0,
             'nanosecond', 'nanoseconds' => $totalDaysFloat * 86_400_000_000_000.0,
-            default => throw new InvalidArgumentException(
+            default => throw new InvalidOptionException(
                 "Unsupported largestUnit/smallestUnit for round(): '{$effectiveUnit}'."
             )
         };
@@ -662,11 +666,11 @@ final class Duration
         ];
 
         if (!isset($unitRanks[$smallest])) {
-            throw new InvalidArgumentException("Unknown or unsupported unit for round()/balance(): '{$smallest}'.");
+            throw new InvalidOptionException("Unknown or unsupported unit for round()/balance(): '{$smallest}'.");
         }
 
         if (!isset($unitRanks[$largest])) {
-            throw new InvalidArgumentException("Unknown or unsupported unit for round()/balance(): '{$largest}'.");
+            throw new InvalidOptionException("Unknown or unsupported unit for round()/balance(): '{$largest}'.");
         }
 
         $smallestRank = $unitRanks[$smallest];
@@ -703,7 +707,7 @@ final class Duration
             'halfExpand' => self::halfExpandRoundNs($totalNs, $step),
             'ceil' => (int) ( ceil($totalNs / $step) * $step ),
             'floor', 'trunc' => intdiv($totalNs, $step) * $step,
-            default => throw new InvalidArgumentException("Unknown roundingMode: '{$roundingMode}'.")
+            default => throw new InvalidOptionException("Unknown roundingMode: '{$roundingMode}'.")
         };
 
         // Distribute from largestUnit down to smallestUnit
@@ -768,7 +772,7 @@ final class Duration
             'ceil' => ceil($ratio),
             'floor' => floor($ratio),
             'trunc' => $ratio >= 0 ? floor($ratio) : ceil($ratio),
-            default => throw new InvalidArgumentException("Unknown roundingMode: '{$mode}'.")
+            default => throw new InvalidOptionException("Unknown roundingMode: '{$mode}'.")
         };
     }
 
@@ -1124,7 +1128,9 @@ final class Duration
         }
 
         if (!str_starts_with($s, 'P')) {
-            throw new InvalidArgumentException("Invalid ISO 8601 duration string: missing 'P' designator in '$s'.");
+            throw new InvalidTemporalStringException(
+                "Invalid ISO 8601 duration string: missing 'P' designator in '$s'."
+            );
         }
         $s = substr($s, 1); // strip 'P'
 
@@ -1139,7 +1145,7 @@ final class Duration
         }
 
         if ($datePart === '' && $timePart === '') {
-            throw new InvalidArgumentException("Invalid ISO 8601 duration: empty duration after 'P'.");
+            throw new InvalidTemporalStringException("Invalid ISO 8601 duration: empty duration after 'P'.");
         }
 
         [$years, $months, $weeks, $days] = self::parseDatePart($datePart);
@@ -1180,7 +1186,7 @@ final class Duration
         }
 
         if (!preg_match('/^(?:(\d+)Y)?(?:(\d+)M)?(?:(\d+)W)?(?:(\d+)D)?$/', $part, $m) || $m[0] === '') {
-            throw new InvalidArgumentException("Invalid ISO 8601 duration date part: '$part'.");
+            throw new InvalidTemporalStringException("Invalid ISO 8601 duration date part: '$part'.");
         }
 
         return [
@@ -1199,7 +1205,7 @@ final class Duration
         }
 
         if (!preg_match('/^(?:(\d+)H)?(?:(\d+)M)?(?:(\d+(?:\.\d+)?)S)?$/', $part, $m) || $m[0] === '') {
-            throw new InvalidArgumentException("Invalid ISO 8601 duration time part: '$part'.");
+            throw new InvalidTemporalStringException("Invalid ISO 8601 duration time part: '$part'.");
         }
 
         $hours = isset($m[1]) && $m[1] !== '' ? (int) $m[1] : 0;

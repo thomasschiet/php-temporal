@@ -4,7 +4,10 @@ declare(strict_types = 1);
 
 namespace Temporal;
 
-use InvalidArgumentException;
+use Temporal\Exception\DateRangeException;
+use Temporal\Exception\InvalidOptionException;
+use Temporal\Exception\InvalidTemporalStringException;
+use Temporal\Exception\MissingFieldException;
 
 /**
  * Represents a wall-clock time (hour, minute, second, and sub-second components)
@@ -68,8 +71,8 @@ final class PlainTime
 
         if (is_array($item)) {
             return new self(
-                (int) ( $item['hour'] ?? throw new InvalidArgumentException('Missing key: hour') ),
-                (int) ( $item['minute'] ?? throw new InvalidArgumentException('Missing key: minute') ),
+                (int) ( $item['hour'] ?? throw new MissingFieldException('Missing key: hour') ),
+                (int) ( $item['minute'] ?? throw new MissingFieldException('Missing key: minute') ),
                 (int) ( $item['second'] ?? 0 ),
                 (int) ( $item['millisecond'] ?? 0 ),
                 (int) ( $item['microsecond'] ?? 0 ),
@@ -244,7 +247,7 @@ final class PlainTime
             $mode = 'halfExpand';
             $increment = 1;
         } else {
-            $unit = $options['smallestUnit'] ?? throw new InvalidArgumentException(
+            $unit = $options['smallestUnit'] ?? throw new MissingFieldException(
                 'Missing required option: smallestUnit.'
             );
             $mode = $options['roundingMode'] ?? 'halfExpand';
@@ -259,12 +262,12 @@ final class PlainTime
             'second', 'seconds' => [1_000_000_000, 60],
             'minute', 'minutes' => [60_000_000_000, 60],
             'hour', 'hours' => [3_600_000_000_000, 24],
-            default => throw new InvalidArgumentException("Unknown or unsupported unit for round(): '{$unit}'.")
+            default => throw new InvalidOptionException("Unknown or unsupported unit for round(): '{$unit}'.")
         };
 
         if ($increment !== 1) {
             if (( $maxPerParent % $increment ) !== 0) {
-                throw new InvalidArgumentException(
+                throw new InvalidOptionException(
                     "roundingIncrement {$increment} does not evenly divide {$maxPerParent}."
                 );
             }
@@ -282,7 +285,7 @@ final class PlainTime
             'ceil' => self::ceilDivFloor($ns, $step) * $step,
             'floor' => intdiv($ns, $step) * $step,
             'trunc' => intdiv($ns, $step) * $step,
-            default => throw new InvalidArgumentException("Unknown roundingMode: '{$mode}'.")
+            default => throw new InvalidOptionException("Unknown roundingMode: '{$mode}'.")
         };
 
         return self::fromNanosecondsSinceMidnight($rounded);
@@ -340,7 +343,7 @@ final class PlainTime
     private static function validate(string $field, int $value, int $min, int $max): void
     {
         if ($value < $min || $value > $max) {
-            throw new InvalidArgumentException("{$field} must be between {$min} and {$max}, got {$value}");
+            throw new DateRangeException("{$field} must be between {$min} and {$max}, got {$value}");
         }
     }
 
@@ -373,7 +376,7 @@ final class PlainTime
         } elseif (preg_match($timeOnlyPattern, $str, $m)) {
             // matched time-only
         } else {
-            throw new InvalidArgumentException("Invalid PlainTime string: {$str}");
+            throw new InvalidTemporalStringException("Invalid PlainTime string: {$str}");
         }
 
         $hour = (int) $m[1];
@@ -447,7 +450,7 @@ final class PlainTime
         ];
 
         if (!in_array($unit, $valid, true)) {
-            throw new \InvalidArgumentException(
+            throw new InvalidOptionException(
                 "largestUnit '{$unit}' is not valid for PlainTime::until()/since(). "
                 . 'Must be one of: hour, minute, second, millisecond, microsecond, nanosecond.'
             );

@@ -4,7 +4,9 @@ declare(strict_types = 1);
 
 namespace Temporal;
 
-use InvalidArgumentException;
+use Temporal\Exception\DateRangeException;
+use Temporal\Exception\InvalidTemporalStringException;
+use Temporal\Exception\MissingFieldException;
 
 /**
  * Represents a calendar month-day combination with no year, time, or time zone.
@@ -26,13 +28,13 @@ final class PlainMonthDay
     public function __construct(int $month, int $day)
     {
         if ($month < 1 || $month > 12) {
-            throw new InvalidArgumentException("Month must be between 1 and 12, got {$month}");
+            throw new DateRangeException("Month must be between 1 and 12, got {$month}");
         }
 
         $max = self::daysInMonthFor(self::REFERENCE_YEAR, $month);
 
         if ($day < 1 || $day > $max) {
-            throw new InvalidArgumentException("Day {$day} is out of range for month {$month} (1–{$max})");
+            throw new DateRangeException("Day {$day} is out of range for month {$month} (1–{$max})");
         }
 
         $this->month = $month;
@@ -56,8 +58,8 @@ final class PlainMonthDay
 
         if (is_array($item)) {
             return new self(
-                (int) ( $item['month'] ?? throw new InvalidArgumentException('Missing key: month') ),
-                (int) ( $item['day'] ?? throw new InvalidArgumentException('Missing key: day') )
+                (int) ( $item['month'] ?? throw new MissingFieldException('Missing key: month') ),
+                (int) ( $item['day'] ?? throw new MissingFieldException('Missing key: day') )
             );
         }
 
@@ -72,7 +74,7 @@ final class PlainMonthDay
         $pattern = '/^--(\d{2})-(\d{2})$/';
 
         if (!preg_match($pattern, $str, $m)) {
-            throw new InvalidArgumentException("Invalid PlainMonthDay string: {$str}");
+            throw new InvalidTemporalStringException("Invalid PlainMonthDay string: {$str}");
         }
 
         return new self((int) $m[1], (int) $m[2]);
@@ -154,7 +156,7 @@ final class PlainMonthDay
             1, 3, 5, 7, 8, 10, 12 => 31,
             4, 6, 9, 11 => 30,
             2 => self::isLeapYear($year) ? 29 : 28,
-            default => throw new InvalidArgumentException("Invalid month: {$month}")
+            default => throw new DateRangeException("Invalid month: {$month}")
         };
     }
 

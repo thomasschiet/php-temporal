@@ -4,7 +4,10 @@ declare(strict_types = 1);
 
 namespace Temporal;
 
-use InvalidArgumentException;
+use Temporal\Exception\DateRangeException;
+use Temporal\Exception\InvalidOptionException;
+use Temporal\Exception\InvalidTemporalStringException;
+use Temporal\Exception\MissingFieldException;
 
 /**
  * Represents a calendar date combined with a wall-clock time (no time zone).
@@ -90,9 +93,9 @@ final class PlainDateTime
 
         if (is_array($item)) {
             return new self(
-                (int) ( $item['year'] ?? throw new InvalidArgumentException('Missing key: year') ),
-                (int) ( $item['month'] ?? throw new InvalidArgumentException('Missing key: month') ),
-                (int) ( $item['day'] ?? throw new InvalidArgumentException('Missing key: day') ),
+                (int) ( $item['year'] ?? throw new MissingFieldException('Missing key: year') ),
+                (int) ( $item['month'] ?? throw new MissingFieldException('Missing key: month') ),
+                (int) ( $item['day'] ?? throw new MissingFieldException('Missing key: day') ),
                 (int) ( $item['hour'] ?? 0 ),
                 (int) ( $item['minute'] ?? 0 ),
                 (int) ( $item['second'] ?? 0 ),
@@ -378,7 +381,7 @@ final class PlainDateTime
     {
         $unit = is_string($options)
             ? $options
-            : $options['smallestUnit'] ?? throw new InvalidArgumentException('Missing required option: smallestUnit.');
+            : $options['smallestUnit'] ?? throw new MissingFieldException('Missing required option: smallestUnit.');
         $mode = is_string($options) ? 'halfExpand' : $options['roundingMode'] ?? 'halfExpand';
         $increment = is_array($options) ? (int) ( $options['roundingIncrement'] ?? 1 ) : 1;
 
@@ -390,7 +393,7 @@ final class PlainDateTime
                 'halfExpand' => ( $ns * 2 ) >= $dayNs,
                 'ceil' => $ns > 0,
                 'floor', 'trunc' => false,
-                default => throw new InvalidArgumentException("Unknown roundingMode: '{$mode}'.")
+                default => throw new InvalidOptionException("Unknown roundingMode: '{$mode}'.")
             };
             $date = $this->toPlainDate();
             if ($roundUp) {
@@ -407,13 +410,11 @@ final class PlainDateTime
             'second', 'seconds' => [1_000_000_000, 60],
             'minute', 'minutes' => [60_000_000_000, 60],
             'hour', 'hours' => [3_600_000_000_000, 24],
-            default => throw new InvalidArgumentException("Unknown or unsupported unit for round(): '{$unit}'.")
+            default => throw new InvalidOptionException("Unknown or unsupported unit for round(): '{$unit}'.")
         };
 
         if ($increment !== 1 && ( $maxPerParent % $increment ) !== 0) {
-            throw new InvalidArgumentException(
-                "roundingIncrement {$increment} does not evenly divide {$maxPerParent}."
-            );
+            throw new InvalidOptionException("roundingIncrement {$increment} does not evenly divide {$maxPerParent}.");
         }
 
         if ($divisor === 1 && $increment === 1) {
@@ -427,7 +428,7 @@ final class PlainDateTime
             'halfExpand' => self::roundHalfExpand($ns, $step),
             'ceil' => self::ceilDiv($ns, $step) * $step,
             'floor', 'trunc' => intdiv($ns, $step) * $step,
-            default => throw new InvalidArgumentException("Unknown roundingMode: '{$mode}'.")
+            default => throw new InvalidOptionException("Unknown roundingMode: '{$mode}'.")
         };
 
         $date = $this->toPlainDate();
@@ -529,7 +530,7 @@ final class PlainDateTime
     private static function validateMonth(int $month): void
     {
         if ($month < 1 || $month > 12) {
-            throw new InvalidArgumentException("Month must be between 1 and 12, got {$month}");
+            throw new DateRangeException("Month must be between 1 and 12, got {$month}");
         }
     }
 
@@ -537,14 +538,14 @@ final class PlainDateTime
     {
         $max = self::daysInMonthFor($year, $month);
         if ($day < 1 || $day > $max) {
-            throw new InvalidArgumentException("Day {$day} is out of range for {$year}-{$month} (1–{$max})");
+            throw new DateRangeException("Day {$day} is out of range for {$year}-{$month} (1–{$max})");
         }
     }
 
     private static function validateField(string $field, int $value, int $min, int $max): void
     {
         if ($value < $min || $value > $max) {
-            throw new InvalidArgumentException("{$field} must be between {$min} and {$max}, got {$value}");
+            throw new DateRangeException("{$field} must be between {$min} and {$max}, got {$value}");
         }
     }
 
@@ -554,7 +555,7 @@ final class PlainDateTime
             1, 3, 5, 7, 8, 10, 12 => 31,
             4, 6, 9, 11 => 30,
             2 => self::isLeapYear($year) ? 29 : 28,
-            default => throw new InvalidArgumentException("Invalid month: {$month}")
+            default => throw new DateRangeException("Invalid month: {$month}")
         };
     }
 
@@ -599,7 +600,7 @@ final class PlainDateTime
             . '(?:\[!?[^\]]*\])*$/';
 
         if (!preg_match($pattern, $str, $m)) {
-            throw new InvalidArgumentException("Invalid PlainDateTime string: {$str}");
+            throw new InvalidTemporalStringException("Invalid PlainDateTime string: {$str}");
         }
 
         $millisecond = 0;
@@ -668,9 +669,7 @@ final class PlainDateTime
         ];
 
         if (!in_array($unit, $valid, true)) {
-            throw new \InvalidArgumentException(
-                "largestUnit '{$unit}' is not valid for PlainDateTime::until()/since()."
-            );
+            throw new InvalidOptionException("largestUnit '{$unit}' is not valid for PlainDateTime::until()/since().");
         }
 
         return rtrim($unit, 's');

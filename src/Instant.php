@@ -4,7 +4,9 @@ declare(strict_types = 1);
 
 namespace Temporal;
 
-use InvalidArgumentException;
+use Temporal\Exception\InvalidOptionException;
+use Temporal\Exception\InvalidTemporalStringException;
+use Temporal\Exception\MissingFieldException;
 
 /**
  * Represents a specific point in time as nanoseconds since the Unix epoch
@@ -112,9 +114,7 @@ final class Instant
         $d = $duration instanceof Duration ? $duration : Duration::from($duration);
 
         if ($d->years !== 0 || $d->months !== 0 || $d->weeks !== 0) {
-            throw new InvalidArgumentException(
-                'Instant::add() does not support calendar fields (years, months, weeks).'
-            );
+            throw new InvalidOptionException('Instant::add() does not support calendar fields (years, months, weeks).');
         }
 
         $ns =
@@ -173,7 +173,7 @@ final class Instant
             $unit = $options;
             $mode = 'halfExpand';
         } else {
-            $unit = $options['smallestUnit'] ?? throw new InvalidArgumentException(
+            $unit = $options['smallestUnit'] ?? throw new MissingFieldException(
                 'Missing required option: smallestUnit.'
             );
             $mode = $options['roundingMode'] ?? 'halfExpand';
@@ -187,7 +187,7 @@ final class Instant
             'minute', 'minutes' => 60_000_000_000,
             'hour', 'hours' => 3_600_000_000_000,
             'day', 'days' => 86_400_000_000_000,
-            default => throw new InvalidArgumentException("Unknown or unsupported unit for round(): '{$unit}'.")
+            default => throw new InvalidOptionException("Unknown or unsupported unit for round(): '{$unit}'.")
         };
 
         if ($divisor === 1) {
@@ -199,7 +199,7 @@ final class Instant
             'ceil' => self::ceilDiv($this->ns, $divisor) * $divisor,
             'floor' => self::floorDiv($this->ns, $divisor) * $divisor,
             'trunc' => intdiv($this->ns, $divisor) * $divisor,
-            default => throw new InvalidArgumentException("Unknown roundingMode: '{$mode}'.")
+            default => throw new InvalidOptionException("Unknown roundingMode: '{$mode}'.")
         };
 
         return new self($rounded);
@@ -240,12 +240,12 @@ final class Instant
     public function toZonedDateTime(TimeZone|string|array $options): ZonedDateTime
     {
         if (is_array($options)) {
-            $tzValue = $options['timeZone'] ?? throw new \InvalidArgumentException(
+            $tzValue = $options['timeZone'] ?? throw new MissingFieldException(
                 "toZonedDateTime() options array must include 'timeZone'."
             );
             $calendar = $options['calendar'] ?? 'iso8601';
             if ($calendar !== 'iso8601') {
-                throw new \InvalidArgumentException("Only the 'iso8601' calendar is supported; got '{$calendar}'.");
+                throw new InvalidOptionException("Only the 'iso8601' calendar is supported; got '{$calendar}'.");
             }
             $tz = $tzValue instanceof TimeZone ? $tzValue : TimeZone::from((string) $tzValue);
         } else {
@@ -427,7 +427,7 @@ final class Instant
             . '(?:\[!?[^\]]*\])*$/';
 
         if (!preg_match($pattern, $str, $m)) {
-            throw new InvalidArgumentException(
+            throw new InvalidTemporalStringException(
                 "Invalid Instant string: '{$str}'. Must be an ISO 8601 date-time with a UTC offset or 'Z'."
             );
         }

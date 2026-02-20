@@ -4,7 +4,9 @@ declare(strict_types = 1);
 
 namespace Temporal;
 
-use InvalidArgumentException;
+use Temporal\Exception\DateRangeException;
+use Temporal\Exception\InvalidTemporalStringException;
+use Temporal\Exception\MissingFieldException;
 
 /**
  * Represents a calendar year-month combination with no day, time, or time zone.
@@ -25,7 +27,7 @@ final class PlainYearMonth
     public function __construct(int $year, int $month)
     {
         if ($month < 1 || $month > 12) {
-            throw new InvalidArgumentException("Month must be between 1 and 12, got {$month}");
+            throw new DateRangeException("Month must be between 1 and 12, got {$month}");
         }
 
         $this->year = $year;
@@ -49,8 +51,8 @@ final class PlainYearMonth
 
         if (is_array($item)) {
             return new self(
-                (int) ( $item['year'] ?? throw new InvalidArgumentException('Missing key: year') ),
-                (int) ( $item['month'] ?? throw new InvalidArgumentException('Missing key: month') )
+                (int) ( $item['year'] ?? throw new MissingFieldException('Missing key: year') ),
+                (int) ( $item['month'] ?? throw new MissingFieldException('Missing key: month') )
             );
         }
 
@@ -66,7 +68,7 @@ final class PlainYearMonth
         $pattern = '/^([+-]?\d{4,6})-(\d{2})$/';
 
         if (!preg_match($pattern, $str, $m)) {
-            throw new InvalidArgumentException("Invalid PlainYearMonth string: {$str}");
+            throw new InvalidTemporalStringException("Invalid PlainYearMonth string: {$str}");
         }
 
         return new self((int) $m[1], (int) $m[2]);
@@ -256,7 +258,7 @@ final class PlainYearMonth
             1, 3, 5, 7, 8, 10, 12 => 31,
             4, 6, 9, 11 => 30,
             2 => self::isLeapYear($year) ? 29 : 28,
-            default => throw new InvalidArgumentException("Invalid month: {$month}")
+            default => throw new DateRangeException("Invalid month: {$month}")
         };
     }
 

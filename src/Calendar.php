@@ -4,7 +4,8 @@ declare(strict_types = 1);
 
 namespace Temporal;
 
-use InvalidArgumentException;
+use Temporal\Exception\InvalidOptionException;
+use Temporal\Exception\UnsupportedCalendarException;
 
 /**
  * Represents the ISO 8601 calendar system.
@@ -46,7 +47,7 @@ final class Calendar
             return new self('iso8601');
         }
 
-        throw new InvalidArgumentException(
+        throw new UnsupportedCalendarException(
             "Unsupported calendar: \"{$item}\". Only \"iso8601\" is currently supported."
         );
     }
@@ -146,7 +147,7 @@ final class Calendar
         $validUnits = ['day', 'week', 'month', 'year'];
 
         if (!in_array($largestUnit, $validUnits, true)) {
-            throw new InvalidArgumentException(
+            throw new InvalidOptionException(
                 "Invalid largestUnit: \"{$largestUnit}\". Valid units are: " . implode(', ', $validUnits)
             );
         }
@@ -173,7 +174,7 @@ final class Calendar
 
         foreach ($fields as $field) {
             if (!in_array($field, $valid, true)) {
-                throw new InvalidArgumentException(
+                throw new InvalidOptionException(
                     "Unknown calendar field: \"{$field}\". Valid fields are: " . implode(', ', $valid)
                 );
             }
@@ -321,9 +322,7 @@ final class Calendar
     private static function validateOverflow(string $overflow): void
     {
         if ($overflow !== 'constrain' && $overflow !== 'reject') {
-            throw new InvalidArgumentException(
-                "Invalid overflow: \"{$overflow}\". Must be \"constrain\" or \"reject\"."
-            );
+            throw new InvalidOptionException("Invalid overflow: \"{$overflow}\". Must be \"constrain\" or \"reject\".");
         }
     }
 }

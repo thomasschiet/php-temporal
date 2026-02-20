@@ -6,6 +6,7 @@ namespace Temporal\Tests;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Temporal\Exception\AmbiguousTimeException;
 use Temporal\Instant;
 use Temporal\PlainDateTime;
 use Temporal\TimeZone;
@@ -422,7 +423,7 @@ final class TimeZoneTest extends TestCase
 
     public function testGetInstantForGapRejectThrows(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(AmbiguousTimeException::class);
         $tz = TimeZone::from('America/New_York');
         $pdt = new PlainDateTime(2024, 3, 10, 2, 30, 0);
         $tz->getInstantFor($pdt, 'reject');

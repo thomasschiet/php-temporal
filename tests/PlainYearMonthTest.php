@@ -6,6 +6,7 @@ namespace Temporal\Tests;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Temporal\Exception\DateRangeException;
 use Temporal\PlainYearMonth;
 use Temporal\Duration;
 
@@ -43,19 +44,19 @@ final class PlainYearMonthTest extends TestCase
 
     public function testConstructorInvalidMonthZero(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainYearMonth(2024, 0);
     }
 
     public function testConstructorInvalidMonthThirteen(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainYearMonth(2024, 13);
     }
 
     public function testConstructorInvalidMonthNegative(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainYearMonth(2024, -1);
     }
 
@@ -132,7 +133,7 @@ final class PlainYearMonthTest extends TestCase
 
     public function testFromStringInvalidMonth(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         PlainYearMonth::from('2024-13');
     }
 
@@ -448,7 +449,7 @@ final class PlainYearMonthTest extends TestCase
 
     public function testToPlainDateInvalidDay(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         $ym = new PlainYearMonth(2024, 3);
         $ym->toPlainDate(32);
     }
@@ -462,7 +463,7 @@ final class PlainYearMonthTest extends TestCase
 
     public function testToPlainDateFebruaryNonLeapInvalid(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         $ym = new PlainYearMonth(2023, 2);
         $ym->toPlainDate(29);
     }

@@ -4,7 +4,9 @@ declare(strict_types = 1);
 
 namespace Temporal;
 
-use InvalidArgumentException;
+use Temporal\Exception\InvalidOptionException;
+use Temporal\Exception\InvalidTemporalStringException;
+use Temporal\Exception\MissingFieldException;
 
 /**
  * Represents a specific moment in time combined with a time zone.
@@ -380,7 +382,7 @@ final class ZonedDateTime
         $unit = is_string($options)
             ? $options
             : (string) (
-                $options['smallestUnit'] ?? throw new InvalidArgumentException('Missing required option: smallestUnit.')
+                $options['smallestUnit'] ?? throw new MissingFieldException('Missing required option: smallestUnit.')
             );
         $mode = is_string($options) ? 'halfExpand' : (string) ( $options['roundingMode'] ?? 'halfExpand' );
 
@@ -395,7 +397,7 @@ final class ZonedDateTime
             'second', 'seconds' => 1_000_000_000,
             'minute', 'minutes' => 60_000_000_000,
             'hour', 'hours' => 3_600_000_000_000,
-            default => throw new InvalidArgumentException("Unknown or unsupported unit for round(): '{$unit}'.")
+            default => throw new InvalidOptionException("Unknown or unsupported unit for round(): '{$unit}'.")
         };
 
         if ($divisor === 1) {
@@ -407,7 +409,7 @@ final class ZonedDateTime
             'ceil' => self::ceilDiv($this->ns, $divisor) * $divisor,
             'floor' => self::floorDiv($this->ns, $divisor) * $divisor,
             'trunc' => intdiv($this->ns, $divisor) * $divisor,
-            default => throw new InvalidArgumentException("Unknown roundingMode: '{$mode}'.")
+            default => throw new InvalidOptionException("Unknown roundingMode: '{$mode}'.")
         };
 
         return new self($rounded, $this->timeZone);
@@ -552,13 +554,13 @@ final class ZonedDateTime
      */
     private static function fromArray(array $item): self
     {
-        $tzId = $item['timeZone'] ?? throw new InvalidArgumentException('Missing key: timeZone');
+        $tzId = $item['timeZone'] ?? throw new MissingFieldException('Missing key: timeZone');
         $tz = $tzId instanceof TimeZone ? $tzId : TimeZone::from((string) $tzId);
 
         $pdt = new PlainDateTime(
-            (int) ( $item['year'] ?? throw new InvalidArgumentException('Missing key: year') ),
-            (int) ( $item['month'] ?? throw new InvalidArgumentException('Missing key: month') ),
-            (int) ( $item['day'] ?? throw new InvalidArgumentException('Missing key: day') ),
+            (int) ( $item['year'] ?? throw new MissingFieldException('Missing key: year') ),
+            (int) ( $item['month'] ?? throw new MissingFieldException('Missing key: month') ),
+            (int) ( $item['day'] ?? throw new MissingFieldException('Missing key: day') ),
             (int) ( $item['hour'] ?? 0 ),
             (int) ( $item['minute'] ?? 0 ),
             (int) ( $item['second'] ?? 0 ),
@@ -596,7 +598,7 @@ final class ZonedDateTime
             . '((?:\[!?[^\]]*\])*)$/';
 
         if (!preg_match($pattern, $str, $m)) {
-            throw new InvalidArgumentException("Invalid ZonedDateTime string: '{$str}'.");
+            throw new InvalidTemporalStringException("Invalid ZonedDateTime string: '{$str}'.");
         }
 
         $year = (int) $m[1];
@@ -709,7 +711,7 @@ final class ZonedDateTime
             'halfExpand' => ( $positionNs * 2 ) >= $dayNs ? $nextNs : $startNs,
             'ceil' => $positionNs > 0 ? $nextNs : $startNs,
             'floor', 'trunc' => $startNs,
-            default => throw new InvalidArgumentException("Unknown roundingMode: '{$mode}'.")
+            default => throw new InvalidOptionException("Unknown roundingMode: '{$mode}'.")
         };
 
         return new self($roundedNs, $this->timeZone);

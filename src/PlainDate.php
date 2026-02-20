@@ -4,7 +4,10 @@ declare(strict_types = 1);
 
 namespace Temporal;
 
-use InvalidArgumentException;
+use Temporal\Exception\DateRangeException;
+use Temporal\Exception\InvalidOptionException;
+use Temporal\Exception\InvalidTemporalStringException;
+use Temporal\Exception\MissingFieldException;
 
 /**
  * Represents a calendar date (year, month, day) with no time or time zone.
@@ -66,9 +69,9 @@ final class PlainDate
 
         if (is_array($item)) {
             return new self(
-                (int) ( $item['year'] ?? throw new InvalidArgumentException('Missing key: year') ),
-                (int) ( $item['month'] ?? throw new InvalidArgumentException('Missing key: month') ),
-                (int) ( $item['day'] ?? throw new InvalidArgumentException('Missing key: day') )
+                (int) ( $item['year'] ?? throw new MissingFieldException('Missing key: year') ),
+                (int) ( $item['month'] ?? throw new MissingFieldException('Missing key: month') ),
+                (int) ( $item['day'] ?? throw new MissingFieldException('Missing key: day') )
             );
         }
 
@@ -98,7 +101,7 @@ final class PlainDate
             . '(?:\[!?[^\]]*\])*$/';
 
         if (!preg_match($pattern, $str, $m)) {
-            throw new InvalidArgumentException("Invalid PlainDate string: {$str}");
+            throw new InvalidTemporalStringException("Invalid PlainDate string: {$str}");
         }
 
         return new self((int) $m[1], (int) $m[2], (int) $m[3]);
@@ -194,7 +197,7 @@ final class PlainDate
     public function toZonedDateTime(TimeZone|string|array $options): ZonedDateTime
     {
         if (is_array($options)) {
-            $tzValue = $options['timeZone'] ?? throw new \InvalidArgumentException(
+            $tzValue = $options['timeZone'] ?? throw new MissingFieldException(
                 "toZonedDateTime() options array must include 'timeZone'."
             );
             $tz = $tzValue instanceof TimeZone ? $tzValue : TimeZone::from($tzValue);
@@ -315,7 +318,7 @@ final class PlainDate
     public function add(array $duration, string $overflow = 'constrain'): self
     {
         if ($overflow !== 'constrain' && $overflow !== 'reject') {
-            throw new InvalidArgumentException("overflow must be 'constrain' or 'reject', got '{$overflow}'");
+            throw new InvalidOptionException("overflow must be 'constrain' or 'reject', got '{$overflow}'");
         }
 
         $years = (int) ( $duration['years'] ?? 0 );
@@ -342,7 +345,7 @@ final class PlainDate
         $maxDay = self::daysInMonthFor($y, $m);
         if ($d > $maxDay) {
             if ($overflow === 'reject') {
-                throw new InvalidArgumentException(
+                throw new DateRangeException(
                     "Day {$d} is out of range for {$y}-{$m} (max {$maxDay}) with overflow: reject"
                 );
             }
@@ -460,7 +463,7 @@ final class PlainDate
     private static function validateEpochDays(int $epochDays): void
     {
         if ($epochDays < self::MIN_EPOCH_DAYS || $epochDays > self::MAX_EPOCH_DAYS) {
-            throw new \RangeException(
+            throw new DateRangeException(
                 'PlainDate value is outside the supported range '
                 . "(epoch days {$epochDays} not in ["
                 . self::MIN_EPOCH_DAYS
@@ -474,7 +477,7 @@ final class PlainDate
     private static function validateMonth(int $month): void
     {
         if ($month < 1 || $month > 12) {
-            throw new InvalidArgumentException("Month must be between 1 and 12, got {$month}");
+            throw new DateRangeException("Month must be between 1 and 12, got {$month}");
         }
     }
 
@@ -482,7 +485,7 @@ final class PlainDate
     {
         $max = self::daysInMonthFor($year, $month);
         if ($day < 1 || $day > $max) {
-            throw new InvalidArgumentException("Day {$day} is out of range for {$year}-{$month} (1–{$max})");
+            throw new DateRangeException("Day {$day} is out of range for {$year}-{$month} (1–{$max})");
         }
     }
 
@@ -492,7 +495,7 @@ final class PlainDate
             1, 3, 5, 7, 8, 10, 12 => 31,
             4, 6, 9, 11 => 30,
             2 => self::isLeapYear($year) ? 29 : 28,
-            default => throw new InvalidArgumentException("Invalid month: {$month}")
+            default => throw new DateRangeException("Invalid month: {$month}")
         };
     }
 
@@ -619,7 +622,7 @@ final class PlainDate
         $valid = ['year', 'years', 'month', 'months', 'week', 'weeks', 'day', 'days'];
 
         if (!in_array($unit, $valid, true)) {
-            throw new InvalidArgumentException(
+            throw new InvalidOptionException(
                 "largestUnit must be one of 'year', 'month', 'week', 'day'; got '{$unit}'."
             );
         }

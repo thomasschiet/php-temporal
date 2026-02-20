@@ -6,6 +6,7 @@ namespace Temporal\Tests;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Temporal\Exception\DateRangeException;
 use Temporal\PlainMonthDay;
 use Temporal\PlainDate;
 
@@ -46,37 +47,37 @@ final class PlainMonthDayTest extends TestCase
 
     public function testConstructorInvalidMonthZero(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainMonthDay(0, 15);
     }
 
     public function testConstructorInvalidMonthThirteen(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainMonthDay(13, 15);
     }
 
     public function testConstructorInvalidDayZero(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainMonthDay(3, 0);
     }
 
     public function testConstructorInvalidDayTooHigh(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainMonthDay(3, 32);
     }
 
     public function testConstructorInvalidDayApril31(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainMonthDay(4, 31);
     }
 
     public function testConstructorInvalidDayFebruary30(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainMonthDay(2, 30);
     }
 
@@ -154,13 +155,13 @@ final class PlainMonthDayTest extends TestCase
 
     public function testFromStringInvalidDay(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         PlainMonthDay::from('--04-31'); // April only has 30 days
     }
 
     public function testFromStringInvalidFebruary30(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         PlainMonthDay::from('--02-30');
     }
 
@@ -202,7 +203,7 @@ final class PlainMonthDayTest extends TestCase
 
     public function testWithInvalidCombination(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         $md = new PlainMonthDay(3, 31);
         $md->with(['month' => 4]); // April has only 30 days
     }
@@ -265,7 +266,7 @@ final class PlainMonthDayTest extends TestCase
 
     public function testToPlainDateFebruary29InNonLeapYearThrows(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         $md = new PlainMonthDay(2, 29);
         $md->toPlainDate(2023); // Not a leap year
     }

@@ -510,6 +510,39 @@ Where necessary, `(int)` and `(string)` casts were added when extracting values 
 
 **Total: 1008 tests passing — 0 mago errors (lint: 70 warnings/notes/helps; analyze: 81 warnings/helps)**
 
+### 20. Typed Exception Hierarchy (2026-02-20)
+
+Replaced all generic `\InvalidArgumentException` and `\RangeException` throws across every
+source file with a well-typed exception hierarchy rooted in the `Temporal\Exception` namespace.
+
+#### Exception classes created in `src/Exception/`
+
+| Class | Extends | Purpose |
+|---|---|---|
+| `TemporalException` | *(interface)* | Marker interface — catch any Temporal error |
+| `MissingFieldException` | `\InvalidArgumentException` | Required field/option absent from input |
+| `InvalidOptionException` | `\InvalidArgumentException` | Unknown unit, rounding mode, overflow, etc. |
+| `InvalidTemporalStringException` | `\InvalidArgumentException` | ISO 8601 parse failure |
+| `InvalidDurationException` | `\InvalidArgumentException` | Mixed-sign Duration fields |
+| `DateRangeException` | `\RangeException` | Field/epoch value out of valid range |
+| `AmbiguousTimeException` | `\RuntimeException` | DST gap/overlap with disambiguation='reject' |
+| `UnknownTimeZoneException` | `\InvalidArgumentException` | Unrecognised IANA time zone ID |
+| `UnsupportedCalendarException` | `\InvalidArgumentException` | Calendar other than iso8601 |
+
+#### Source files updated (10 files)
+
+All 10 source files had `use` statements added and all `throw new` sites updated:
+`Duration.php`, `Instant.php`, `PlainDate.php`, `PlainDateTime.php`, `PlainMonthDay.php`,
+`PlainTime.php`, `PlainYearMonth.php`, `Calendar.php`, `TimeZone.php`, `ZonedDateTime.php`.
+
+#### Test files updated
+
+Tests whose `expectException(...)` assertions referenced field-range validations that now
+throw `DateRangeException` (extends `\RangeException`, not `\InvalidArgumentException`)
+were updated: `PlainTimeTest.php`, `PlainYearMonthTest.php`, `TimeZoneTest.php`.
+
+**Total: 1008 tests passing — 0 mago errors**
+
 ## Current Task
 
 - All planned tasks complete.
@@ -522,4 +555,5 @@ Where necessary, `(int)` and `(string)` casts were added when extracting values 
   `Temporal\Now` utility class. All classes are immutable. test262 behaviours are covered
   by the 1008-test PHPUnit suite (including the full `PlainDate.add` matrix and
   `Duration.add` balancing tests from the TC39 test262 repository).
+  The library has a complete typed exception hierarchy under `Temporal\Exception\`.
   mago passes with 0 errors.

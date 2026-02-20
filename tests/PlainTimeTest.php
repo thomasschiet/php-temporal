@@ -6,6 +6,7 @@ namespace Temporal\Tests;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Temporal\Exception\DateRangeException;
 use Temporal\PlainTime;
 
 final class PlainTimeTest extends TestCase
@@ -61,73 +62,73 @@ final class PlainTimeTest extends TestCase
 
     public function testInvalidHourTooLow(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainTime(-1, 0, 0);
     }
 
     public function testInvalidHourTooHigh(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainTime(24, 0, 0);
     }
 
     public function testInvalidMinuteTooLow(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainTime(0, -1, 0);
     }
 
     public function testInvalidMinuteTooHigh(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainTime(0, 60, 0);
     }
 
     public function testInvalidSecondTooLow(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainTime(0, 0, -1);
     }
 
     public function testInvalidSecondTooHigh(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainTime(0, 0, 60);
     }
 
     public function testInvalidMillisecondTooLow(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainTime(0, 0, 0, -1);
     }
 
     public function testInvalidMillisecondTooHigh(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainTime(0, 0, 0, 1000);
     }
 
     public function testInvalidMicrosecondTooLow(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainTime(0, 0, 0, 0, -1);
     }
 
     public function testInvalidMicrosecondTooHigh(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainTime(0, 0, 0, 0, 1000);
     }
 
     public function testInvalidNanosecondTooLow(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainTime(0, 0, 0, 0, 0, -1);
     }
 
     public function testInvalidNanosecondTooHigh(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DateRangeException::class);
         new PlainTime(0, 0, 0, 0, 0, 1000);
     }
 
