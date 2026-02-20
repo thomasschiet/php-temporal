@@ -34,7 +34,7 @@ final class Calendar
     /**
      * Create a Calendar from a string identifier or another Calendar.
      *
-     * Accepted identifiers (case-insensitive): "iso8601".
+     * Accepted identifiers (case-insensitive): "iso8601", "gregory", "buddhist".
      *
      * @throws \InvalidArgumentException for unsupported calendar systems.
      */
@@ -46,11 +46,12 @@ final class Calendar
 
         $normalized = strtolower($item);
 
-        if ($normalized === 'iso8601') {
-            return new self(IsoCalendar::instance());
-        }
-
-        throw UnsupportedCalendarException::unsupported($item);
+        return match ($normalized) {
+            'iso8601' => new self(IsoCalendar::instance()),
+            'gregory' => new self(GregoryCalendar::instance()),
+            'buddhist' => new self(BuddhistCalendar::instance()),
+            default => throw UnsupportedCalendarException::unsupported($item)
+        };
     }
 
     // -------------------------------------------------------------------------

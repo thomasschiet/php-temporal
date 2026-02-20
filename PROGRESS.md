@@ -65,9 +65,17 @@
 - **5338 tests passing** (1132 core + 4204 test262 data-driven, 2 skipped), 0 mago errors
 - **mago-baseline.json** updated to cover 1557 pre-existing test-file suppressions
 
+- **Concrete non-ISO calendar implementations**:
+  - `GregoryCalendar` (`src/GregoryCalendar.php`) — proleptic Gregorian calendar with era support ('ce'/'bce'), ISO year pass-through for all date arithmetic, `#[Override]` on all interface methods
+  - `BuddhistCalendar` (`src/BuddhistCalendar.php`) — Thai Buddhist calendar (ISO year + 543 offset), single era 'be', identical month/day structure to ISO
+  - `Calendar::from()` updated to recognise 'gregory' and 'buddhist' identifiers (case-insensitive)
+  - `GregoryCalendarTest` — 84 tests covering: singleton, era fields (CE/BCE), field pass-through, dateFromFields with year/era+eraYear, constrain/reject overflow, Calendar facade integration, PlainDate calendarId and __toString annotation
+  - **5475 tests passing** (1271 core + 4204 test262 data-driven, 2 skipped), 0 mago errors
+  - mago-baseline.json updated to cover 1999 pre-existing suppressions
+
 ## Next Tasks
 
 - **All planned tasks are complete.** The full TC39 Temporal API surface is implemented,
-  tested with 5391 tests (including 4204 test262 data-driven), documented, mutation-tested,
-  and refactored to support the multi-calendar CalendarProtocol infrastructure.
+  tested with 5475 tests (including 4204 test262 data-driven), documented, mutation-tested,
+  and extended with concrete non-ISO calendar implementations (GregoryCalendar, BuddhistCalendar).
   See Stopping Condition in agent prompt.
