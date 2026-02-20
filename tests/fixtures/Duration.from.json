@@ -1,0 +1,1076 @@
+{
+  "type": "Duration",
+  "method": "from",
+  "source": "test/built-ins/Temporal/Duration/from",
+  "cases": [
+    {
+      "file": "test/built-ins/Temporal/Duration/from/argument-duration.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P1Y2M3W4DT5H6M7.987654321S",
+          "expected": {
+            "years": 1,
+            "months": 2,
+            "weeks": 3,
+            "days": 4,
+            "hours": 5,
+            "minutes": 6,
+            "seconds": 7,
+            "milliseconds": 987,
+            "microseconds": 654,
+            "nanoseconds": 321
+          },
+          "description": "Duration is copied"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Duration/from/argument-existing-object.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "PT1S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 1000,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT1S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 1000,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT1S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 1000,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": null
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Duration/from/argument-string-fractional-precision.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "PT59M59.9999964S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 59,
+            "seconds": 59,
+            "milliseconds": 999,
+            "microseconds": 996,
+            "nanoseconds": 400
+          },
+          "description": "PT0.999999999H"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0.0000396S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 39,
+            "nanoseconds": 600
+          },
+          "description": "PT0.000000011H"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT59.99999994S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 59,
+            "milliseconds": 999,
+            "microseconds": 999,
+            "nanoseconds": 940
+          },
+          "description": "PT0.999999999M"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0.00000066S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 660
+          },
+          "description": "PT0.000000011M"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0.999999999S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 999,
+            "microseconds": 999,
+            "nanoseconds": 999
+          },
+          "description": "PT0.999999999S"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0.000000011S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 11
+          },
+          "description": "PT0.000000011S"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Duration/from/argument-string-fractional-units-rounding-mode.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "PT1H1M52.5S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 1,
+            "minutes": 1,
+            "seconds": 52,
+            "milliseconds": 500,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "positive fractional hours rounded with correct rounding mode"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-PT1H1M52.5S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": -1,
+            "minutes": -1,
+            "seconds": -52,
+            "milliseconds": -500,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "negative fractional hours rounded with correct rounding mode"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT3M7.5S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 3,
+            "seconds": 7,
+            "milliseconds": 500,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "positive fractional minutes rounded with correct rounding mode"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-PT3M1.5S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": -3,
+            "seconds": -1,
+            "milliseconds": -500,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "negative fractional minutes rounded with correct rounding mode"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT46H66M71.50040904S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 46,
+            "minutes": 66,
+            "seconds": 71,
+            "milliseconds": 500,
+            "microseconds": 409,
+            "nanoseconds": 40
+          },
+          "description": "positive fractional seconds not rounded"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-PT46H66M71.50040904S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": -46,
+            "minutes": -66,
+            "seconds": -71,
+            "milliseconds": -500,
+            "microseconds": -409,
+            "nanoseconds": -40
+          },
+          "description": "negative fractional seconds not rounded"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P11Y22M33W44DT55H66M77.987654321S",
+          "expected": {
+            "years": 11,
+            "months": 22,
+            "weeks": 33,
+            "days": 44,
+            "hours": 55,
+            "minutes": 66,
+            "seconds": 77,
+            "milliseconds": 987,
+            "microseconds": 654,
+            "nanoseconds": 321
+          },
+          "description": "positive fractional seconds in datetime string not rounded"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P11Y22M33W44DT55H66M77.987654321S",
+          "expected": {
+            "years": -11,
+            "months": -22,
+            "weeks": -33,
+            "days": -44,
+            "hours": -55,
+            "minutes": -66,
+            "seconds": -77,
+            "milliseconds": -987,
+            "microseconds": -654,
+            "nanoseconds": -321
+          },
+          "description": "negative fractional seconds in datetime string not rounded"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Duration/from/argument-string.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P1D",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 1,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P1Y1M1DT1H1M1S",
+          "expected": {
+            "years": 1,
+            "months": 1,
+            "weeks": 0,
+            "days": 1,
+            "hours": 1,
+            "minutes": 1,
+            "seconds": 1,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P1Y1M1W1DT1H1M1.1S",
+          "expected": {
+            "years": 1,
+            "months": 1,
+            "weeks": 1,
+            "days": 1,
+            "hours": 1,
+            "minutes": 1,
+            "seconds": 1,
+            "milliseconds": 100,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P1Y1M1W1DT1H1M1.12S",
+          "expected": {
+            "years": 1,
+            "months": 1,
+            "weeks": 1,
+            "days": 1,
+            "hours": 1,
+            "minutes": 1,
+            "seconds": 1,
+            "milliseconds": 120,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P1Y1M1W1DT1H1M1.123S",
+          "expected": {
+            "years": 1,
+            "months": 1,
+            "weeks": 1,
+            "days": 1,
+            "hours": 1,
+            "minutes": 1,
+            "seconds": 1,
+            "milliseconds": 123,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P1Y1M1W1DT1H1M1.1234S",
+          "expected": {
+            "years": 1,
+            "months": 1,
+            "weeks": 1,
+            "days": 1,
+            "hours": 1,
+            "minutes": 1,
+            "seconds": 1,
+            "milliseconds": 123,
+            "microseconds": 400,
+            "nanoseconds": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P1Y1M1W1DT1H1M1.12345S",
+          "expected": {
+            "years": 1,
+            "months": 1,
+            "weeks": 1,
+            "days": 1,
+            "hours": 1,
+            "minutes": 1,
+            "seconds": 1,
+            "milliseconds": 123,
+            "microseconds": 450,
+            "nanoseconds": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P1Y1M1W1DT1H1M1.123456S",
+          "expected": {
+            "years": 1,
+            "months": 1,
+            "weeks": 1,
+            "days": 1,
+            "hours": 1,
+            "minutes": 1,
+            "seconds": 1,
+            "milliseconds": 123,
+            "microseconds": 456,
+            "nanoseconds": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P1Y1M1W1DT1H1M1.1234567S",
+          "expected": {
+            "years": 1,
+            "months": 1,
+            "weeks": 1,
+            "days": 1,
+            "hours": 1,
+            "minutes": 1,
+            "seconds": 1,
+            "milliseconds": 123,
+            "microseconds": 456,
+            "nanoseconds": 700
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P1Y1M1W1DT1H1M1.12345678S",
+          "expected": {
+            "years": 1,
+            "months": 1,
+            "weeks": 1,
+            "days": 1,
+            "hours": 1,
+            "minutes": 1,
+            "seconds": 1,
+            "milliseconds": 123,
+            "microseconds": 456,
+            "nanoseconds": 780
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P1Y1M1W1DT1H1M1.123456789S",
+          "expected": {
+            "years": 1,
+            "months": 1,
+            "weeks": 1,
+            "days": 1,
+            "hours": 1,
+            "minutes": 1,
+            "seconds": 1,
+            "milliseconds": 123,
+            "microseconds": 456,
+            "nanoseconds": 789
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P1Y1M1W1DT1H1M1.12S",
+          "expected": {
+            "years": 1,
+            "months": 1,
+            "weeks": 1,
+            "days": 1,
+            "hours": 1,
+            "minutes": 1,
+            "seconds": 1,
+            "milliseconds": 120,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P1DT30S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 1,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 30,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P1DT30M",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 1,
+            "hours": 0,
+            "minutes": 30,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P1D",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 1,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P1D",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -1,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P1Y1M1W1DT1H1M1.123456789S",
+          "expected": {
+            "years": -1,
+            "months": -1,
+            "weeks": -1,
+            "days": -1,
+            "hours": -1,
+            "minutes": -1,
+            "seconds": -1,
+            "milliseconds": -123,
+            "microseconds": -456,
+            "nanoseconds": -789
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT100M",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 100,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": null
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Duration/from/lower-limit.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": null
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Duration/from/negative-inifinity-throws-rangeerror.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "1",
+          "description": "it fails after fetching the primitive value"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "1",
+          "description": "it fails after fetching the primitive value"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "1",
+          "description": "it fails after fetching the primitive value"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "1",
+          "description": "it fails after fetching the primitive value"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "1",
+          "description": "it fails after fetching the primitive value"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "1",
+          "description": "it fails after fetching the primitive value"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "1",
+          "description": "it fails after fetching the primitive value"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "1",
+          "description": "it fails after fetching the primitive value"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "1",
+          "description": "it fails after fetching the primitive value"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "1",
+          "description": "it fails after fetching the primitive value"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Duration/from/string-with-skipped-units.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P3Y4W",
+          "expected": {
+            "years": 3,
+            "months": 0,
+            "weeks": 4,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "years-weeks string"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P3Y4D",
+          "expected": {
+            "years": 3,
+            "months": 0,
+            "weeks": 0,
+            "days": 4,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "years-days string"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P3M4D",
+          "expected": {
+            "years": 0,
+            "months": 3,
+            "weeks": 0,
+            "days": 4,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "months-days string"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT3H4.123456789S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 3,
+            "minutes": 0,
+            "seconds": 4,
+            "milliseconds": 123,
+            "microseconds": 456,
+            "nanoseconds": 789
+          },
+          "description": "hours-seconds string"
+        }
+      ]
+    }
+  ]
+}

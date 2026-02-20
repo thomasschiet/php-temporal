@@ -1,0 +1,1496 @@
+{
+  "type": "PlainDate",
+  "method": "subtract",
+  "source": "test/built-ins/Temporal/PlainDate/prototype/subtract",
+  "cases": [
+    {
+      "file": "test/built-ins/Temporal/PlainDate/prototype/subtract/argument-string.js",
+      "assertions": [
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-04-29",
+          "expected": {
+            "year": 2000,
+            "month": 4,
+            "day": 29
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-05",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 5
+          },
+          "description": null
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDate/prototype/subtract/basic-arithmetic.js",
+      "assertions": [
+        {
+          "kind": "assertPlainDate",
+          "actual": "2022-07-16",
+          "expected": {
+            "year": 2022,
+            "month": 7,
+            "day": 16
+          },
+          "description": "add 1y"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2025-07-16",
+          "expected": {
+            "year": 2025,
+            "month": 7,
+            "day": 16
+          },
+          "description": "add 4y"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2020-07-16",
+          "expected": {
+            "year": 2020,
+            "month": 7,
+            "day": 16
+          },
+          "description": "subtract 1y"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2017-07-16",
+          "expected": {
+            "year": 2017,
+            "month": 7,
+            "day": 16
+          },
+          "description": "subtract 4y"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2001-06-18",
+          "expected": {
+            "year": 2001,
+            "month": 6,
+            "day": 18
+          },
+          "description": "add 3y6m17d"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "1997-12-01",
+          "expected": {
+            "year": 1997,
+            "month": 12,
+            "day": 1
+          },
+          "description": "subtract 3y6m17d"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-12-16",
+          "expected": {
+            "year": 2021,
+            "month": 12,
+            "day": 16
+          },
+          "description": "add 5mo with result in the same year"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2022-01-16",
+          "expected": {
+            "year": 2022,
+            "month": 1,
+            "day": 16
+          },
+          "description": "add 5mo with result in the next year"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2020-03-01",
+          "expected": {
+            "year": 2020,
+            "month": 3,
+            "day": 1
+          },
+          "description": "add 5mo with result in the next year on day 1 of month"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2022-03-31",
+          "expected": {
+            "year": 2022,
+            "month": 3,
+            "day": 31
+          },
+          "description": "add 5mo with result in the next year on day 31 of month"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2022-09-16",
+          "expected": {
+            "year": 2022,
+            "month": 9,
+            "day": 16
+          },
+          "description": "add 1y 2mo"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2023-01-30",
+          "expected": {
+            "year": 2023,
+            "month": 1,
+            "day": 30
+          },
+          "description": "add 1y 2mo with result in the next year"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-02-16",
+          "expected": {
+            "year": 2021,
+            "month": 2,
+            "day": 16
+          },
+          "description": "subtract 5mo with result in the same year"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2020-08-16",
+          "expected": {
+            "year": 2020,
+            "month": 8,
+            "day": 16
+          },
+          "description": "subtract 5mo with result in the previous year"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2018-09-01",
+          "expected": {
+            "year": 2018,
+            "month": 9,
+            "day": 1
+          },
+          "description": "subtract 5mo with result in the previous year on day 1 of month"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2020-10-31",
+          "expected": {
+            "year": 2020,
+            "month": 10,
+            "day": 31
+          },
+          "description": "subtract 5mo with result in the previous year on day 31 of month"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2020-05-16",
+          "expected": {
+            "year": 2020,
+            "month": 5,
+            "day": 16
+          },
+          "description": "subtract 1y 2mo"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2019-12-17",
+          "expected": {
+            "year": 2019,
+            "month": 12,
+            "day": 17
+          },
+          "description": "subtract 1y 2mo with result in the previous year"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2001-06-01",
+          "expected": {
+            "year": 2001,
+            "month": 6,
+            "day": 1
+          },
+          "description": "subtract 6mo"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-12-01",
+          "expected": {
+            "year": 2000,
+            "month": 12,
+            "day": 1
+          },
+          "description": "subtract 6mo"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-02-26",
+          "expected": {
+            "year": 2021,
+            "month": 2,
+            "day": 26
+          },
+          "description": "add 1w"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-12-31",
+          "expected": {
+            "year": 2021,
+            "month": 12,
+            "day": 31
+          },
+          "description": "add 1w with result on the last day of the year"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2022-01-01",
+          "expected": {
+            "year": 2022,
+            "month": 1,
+            "day": 1
+          },
+          "description": "add 1w with result on the first day of the next year"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-02-03",
+          "expected": {
+            "year": 2021,
+            "month": 2,
+            "day": 3
+          },
+          "description": "add 1w in a 31-day month with result in the next month"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-08-03",
+          "expected": {
+            "year": 2021,
+            "month": 8,
+            "day": 3
+          },
+          "description": "add 1w in another 31-day month with result in the next month"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-07-04",
+          "expected": {
+            "year": 2021,
+            "month": 7,
+            "day": 4
+          },
+          "description": "add 1w in a 30-day month with result in the next month"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-03-10",
+          "expected": {
+            "year": 2021,
+            "month": 3,
+            "day": 10
+          },
+          "description": "add 6w with result in the same year"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2022-02-04",
+          "expected": {
+            "year": 2022,
+            "month": 2,
+            "day": 4
+          },
+          "description": "add 6w with result in the next year"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-08-08",
+          "expected": {
+            "year": 2021,
+            "month": 8,
+            "day": 8
+          },
+          "description": "add 6w crossing months of 30 and 31 days"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-09-07",
+          "expected": {
+            "year": 2021,
+            "month": 9,
+            "day": 7
+          },
+          "description": "add 6w crossing months of 31 and 31 days"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2022-01-11",
+          "expected": {
+            "year": 2022,
+            "month": 1,
+            "day": 11
+          },
+          "description": "add 1y 2w with result in the next year"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2020-01-18",
+          "expected": {
+            "year": 2020,
+            "month": 1,
+            "day": 18
+          },
+          "description": "add 2mo 3w with result in the next year"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2020-01-21",
+          "expected": {
+            "year": 2020,
+            "month": 1,
+            "day": 21
+          },
+          "description": "add 2mo 3w with result in the next year"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-02-12",
+          "expected": {
+            "year": 2021,
+            "month": 2,
+            "day": 12
+          },
+          "description": "subtract 1w"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-01-01",
+          "expected": {
+            "year": 2021,
+            "month": 1,
+            "day": 1
+          },
+          "description": "subtract 1w with result on the first day of the year"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2020-12-31",
+          "expected": {
+            "year": 2020,
+            "month": 12,
+            "day": 31
+          },
+          "description": "subtract 1w with result on the last day of the previous year"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-05-28",
+          "expected": {
+            "year": 2021,
+            "month": 5,
+            "day": 28
+          },
+          "description": "subtract 1w with result in the previous 31-day month"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-06-26",
+          "expected": {
+            "year": 2021,
+            "month": 6,
+            "day": 26
+          },
+          "description": "subtract 1w with result in the previous 30-day month"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-04-23",
+          "expected": {
+            "year": 2021,
+            "month": 4,
+            "day": 23
+          },
+          "description": "subtract 6w with result in the same year"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2020-12-16",
+          "expected": {
+            "year": 2020,
+            "month": 12,
+            "day": 16
+          },
+          "description": "subtract 6w with result in the previous year"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-07-28",
+          "expected": {
+            "year": 2021,
+            "month": 7,
+            "day": 28
+          },
+          "description": "subtract 6w crossing months of 30 and 31 days"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-06-27",
+          "expected": {
+            "year": 2021,
+            "month": 6,
+            "day": 27
+          },
+          "description": "subtract 6w crossing months of 31 and 31 days"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2020-12-22",
+          "expected": {
+            "year": 2020,
+            "month": 12,
+            "day": 22
+          },
+          "description": "subtract 1y 2w with result in the previous year"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2018-12-12",
+          "expected": {
+            "year": 2018,
+            "month": 12,
+            "day": 12
+          },
+          "description": "subtract 2mo 3w with result in the previous year"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-10-07",
+          "expected": {
+            "year": 2000,
+            "month": 10,
+            "day": 7
+          },
+          "description": "add 40w"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-01-01",
+          "expected": {
+            "year": 2000,
+            "month": 1,
+            "day": 1
+          },
+          "description": "subtract 40w"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-07-26",
+          "expected": {
+            "year": 2021,
+            "month": 7,
+            "day": 26
+          },
+          "description": "add 10 days with result in the same month"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-08-05",
+          "expected": {
+            "year": 2021,
+            "month": 8,
+            "day": 5
+          },
+          "description": "add 10 days with result in the next month"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2022-01-05",
+          "expected": {
+            "year": 2022,
+            "month": 1,
+            "day": 5
+          },
+          "description": "add 10 days with result in the next year"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-01-14",
+          "expected": {
+            "year": 2021,
+            "month": 1,
+            "day": 14
+          },
+          "description": "add 2w 3d with result in the next year"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2022-09-20",
+          "expected": {
+            "year": 2022,
+            "month": 9,
+            "day": 20
+          },
+          "description": "add 1y 2mo 4d"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2022-05-01",
+          "expected": {
+            "year": 2022,
+            "month": 5,
+            "day": 1
+          },
+          "description": "add 1y 2mo 4d with result in a month following a 30-day month"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2022-10-04",
+          "expected": {
+            "year": 2022,
+            "month": 10,
+            "day": 4
+          },
+          "description": "add 1y 2mo 4d with result in a month following a 30-day month"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2022-04-01",
+          "expected": {
+            "year": 2022,
+            "month": 4,
+            "day": 1
+          },
+          "description": "add 1y 2mo 4d with result in a month following a 31-day month"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2022-09-03",
+          "expected": {
+            "year": 2022,
+            "month": 9,
+            "day": 3
+          },
+          "description": "add 1y 2mo 4d with result in a month following a 31-day month"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-07-06",
+          "expected": {
+            "year": 2021,
+            "month": 7,
+            "day": 6
+          },
+          "description": "subtract 10 days with result in the same month"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-06-26",
+          "expected": {
+            "year": 2021,
+            "month": 6,
+            "day": 26
+          },
+          "description": "subtract 10 days with result in the previous month"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2020-12-25",
+          "expected": {
+            "year": 2020,
+            "month": 12,
+            "day": 25
+          },
+          "description": "subtract 10 days with result in the previous year"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2020-12-29",
+          "expected": {
+            "year": 2020,
+            "month": 12,
+            "day": 29
+          },
+          "description": "subtract 2w 3d with result in the previous year"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2020-05-12",
+          "expected": {
+            "year": 2020,
+            "month": 5,
+            "day": 12
+          },
+          "description": "subtract 1y 2mo 4d"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2020-04-30",
+          "expected": {
+            "year": 2020,
+            "month": 4,
+            "day": 30
+          },
+          "description": "subtract 1y 2mo 4d with result in a 30-day month"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2020-03-31",
+          "expected": {
+            "year": 2020,
+            "month": 3,
+            "day": 31
+          },
+          "description": "subtract 1y 2mo 4d with result in a 31-day month"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-10-07",
+          "expected": {
+            "year": 2000,
+            "month": 10,
+            "day": 7
+          },
+          "description": "add 280d"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-01-01",
+          "expected": {
+            "year": 2000,
+            "month": 1,
+            "day": 1
+          },
+          "description": "subtract 280d"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDate/prototype/subtract/basic.js",
+      "assertions": [
+        {
+          "kind": "assertPlainDate",
+          "actual": "1976-11-18",
+          "expected": {
+            "year": 1976,
+            "month": 11,
+            "day": 18
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2018-12-18",
+          "expected": {
+            "year": 2018,
+            "month": 12,
+            "day": 18
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2019-10-29",
+          "expected": {
+            "year": 2019,
+            "month": 10,
+            "day": 29
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2019-01-28",
+          "expected": {
+            "year": 2019,
+            "month": 1,
+            "day": 28
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "1976-11-18",
+          "expected": {
+            "year": 1976,
+            "month": 11,
+            "day": 18
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2019-11-18",
+          "expected": {
+            "year": 2019,
+            "month": 11,
+            "day": 18
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2019-11-18",
+          "expected": {
+            "year": 2019,
+            "month": 11,
+            "day": 18
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2019-11-18",
+          "expected": {
+            "year": 2019,
+            "month": 11,
+            "day": 18
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2019-02-28",
+          "expected": {
+            "year": 2019,
+            "month": 2,
+            "day": 28
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-02-28",
+          "expected": {
+            "year": 2021,
+            "month": 2,
+            "day": 28
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2024-02-29",
+          "expected": {
+            "year": 2024,
+            "month": 2,
+            "day": 29
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2022-07-16",
+          "expected": {
+            "year": 2022,
+            "month": 7,
+            "day": 16
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-12-16",
+          "expected": {
+            "year": 2021,
+            "month": 12,
+            "day": 16
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2022-01-16",
+          "expected": {
+            "year": 2022,
+            "month": 1,
+            "day": 16
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2022-03-31",
+          "expected": {
+            "year": 2022,
+            "month": 3,
+            "day": 31
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2022-02-28",
+          "expected": {
+            "year": 2022,
+            "month": 2,
+            "day": 28
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2020-02-29",
+          "expected": {
+            "year": 2020,
+            "month": 2,
+            "day": 29
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2020-03-01",
+          "expected": {
+            "year": 2020,
+            "month": 3,
+            "day": 1
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2022-09-16",
+          "expected": {
+            "year": 2022,
+            "month": 9,
+            "day": 16
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2023-01-30",
+          "expected": {
+            "year": 2023,
+            "month": 1,
+            "day": 30
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2023-02-28",
+          "expected": {
+            "year": 2023,
+            "month": 2,
+            "day": 28
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2024-02-29",
+          "expected": {
+            "year": 2024,
+            "month": 2,
+            "day": 29
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2022-07-20",
+          "expected": {
+            "year": 2022,
+            "month": 7,
+            "day": 20
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2022-03-03",
+          "expected": {
+            "year": 2022,
+            "month": 3,
+            "day": 3
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2024-03-02",
+          "expected": {
+            "year": 2024,
+            "month": 3,
+            "day": 2
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2023-01-03",
+          "expected": {
+            "year": 2023,
+            "month": 1,
+            "day": 3
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2022-08-03",
+          "expected": {
+            "year": 2022,
+            "month": 8,
+            "day": 3
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2022-07-04",
+          "expected": {
+            "year": 2022,
+            "month": 7,
+            "day": 4
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2022-09-20",
+          "expected": {
+            "year": 2022,
+            "month": 9,
+            "day": 20
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2022-05-01",
+          "expected": {
+            "year": 2022,
+            "month": 5,
+            "day": 1
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2022-04-30",
+          "expected": {
+            "year": 2022,
+            "month": 4,
+            "day": 30
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2024-04-30",
+          "expected": {
+            "year": 2024,
+            "month": 4,
+            "day": 30
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2023-03-04",
+          "expected": {
+            "year": 2023,
+            "month": 3,
+            "day": 4
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2022-10-04",
+          "expected": {
+            "year": 2022,
+            "month": 10,
+            "day": 4
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2022-09-03",
+          "expected": {
+            "year": 2022,
+            "month": 9,
+            "day": 3
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-07-26",
+          "expected": {
+            "year": 2021,
+            "month": 7,
+            "day": 26
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-08-05",
+          "expected": {
+            "year": 2021,
+            "month": 8,
+            "day": 5
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2022-01-05",
+          "expected": {
+            "year": 2022,
+            "month": 1,
+            "day": 5
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2020-03-07",
+          "expected": {
+            "year": 2020,
+            "month": 3,
+            "day": 7
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-03-08",
+          "expected": {
+            "year": 2021,
+            "month": 3,
+            "day": 8
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2020-02-29",
+          "expected": {
+            "year": 2020,
+            "month": 2,
+            "day": 29
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-03-01",
+          "expected": {
+            "year": 2021,
+            "month": 3,
+            "day": 1
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-02-26",
+          "expected": {
+            "year": 2021,
+            "month": 2,
+            "day": 26
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-03-06",
+          "expected": {
+            "year": 2021,
+            "month": 3,
+            "day": 6
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2020-03-05",
+          "expected": {
+            "year": 2020,
+            "month": 3,
+            "day": 5
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-12-31",
+          "expected": {
+            "year": 2021,
+            "month": 12,
+            "day": 31
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2022-01-03",
+          "expected": {
+            "year": 2022,
+            "month": 1,
+            "day": 3
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-02-03",
+          "expected": {
+            "year": 2021,
+            "month": 2,
+            "day": 3
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-07-04",
+          "expected": {
+            "year": 2021,
+            "month": 7,
+            "day": 4
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-08-03",
+          "expected": {
+            "year": 2021,
+            "month": 8,
+            "day": 3
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-04-02",
+          "expected": {
+            "year": 2021,
+            "month": 4,
+            "day": 2
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-04-10",
+          "expected": {
+            "year": 2021,
+            "month": 4,
+            "day": 10
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2020-04-09",
+          "expected": {
+            "year": 2020,
+            "month": 4,
+            "day": 9
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2022-02-04",
+          "expected": {
+            "year": 2022,
+            "month": 2,
+            "day": 4
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2022-02-07",
+          "expected": {
+            "year": 2022,
+            "month": 2,
+            "day": 7
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-03-10",
+          "expected": {
+            "year": 2021,
+            "month": 3,
+            "day": 10
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-08-08",
+          "expected": {
+            "year": 2021,
+            "month": 8,
+            "day": 8
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-09-07",
+          "expected": {
+            "year": 2021,
+            "month": 9,
+            "day": 7
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2020-03-17",
+          "expected": {
+            "year": 2020,
+            "month": 3,
+            "day": 17
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2020-03-16",
+          "expected": {
+            "year": 2020,
+            "month": 3,
+            "day": 16
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-03-17",
+          "expected": {
+            "year": 2021,
+            "month": 3,
+            "day": 17
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-01-14",
+          "expected": {
+            "year": 2021,
+            "month": 1,
+            "day": 14
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-03-14",
+          "expected": {
+            "year": 2021,
+            "month": 3,
+            "day": 14
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-03-14",
+          "expected": {
+            "year": 2021,
+            "month": 3,
+            "day": 14
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2022-03-14",
+          "expected": {
+            "year": 2022,
+            "month": 3,
+            "day": 14
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2022-01-11",
+          "expected": {
+            "year": 2022,
+            "month": 1,
+            "day": 11
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2020-05-20",
+          "expected": {
+            "year": 2020,
+            "month": 5,
+            "day": 20
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2020-05-19",
+          "expected": {
+            "year": 2020,
+            "month": 5,
+            "day": 19
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-05-19",
+          "expected": {
+            "year": 2021,
+            "month": 5,
+            "day": 19
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-03-21",
+          "expected": {
+            "year": 2021,
+            "month": 3,
+            "day": 21
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2020-03-20",
+          "expected": {
+            "year": 2020,
+            "month": 3,
+            "day": 20
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2020-01-18",
+          "expected": {
+            "year": 2020,
+            "month": 1,
+            "day": 18
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2020-01-21",
+          "expected": {
+            "year": 2020,
+            "month": 1,
+            "day": 21
+          },
+          "description": null
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDate/prototype/subtract/month-boundary.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "30",
+          "expected": "30",
+          "description": "adding months should result in same day"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2001-06-01",
+          "expected": {
+            "year": 2001,
+            "month": 6,
+            "day": 1
+          },
+          "description": "endYesterdayNextDay"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "30",
+          "expected": "30",
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-12-01",
+          "expected": {
+            "year": 2000,
+            "month": 12,
+            "day": 1
+          },
+          "description": "startReverseNextDay"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "30",
+          "expected": "30",
+          "description": "adding months should result in same day"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-06-01",
+          "expected": {
+            "year": 2000,
+            "month": 6,
+            "day": 1
+          },
+          "description": "endYesterdayNextDay"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "30",
+          "expected": "30",
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-12-01",
+          "expected": {
+            "year": 2000,
+            "month": 12,
+            "day": 1
+          },
+          "description": "startReverseNextDay"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDate/prototype/subtract/overflow-constrain.js",
+      "assertions": [
+        {
+          "kind": "assertPlainDate",
+          "actual": "2020-02-29",
+          "expected": {
+            "year": 2020,
+            "month": 2,
+            "day": 29
+          },
+          "description": null
+        }
+      ]
+    }
+  ]
+}

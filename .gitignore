@@ -22,3 +22,10 @@ composer.phar
 # Environment
 .env
 .env.local
+
+# test262 bridge
+/tests/test262/
+/node_modules/
+/package-lock.json
+/infection.phar
+/infection.json5

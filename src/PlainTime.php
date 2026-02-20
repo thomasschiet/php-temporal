@@ -325,15 +325,11 @@ final class PlainTime
             return $base;
         }
 
-        if ($this->microsecond === 0 && $this->nanosecond === 0) {
-            return $base . sprintf('.%03d', $this->millisecond);
-        }
+        // Build the full 9-digit fractional string and strip all trailing zeros
+        $frac = sprintf('%03d%03d%03d', $this->millisecond, $this->microsecond, $this->nanosecond);
+        $frac = rtrim($frac, '0');
 
-        if ($this->nanosecond === 0) {
-            return $base . sprintf('.%03d%03d', $this->millisecond, $this->microsecond);
-        }
-
-        return $base . sprintf('.%03d%03d%03d', $this->millisecond, $this->microsecond, $this->nanosecond);
+        return $base . '.' . $frac;
     }
 
     // -------------------------------------------------------------------------

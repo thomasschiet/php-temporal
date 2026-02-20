@@ -1,0 +1,749 @@
+{
+  "type": "Instant",
+  "method": "from",
+  "source": "test/built-ins/Temporal/Instant/from",
+  "cases": [
+    {
+      "file": "test/built-ins/Temporal/Instant/from/argument-instant.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "217175010123456789",
+          "expected": "217175010123456789",
+          "description": "Instant is copied"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Instant/from/argument-object-tostring.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "result of toString is interpreted as ISO string"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Instant/from/argument-string-calendar-annotation.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "calendar annotation (without time zone)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "calendar annotation (with time zone)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "calendar annotation (with ! and no time zone)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "calendar annotation (with ! and time zone)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "calendar annotation (annotation is ignored)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "calendar annotation (annotation with ! is ignored)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "calendar annotation (two annotations are ignored)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Instant/from/argument-string-date-with-utc-offset.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "\"1970-01-01T00Z\" is a valid UTC offset with time for Instant"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "\"1970-01-01T00Z[UTC]\" is a valid UTC offset with time for Instant"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "\"1970-01-01T00Z[!UTC]\" is a valid UTC offset with time for Instant"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "\"1970-01-01T00Z[Europe/Vienna]\" is a valid UTC offset with time for Instant"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "\"1970-01-01T00+00:00\" is a valid UTC offset with time for Instant"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "\"1970-01-01T00+00:00[UTC]\" is a valid UTC offset with time for Instant"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "\"1970-01-01T00+00:00[!UTC]\" is a valid UTC offset with time for Instant"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "\"1969-12-31T16-08:00[America/Vancouver]\" is a valid UTC offset with time for Instant"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Instant/from/argument-string-time-separators.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "variant time separators (uppercase T)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "variant time separators (lowercase T)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "variant time separators (space between date and time)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Instant/from/argument-string-time-zone-annotation.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "time zone annotation (named, with Z)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "time zone annotation (named, with Z and !)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "time zone annotation (numeric, with Z)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "time zone annotation (numeric, with Z and !)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "time zone annotation (named, with offset)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "time zone annotation (named, with offset and !)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "time zone annotation (numeric, with offset)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "time zone annotation (numeric, with offset and !)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Instant/from/argument-string-unknown-annotation.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "unknown annotation (alone)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "unknown annotation (with time zone)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "unknown annotation (with calendar)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "unknown annotation (with time zone and calendar)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "unknown annotation (with another unknown annotation)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Instant/from/argument-string.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "217178580000000000",
+          "expected": "217178580000000000",
+          "description": "Instant.from(1976-11-18T15:23z)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610100000000",
+          "expected": "217178610100000000",
+          "description": "Instant.from(1976-11-18T15:23:30.1Z)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610120000000",
+          "expected": "217178610120000000",
+          "description": "Instant.from(1976-11-18T15:23:30.12Z)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123000000",
+          "expected": "217178610123000000",
+          "description": "Instant.from(1976-11-18T15:23:30.123Z)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123400000",
+          "expected": "217178610123400000",
+          "description": "Instant.from(1976-11-18T15:23:30.1234Z)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123450000",
+          "expected": "217178610123450000",
+          "description": "Instant.from(1976-11-18T15:23:30.12345Z)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123456000",
+          "expected": "217178610123456000",
+          "description": "Instant.from(1976-11-18T15:23:30.123456Z)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123456700",
+          "expected": "217178610123456700",
+          "description": "Instant.from(1976-11-18T15:23:30.1234567Z)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123456780",
+          "expected": "217178610123456780",
+          "description": "Instant.from(1976-11-18T15:23:30.12345678Z)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123456789",
+          "expected": "217178610123456789",
+          "description": "Instant.from(1976-11-18T15:23:30.123456789Z)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610120000000",
+          "expected": "217178610120000000",
+          "description": "Instant.from(1976-11-18T15:23:30,12Z)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217185810120000000",
+          "expected": "217185810120000000",
+          "description": "Instant.from(1976-11-18T15:23:30.12-02:00)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "-377677326989880000000",
+          "expected": "-377677326989880000000",
+          "description": "Instant.from(-009999-11-18T15:23:30.12Z)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610100000000",
+          "expected": "217178610100000000",
+          "description": "Instant.from(19761118T15:23:30.1+00:00)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610100000000",
+          "expected": "217178610100000000",
+          "description": "Instant.from(1976-11-18T152330.1+00:00)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610100000000",
+          "expected": "217178610100000000",
+          "description": "Instant.from(1976-11-18T15:23:30.1+0000)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610100000000",
+          "expected": "217178610100000000",
+          "description": "Instant.from(1976-11-18T152330.1+0000)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610100000000",
+          "expected": "217178610100000000",
+          "description": "Instant.from(19761118T15:23:30.1+0000)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610100000000",
+          "expected": "217178610100000000",
+          "description": "Instant.from(19761118T152330.1+00:00)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610100000000",
+          "expected": "217178610100000000",
+          "description": "Instant.from(+0019761118T15:23:30.1+00:00)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610100000000",
+          "expected": "217178610100000000",
+          "description": "Instant.from(+001976-11-18T152330.1+00:00)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610100000000",
+          "expected": "217178610100000000",
+          "description": "Instant.from(+001976-11-18T15:23:30.1+0000)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610100000000",
+          "expected": "217178610100000000",
+          "description": "Instant.from(+001976-11-18T152330.1+0000)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610100000000",
+          "expected": "217178610100000000",
+          "description": "Instant.from(+0019761118T15:23:30.1+0000)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610100000000",
+          "expected": "217178610100000000",
+          "description": "Instant.from(+0019761118T152330.1+00:00)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610100000000",
+          "expected": "217178610100000000",
+          "description": "Instant.from(+0019761118T152330.1+0000)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610000000000",
+          "expected": "217178610000000000",
+          "description": "Instant.from(1976-11-18T15:23:30+00)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123456789",
+          "expected": "217178610123456789",
+          "description": "Instant.from(1976-11-18T15:23:30.123456789-00:00:00)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123456789",
+          "expected": "217178610123456789",
+          "description": "Instant.from(1976-11-18T15:23:30.123456789-00:00:00.0)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123456789",
+          "expected": "217178610123456789",
+          "description": "Instant.from(1976-11-18T15:23:30.123456789-00:00:00.00)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123456789",
+          "expected": "217178610123456789",
+          "description": "Instant.from(1976-11-18T15:23:30.123456789-00:00:00.000)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123456789",
+          "expected": "217178610123456789",
+          "description": "Instant.from(1976-11-18T15:23:30.123456789-00:00:00.0000)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123456789",
+          "expected": "217178610123456789",
+          "description": "Instant.from(1976-11-18T15:23:30.123456789-00:00:00.00000)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123456789",
+          "expected": "217178610123456789",
+          "description": "Instant.from(1976-11-18T15:23:30.123456789-00:00:00.000000)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123456789",
+          "expected": "217178610123456789",
+          "description": "Instant.from(1976-11-18T15:23:30.123456789-00:00:00.0000000)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123456789",
+          "expected": "217178610123456789",
+          "description": "Instant.from(1976-11-18T15:23:30.123456789-00:00:00.00000000)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123456789",
+          "expected": "217178610123456789",
+          "description": "Instant.from(1976-11-18T15:23:30.123456789-00:00:00.000000000)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610223456789",
+          "expected": "217178610223456789",
+          "description": "Instant.from(1976-11-18T15:23:30.123456789-00:00:00.1)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610133456789",
+          "expected": "217178610133456789",
+          "description": "Instant.from(1976-11-18T15:23:30.123456789-00:00:00.01)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610124456789",
+          "expected": "217178610124456789",
+          "description": "Instant.from(1976-11-18T15:23:30.123456789-00:00:00.001)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123556789",
+          "expected": "217178610123556789",
+          "description": "Instant.from(1976-11-18T15:23:30.123456789-00:00:00.0001)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123466789",
+          "expected": "217178610123466789",
+          "description": "Instant.from(1976-11-18T15:23:30.123456789-00:00:00.00001)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123457789",
+          "expected": "217178610123457789",
+          "description": "Instant.from(1976-11-18T15:23:30.123456789-00:00:00.000001)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123456889",
+          "expected": "217178610123456889",
+          "description": "Instant.from(1976-11-18T15:23:30.123456789-00:00:00.0000001)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123456799",
+          "expected": "217178610123456799",
+          "description": "Instant.from(1976-11-18T15:23:30.123456789-00:00:00.00000001)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123456790",
+          "expected": "217178610123456790",
+          "description": "Instant.from(1976-11-18T15:23:30.123456789-00:00:00.000000001)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610223456789",
+          "expected": "217178610223456789",
+          "description": "Instant.from(1976-11-18T15:23:30.123456789-00:00:00.100000000)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610133456789",
+          "expected": "217178610133456789",
+          "description": "Instant.from(1976-11-18T15:23:30.123456789-00:00:00.010000000)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610124456789",
+          "expected": "217178610124456789",
+          "description": "Instant.from(1976-11-18T15:23:30.123456789-00:00:00.001000000)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123556789",
+          "expected": "217178610123556789",
+          "description": "Instant.from(1976-11-18T15:23:30.123456789-00:00:00.000100000)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123466789",
+          "expected": "217178610123466789",
+          "description": "Instant.from(1976-11-18T15:23:30.123456789-00:00:00.000010000)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123457789",
+          "expected": "217178610123457789",
+          "description": "Instant.from(1976-11-18T15:23:30.123456789-00:00:00.000001000)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123456889",
+          "expected": "217178610123456889",
+          "description": "Instant.from(1976-11-18T15:23:30.123456789-00:00:00.000000100)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123456799",
+          "expected": "217178610123456799",
+          "description": "Instant.from(1976-11-18T15:23:30.123456789-00:00:00.000000010)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217177200000000000",
+          "expected": "217177200000000000",
+          "description": "Instant.from(1976-11-18T15Z)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123456789",
+          "expected": "217178610123456789",
+          "description": "Instant.from(1976-11-18T15:23:30.123456789Z[u-ca=discord])"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123456789",
+          "expected": "217178610123456789",
+          "description": "Instant.from(1976-11-18T15:23:30.123456789Z[+00])"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123456789",
+          "expected": "217178610123456789",
+          "description": "Instant.from(1976-11-18T15:23:30.123456789Z[-00])"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123456789",
+          "expected": "217178610123456789",
+          "description": "Instant.from(1976-11-18T15:23:30.123456789Z[-00:00])"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123456789",
+          "expected": "217178610123456789",
+          "description": "Instant.from(1976-11-18T15:23:30.123456789Z[+12])"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123456789",
+          "expected": "217178610123456789",
+          "description": "Instant.from(1976-11-18T15:23:30.123456789Z[NotATimeZone])"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Instant/from/basic.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "217178580000000000",
+          "expected": "217178580000000000",
+          "description": "ISO string with UTC designator and minutes precision"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610000000000",
+          "expected": "217178610000000000",
+          "description": "ISO string with UTC designator and seconds precision"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123000000",
+          "expected": "217178610123000000",
+          "description": "ISO string with UTC designator and milliseconds precision"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123456000",
+          "expected": "217178610123456000",
+          "description": "ISO string with UTC designator and microseconds precision"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217178610123456789",
+          "expected": "217178610123456789",
+          "description": "ISO string with UTC designator and nanoseconds precision"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217182180000000000",
+          "expected": "217182180000000000",
+          "description": "ISO string with negative UTC offset"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "217174980000000000",
+          "expected": "217174980000000000",
+          "description": "ISO string with positive UTC offset"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Instant/from/instant-string-multiple-offsets.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "UTC offset determined from offset part of string"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Instant/from/instant-string-sub-minute-offset.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "if present, sub-minute offset is accepted exactly"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Instant/from/instant-string.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "date-time + Z preserves exact time"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "-3600000000000",
+          "expected": "-3600000000000",
+          "description": "date-time + offset preserves exact time with offset"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "date-time + Z + IANA annotation ignores the IANA annotation"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "-3600000000000",
+          "expected": "-3600000000000",
+          "description": "date-time + offset + IANA annotation ignores the IANA annotation"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": "date-time + Z + Calendar ignores the Calendar"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "-3600000000000",
+          "expected": "-3600000000000",
+          "description": "date-time + offset + Calendar ignores the Calendar"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "-3600000000000",
+          "expected": "-3600000000000",
+          "description": "date-time + offset + IANA annotation + Calendar ignores the Calendar and IANA annotation"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Instant/from/leap-second.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "1483228799000000000",
+          "expected": "1483228799000000000",
+          "description": "leap second is a valid ISO string for Instant"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Instant/from/timezone-custom.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "160579536123",
+          "expected": "160579536123",
+          "description": null
+        }
+      ]
+    }
+  ]
+}

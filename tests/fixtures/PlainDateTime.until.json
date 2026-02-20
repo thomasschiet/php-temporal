@@ -1,0 +1,4929 @@
+{
+  "type": "PlainDateTime",
+  "method": "until",
+  "source": "test/built-ins/Temporal/PlainDateTime/prototype/until",
+  "cases": [
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/argument-object.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P15684DT18H36M29.876543211S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 15684,
+            "hours": 18,
+            "minutes": 36,
+            "seconds": 29,
+            "milliseconds": 876,
+            "microseconds": 543,
+            "nanoseconds": 211
+          },
+          "description": "casts argument (plain object)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/argument-string-calendar-annotation.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "calendar annotation (without time zone)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "calendar annotation (with time zone)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "calendar annotation (with ! and no time zone)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "calendar annotation (with ! and time zone)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "calendar annotation (second annotation ignored)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/argument-string-date-with-utc-offset.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "\"1976-11-18T15:23+00:00\" is a valid UTC offset with time for PlainDateTime"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "\"1976-11-18T15:23+00:00[UTC]\" is a valid UTC offset with time for PlainDateTime"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "\"1976-11-18T15:23+00:00[!UTC]\" is a valid UTC offset with time for PlainDateTime"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "\"1976-11-18T15:23-02:30[America/St_Johns]\" is a valid UTC offset with time for PlainDateTime"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/argument-string-time-separators.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "variant time separators (uppercase T)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "variant time separators (lowercase T)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "variant time separators (space between date and time)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/argument-string-time-zone-annotation.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "time zone annotation (named, with no offset)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "time zone annotation (named, with ! and no offset)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "time zone annotation (numeric, with no offset)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "time zone annotation (numeric, with ! and no offset)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "time zone annotation (named, with offset)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "time zone annotation (named, with offset and !)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "time zone annotation (numeric, with offset)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "time zone annotation (numeric, with offset and !)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/argument-string-unknown-annotation.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "unknown annotation (alone)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "unknown annotation (with time zone)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "unknown annotation (with calendar)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "unknown annotation (with time zone and calendar)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "unknown annotation (with another unknown annotation)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/argument-string.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P15684DT19H23M8.148529313S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 15684,
+            "hours": 19,
+            "minutes": 23,
+            "seconds": 8,
+            "milliseconds": 148,
+            "microseconds": 529,
+            "nanoseconds": 313
+          },
+          "description": "casts argument (string)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/argument-zoneddatetime-balance-negative-time-units.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "PT59M1.001001001S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 59,
+            "seconds": 1,
+            "milliseconds": 1,
+            "microseconds": 1,
+            "nanoseconds": 1
+          },
+          "description": null
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/argument-zoneddatetime-negative-epochnanoseconds.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "-P11239DT22H40M10.98765432S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -11239,
+            "hours": -22,
+            "minutes": -40,
+            "seconds": -10,
+            "milliseconds": -987,
+            "microseconds": -654,
+            "nanoseconds": -320
+          },
+          "description": null
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/balance-negative-duration.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "-P3DT1H",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -3,
+            "hours": -1,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "date sign == time sign"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P2DT23H",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -2,
+            "hours": -23,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "date sign != time sign"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/balance-negative-time-units.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "PT1H1M1.001000999S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 1,
+            "minutes": 1,
+            "seconds": 1,
+            "milliseconds": 1,
+            "microseconds": 0,
+            "nanoseconds": 999
+          },
+          "description": "nanoseconds balance"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT1H1M1.000999001S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 1,
+            "minutes": 1,
+            "seconds": 1,
+            "milliseconds": 0,
+            "microseconds": 999,
+            "nanoseconds": 1
+          },
+          "description": "microseconds balance"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT1H1M0.999001001S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 1,
+            "minutes": 1,
+            "seconds": 0,
+            "milliseconds": 999,
+            "microseconds": 1,
+            "nanoseconds": 1
+          },
+          "description": "milliseconds balance"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT1H59.001001001S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 1,
+            "minutes": 0,
+            "seconds": 59,
+            "milliseconds": 1,
+            "microseconds": 1,
+            "nanoseconds": 1
+          },
+          "description": "seconds balance"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT59M1.001001001S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 59,
+            "seconds": 1,
+            "milliseconds": 1,
+            "microseconds": 1,
+            "nanoseconds": 1
+          },
+          "description": "minutes balance"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-PT58M58.998998999S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": -58,
+            "seconds": -58,
+            "milliseconds": -998,
+            "microseconds": -998,
+            "nanoseconds": -999
+          },
+          "description": "hours balance"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/balance.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P40M27DT19H25M31S",
+          "expected": {
+            "years": 0,
+            "months": 40,
+            "weeks": 0,
+            "days": 27,
+            "hours": 19,
+            "minutes": 25,
+            "seconds": 31,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "r1"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "2021-03-05T03:32:45",
+          "expected": "2021-03-05T03:32:45",
+          "description": "a.add(r1)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P40M30DT19H25M31S",
+          "expected": {
+            "years": 0,
+            "months": -40,
+            "weeks": 0,
+            "days": -30,
+            "hours": -19,
+            "minutes": -25,
+            "seconds": -31,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "r2"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "2017-10-05T08:07:14",
+          "expected": "2017-10-05T08:07:14",
+          "description": "b.add(r2)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P41MT1H25M31S",
+          "expected": {
+            "years": 0,
+            "months": -41,
+            "weeks": 0,
+            "days": 0,
+            "hours": -1,
+            "minutes": -25,
+            "seconds": -31,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "r3"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "2017-10-05T08:07:14",
+          "expected": "2017-10-05T08:07:14",
+          "description": "c.add(r3)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/basic.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "-P73D",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -73,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "same year"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P9719D",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -9719,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "different year"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P3Y6M17D",
+          "expected": {
+            "years": 3,
+            "months": 6,
+            "weeks": 0,
+            "days": 17,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "3 years, 6 months, 17 days"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P6M",
+          "expected": {
+            "years": 0,
+            "months": 6,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "6 months"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P40W",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 40,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "40 weeks"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P280D",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 280,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "40 weeks"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/blank-result.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "blank result"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/casts-argument.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P15684DT18H36M29.876543211S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 15684,
+            "hours": 18,
+            "minutes": 36,
+            "seconds": 29,
+            "milliseconds": 876,
+            "microseconds": 543,
+            "nanoseconds": 211
+          },
+          "description": "plain object argument"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P15684DT19H23M8.148529313S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 15684,
+            "hours": 19,
+            "minutes": 23,
+            "seconds": 8,
+            "milliseconds": 148,
+            "microseconds": 529,
+            "nanoseconds": 313
+          },
+          "description": "string argument gets cast"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/inverse.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P14350DT2H36M29.876543211S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 14350,
+            "hours": 2,
+            "minutes": 36,
+            "seconds": 29,
+            "milliseconds": 876,
+            "microseconds": 543,
+            "nanoseconds": 211
+          },
+          "description": "until and since act as inverses"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/leap-second.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "leap second is a valid ISO string for PlainDateTime"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "second: 60 is ignored in property bag for PlainDateTime"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/no-unnecessary-units.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P12M",
+          "expected": {
+            "years": 0,
+            "months": 12,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "does not include higher units than necessary (largest unit = months)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P1Y",
+          "expected": {
+            "years": 1,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "does not include higher units than necessary (largest unit = years)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/options-empty.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P366D",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 366,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "empty options (plain object) are acceptable"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P366D",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 366,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "empty options (function object) are acceptable"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/returns-days.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P366D",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 366,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "defaults to returning days (largest unit = auto)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P366D",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 366,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "defaults to returning days (largest unit = days)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P366DT0.000000001S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 366,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 1
+          },
+          "description": "returns nanoseconds if argument is PDT with non-zero nanoseconds"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P365DT23H59M59.999999999S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 365,
+            "hours": 23,
+            "minutes": 59,
+            "seconds": 59,
+            "milliseconds": 999,
+            "microseconds": 999,
+            "nanoseconds": 999
+          },
+          "description": "one nanosecond away from one year away"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/round-cross-unit-boundary.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P2Y",
+          "expected": {
+            "years": 2,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "1 year 11 months balances to 2 years"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT2H",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 2,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "1:59 balances to 2 hours"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P2Y",
+          "expected": {
+            "years": 2,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounding up 1 ns balances to 2 years"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/round-negative-duration.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "-P2D",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -2,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": null
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/round-relative-to-receiver.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P2Y",
+          "expected": {
+            "years": 2,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds relative to the receiver (positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P1Y",
+          "expected": {
+            "years": -1,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds relative to the receiver (negative case)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/roundingincrement-basic.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT3H",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 3,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to an increment of hours"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H30M",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 30,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to an increment of minutes"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to an increment of seconds"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M4.86S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 4,
+            "milliseconds": 860,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to an increment of milliseconds"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M4.8642S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 4,
+            "milliseconds": 864,
+            "microseconds": 200,
+            "nanoseconds": 0
+          },
+          "description": "rounds to an increment of microseconds"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M4.86419753S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 4,
+            "milliseconds": 864,
+            "microseconds": 197,
+            "nanoseconds": 530
+          },
+          "description": "rounds to an increment of nanoseconds"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/roundingmode-ceil.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P3Y",
+          "expected": {
+            "years": 3,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (roundingMode = ceil, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P2Y",
+          "expected": {
+            "years": -2,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (rounding mode = ceil, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P32M",
+          "expected": {
+            "years": 0,
+            "months": 32,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (roundingMode = ceil, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P31M",
+          "expected": {
+            "years": 0,
+            "months": -31,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (rounding mode = ceil, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P140W",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 140,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to weeks (roundingMode = ceil, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P139W",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": -139,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to weeks (rounding mode = ceil, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P974D",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 974,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to days (roundingMode = ceil, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973D",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to days (rounding mode = ceil, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT5H",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 5,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to hours (roundingMode = ceil, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to hours (rounding mode = ceil, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H18M",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 18,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to minutes (roundingMode = ceil, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to minutes (rounding mode = ceil, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M5S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 5,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to seconds (roundingMode = ceil, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M4S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -4,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to seconds (rounding mode = ceil, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M4.865S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 4,
+            "milliseconds": 865,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to milliseconds (roundingMode = ceil, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M4.864S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -4,
+            "milliseconds": -864,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to milliseconds (rounding mode = ceil, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M4.864198S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 4,
+            "milliseconds": 864,
+            "microseconds": 198,
+            "nanoseconds": 0
+          },
+          "description": "rounds to microseconds (roundingMode = ceil, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M4.864197S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -4,
+            "milliseconds": -864,
+            "microseconds": -197,
+            "nanoseconds": 0
+          },
+          "description": "rounds to microseconds (rounding mode = ceil, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M4.8641975S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 4,
+            "milliseconds": 864,
+            "microseconds": 197,
+            "nanoseconds": 500
+          },
+          "description": "rounds to nanoseconds (roundingMode = ceil, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M4.8641975S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -4,
+            "milliseconds": -864,
+            "microseconds": -197,
+            "nanoseconds": -500
+          },
+          "description": "rounds to nanoseconds (rounding mode = ceil, negative case)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/roundingmode-expand.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P3Y",
+          "expected": {
+            "years": 3,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (roundingMode = expand, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P3Y",
+          "expected": {
+            "years": -3,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (rounding mode = expand, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P32M",
+          "expected": {
+            "years": 0,
+            "months": 32,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (roundingMode = expand, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P32M",
+          "expected": {
+            "years": 0,
+            "months": -32,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (rounding mode = expand, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P140W",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 140,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to weeks (roundingMode = expand, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P140W",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": -140,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to weeks (rounding mode = expand, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P974D",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 974,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to days (roundingMode = expand, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P974D",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -974,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to days (rounding mode = expand, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT5H",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 5,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to hours (roundingMode = expand, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT5H",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -5,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to hours (rounding mode = expand, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H18M",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 18,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to minutes (roundingMode = expand, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H18M",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -18,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to minutes (rounding mode = expand, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M5S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 5,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to seconds (roundingMode = expand, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M5S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -5,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to seconds (rounding mode = expand, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M4.865S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 4,
+            "milliseconds": 865,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to milliseconds (roundingMode = expand, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M4.865S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -4,
+            "milliseconds": -865,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to milliseconds (rounding mode = expand, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M4.864198S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 4,
+            "milliseconds": 864,
+            "microseconds": 198,
+            "nanoseconds": 0
+          },
+          "description": "rounds to microseconds (roundingMode = expand, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M4.864198S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -4,
+            "milliseconds": -864,
+            "microseconds": -198,
+            "nanoseconds": 0
+          },
+          "description": "rounds to microseconds (rounding mode = expand, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M4.8641975S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 4,
+            "milliseconds": 864,
+            "microseconds": 197,
+            "nanoseconds": 500
+          },
+          "description": "rounds to nanoseconds (roundingMode = expand, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M4.8641975S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -4,
+            "milliseconds": -864,
+            "microseconds": -197,
+            "nanoseconds": -500
+          },
+          "description": "rounds to nanoseconds (rounding mode = expand, negative case)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/roundingmode-floor.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P2Y",
+          "expected": {
+            "years": 2,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (roundingMode = floor, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P3Y",
+          "expected": {
+            "years": -3,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (rounding mode = floor, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P31M",
+          "expected": {
+            "years": 0,
+            "months": 31,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (roundingMode = floor, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P32M",
+          "expected": {
+            "years": 0,
+            "months": -32,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (rounding mode = floor, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P139W",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 139,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to weeks (roundingMode = floor, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P140W",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": -140,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to weeks (rounding mode = floor, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973D",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to days (roundingMode = floor, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P974D",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -974,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to days (rounding mode = floor, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to hours (roundingMode = floor, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT5H",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -5,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to hours (rounding mode = floor, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to minutes (roundingMode = floor, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H18M",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -18,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to minutes (rounding mode = floor, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M4S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 4,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to seconds (roundingMode = floor, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M5S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -5,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to seconds (rounding mode = floor, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M4.864S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 4,
+            "milliseconds": 864,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to milliseconds (roundingMode = floor, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M4.865S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -4,
+            "milliseconds": -865,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to milliseconds (rounding mode = floor, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M4.864197S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 4,
+            "milliseconds": 864,
+            "microseconds": 197,
+            "nanoseconds": 0
+          },
+          "description": "rounds to microseconds (roundingMode = floor, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M4.864198S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -4,
+            "milliseconds": -864,
+            "microseconds": -198,
+            "nanoseconds": 0
+          },
+          "description": "rounds to microseconds (rounding mode = floor, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M4.8641975S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 4,
+            "milliseconds": 864,
+            "microseconds": 197,
+            "nanoseconds": 500
+          },
+          "description": "rounds to nanoseconds (roundingMode = floor, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M4.8641975S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -4,
+            "milliseconds": -864,
+            "microseconds": -197,
+            "nanoseconds": -500
+          },
+          "description": "rounds to nanoseconds (rounding mode = floor, negative case)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/roundingmode-halfCeil.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P3Y",
+          "expected": {
+            "years": 3,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (roundingMode = halfCeil, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P3Y",
+          "expected": {
+            "years": -3,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (rounding mode = halfCeil, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P32M",
+          "expected": {
+            "years": 0,
+            "months": 32,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (roundingMode = halfCeil, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P32M",
+          "expected": {
+            "years": 0,
+            "months": -32,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (rounding mode = halfCeil, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P139W",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 139,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to weeks (roundingMode = halfCeil, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P139W",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": -139,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to weeks (rounding mode = halfCeil, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973D",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to days (roundingMode = halfCeil, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973D",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to days (rounding mode = halfCeil, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to hours (roundingMode = halfCeil, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to hours (rounding mode = halfCeil, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to minutes (roundingMode = halfCeil, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to minutes (rounding mode = halfCeil, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M5S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 5,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to seconds (roundingMode = halfCeil, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M5S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -5,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to seconds (rounding mode = halfCeil, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M4.864S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 4,
+            "milliseconds": 864,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to milliseconds (roundingMode = halfCeil, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M4.864S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -4,
+            "milliseconds": -864,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to milliseconds (rounding mode = halfCeil, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M4.864198S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 4,
+            "milliseconds": 864,
+            "microseconds": 198,
+            "nanoseconds": 0
+          },
+          "description": "rounds to microseconds (roundingMode = halfCeil, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M4.864197S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -4,
+            "milliseconds": -864,
+            "microseconds": -197,
+            "nanoseconds": 0
+          },
+          "description": "rounds to microseconds (rounding mode = halfCeil, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M4.8641975S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 4,
+            "milliseconds": 864,
+            "microseconds": 197,
+            "nanoseconds": 500
+          },
+          "description": "rounds to nanoseconds (roundingMode = halfCeil, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M4.8641975S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -4,
+            "milliseconds": -864,
+            "microseconds": -197,
+            "nanoseconds": -500
+          },
+          "description": "rounds to nanoseconds (rounding mode = halfCeil, negative case)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/roundingmode-halfEven.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P3Y",
+          "expected": {
+            "years": 3,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (roundingMode = halfEven, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P3Y",
+          "expected": {
+            "years": -3,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (rounding mode = halfEven, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P32M",
+          "expected": {
+            "years": 0,
+            "months": 32,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (roundingMode = halfEven, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P32M",
+          "expected": {
+            "years": 0,
+            "months": -32,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (rounding mode = halfEven, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P139W",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 139,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to weeks (roundingMode = halfEven, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P139W",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": -139,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to weeks (rounding mode = halfEven, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973D",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to days (roundingMode = halfEven, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973D",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to days (rounding mode = halfEven, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to hours (roundingMode = halfEven, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to hours (rounding mode = halfEven, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to minutes (roundingMode = halfEven, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to minutes (rounding mode = halfEven, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M5S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 5,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to seconds (roundingMode = halfEven, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M5S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -5,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to seconds (rounding mode = halfEven, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M4.864S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 4,
+            "milliseconds": 864,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to milliseconds (roundingMode = halfEven, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M4.864S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -4,
+            "milliseconds": -864,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to milliseconds (rounding mode = halfEven, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M4.864198S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 4,
+            "milliseconds": 864,
+            "microseconds": 198,
+            "nanoseconds": 0
+          },
+          "description": "rounds to microseconds (roundingMode = halfEven, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M4.864198S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -4,
+            "milliseconds": -864,
+            "microseconds": -198,
+            "nanoseconds": 0
+          },
+          "description": "rounds to microseconds (rounding mode = halfEven, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M4.8641975S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 4,
+            "milliseconds": 864,
+            "microseconds": 197,
+            "nanoseconds": 500
+          },
+          "description": "rounds to nanoseconds (roundingMode = halfEven, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M4.8641975S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -4,
+            "milliseconds": -864,
+            "microseconds": -197,
+            "nanoseconds": -500
+          },
+          "description": "rounds to nanoseconds (rounding mode = halfEven, negative case)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/roundingmode-halfExpand.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P3Y",
+          "expected": {
+            "years": 3,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (roundingMode = halfExpand, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P3Y",
+          "expected": {
+            "years": -3,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (rounding mode = halfExpand, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P32M",
+          "expected": {
+            "years": 0,
+            "months": 32,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (roundingMode = halfExpand, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P32M",
+          "expected": {
+            "years": 0,
+            "months": -32,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (rounding mode = halfExpand, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P139W",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 139,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to weeks (roundingMode = halfExpand, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P139W",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": -139,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to weeks (rounding mode = halfExpand, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973D",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to days (roundingMode = halfExpand, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973D",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to days (rounding mode = halfExpand, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to hours (roundingMode = halfExpand, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to hours (rounding mode = halfExpand, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to minutes (roundingMode = halfExpand, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to minutes (rounding mode = halfExpand, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M5S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 5,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to seconds (roundingMode = halfExpand, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M5S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -5,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to seconds (rounding mode = halfExpand, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M4.864S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 4,
+            "milliseconds": 864,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to milliseconds (roundingMode = halfExpand, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M4.864S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -4,
+            "milliseconds": -864,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to milliseconds (rounding mode = halfExpand, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M4.864198S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 4,
+            "milliseconds": 864,
+            "microseconds": 198,
+            "nanoseconds": 0
+          },
+          "description": "rounds to microseconds (roundingMode = halfExpand, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M4.864198S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -4,
+            "milliseconds": -864,
+            "microseconds": -198,
+            "nanoseconds": 0
+          },
+          "description": "rounds to microseconds (rounding mode = halfExpand, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M4.8641975S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 4,
+            "milliseconds": 864,
+            "microseconds": 197,
+            "nanoseconds": 500
+          },
+          "description": "rounds to nanoseconds (roundingMode = halfExpand, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M4.8641975S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -4,
+            "milliseconds": -864,
+            "microseconds": -197,
+            "nanoseconds": -500
+          },
+          "description": "rounds to nanoseconds (rounding mode = halfExpand, negative case)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/roundingmode-halfFloor.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P3Y",
+          "expected": {
+            "years": 3,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (roundingMode = halfFloor, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P3Y",
+          "expected": {
+            "years": -3,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (rounding mode = halfFloor, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P32M",
+          "expected": {
+            "years": 0,
+            "months": 32,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (roundingMode = halfFloor, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P32M",
+          "expected": {
+            "years": 0,
+            "months": -32,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (rounding mode = halfFloor, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P139W",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 139,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to weeks (roundingMode = halfFloor, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P139W",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": -139,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to weeks (rounding mode = halfFloor, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973D",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to days (roundingMode = halfFloor, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973D",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to days (rounding mode = halfFloor, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to hours (roundingMode = halfFloor, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to hours (rounding mode = halfFloor, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to minutes (roundingMode = halfFloor, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to minutes (rounding mode = halfFloor, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M5S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 5,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to seconds (roundingMode = halfFloor, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M5S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -5,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to seconds (rounding mode = halfFloor, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M4.864S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 4,
+            "milliseconds": 864,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to milliseconds (roundingMode = halfFloor, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M4.864S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -4,
+            "milliseconds": -864,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to milliseconds (rounding mode = halfFloor, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M4.864197S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 4,
+            "milliseconds": 864,
+            "microseconds": 197,
+            "nanoseconds": 0
+          },
+          "description": "rounds to microseconds (roundingMode = halfFloor, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M4.864198S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -4,
+            "milliseconds": -864,
+            "microseconds": -198,
+            "nanoseconds": 0
+          },
+          "description": "rounds to microseconds (rounding mode = halfFloor, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M4.8641975S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 4,
+            "milliseconds": 864,
+            "microseconds": 197,
+            "nanoseconds": 500
+          },
+          "description": "rounds to nanoseconds (roundingMode = halfFloor, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M4.8641975S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -4,
+            "milliseconds": -864,
+            "microseconds": -197,
+            "nanoseconds": -500
+          },
+          "description": "rounds to nanoseconds (rounding mode = halfFloor, negative case)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/roundingmode-halfTrunc.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P3Y",
+          "expected": {
+            "years": 3,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (roundingMode = halfTrunc, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P3Y",
+          "expected": {
+            "years": -3,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (rounding mode = halfTrunc, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P32M",
+          "expected": {
+            "years": 0,
+            "months": 32,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (roundingMode = halfTrunc, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P32M",
+          "expected": {
+            "years": 0,
+            "months": -32,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (rounding mode = halfTrunc, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P139W",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 139,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to weeks (roundingMode = halfTrunc, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P139W",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": -139,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to weeks (rounding mode = halfTrunc, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973D",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to days (roundingMode = halfTrunc, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973D",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to days (rounding mode = halfTrunc, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to hours (roundingMode = halfTrunc, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to hours (rounding mode = halfTrunc, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to minutes (roundingMode = halfTrunc, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to minutes (rounding mode = halfTrunc, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M5S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 5,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to seconds (roundingMode = halfTrunc, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M5S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -5,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to seconds (rounding mode = halfTrunc, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M4.864S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 4,
+            "milliseconds": 864,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to milliseconds (roundingMode = halfTrunc, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M4.864S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -4,
+            "milliseconds": -864,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to milliseconds (rounding mode = halfTrunc, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M4.864197S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 4,
+            "milliseconds": 864,
+            "microseconds": 197,
+            "nanoseconds": 0
+          },
+          "description": "rounds to microseconds (roundingMode = halfTrunc, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M4.864197S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -4,
+            "milliseconds": -864,
+            "microseconds": -197,
+            "nanoseconds": 0
+          },
+          "description": "rounds to microseconds (rounding mode = halfTrunc, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M4.8641975S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 4,
+            "milliseconds": 864,
+            "microseconds": 197,
+            "nanoseconds": 500
+          },
+          "description": "rounds to nanoseconds (roundingMode = halfTrunc, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M4.8641975S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -4,
+            "milliseconds": -864,
+            "microseconds": -197,
+            "nanoseconds": -500
+          },
+          "description": "rounds to nanoseconds (rounding mode = halfTrunc, negative case)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/roundingmode-halfexpand-default-changes.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P3Y",
+          "expected": {
+            "years": 3,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "assumes a different default for largestUnit if smallestUnit is larger than days (largest unit = years)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P32M",
+          "expected": {
+            "years": 0,
+            "months": 32,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "assumes a different default for largestUnit if smallestUnit is larger than days (largest unit = months)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P139W",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 139,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "assumes a different default for largestUnit if smallestUnit is larger than days (largest unit = weeks)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/roundingmode-trunc-is-default.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "trunc is the default (round up)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M4S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 4,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "trunc is the default (round down)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/roundingmode-trunc.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P2Y",
+          "expected": {
+            "years": 2,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (roundingMode = trunc, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P2Y",
+          "expected": {
+            "years": -2,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (rounding mode = trunc, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P31M",
+          "expected": {
+            "years": 0,
+            "months": 31,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (roundingMode = trunc, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P31M",
+          "expected": {
+            "years": 0,
+            "months": -31,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (rounding mode = trunc, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P139W",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 139,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to weeks (roundingMode = trunc, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P139W",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": -139,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to weeks (rounding mode = trunc, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973D",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to days (roundingMode = trunc, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973D",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to days (rounding mode = trunc, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to hours (roundingMode = trunc, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to hours (rounding mode = trunc, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to minutes (roundingMode = trunc, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to minutes (rounding mode = trunc, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M4S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 4,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to seconds (roundingMode = trunc, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M4S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -4,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to seconds (rounding mode = trunc, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M4.864S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 4,
+            "milliseconds": 864,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to milliseconds (roundingMode = trunc, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M4.864S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -4,
+            "milliseconds": -864,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to milliseconds (rounding mode = trunc, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M4.864197S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 4,
+            "milliseconds": 864,
+            "microseconds": 197,
+            "nanoseconds": 0
+          },
+          "description": "rounds to microseconds (roundingMode = trunc, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M4.864197S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -4,
+            "milliseconds": -864,
+            "microseconds": -197,
+            "nanoseconds": 0
+          },
+          "description": "rounds to microseconds (rounding mode = trunc, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P973DT4H17M4.8641975S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 973,
+            "hours": 4,
+            "minutes": 17,
+            "seconds": 4,
+            "milliseconds": 864,
+            "microseconds": 197,
+            "nanoseconds": 500
+          },
+          "description": "rounds to nanoseconds (roundingMode = trunc, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P973DT4H17M4.8641975S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": -973,
+            "hours": -4,
+            "minutes": -17,
+            "seconds": -4,
+            "milliseconds": -864,
+            "microseconds": -197,
+            "nanoseconds": -500
+          },
+          "description": "rounds to nanoseconds (rounding mode = trunc, negative case)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/roundingmode-undefined.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P1DT1H1M1.123987S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 1,
+            "hours": 1,
+            "minutes": 1,
+            "seconds": 1,
+            "milliseconds": 123,
+            "microseconds": 987,
+            "nanoseconds": 0
+          },
+          "description": "default roundingMode is trunc"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P1DT1H1M1.123987S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 1,
+            "hours": 1,
+            "minutes": 1,
+            "seconds": 1,
+            "milliseconds": 123,
+            "microseconds": 987,
+            "nanoseconds": 0
+          },
+          "description": "default roundingMode is trunc"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P1DT1H1M1.123S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 1,
+            "hours": 1,
+            "minutes": 1,
+            "seconds": 1,
+            "milliseconds": 123,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "default roundingMode is trunc"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P1DT1H1M1.123S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 1,
+            "hours": 1,
+            "minutes": 1,
+            "seconds": 1,
+            "milliseconds": 123,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "default roundingMode is trunc"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P1DT1H1M1S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 1,
+            "hours": 1,
+            "minutes": 1,
+            "seconds": 1,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "default roundingMode is trunc"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P1DT1H1M1S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 1,
+            "hours": 1,
+            "minutes": 1,
+            "seconds": 1,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "default roundingMode is trunc"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/subseconds.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "PT86400.25025025S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 86400250,
+            "microseconds": 250,
+            "nanoseconds": 250
+          },
+          "description": "can return subseconds (millisecond precision)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT86400.25025025S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 86400250250,
+            "nanoseconds": 250
+          },
+          "description": "can return subseconds (microsecond precision)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT86400.25025025S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 86400250250250
+          },
+          "description": "can return subseconds (nanosecond precision)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/units-changed.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P1Y",
+          "expected": {
+            "years": 1,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "can return lower or higher units (years)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P12M",
+          "expected": {
+            "years": 0,
+            "months": 12,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "can return lower or higher units (months)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P52W2D",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 52,
+            "days": 2,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "can return lower or higher units (weeks)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT8784H",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 8784,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "can return lower or higher units (hours)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT527040M",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 527040,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "can return lower or higher units (minutes)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT31622400S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 31622400,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "can return lower or higher units (seconds)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT31622400S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 31622400000,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "can return lower or higher units (milliseconds)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT31622400S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 31622400000000,
+            "nanoseconds": 0
+          },
+          "description": "can return lower or higher units (microseconds)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT31622400S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 31622400000000000
+          },
+          "description": "can return lower or higher units (nanoseconds)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/until/weeks-months-mutually-exclusive.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P6WT3H",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 6,
+            "days": 0,
+            "hours": 3,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "weeks and months mutually exclusive (prefer weeks)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P1M12DT3H",
+          "expected": {
+            "years": 0,
+            "months": 1,
+            "weeks": 0,
+            "days": 12,
+            "hours": 3,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "weeks and months mutually exclusive (prefer months)"
+        }
+      ]
+    }
+  ]
+}

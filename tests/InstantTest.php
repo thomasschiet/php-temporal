@@ -290,7 +290,7 @@ final class InstantTest extends TestCase
     public function test_to_string_with_milliseconds(): void
     {
         $instant = Instant::fromEpochMilliseconds(500);
-        self::assertSame('1970-01-01T00:00:00.500Z', (string) $instant);
+        self::assertSame('1970-01-01T00:00:00.5Z', (string) $instant);
     }
 
     public function test_to_string_with_nanoseconds(): void

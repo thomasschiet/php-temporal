@@ -1,0 +1,148 @@
+{
+  "type": "PlainYearMonth",
+  "method": "add",
+  "source": "test/built-ins/Temporal/PlainYearMonth/prototype/add",
+  "cases": [
+    {
+      "file": "test/built-ins/Temporal/PlainYearMonth/prototype/add/argument-duration-object.js",
+      "assertions": [
+        {
+          "kind": "assertPlainYearMonth",
+          "actual": "2013-06",
+          "expected": {
+            "year": 2013,
+            "month": 6
+          },
+          "description": null
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainYearMonth/prototype/add/argument-object.js",
+      "assertions": [
+        {
+          "kind": "assertPlainYearMonth",
+          "actual": "2020-01",
+          "expected": {
+            "year": 2020,
+            "month": 1
+          },
+          "description": "no options"
+        },
+        {
+          "kind": "assertPlainYearMonth",
+          "actual": "2020-01",
+          "expected": {
+            "year": 2020,
+            "month": 1
+          },
+          "description": "constrain"
+        },
+        {
+          "kind": "assertPlainYearMonth",
+          "actual": "2020-01",
+          "expected": {
+            "year": 2020,
+            "month": 1
+          },
+          "description": "reject"
+        },
+        {
+          "kind": "assertPlainYearMonth",
+          "actual": "2020-11",
+          "expected": {
+            "year": 2020,
+            "month": 11
+          },
+          "description": "no options"
+        },
+        {
+          "kind": "assertPlainYearMonth",
+          "actual": "2020-11",
+          "expected": {
+            "year": 2020,
+            "month": 11
+          },
+          "description": "constrain"
+        },
+        {
+          "kind": "assertPlainYearMonth",
+          "actual": "2020-11",
+          "expected": {
+            "year": 2020,
+            "month": 11
+          },
+          "description": "reject"
+        },
+        {
+          "kind": "assertPlainYearMonth",
+          "actual": "2019-09",
+          "expected": {
+            "year": 2019,
+            "month": 9
+          },
+          "description": "no options"
+        },
+        {
+          "kind": "assertPlainYearMonth",
+          "actual": "2019-09",
+          "expected": {
+            "year": 2019,
+            "month": 9
+          },
+          "description": "constrain"
+        },
+        {
+          "kind": "assertPlainYearMonth",
+          "actual": "2019-09",
+          "expected": {
+            "year": 2019,
+            "month": 9
+          },
+          "description": "reject"
+        },
+        {
+          "kind": "assertPlainYearMonth",
+          "actual": "2018-11",
+          "expected": {
+            "year": 2018,
+            "month": 11
+          },
+          "description": "no options"
+        },
+        {
+          "kind": "assertPlainYearMonth",
+          "actual": "2018-11",
+          "expected": {
+            "year": 2018,
+            "month": 11
+          },
+          "description": "constrain"
+        },
+        {
+          "kind": "assertPlainYearMonth",
+          "actual": "2018-11",
+          "expected": {
+            "year": 2018,
+            "month": 11
+          },
+          "description": "reject"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainYearMonth/prototype/add/argument-string.js",
+      "assertions": [
+        {
+          "kind": "assertPlainYearMonth",
+          "actual": "2000-08",
+          "expected": {
+            "year": 2000,
+            "month": 8
+          },
+          "description": null
+        }
+      ]
+    }
+  ]
+}

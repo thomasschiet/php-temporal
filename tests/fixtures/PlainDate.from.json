@@ -1,0 +1,1102 @@
+{
+  "type": "PlainDate",
+  "method": "from",
+  "source": "test/built-ins/Temporal/PlainDate/from",
+  "cases": [
+    {
+      "file": "test/built-ins/Temporal/PlainDate/from/argument-leap-second.js",
+      "assertions": [
+        {
+          "kind": "assertPlainDate",
+          "actual": "2016-12-31",
+          "expected": {
+            "year": 2016,
+            "month": 12,
+            "day": 31
+          },
+          "description": "leap second is a valid ISO string for PlainDate"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2016-12-31",
+          "expected": {
+            "year": 2016,
+            "month": 12,
+            "day": 31
+          },
+          "description": "leap second is a valid ISO string for PlainDate"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2016-12-31",
+          "expected": {
+            "year": 2016,
+            "month": 12,
+            "day": 31
+          },
+          "description": "second: 60 is ignored in property bag for PlainDate"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2016-12-31",
+          "expected": {
+            "year": 2016,
+            "month": 12,
+            "day": 31
+          },
+          "description": "second: 60 is ignored in property bag for PlainDate even with overflow: reject"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDate/from/argument-object-valid.js",
+      "assertions": [
+        {
+          "kind": "assertPlainDate",
+          "actual": "2019-10-01",
+          "expected": {
+            "year": 2019,
+            "month": 10,
+            "day": 1
+          },
+          "description": "from({\"year\":2019,\"month\":10,\"monthCode\":\"M10\",\"day\":1,\"hour\":14,\"minute\":20,\"second\":36}"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "1976-11-18",
+          "expected": {
+            "year": 1976,
+            "month": 11,
+            "day": 18
+          },
+          "description": "from({\"year\":1976,\"month\":11,\"day\":18}"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "1976-11-18",
+          "expected": {
+            "year": 1976,
+            "month": 11,
+            "day": 18
+          },
+          "description": "from({\"year\":1976,\"monthCode\":\"M11\",\"day\":18}"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "1976-11-18",
+          "expected": {
+            "year": 1976,
+            "month": 11,
+            "day": 18
+          },
+          "description": "from({\"year\":1976,\"month\":11,\"day\":18,\"days\":15}"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDate/from/argument-plaindate.js",
+      "assertions": [
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": "PlainDate is copied"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "iso8601",
+          "expected": "iso8601",
+          "description": "Calendar is copied"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDate/from/argument-string-calendar-annotation.js",
+      "assertions": [
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": "calendar annotation (without time or time zone)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": "calendar annotation (with time zone and no time)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": "calendar annotation (without time zone)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": "calendar annotation (with time zone)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": "calendar annotation (with ! and no time zone)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": "calendar annotation (with ! and time zone)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": "calendar annotation (second annotation ignored)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDate/from/argument-string-date-with-utc-offset.js",
+      "assertions": [
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": "\"2000-05-02T00+00:00\" is a valid UTC offset with time for PlainDate"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": "\"2000-05-02T00+00:00[UTC]\" is a valid UTC offset with time for PlainDate"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": "\"2000-05-02T00+00:00[!UTC]\" is a valid UTC offset with time for PlainDate"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": "\"2000-05-02T00-02:30[America/St_Johns]\" is a valid UTC offset with time for PlainDate"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDate/from/argument-string-time-separators.js",
+      "assertions": [
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": "variant time separators (uppercase T)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": "variant time separators (lowercase T)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": "variant time separators (space between date and time)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDate/from/argument-string-time-zone-annotation.js",
+      "assertions": [
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": "time zone annotation (named, with no time)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": "time zone annotation (named, with ! and no time)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": "time zone annotation (numeric, with no time)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": "time zone annotation (numeric, with ! and no time)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": "time zone annotation (named, with no offset)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": "time zone annotation (named, with ! and no offset)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": "time zone annotation (numeric, with no offset)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": "time zone annotation (numeric, with ! and no offset)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": "time zone annotation (named, with offset)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": "time zone annotation (named, with offset and !)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": "time zone annotation (numeric, with offset)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": "time zone annotation (numeric, with offset and !)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDate/from/argument-string-unknown-annotation.js",
+      "assertions": [
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": "unknown annotation (without time)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": "unknown annotation (alone)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": "unknown annotation (with time zone)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": "unknown annotation (with calendar)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": "unknown annotation (with time zone and calendar)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": "unknown annotation (with another unknown annotation)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDate/from/argument-string.js",
+      "assertions": [
+        {
+          "kind": "assertPlainDate",
+          "actual": "1976-11-18",
+          "expected": {
+            "year": 1976,
+            "month": 11,
+            "day": 18
+          },
+          "description": "from(1976-11-18)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2019-06-30",
+          "expected": {
+            "year": 2019,
+            "month": 6,
+            "day": 30
+          },
+          "description": "from(2019-06-30)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "0050-06-30",
+          "expected": {
+            "year": 50,
+            "month": 6,
+            "day": 30
+          },
+          "description": "from(+000050-06-30)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "+010583-06-30",
+          "expected": {
+            "year": 10583,
+            "month": 6,
+            "day": 30
+          },
+          "description": "from(+010583-06-30)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "-010583-06-30",
+          "expected": {
+            "year": -10583,
+            "month": 6,
+            "day": 30
+          },
+          "description": "from(-010583-06-30)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "-000333-06-30",
+          "expected": {
+            "year": -333,
+            "month": 6,
+            "day": 30
+          },
+          "description": "from(-000333-06-30)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "1976-11-18",
+          "expected": {
+            "year": 1976,
+            "month": 11,
+            "day": 18
+          },
+          "description": "from(19761118)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "1976-11-18",
+          "expected": {
+            "year": 1976,
+            "month": 11,
+            "day": 18
+          },
+          "description": "from(+0019761118)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "1976-11-18",
+          "expected": {
+            "year": 1976,
+            "month": 11,
+            "day": 18
+          },
+          "description": "from(1976-11-18T152330.1+00:00)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "1976-11-18",
+          "expected": {
+            "year": 1976,
+            "month": 11,
+            "day": 18
+          },
+          "description": "from(19761118T15:23:30.1+00:00)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "1976-11-18",
+          "expected": {
+            "year": 1976,
+            "month": 11,
+            "day": 18
+          },
+          "description": "from(1976-11-18T15:23:30.1+0000)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "1976-11-18",
+          "expected": {
+            "year": 1976,
+            "month": 11,
+            "day": 18
+          },
+          "description": "from(1976-11-18T152330.1+0000)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "1976-11-18",
+          "expected": {
+            "year": 1976,
+            "month": 11,
+            "day": 18
+          },
+          "description": "from(19761118T15:23:30.1+0000)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "1976-11-18",
+          "expected": {
+            "year": 1976,
+            "month": 11,
+            "day": 18
+          },
+          "description": "from(19761118T152330.1+00:00)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "1976-11-18",
+          "expected": {
+            "year": 1976,
+            "month": 11,
+            "day": 18
+          },
+          "description": "from(19761118T152330.1+0000)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "1976-11-18",
+          "expected": {
+            "year": 1976,
+            "month": 11,
+            "day": 18
+          },
+          "description": "from(+001976-11-18T152330.1+00:00)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "1976-11-18",
+          "expected": {
+            "year": 1976,
+            "month": 11,
+            "day": 18
+          },
+          "description": "from(+0019761118T15:23:30.1+00:00)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "1976-11-18",
+          "expected": {
+            "year": 1976,
+            "month": 11,
+            "day": 18
+          },
+          "description": "from(+001976-11-18T15:23:30.1+0000)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "1976-11-18",
+          "expected": {
+            "year": 1976,
+            "month": 11,
+            "day": 18
+          },
+          "description": "from(+001976-11-18T152330.1+0000)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "1976-11-18",
+          "expected": {
+            "year": 1976,
+            "month": 11,
+            "day": 18
+          },
+          "description": "from(+0019761118T15:23:30.1+0000)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "1976-11-18",
+          "expected": {
+            "year": 1976,
+            "month": 11,
+            "day": 18
+          },
+          "description": "from(+0019761118T152330.1+00:00)"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "1976-11-18",
+          "expected": {
+            "year": 1976,
+            "month": 11,
+            "day": 18
+          },
+          "description": "from(+0019761118T152330.1+0000)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDate/from/argument-zoneddatetime.js",
+      "assertions": [
+        {
+          "kind": "assertPlainDate",
+          "actual": "2001-09-09",
+          "expected": {
+            "year": 2001,
+            "month": 9,
+            "day": 9
+          },
+          "description": "ZonedDateTime is converted"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "iso8601",
+          "expected": "iso8601",
+          "description": "Calendar is copied"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDate/from/one-of-era-erayear-undefined.js",
+      "assertions": [
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-05-02",
+          "expected": {
+            "year": 2000,
+            "month": 5,
+            "day": 2
+          },
+          "description": null
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDate/from/options-basic.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "1",
+          "expected": "1",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "2",
+          "expected": "2",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "3",
+          "expected": "3",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "iso8601",
+          "expected": "iso8601",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "1",
+          "expected": "1",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "2",
+          "expected": "2",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "3",
+          "expected": "3",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "iso8601",
+          "expected": "iso8601",
+          "description": null
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDate/from/roundtrip-from-iso.js",
+      "assertions": [
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-01-01",
+          "expected": {
+            "year": 2000,
+            "month": 1,
+            "day": 1
+          },
+          "description": "2000-01-01 - created from year and month"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-01-01",
+          "expected": {
+            "year": 2000,
+            "month": 1,
+            "day": 1
+          },
+          "description": "2000-01-01 - created from year and month code"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "0001-01-01",
+          "expected": {
+            "year": 1,
+            "month": 1,
+            "day": 1
+          },
+          "description": "0001-01-01 - created from year and month"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "0001-01-01",
+          "expected": {
+            "year": 1,
+            "month": 1,
+            "day": 1
+          },
+          "description": "0001-01-01 - created from year and month code"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDate/from/roundtrip-from-property-bag.js",
+      "assertions": [
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-01-01",
+          "expected": {
+            "year": 2000,
+            "month": 1,
+            "day": 1
+          },
+          "description": "2000-01-01 - created from year and month"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-01-01",
+          "expected": {
+            "year": 2000,
+            "month": 1,
+            "day": 1
+          },
+          "description": "2000-01-01 - created from year and month"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-01-01",
+          "expected": {
+            "year": 2000,
+            "month": 1,
+            "day": 1
+          },
+          "description": "2000-01-01 - created from year and month code"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-01-01",
+          "expected": {
+            "year": 2000,
+            "month": 1,
+            "day": 1
+          },
+          "description": "2000-01-01 - created from year and month code"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "0001-01-01",
+          "expected": {
+            "year": 1,
+            "month": 1,
+            "day": 1
+          },
+          "description": "0001-01-01 - created from year and month"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "0001-01-01",
+          "expected": {
+            "year": 1,
+            "month": 1,
+            "day": 1
+          },
+          "description": "0001-01-01 - created from year and month"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "0001-01-01",
+          "expected": {
+            "year": 1,
+            "month": 1,
+            "day": 1
+          },
+          "description": "0001-01-01 - created from year and month code"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "0001-01-01",
+          "expected": {
+            "year": 1,
+            "month": 1,
+            "day": 1
+          },
+          "description": "0001-01-01 - created from year and month code"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-07-15",
+          "expected": {
+            "year": 2021,
+            "month": 7,
+            "day": 15
+          },
+          "description": "2021-07-15 - created from year and month"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-07-15",
+          "expected": {
+            "year": 2021,
+            "month": 7,
+            "day": 15
+          },
+          "description": "2021-07-15 - created from year and month"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-07-15",
+          "expected": {
+            "year": 2021,
+            "month": 7,
+            "day": 15
+          },
+          "description": "2021-07-15 - created from year and month code"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-07-15",
+          "expected": {
+            "year": 2021,
+            "month": 7,
+            "day": 15
+          },
+          "description": "2021-07-15 - created from year and month code"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-07-03",
+          "expected": {
+            "year": 2021,
+            "month": 7,
+            "day": 3
+          },
+          "description": "2021-07-03 - created from year and month"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-07-03",
+          "expected": {
+            "year": 2021,
+            "month": 7,
+            "day": 3
+          },
+          "description": "2021-07-03 - created from year and month"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-07-03",
+          "expected": {
+            "year": 2021,
+            "month": 7,
+            "day": 3
+          },
+          "description": "2021-07-03 - created from year and month code"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-07-03",
+          "expected": {
+            "year": 2021,
+            "month": 7,
+            "day": 3
+          },
+          "description": "2021-07-03 - created from year and month code"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-12-31",
+          "expected": {
+            "year": 2021,
+            "month": 12,
+            "day": 31
+          },
+          "description": "2021-12-31 - created from year and month"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-12-31",
+          "expected": {
+            "year": 2021,
+            "month": 12,
+            "day": 31
+          },
+          "description": "2021-12-31 - created from year and month"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-12-31",
+          "expected": {
+            "year": 2021,
+            "month": 12,
+            "day": 31
+          },
+          "description": "2021-12-31 - created from year and month code"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-12-31",
+          "expected": {
+            "year": 2021,
+            "month": 12,
+            "day": 31
+          },
+          "description": "2021-12-31 - created from year and month code"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-07-15",
+          "expected": {
+            "year": 2021,
+            "month": 7,
+            "day": 15
+          },
+          "description": "2021-07-15 - created from year and month"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-07-15",
+          "expected": {
+            "year": 2021,
+            "month": 7,
+            "day": 15
+          },
+          "description": "2021-07-15 - created from year and month"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-07-15",
+          "expected": {
+            "year": 2021,
+            "month": 7,
+            "day": 15
+          },
+          "description": "2021-07-15 - created from year and month code"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "2021-07-15",
+          "expected": {
+            "year": 2021,
+            "month": 7,
+            "day": 15
+          },
+          "description": "2021-07-15 - created from year and month code"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDate/from/roundtrip-from-string.js",
+      "assertions": [
+        {
+          "kind": "assertPlainDate",
+          "actual": "2000-01-01",
+          "expected": {
+            "year": 2000,
+            "month": 1,
+            "day": 1
+          },
+          "description": "created from string 2000-01-01"
+        },
+        {
+          "kind": "assertPlainDate",
+          "actual": "0001-01-01",
+          "expected": {
+            "year": 1,
+            "month": 1,
+            "day": 1
+          },
+          "description": "created from string 0001-01-01"
+        }
+      ]
+    }
+  ]
+}

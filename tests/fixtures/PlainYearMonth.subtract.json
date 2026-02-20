@@ -1,0 +1,148 @@
+{
+  "type": "PlainYearMonth",
+  "method": "subtract",
+  "source": "test/built-ins/Temporal/PlainYearMonth/prototype/subtract",
+  "cases": [
+    {
+      "file": "test/built-ins/Temporal/PlainYearMonth/prototype/subtract/argument-duration-object.js",
+      "assertions": [
+        {
+          "kind": "assertPlainYearMonth",
+          "actual": "1994-11",
+          "expected": {
+            "year": 1994,
+            "month": 11
+          },
+          "description": null
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainYearMonth/prototype/subtract/argument-object.js",
+      "assertions": [
+        {
+          "kind": "assertPlainYearMonth",
+          "actual": "2019-09",
+          "expected": {
+            "year": 2019,
+            "month": 9
+          },
+          "description": "no options"
+        },
+        {
+          "kind": "assertPlainYearMonth",
+          "actual": "2019-09",
+          "expected": {
+            "year": 2019,
+            "month": 9
+          },
+          "description": "constrain"
+        },
+        {
+          "kind": "assertPlainYearMonth",
+          "actual": "2019-09",
+          "expected": {
+            "year": 2019,
+            "month": 9
+          },
+          "description": "reject"
+        },
+        {
+          "kind": "assertPlainYearMonth",
+          "actual": "2018-11",
+          "expected": {
+            "year": 2018,
+            "month": 11
+          },
+          "description": "no options"
+        },
+        {
+          "kind": "assertPlainYearMonth",
+          "actual": "2018-11",
+          "expected": {
+            "year": 2018,
+            "month": 11
+          },
+          "description": "constrain"
+        },
+        {
+          "kind": "assertPlainYearMonth",
+          "actual": "2018-11",
+          "expected": {
+            "year": 2018,
+            "month": 11
+          },
+          "description": "reject"
+        },
+        {
+          "kind": "assertPlainYearMonth",
+          "actual": "2020-01",
+          "expected": {
+            "year": 2020,
+            "month": 1
+          },
+          "description": "no options"
+        },
+        {
+          "kind": "assertPlainYearMonth",
+          "actual": "2020-01",
+          "expected": {
+            "year": 2020,
+            "month": 1
+          },
+          "description": "constrain"
+        },
+        {
+          "kind": "assertPlainYearMonth",
+          "actual": "2020-01",
+          "expected": {
+            "year": 2020,
+            "month": 1
+          },
+          "description": "reject"
+        },
+        {
+          "kind": "assertPlainYearMonth",
+          "actual": "2020-11",
+          "expected": {
+            "year": 2020,
+            "month": 11
+          },
+          "description": "no options"
+        },
+        {
+          "kind": "assertPlainYearMonth",
+          "actual": "2020-11",
+          "expected": {
+            "year": 2020,
+            "month": 11
+          },
+          "description": "constrain"
+        },
+        {
+          "kind": "assertPlainYearMonth",
+          "actual": "2020-11",
+          "expected": {
+            "year": 2020,
+            "month": 11
+          },
+          "description": "reject"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainYearMonth/prototype/subtract/argument-string.js",
+      "assertions": [
+        {
+          "kind": "assertPlainYearMonth",
+          "actual": "2000-02",
+          "expected": {
+            "year": 2000,
+            "month": 2
+          },
+          "description": null
+        }
+      ]
+    }
+  ]
+}

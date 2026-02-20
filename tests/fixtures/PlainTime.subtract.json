@@ -1,0 +1,903 @@
+{
+  "type": "PlainTime",
+  "method": "subtract",
+  "source": "test/built-ins/Temporal/PlainTime/prototype/subtract",
+  "cases": [
+    {
+      "file": "test/built-ins/Temporal/PlainTime/prototype/subtract/argument-duration.js",
+      "assertions": [
+        {
+          "kind": "assertPlainTime",
+          "actual": "23:23:30.123456789",
+          "expected": {
+            "hour": 23,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": null
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainTime/prototype/subtract/argument-higher-units.js",
+      "assertions": [
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.123456789",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.123456789",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.123456789",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.123456789",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.123456789",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.123456789",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.123456789",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.123456789",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.123456789",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.123456789",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.123456789",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.123456789",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": null
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainTime/prototype/subtract/argument-object.js",
+      "assertions": [
+        {
+          "kind": "assertPlainTime",
+          "actual": "23:23:30.123456789",
+          "expected": {
+            "hour": 23,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "subtract 16 hours across midnight boundary"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "14:38:30.123456789",
+          "expected": {
+            "hour": 14,
+            "minute": 38,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "subtract 45 minutes"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:22:45.123456789",
+          "expected": {
+            "hour": 15,
+            "minute": 22,
+            "second": 45,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "subtract 45 seconds"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:29.323456789",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 29,
+            "millisecond": 323,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "subtract 800 milliseconds"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.122656789",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 122,
+            "microsecond": 656,
+            "nanosecond": 789
+          },
+          "description": "subtract 800 microseconds"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.123455989",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 455,
+            "nanosecond": 989
+          },
+          "description": "subtract 800 nanoseconds"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.123456789",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "subtract -16 hours across midnight boundary"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.123456789",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "subtract -45 minutes"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.123456789",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "subtract -45 seconds"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.123456789",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "subtract -800 milliseconds"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.123456789",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "subtract -800 microseconds"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.123456789",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "subtract -800 nanoseconds"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "14:23:30.123456789",
+          "expected": {
+            "hour": 14,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "misspelled property is ignored"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainTime/prototype/subtract/argument-string-duration-too-large.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "Infinity",
+          "expected": "Infinity",
+          "description": null
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainTime/prototype/subtract/argument-string-fractional-units-rounding-mode.js",
+      "assertions": [
+        {
+          "kind": "assertPlainTime",
+          "actual": "22:58:07.5",
+          "expected": {
+            "hour": 22,
+            "minute": 58,
+            "second": 7,
+            "millisecond": 500,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "positive fractional units rounded with correct rounding mode"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "01:01:52.5",
+          "expected": {
+            "hour": 1,
+            "minute": 1,
+            "second": 52,
+            "millisecond": 500,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "negative fractional units rounded with correct rounding mode"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainTime/prototype/subtract/argument-string.js",
+      "assertions": [
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:31:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 31,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": null
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainTime/prototype/subtract/balance-negative-time-units.js",
+      "assertions": [
+        {
+          "kind": "assertPlainTime",
+          "actual": "01:01:01.001000999",
+          "expected": {
+            "hour": 1,
+            "minute": 1,
+            "second": 1,
+            "millisecond": 1,
+            "microsecond": 0,
+            "nanosecond": 999
+          },
+          "description": "nanoseconds balance"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "01:01:01.000999001",
+          "expected": {
+            "hour": 1,
+            "minute": 1,
+            "second": 1,
+            "millisecond": 0,
+            "microsecond": 999,
+            "nanosecond": 1
+          },
+          "description": "microseconds balance"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "01:01:00.999001001",
+          "expected": {
+            "hour": 1,
+            "minute": 1,
+            "second": 0,
+            "millisecond": 999,
+            "microsecond": 1,
+            "nanosecond": 1
+          },
+          "description": "milliseconds balance"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "01:00:59.001001001",
+          "expected": {
+            "hour": 1,
+            "minute": 0,
+            "second": 59,
+            "millisecond": 1,
+            "microsecond": 1,
+            "nanosecond": 1
+          },
+          "description": "seconds balance"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "00:59:01.001001001",
+          "expected": {
+            "hour": 0,
+            "minute": 59,
+            "second": 1,
+            "millisecond": 1,
+            "microsecond": 1,
+            "nanosecond": 1
+          },
+          "description": "minutes balance"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "23:01:01.001001001",
+          "expected": {
+            "hour": 23,
+            "minute": 1,
+            "second": 1,
+            "millisecond": 1,
+            "microsecond": 1,
+            "nanosecond": 1
+          },
+          "description": "hours mod 24"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainTime/prototype/subtract/options-ignored.js",
+      "assertions": [
+        {
+          "kind": "assertPlainTime",
+          "actual": "14:23:30.123456789",
+          "expected": {
+            "hour": 14,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "14:23:30.123456789",
+          "expected": {
+            "hour": 14,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "14:23:30.123456789",
+          "expected": {
+            "hour": 14,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "14:23:30.123456789",
+          "expected": {
+            "hour": 14,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "14:23:30.123456789",
+          "expected": {
+            "hour": 14,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "14:23:30.123456789",
+          "expected": {
+            "hour": 14,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "14:23:30.123456789",
+          "expected": {
+            "hour": 14,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "14:23:30.123456789",
+          "expected": {
+            "hour": 14,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "14:23:30.123456789",
+          "expected": {
+            "hour": 14,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "14:23:30.123456789",
+          "expected": {
+            "hour": 14,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": null
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainTime/prototype/subtract/subtract-large-subseconds.js",
+      "assertions": [
+        {
+          "kind": "assertPlainTime",
+          "actual": "18:57:28.492871587",
+          "expected": {
+            "hour": 18,
+            "minute": 57,
+            "second": 28,
+            "millisecond": 492,
+            "microsecond": 871,
+            "nanosecond": 587
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "06:57:27.002353569",
+          "expected": {
+            "hour": 6,
+            "minute": 57,
+            "second": 27,
+            "millisecond": 2,
+            "microsecond": 353,
+            "nanosecond": 569
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "01:09:53.006621578",
+          "expected": {
+            "hour": 1,
+            "minute": 9,
+            "second": 53,
+            "millisecond": 6,
+            "microsecond": 621,
+            "nanosecond": 578
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "00:45:02.488603578",
+          "expected": {
+            "hour": 0,
+            "minute": 45,
+            "second": 2,
+            "millisecond": 488,
+            "microsecond": 603,
+            "nanosecond": 578
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:58:26.756612578",
+          "expected": {
+            "hour": 15,
+            "minute": 58,
+            "second": 26,
+            "millisecond": 756,
+            "microsecond": 612,
+            "nanosecond": 578
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "09:56:28.738612578",
+          "expected": {
+            "hour": 9,
+            "minute": 56,
+            "second": 28,
+            "millisecond": 738,
+            "microsecond": 612,
+            "nanosecond": 578
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "17:20:56.747612578",
+          "expected": {
+            "hour": 17,
+            "minute": 20,
+            "second": 56,
+            "millisecond": 747,
+            "microsecond": 612,
+            "nanosecond": 578
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "08:33:58.747612578",
+          "expected": {
+            "hour": 8,
+            "minute": 33,
+            "second": 58,
+            "millisecond": 747,
+            "microsecond": 612,
+            "nanosecond": 578
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "01:09:53.006621602",
+          "expected": {
+            "hour": 1,
+            "minute": 9,
+            "second": 53,
+            "millisecond": 6,
+            "microsecond": 621,
+            "nanosecond": 602
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "00:45:02.488603554",
+          "expected": {
+            "hour": 0,
+            "minute": 45,
+            "second": 2,
+            "millisecond": 488,
+            "microsecond": 603,
+            "nanosecond": 554
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:58:26.756636578",
+          "expected": {
+            "hour": 15,
+            "minute": 58,
+            "second": 26,
+            "millisecond": 756,
+            "microsecond": 636,
+            "nanosecond": 578
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "09:56:28.738588578",
+          "expected": {
+            "hour": 9,
+            "minute": 56,
+            "second": 28,
+            "millisecond": 738,
+            "microsecond": 588,
+            "nanosecond": 578
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "17:20:56.771612578",
+          "expected": {
+            "hour": 17,
+            "minute": 20,
+            "second": 56,
+            "millisecond": 771,
+            "microsecond": 612,
+            "nanosecond": 578
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "08:33:56.723612578",
+          "expected": {
+            "hour": 8,
+            "minute": 33,
+            "second": 58,
+            "millisecond": 723,
+            "microsecond": 612,
+            "nanosecond": 578
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "00:12:25.259009024",
+          "expected": {
+            "hour": 0,
+            "minute": 12,
+            "second": 25,
+            "millisecond": 259,
+            "microsecond": 9,
+            "nanosecond": 24
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "23:47:34.740990976",
+          "expected": {
+            "hour": 23,
+            "minute": 47,
+            "second": 34,
+            "millisecond": 740,
+            "microsecond": 990,
+            "nanosecond": 976
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:00:59.009024",
+          "expected": {
+            "hour": 15,
+            "minute": 0,
+            "second": 59,
+            "millisecond": 9,
+            "microsecond": 24,
+            "nanosecond": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "08:59:00.990976",
+          "expected": {
+            "hour": 8,
+            "minute": 59,
+            "second": 0,
+            "millisecond": 990,
+            "microsecond": 976,
+            "nanosecond": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "16:23:29.024",
+          "expected": {
+            "hour": 16,
+            "minute": 23,
+            "second": 29,
+            "millisecond": 24,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "07:36:30.976",
+          "expected": {
+            "hour": 7,
+            "minute": 36,
+            "second": 30,
+            "millisecond": 976,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": null
+        }
+      ]
+    }
+  ]
+}

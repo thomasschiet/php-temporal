@@ -1,0 +1,384 @@
+{
+  "type": "Duration",
+  "method": "with",
+  "source": "test/built-ins/Temporal/Duration/prototype/with",
+  "cases": [
+    {
+      "file": "test/built-ins/Temporal/Duration/prototype/with/all-negative.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "-P9Y8M7W6DT5H4M3.00200101S",
+          "expected": {
+            "years": -9,
+            "months": -8,
+            "weeks": -7,
+            "days": -6,
+            "hours": -5,
+            "minutes": -4,
+            "seconds": -3,
+            "milliseconds": -2,
+            "microseconds": -1,
+            "nanoseconds": -10
+          },
+          "description": "replace all zeroes with all negative"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P9Y8M7W6DT5H4M3.00200101S",
+          "expected": {
+            "years": -9,
+            "months": -8,
+            "weeks": -7,
+            "days": -6,
+            "hours": -5,
+            "minutes": -4,
+            "seconds": -3,
+            "milliseconds": -2,
+            "microseconds": -1,
+            "nanoseconds": -10
+          },
+          "description": "replace all positive with all negative"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P9Y8M7W6DT5H4M3.00200101S",
+          "expected": {
+            "years": -9,
+            "months": -8,
+            "weeks": -7,
+            "days": -6,
+            "hours": -5,
+            "minutes": -4,
+            "seconds": -3,
+            "milliseconds": -2,
+            "microseconds": -1,
+            "nanoseconds": -10
+          },
+          "description": "replace all positive large numbers with all negative"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P9Y8M7W6DT5H4M3.00200101S",
+          "expected": {
+            "years": -9,
+            "months": -8,
+            "weeks": -7,
+            "days": -6,
+            "hours": -5,
+            "minutes": -4,
+            "seconds": -3,
+            "milliseconds": -2,
+            "microseconds": -1,
+            "nanoseconds": -10
+          },
+          "description": "replace all negative with all negative"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Duration/prototype/with/all-positive.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P9Y8M7W6DT5H4M3.00200101S",
+          "expected": {
+            "years": 9,
+            "months": 8,
+            "weeks": 7,
+            "days": 6,
+            "hours": 5,
+            "minutes": 4,
+            "seconds": 3,
+            "milliseconds": 2,
+            "microseconds": 1,
+            "nanoseconds": 10
+          },
+          "description": "replace all zeroes with all positive"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P9Y8M7W6DT5H4M3.00200101S",
+          "expected": {
+            "years": 9,
+            "months": 8,
+            "weeks": 7,
+            "days": 6,
+            "hours": 5,
+            "minutes": 4,
+            "seconds": 3,
+            "milliseconds": 2,
+            "microseconds": 1,
+            "nanoseconds": 10
+          },
+          "description": "replace all positive with all positive"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P9Y8M7W6DT5H4M3.00200101S",
+          "expected": {
+            "years": 9,
+            "months": 8,
+            "weeks": 7,
+            "days": 6,
+            "hours": 5,
+            "minutes": 4,
+            "seconds": 3,
+            "milliseconds": 2,
+            "microseconds": 1,
+            "nanoseconds": 10
+          },
+          "description": "replace all positive large numbers with all positive"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P9Y8M7W6DT5H4M3.00200101S",
+          "expected": {
+            "years": 9,
+            "months": 8,
+            "weeks": 7,
+            "days": 6,
+            "hours": 5,
+            "minutes": 4,
+            "seconds": 3,
+            "milliseconds": 2,
+            "microseconds": 1,
+            "nanoseconds": 10
+          },
+          "description": "replace all negative with all positive"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Duration/prototype/with/copy-properties-not-undefined.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P9Y8M7W6DT6H11M3.002001S",
+          "expected": {
+            "years": 9,
+            "months": 8,
+            "weeks": 7,
+            "days": 6,
+            "hours": 6,
+            "minutes": 11,
+            "seconds": 3,
+            "milliseconds": 2,
+            "microseconds": 1,
+            "nanoseconds": 0
+          },
+          "description": "only the properties that are present and defined in the plain object are copied"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Duration/prototype/with/partial-positive.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P9YT5H",
+          "expected": {
+            "years": 9,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 5,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "replace all zeroes with years and hours"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P8MT4M",
+          "expected": {
+            "years": 0,
+            "months": 8,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 4,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "replace all zeroes wtih months and minutes"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P7WT3S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 7,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 3,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "replace all zeroes with weeks and seconds"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P6DT0.002S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 6,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 2,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "replace all zeroes with days and milliseconds"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0.000987123S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 987,
+            "nanoseconds": 123
+          },
+          "description": "replace all zeroes with microseconds and nanoseconds"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P9Y2M3W4DT5H6M7.00800901S",
+          "expected": {
+            "years": 9,
+            "months": 2,
+            "weeks": 3,
+            "days": 4,
+            "hours": 5,
+            "minutes": 6,
+            "seconds": 7,
+            "milliseconds": 8,
+            "microseconds": 9,
+            "nanoseconds": 10
+          },
+          "description": "replace all positive with years and hours"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P1Y8M3W4DT5H4M7.00800901S",
+          "expected": {
+            "years": 1,
+            "months": 8,
+            "weeks": 3,
+            "days": 4,
+            "hours": 5,
+            "minutes": 4,
+            "seconds": 7,
+            "milliseconds": 8,
+            "microseconds": 9,
+            "nanoseconds": 10
+          },
+          "description": "replace all positive with months and minutes"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P1Y2M7W4DT5H6M3.00800901S",
+          "expected": {
+            "years": 1,
+            "months": 2,
+            "weeks": 7,
+            "days": 4,
+            "hours": 5,
+            "minutes": 6,
+            "seconds": 3,
+            "milliseconds": 8,
+            "microseconds": 9,
+            "nanoseconds": 10
+          },
+          "description": "replace all positive with weeks and seconds"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P1Y2M3W6DT5H6M7.00200901S",
+          "expected": {
+            "years": 1,
+            "months": 2,
+            "weeks": 3,
+            "days": 6,
+            "hours": 5,
+            "minutes": 6,
+            "seconds": 7,
+            "milliseconds": 2,
+            "microseconds": 9,
+            "nanoseconds": 10
+          },
+          "description": "replace all positive with days and milliseconds"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P1Y2M3W4DT5H6M7.008987123S",
+          "expected": {
+            "years": 1,
+            "months": 2,
+            "weeks": 3,
+            "days": 4,
+            "hours": 5,
+            "minutes": 6,
+            "seconds": 7,
+            "milliseconds": 8,
+            "microseconds": 987,
+            "nanoseconds": 123
+          },
+          "description": "replace all positive with microseconds and nanoseconds"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Duration/prototype/with/sign-replace.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "1",
+          "expected": "1",
+          "description": "original sign"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "-1",
+          "expected": "-1",
+          "description": "new sign"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P1YT1M",
+          "expected": {
+            "years": -1,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": -1,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": null
+        }
+      ]
+    }
+  ]
+}

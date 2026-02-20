@@ -1,0 +1,147 @@
+{
+  "type": "PlainTime",
+  "method": "with",
+  "source": "test/built-ins/Temporal/PlainTime/prototype/with",
+  "cases": [
+    {
+      "file": "test/built-ins/Temporal/PlainTime/prototype/with/basic.js",
+      "assertions": [
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.123456789",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "initial"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "03:23:30.123456789",
+          "expected": {
+            "hour": 3,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "hour"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:03:30.123456789",
+          "expected": {
+            "hour": 15,
+            "minute": 3,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "minute"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:03.123456789",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 3,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "second"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.003456789",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 3,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "millisecond"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.123003789",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 3,
+            "nanosecond": 789
+          },
+          "description": "microsecond"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.123456003",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 3
+          },
+          "description": "nanosecond"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:08:30.123456003",
+          "expected": {
+            "hour": 15,
+            "minute": 8,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 3
+          },
+          "description": "combined"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.123456003",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 3
+          },
+          "description": "plural"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainTime/prototype/with/copy-properties-not-undefined.js",
+      "assertions": [
+        {
+          "kind": "assertPlainTime",
+          "actual": "08:45:55",
+          "expected": {
+            "hour": 8,
+            "minute": 45,
+            "second": 55,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "only the properties that are present and defined in the plain object are copied"
+        }
+      ]
+    }
+  ]
+}

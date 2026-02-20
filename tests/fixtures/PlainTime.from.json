@@ -1,0 +1,2227 @@
+{
+  "type": "PlainTime",
+  "method": "from",
+  "source": "test/built-ins/Temporal/PlainTime/from",
+  "cases": [
+    {
+      "file": "test/built-ins/Temporal/PlainTime/from/argument-object-leap-second.js",
+      "assertions": [
+        {
+          "kind": "assertPlainTime",
+          "actual": "23:59:59",
+          "expected": {
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:30:59",
+          "expected": {
+            "hour": 12,
+            "minute": 30,
+            "second": 59,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "23:59:59.17",
+          "expected": {
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 170,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "23:59:59",
+          "expected": {
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:30:59",
+          "expected": {
+            "hour": 12,
+            "minute": 30,
+            "second": 59,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "23:59:59.17",
+          "expected": {
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 170,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "23:59:59",
+          "expected": {
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:30:59",
+          "expected": {
+            "hour": 12,
+            "minute": 30,
+            "second": 59,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "23:59:59.17",
+          "expected": {
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 170,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": null
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainTime/from/argument-plaintime.js",
+      "assertions": [
+        {
+          "kind": "assertPlainTime",
+          "actual": "11:42:00",
+          "expected": {
+            "hour": 11,
+            "minute": 42,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "PlainTime is copied"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainTime/from/argument-string-calendar-annotation.js",
+      "assertions": [
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "calendar annotation (without time zone)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "calendar annotation (with time zone)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "calendar annotation (with ! and no time zone)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "calendar annotation (with ! and time zone)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "calendar annotation (with T and no time zone)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "calendar annotation (with T and time zone)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "calendar annotation (with T, !, and no time zone)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "calendar annotation (with T, !, and time zone)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "calendar annotation (with date and no time zone)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "calendar annotation (with date and time zone)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "calendar annotation (with !, date, and no time zone)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "calendar annotation (with !, date, and time zone)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "calendar annotation (calendar annotation ignored)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "calendar annotation (calendar annotation ignored even if unknown calendar)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "calendar annotation (calendar annotation ignored even if unknown calendar with !)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "calendar annotation (second annotation ignored)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainTime/from/argument-string-date-with-utc-offset.js",
+      "assertions": [
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "\"12:34:56.987654321+00:00\" is a valid UTC offset with time for PlainTime"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "\"12:34:56.987654321+00:00[UTC]\" is a valid UTC offset with time for PlainTime"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "\"12:34:56.987654321+00:00[!UTC]\" is a valid UTC offset with time for PlainTime"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "\"12:34:56.987654321-02:30[America/St_Johns]\" is a valid UTC offset with time for PlainTime"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "\"1976-11-18T12:34:56.987654321+00:00\" is a valid UTC offset with time for PlainTime"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "\"1976-11-18T12:34:56.987654321+00:00[UTC]\" is a valid UTC offset with time for PlainTime"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "\"1976-11-18T12:34:56.987654321+00:00[!UTC]\" is a valid UTC offset with time for PlainTime"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "\"1976-11-18T12:34:56.987654321-02:30[America/St_Johns]\" is a valid UTC offset with time for PlainTime"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainTime/from/argument-string-leap-second.js",
+      "assertions": [
+        {
+          "kind": "assertPlainTime",
+          "actual": "23:59:59",
+          "expected": {
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:30:59",
+          "expected": {
+            "hour": 12,
+            "minute": 30,
+            "second": 59,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "23:59:59.17",
+          "expected": {
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 170,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "23:59:59",
+          "expected": {
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:30:59",
+          "expected": {
+            "hour": 12,
+            "minute": 30,
+            "second": 59,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "23:59:59.17",
+          "expected": {
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 170,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "23:59:59",
+          "expected": {
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:30:59",
+          "expected": {
+            "hour": 12,
+            "minute": 30,
+            "second": 59,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "23:59:59.17",
+          "expected": {
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 170,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "23:59:59",
+          "expected": {
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:30:59",
+          "expected": {
+            "hour": 12,
+            "minute": 30,
+            "second": 59,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "23:59:59.17",
+          "expected": {
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 170,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": null
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainTime/from/argument-string-time-separators.js",
+      "assertions": [
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "variant time separators (uppercase T)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "variant time separators (lowercase T)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "variant time separators (space between date and time)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "variant time separators (time-only uppercase T)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "variant time separators (time-only lowercase T)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainTime/from/argument-string-time-zone-annotation.js",
+      "assertions": [
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "time zone annotation (named, with no offset)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "time zone annotation (named, with ! and no offset)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "time zone annotation (numeric, with no offset)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "time zone annotation (numeric, with ! and no offset)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "time zone annotation (named, with T and no offset)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "time zone annotation (named, with T, !, and no offset)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "time zone annotation (numeric, with T and no offset)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "time zone annotation (numeric, with T, !, and no offset)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "time zone annotation (named, with offset)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "time zone annotation (named, with ! and offset)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "time zone annotation (numeric, with offset)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "time zone annotation (numeric, with ! and offset)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "time zone annotation (named, with T and offset)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "time zone annotation (named, with T, !, and offset)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "time zone annotation (numeric, with T and offset)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "time zone annotation (numeric, with T, !, and offset)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "time zone annotation (named, with date and no offset)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "time zone annotation (named, with date, !, and no offset)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "time zone annotation (numeric, with date and no offset)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "time zone annotation (numeric, with date, !, and no offset)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "time zone annotation (named, with date and offset)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "time zone annotation (named, with date, offset, and !)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "time zone annotation (numeric, with date and offset)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "time zone annotation (numeric, with date, offset, and !)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainTime/from/argument-string-unknown-annotation.js",
+      "assertions": [
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "unknown annotation (alone)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "unknown annotation (with time zone)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "unknown annotation (with calendar)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "unknown annotation (with time zone and calendar)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "unknown annotation (with T)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "unknown annotation (with T and time zone)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "unknown annotation (with T and calendar)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "unknown annotation (with T, time zone, and calendar)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "unknown annotation (with date)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "unknown annotation (with date and time zone)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "unknown annotation (with date and calendar)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "unknown annotation (with date, time zone, and calendar)"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "12:34:56.987654321",
+          "expected": {
+            "hour": 12,
+            "minute": 34,
+            "second": 56,
+            "millisecond": 987,
+            "microsecond": 654,
+            "nanosecond": 321
+          },
+          "description": "unknown annotation (with another unknown annotation)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainTime/from/argument-string-with-time-designator.js",
+      "assertions": [
+        {
+          "kind": "assertPlainTime",
+          "actual": "00:30:00",
+          "expected": {
+            "hour": 0,
+            "minute": 30,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "T prefix is accepted: T00:30"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "00:30:00",
+          "expected": {
+            "hour": 0,
+            "minute": 30,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "T prefix is accepted: t00:30"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "00:30:00",
+          "expected": {
+            "hour": 0,
+            "minute": 30,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "T prefix is accepted: T0030"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "00:30:00",
+          "expected": {
+            "hour": 0,
+            "minute": 30,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "T prefix is accepted: t0030"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "00:30:00",
+          "expected": {
+            "hour": 0,
+            "minute": 30,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "T prefix is accepted: T00:30:00"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "00:30:00",
+          "expected": {
+            "hour": 0,
+            "minute": 30,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "T prefix is accepted: t00:30:00"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "00:30:00",
+          "expected": {
+            "hour": 0,
+            "minute": 30,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "T prefix is accepted: T003000"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "00:30:00",
+          "expected": {
+            "hour": 0,
+            "minute": 30,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "T prefix is accepted: t003000"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "00:30:00",
+          "expected": {
+            "hour": 0,
+            "minute": 30,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "T prefix is accepted: T00:30:00.000000000"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "00:30:00",
+          "expected": {
+            "hour": 0,
+            "minute": 30,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "T prefix is accepted: t00:30:00.000000000"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "00:30:00",
+          "expected": {
+            "hour": 0,
+            "minute": 30,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "T prefix is accepted: T003000.000000000"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "00:30:00",
+          "expected": {
+            "hour": 0,
+            "minute": 30,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "T prefix is accepted: t003000.000000000"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainTime/from/argument-string.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "15:23"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:00",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "15:23"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "15:23:30"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "15:23:30"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "15:23:30.123"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.123",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "15:23:30.123"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "15:23:30.123456"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.123456",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 0
+          },
+          "description": "15:23:30.123456"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "15:23:30.123456789"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.123456789",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "15:23:30.123456789"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "1976-11-18T15:23:30.1"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.1",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 100,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "1976-11-18T15:23:30.1"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "1976-11-18T15:23:30.12"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.12",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 120,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "1976-11-18T15:23:30.12"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "1976-11-18T15:23:30.123"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.123",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "1976-11-18T15:23:30.123"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "1976-11-18T15:23:30.1234"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.1234",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 400,
+            "nanosecond": 0
+          },
+          "description": "1976-11-18T15:23:30.1234"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "1976-11-18T15:23:30.12345"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.12345",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 450,
+            "nanosecond": 0
+          },
+          "description": "1976-11-18T15:23:30.12345"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "1976-11-18T15:23:30.123456"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.123456",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 0
+          },
+          "description": "1976-11-18T15:23:30.123456"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "1976-11-18T15:23:30.1234567"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.1234567",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 700
+          },
+          "description": "1976-11-18T15:23:30.1234567"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "1976-11-18T15:23:30.12345678"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.12345678",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 780
+          },
+          "description": "1976-11-18T15:23:30.12345678"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "1976-11-18T15:23:30.123456789"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.123456789",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "1976-11-18T15:23:30.123456789"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "1976-11-18T15:23:30,12"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.12",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 120,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "1976-11-18T15:23:30,12"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "1976-11-18T15:23:30.12-02:00"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.12",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 120,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "1976-11-18T15:23:30.12-02:00"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "152330"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "152330"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "152330.1"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.1",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 100,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "152330.1"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "152330-08"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "152330-08"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "152330.1-08"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.1",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 100,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "152330.1-08"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "152330-0800"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "152330-0800"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "152330.1-0800"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.1",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 100,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "152330.1-0800"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "1976-11-18T152330.1+00:00"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.1",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 100,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "1976-11-18T152330.1+00:00"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "19761118T15:23:30.1+00:00"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.1",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 100,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "19761118T15:23:30.1+00:00"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "1976-11-18T15:23:30.1+0000"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.1",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 100,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "1976-11-18T15:23:30.1+0000"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "1976-11-18T152330.1+0000"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.1",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 100,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "1976-11-18T152330.1+0000"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "19761118T15:23:30.1+0000"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.1",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 100,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "19761118T15:23:30.1+0000"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "19761118T152330.1+00:00"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.1",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 100,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "19761118T152330.1+00:00"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "19761118T152330.1+0000"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.1",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 100,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "19761118T152330.1+0000"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "+001976-11-18T152330.1+00:00"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.1",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 100,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "+001976-11-18T152330.1+00:00"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "+0019761118T15:23:30.1+00:00"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.1",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 100,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "+0019761118T15:23:30.1+00:00"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "+001976-11-18T15:23:30.1+0000"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.1",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 100,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "+001976-11-18T15:23:30.1+0000"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "+001976-11-18T152330.1+0000"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.1",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 100,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "+001976-11-18T152330.1+0000"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "+0019761118T15:23:30.1+0000"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.1",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 100,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "+0019761118T15:23:30.1+0000"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "+0019761118T152330.1+00:00"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.1",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 100,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "+0019761118T152330.1+00:00"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "+0019761118T152330.1+0000"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30.1",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 100,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "+0019761118T152330.1+0000"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "15"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:00:00",
+          "expected": {
+            "hour": 15,
+            "minute": 0,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "15"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "T15:23:30"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "T15:23:30"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6",
+          "expected": "6",
+          "description": "t152330"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "15:23:30",
+          "expected": {
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "t152330"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainTime/from/argument-zoneddatetime-balance-negative-time-units.js",
+      "assertions": [
+        {
+          "kind": "assertPlainTime",
+          "actual": "00:59:01.001001001",
+          "expected": {
+            "hour": 0,
+            "minute": 59,
+            "second": 1,
+            "millisecond": 1,
+            "microsecond": 1,
+            "nanosecond": 1
+          },
+          "description": null
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainTime/from/argument-zoneddatetime-negative-epochnanoseconds.js",
+      "assertions": [
+        {
+          "kind": "assertPlainTime",
+          "actual": "16:50:35.000000001",
+          "expected": {
+            "hour": 16,
+            "minute": 50,
+            "second": 35,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 1
+          },
+          "description": null
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainTime/from/leap-second.js",
+      "assertions": [
+        {
+          "kind": "assertPlainTime",
+          "actual": "23:59:59",
+          "expected": {
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "leap second is a valid ISO string for PlainTime"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "23:59:59",
+          "expected": {
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "leap second is a valid ISO string for PlainTime"
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "23:59:59",
+          "expected": {
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "second: 60 is ignored in property bag for PlainTime"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainTime/from/overflow-constrain.js",
+      "assertions": [
+        {
+          "kind": "assertPlainTime",
+          "actual": "23:00:00",
+          "expected": {
+            "hour": 23,
+            "minute": 0,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainTime",
+          "actual": "22:00:00",
+          "expected": {
+            "hour": 22,
+            "minute": 0,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": null
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainTime/from/overflow-reject.js",
+      "assertions": [
+        {
+          "kind": "assertPlainTime",
+          "actual": "22:00:00",
+          "expected": {
+            "hour": 22,
+            "minute": 0,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": null
+        }
+      ]
+    }
+  ]
+}

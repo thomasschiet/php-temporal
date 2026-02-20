@@ -67,17 +67,27 @@ final class PlainMonthDay
     }
 
     /**
-     * Parse an ISO 8601 month-day string, e.g. "--03-15".
+     * Parse an ISO 8601 month-day string.
+     *
+     * Accepts both:
+     *   - "MM-DD"   (the canonical form per the current Temporal spec)
+     *   - "--MM-DD" (the legacy ISO 8601 form, still accepted for compatibility)
+     *
+     * Optional trailing timezone/annotation suffixes are silently ignored.
      */
     private static function fromString(string $str): self
     {
-        $pattern = '/^--(\d{2})-(\d{2})$/';
-
-        if (!preg_match($pattern, $str, $m)) {
-            throw new InvalidTemporalStringException("Invalid PlainMonthDay string: {$str}");
+        // Accept "--MM-DD" with optional offset/annotation suffix
+        if (preg_match('/^--(\d{2})-(\d{2})(?:[Z+\-\[].*)?$/', $str, $m)) {
+            return new self((int) $m[1], (int) $m[2]);
         }
 
-        return new self((int) $m[1], (int) $m[2]);
+        // Accept "MM-DD" without the legacy "--" prefix
+        if (preg_match('/^(\d{2})-(\d{2})$/', $str, $m)) {
+            return new self((int) $m[1], (int) $m[2]);
+        }
+
+        throw new InvalidTemporalStringException("Invalid PlainMonthDay string: {$str}");
     }
 
     // -------------------------------------------------------------------------
@@ -143,7 +153,7 @@ final class PlainMonthDay
 
     public function __toString(): string
     {
-        return sprintf('--%02d-%02d', $this->month, $this->day);
+        return sprintf('%02d-%02d', $this->month, $this->day);
     }
 
     // -------------------------------------------------------------------------

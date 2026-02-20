@@ -1,0 +1,500 @@
+{
+  "type": "Duration",
+  "method": "total",
+  "source": "test/built-ins/Temporal/Duration/prototype/total",
+  "cases": [
+    {
+      "file": "test/built-ins/Temporal/Duration/prototype/total/balances-days-up-to-both-years-and-months.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "2",
+          "expected": "2",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "-2",
+          "expected": "-2",
+          "description": null
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Duration/prototype/total/incorrect-properties-ignored.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "1",
+          "expected": "1",
+          "description": null
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Duration/prototype/total/no-precision-loss-for-small-units.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "0.002031",
+          "expected": "0.002031",
+          "description": null
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Duration/prototype/total/relativeto-calendar-units-depend-on-relative-date.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "1.354838709677419",
+          "expected": "1.354838709677419",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "1.310344827586207",
+          "expected": "1.310344827586207",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "-1.354838709677419",
+          "expected": "-1.354838709677419",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "-1.310344827586207",
+          "expected": "-1.310344827586207",
+          "description": null
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Duration/prototype/total/relativeto-plaindatetime.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "1.2307194003046997",
+          "expected": "1.2307194003046997",
+          "description": "unit = years"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "14.813309068103722",
+          "expected": "14.813309068103722",
+          "description": "unit = months"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "64.17322587303077",
+          "expected": "64.17322587303077",
+          "description": "unit = weeks"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "449.2125811112154",
+          "expected": "449.2125811112154",
+          "description": "unit = days"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "10781.101946669169",
+          "expected": "10781.101946669169",
+          "description": "unit = hours"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "646866.1168001501",
+          "expected": "646866.1168001501",
+          "description": "unit = minutes"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "38811967.00800901",
+          "expected": "38811967.00800901",
+          "description": "unit = seconds"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "38811967008.00901",
+          "expected": "38811967008.00901",
+          "description": "unit = milliseconds"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "38811967008009.01",
+          "expected": "38811967008009.01",
+          "description": "unit = microseconds"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "38811967008009010",
+          "expected": "38811967008009010",
+          "description": "unit = nanoseconds"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Duration/prototype/total/relativeto-string.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "367",
+          "expected": "367",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "367",
+          "expected": "367",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "367",
+          "expected": "367",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "367",
+          "expected": "367",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "367",
+          "expected": "367",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "367",
+          "expected": "367",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "367",
+          "expected": "367",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "367",
+          "expected": "367",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "367",
+          "expected": "367",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "367",
+          "expected": "367",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "367",
+          "expected": "367",
+          "description": null
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Duration/prototype/total/relativeto-total-of-each-unit.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "5.523868119133847",
+          "expected": "5.523868119133847",
+          "description": "Duration.total results for years relative to 2000-01-01"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "5.523868119133847",
+          "expected": "5.523868119133847",
+          "description": "Duration.total results for years relative to 1972-01-01T00:00:00+00:00[UTC]"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "66.32941495109208",
+          "expected": "66.32941495109208",
+          "description": "Duration.total results for months relative to 2000-01-01"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "66.32941495109208",
+          "expected": "66.32941495109208",
+          "description": "Duration.total results for months relative to 1972-01-01T00:00:00+00:00[UTC]"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "288.3159804976935",
+          "expected": "288.3159804976935",
+          "description": "Duration.total results for weeks relative to 2000-01-01"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "288.3159804976935",
+          "expected": "288.3159804976935",
+          "description": "Duration.total results for weeks relative to 1972-01-01T00:00:00+00:00[UTC]"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "2018.2118634838541",
+          "expected": "2018.2118634838541",
+          "description": "Duration.total results for days relative to 2000-01-01"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "2018.2118634838541",
+          "expected": "2018.2118634838541",
+          "description": "Duration.total results for days relative to 1972-01-01T00:00:00+00:00[UTC]"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "48437.084723612505",
+          "expected": "48437.084723612505",
+          "description": "Duration.total results for hours relative to 2000-01-01"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "48437.084723612505",
+          "expected": "48437.084723612505",
+          "description": "Duration.total results for hours relative to 1972-01-01T00:00:00+00:00[UTC]"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "2906225.08341675",
+          "expected": "2906225.08341675",
+          "description": "Duration.total results for minutes relative to 2000-01-01"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "2906225.08341675",
+          "expected": "2906225.08341675",
+          "description": "Duration.total results for minutes relative to 1972-01-01T00:00:00+00:00[UTC]"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "174373505.005005",
+          "expected": "174373505.005005",
+          "description": "Duration.total results for seconds relative to 2000-01-01"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "174373505.005005",
+          "expected": "174373505.005005",
+          "description": "Duration.total results for seconds relative to 1972-01-01T00:00:00+00:00[UTC]"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "174373505005.005",
+          "expected": "174373505005.005",
+          "description": "Duration.total results for milliseconds relative to 2000-01-01"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "174373505005.005",
+          "expected": "174373505005.005",
+          "description": "Duration.total results for milliseconds relative to 1972-01-01T00:00:00+00:00[UTC]"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "174373505005005",
+          "expected": "174373505005005",
+          "description": "Duration.total results for microseconds relative to 2000-01-01"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "174373505005005",
+          "expected": "174373505005005",
+          "description": "Duration.total results for microseconds relative to 1972-01-01T00:00:00+00:00[UTC]"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "174373505005005000",
+          "expected": "174373505005005000",
+          "description": "Duration.total results for nanoseconds relative to 2000-01-01"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "174373505005005000",
+          "expected": "174373505005005000",
+          "description": "Duration.total results for nanoseconds relative to 1972-01-01T00:00:00+00:00[UTC]"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Duration/prototype/total/rounding-window.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "1.0001141552511414",
+          "expected": "1.0001141552511414",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "1.014367816091954",
+          "expected": "1.0134408602150538",
+          "description": null
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Duration/prototype/total/total-of-each-unit.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "5.211863483854224",
+          "expected": "5.211863483854224",
+          "description": "Duration.total results for days"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "125.08472361250139",
+          "expected": "125.08472361250139",
+          "description": "Duration.total results for hours"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "7505.083416750083",
+          "expected": "7505.083416750083",
+          "description": "Duration.total results for minutes"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "450305.005005005",
+          "expected": "450305.005005005",
+          "description": "Duration.total results for seconds"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "450305005.005005",
+          "expected": "450305005.005005",
+          "description": "Duration.total results for milliseconds"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "450305005005.005",
+          "expected": "450305005005.005",
+          "description": "Duration.total results for microseconds"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "450305005005005",
+          "expected": "450305005005005",
+          "description": "Duration.total results for nanoseconds"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Duration/prototype/total/unit-string-shorthand-string.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "4.21259244970279",
+          "expected": "4.21259244970279",
+          "description": "\"day\" as first argument to total is equivalent to options bag"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "101.10221879286695",
+          "expected": "101.10221879286695",
+          "description": "\"hour\" as first argument to total is equivalent to options bag"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "6066.133127572017",
+          "expected": "6066.133127572017",
+          "description": "\"minute\" as first argument to total is equivalent to options bag"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "363967.987654321",
+          "expected": "363967.987654321",
+          "description": "\"second\" as first argument to total is equivalent to options bag"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "363967987.654321",
+          "expected": "363967987.654321",
+          "description": "\"millisecond\" as first argument to total is equivalent to options bag"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "363967987654.321",
+          "expected": "363967987654.321",
+          "description": "\"microsecond\" as first argument to total is equivalent to options bag"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "363967987654321",
+          "expected": "363967987654321",
+          "description": "\"nanosecond\" as first argument to total is equivalent to options bag"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Duration/prototype/total/zero-duration.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "0",
+          "expected": "0",
+          "description": null
+        }
+      ]
+    }
+  ]
+}

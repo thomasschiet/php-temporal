@@ -1,0 +1,218 @@
+{
+  "type": "Instant",
+  "method": "subtract",
+  "source": "test/built-ins/Temporal/Instant/prototype/subtract",
+  "cases": [
+    {
+      "file": "test/built-ins/Temporal/Instant/prototype/subtract/argument-string-fractional-units-rounding-mode.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "-3712500000000",
+          "expected": "-3712500000000",
+          "description": "positive fractional units rounded with correct rounding mode"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "3712500000000",
+          "expected": "3712500000000",
+          "description": "negative fractional units rounded with correct rounding mode"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Instant/prototype/subtract/argument-string.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "-10790000000000",
+          "expected": "-10790000000000",
+          "description": "epochNanoseconds result"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Instant/prototype/subtract/basic.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "-2952001",
+          "expected": "-2952001",
+          "description": "subtract positive sub-seconds"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "-4002952001",
+          "expected": "-4002952001",
+          "description": "subtract positive seconds"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "-304002952001",
+          "expected": "-304002952001",
+          "description": "subtract positive minutes"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "-21904002952001",
+          "expected": "-21904002952001",
+          "description": "subtract positive hours"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "3052001",
+          "expected": "3052001",
+          "description": "subtract negative sub-seconds"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "4003052001",
+          "expected": "4003052001",
+          "description": "subtract negative seconds"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "304003052001",
+          "expected": "304003052001",
+          "description": "subtract negative minutes"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "21904003052001",
+          "expected": "21904003052001",
+          "description": "subtract negative hours"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Instant/prototype/subtract/minimum-maximum-instant.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "-8640000000000000000000",
+          "expected": "-8640000000000000000000",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "8640000000000000000000",
+          "expected": "8640000000000000000000",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "-8639999999999999999999",
+          "expected": "-8639999999999999999999",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "8639999999999999999999",
+          "expected": "8639999999999999999999",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "8640000000000000000000",
+          "expected": "8640000000000000000000",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "8640000000000000000000",
+          "expected": "8640000000000000000000",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "8640000000000000000000",
+          "expected": "8640000000000000000000",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "8640000000000000000000",
+          "expected": "8640000000000000000000",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "-8640000000000000000000",
+          "expected": "-8640000000000000000000",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "-8640000000000000000000",
+          "expected": "-8640000000000000000000",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "-8640000000000000000000",
+          "expected": "-8640000000000000000000",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "-8640000000000000000000",
+          "expected": "-8640000000000000000000",
+          "description": null
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Instant/prototype/subtract/subtract-large-subseconds.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "1573959448492871587",
+          "expected": "1573959448492871587",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "1591973847002353569",
+          "expected": "1591973847002353569",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "-7424232606993378422",
+          "expected": "-7424232606993378422",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "10590165902488603578",
+          "expected": "10590165902488603578",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "-7424232606993378398",
+          "expected": "-7424232606993378398",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "10590165902488603554",
+          "expected": "10590165902488603554",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "-9007199254740990976",
+          "expected": "-9007199254740990976",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "9007199254740990976",
+          "expected": "9007199254740990976",
+          "description": null
+        }
+      ]
+    }
+  ]
+}

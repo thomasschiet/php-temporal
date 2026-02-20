@@ -1,0 +1,281 @@
+{
+  "type": "PlainDate",
+  "method": "equals",
+  "source": "test/built-ins/Temporal/PlainDate/prototype/equals",
+  "cases": [
+    {
+      "file": "test/built-ins/Temporal/PlainDate/prototype/equals/argument-leap-second.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "leap second is a valid ISO string for PlainDate"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "second: 60 is ignored in property bag for PlainDate"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDate/prototype/equals/argument-string-calendar-annotation.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "calendar annotation (without time or time zone)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "calendar annotation (with time zone and no time)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "calendar annotation (without time zone)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "calendar annotation (with time zone)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "calendar annotation (with ! and no time zone)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "calendar annotation (with ! and time zone)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "calendar annotation (second annotation ignored)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDate/prototype/equals/argument-string-date-with-utc-offset.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "\"2000-05-02T00+00:00\" is a valid UTC offset with time for PlainDate"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "\"2000-05-02T00+00:00[UTC]\" is a valid UTC offset with time for PlainDate"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "\"2000-05-02T00+00:00[!UTC]\" is a valid UTC offset with time for PlainDate"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "\"2000-05-02T00-02:30[America/St_Johns]\" is a valid UTC offset with time for PlainDate"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDate/prototype/equals/argument-string-time-separators.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "variant time separators (uppercase T)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "variant time separators (lowercase T)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "variant time separators (space between date and time)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDate/prototype/equals/argument-string-time-zone-annotation.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "time zone annotation (named, with no time)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "time zone annotation (named, with ! and no time)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "time zone annotation (numeric, with no time)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "time zone annotation (numeric, with ! and no time)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "time zone annotation (named, with no offset)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "time zone annotation (named, with ! and no offset)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "time zone annotation (numeric, with no offset)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "time zone annotation (numeric, with ! and no offset)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "time zone annotation (named, with offset)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "time zone annotation (named, with offset and !)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "time zone annotation (numeric, with offset)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "time zone annotation (numeric, with offset and !)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDate/prototype/equals/argument-string-unknown-annotation.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "unknown annotation (without time)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "unknown annotation (alone)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "unknown annotation (with time zone)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "unknown annotation (with calendar)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "unknown annotation (with time zone and calendar)"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "unknown annotation (with another unknown annotation)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDate/prototype/equals/argument-string.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "same date"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "false",
+          "expected": "false",
+          "description": "different date"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDate/prototype/equals/basic.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "false",
+          "expected": "false",
+          "description": "different dates"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "same dates"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "true",
+          "expected": "true",
+          "description": "same objects"
+        }
+      ]
+    }
+  ]
+}

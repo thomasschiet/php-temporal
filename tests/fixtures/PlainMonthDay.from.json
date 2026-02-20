@@ -1,0 +1,592 @@
+{
+  "type": "PlainMonthDay",
+  "method": "from",
+  "source": "test/built-ins/Temporal/PlainMonthDay/from",
+  "cases": [
+    {
+      "file": "test/built-ins/Temporal/PlainMonthDay/from/argument-plainmonthday.js",
+      "assertions": [
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": "PlainMonthDay is copied"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "iso8601",
+          "expected": "iso8601",
+          "description": "Calendar is copied"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainMonthDay/from/argument-string-calendar-annotation.js",
+      "assertions": [
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": "calendar annotation (without time zone)"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": "calendar annotation (with time zone)"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": "calendar annotation (with ! and no time zone)"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": "calendar annotation (with ! and time zone)"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": "calendar annotation (second annotation ignored)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainMonthDay/from/argument-string-date-with-utc-offset.js",
+      "assertions": [
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": "\"05-02[Asia/Katmandu]\" is a valid UTC offset with time for PlainMonthDay"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": "\"05-02[!Asia/Katmandu]\" is a valid UTC offset with time for PlainMonthDay"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": "\"05-02[u-ca=iso8601]\" is a valid UTC offset with time for PlainMonthDay"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": "\"05-02[Asia/Tokyo][u-ca=iso8601]\" is a valid UTC offset with time for PlainMonthDay"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": "\"--05-02[Asia/Katmandu]\" is a valid UTC offset with time for PlainMonthDay"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": "\"--05-02[!Asia/Katmandu]\" is a valid UTC offset with time for PlainMonthDay"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": "\"--05-02[u-ca=iso8601]\" is a valid UTC offset with time for PlainMonthDay"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": "\"--05-02[Asia/Tokyo][u-ca=iso8601]\" is a valid UTC offset with time for PlainMonthDay"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": "\"2000-05-02T00+00:00\" is a valid UTC offset with time for PlainMonthDay"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": "\"2000-05-02T00+00:00[UTC]\" is a valid UTC offset with time for PlainMonthDay"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": "\"2000-05-02T00-02:30[America/St_Johns]\" is a valid UTC offset with time for PlainMonthDay"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainMonthDay/from/argument-string-time-separators.js",
+      "assertions": [
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": "variant time separators (uppercase T)"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": "variant time separators (lowercase T)"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": "variant time separators (space between date and time)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainMonthDay/from/argument-string-time-zone-annotation.js",
+      "assertions": [
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": "time zone annotation (named, with no offset)"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": "time zone annotation (named, with ! and no offset)"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": "time zone annotation (numeric, with no offset)"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": "time zone annotation (numeric, with ! and no offset)"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": "time zone annotation (named, with offset)"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": "time zone annotation (named, with offset and !)"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": "time zone annotation (numeric, with offset)"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": "time zone annotation (numeric, with offset and !)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainMonthDay/from/argument-string-unknown-annotation.js",
+      "assertions": [
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": "unknown annotation (alone)"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": "unknown annotation (with time zone)"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": "unknown annotation (with calendar)"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": "unknown annotation (with time zone and calendar)"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": "unknown annotation (with another unknown annotation)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainMonthDay/from/constrain-to-leap-day.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "29",
+          "expected": "29",
+          "description": "M02-30 should constrain to 29, not 28"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainMonthDay/from/fields-leap-day.js",
+      "assertions": [
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "02-29",
+          "expected": {
+            "day": 29
+          },
+          "description": "from reject string"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "02-29",
+          "expected": {
+            "day": 29
+          },
+          "description": "from reject with monthCode"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "02-29",
+          "expected": {
+            "day": 29
+          },
+          "description": "from reject without year"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "02-29",
+          "expected": {
+            "day": 29
+          },
+          "description": "from reject with leap year"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "02-29",
+          "expected": {
+            "day": 29
+          },
+          "description": "from constrain string"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "02-29",
+          "expected": {
+            "day": 29
+          },
+          "description": "from constrain with monthCode"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "02-29",
+          "expected": {
+            "day": 29
+          },
+          "description": "from constrain without year"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "02-29",
+          "expected": {
+            "day": 29
+          },
+          "description": "from constrain with leap year"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "02-28",
+          "expected": {
+            "day": 28
+          },
+          "description": "from constrain with non-leap year"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "02-28",
+          "expected": {
+            "day": 28
+          },
+          "description": "from constrain with non-leap year and explicit calendar"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainMonthDay/from/fields-object.js",
+      "assertions": [
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "10-01",
+          "expected": {
+            "day": 1
+          },
+          "description": "from option bag with monthCode"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "iso8601",
+          "expected": "iso8601",
+          "description": "from option bag with monthCode calendar"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "10-01",
+          "expected": {
+            "day": 1
+          },
+          "description": "from option bag with year, monthCode"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "iso8601",
+          "expected": "iso8601",
+          "description": "from option bag with year, monthCode calendar"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "10-01",
+          "expected": {
+            "day": 1
+          },
+          "description": "from option bag with year, month"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "iso8601",
+          "expected": "iso8601",
+          "description": "from option bag with year, month calendar"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "10-01",
+          "expected": {
+            "day": 1
+          },
+          "description": "from option bag with year, month"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "iso8601",
+          "expected": "iso8601",
+          "description": "from option bag with year, month calendar"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "10-01",
+          "expected": {
+            "day": 1
+          },
+          "description": "from option bag with plural 'days'"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "iso8601",
+          "expected": "iso8601",
+          "description": "from option bag with plural 'days' calendar"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "10-01",
+          "expected": {
+            "day": 1
+          },
+          "description": "from PlainMonthDay object"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "iso8601",
+          "expected": "iso8601",
+          "description": "from PlainMonthDay object calendar"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "10-01",
+          "expected": {
+            "day": 1
+          },
+          "description": "from PlainDate object"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "iso8601",
+          "expected": "iso8601",
+          "description": "from PlainDate object calendar"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "10-01",
+          "expected": {
+            "day": 1
+          },
+          "description": "from option bag with monthCode and explicit ISO calendar"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "iso8601",
+          "expected": "iso8601",
+          "description": "from option bag with monthCode and explicit ISO calendar calendar"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "10-01",
+          "expected": {
+            "day": 1
+          },
+          "description": "from option bag with month and explicit ISO calendar"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "iso8601",
+          "expected": "iso8601",
+          "description": "from option bag with month and explicit ISO calendar calendar"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainMonthDay/from/leap-second.js",
+      "assertions": [
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "12-31",
+          "expected": {
+            "day": 31
+          },
+          "description": "leap second is a valid ISO string for PlainMonthDay"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "12-31",
+          "expected": {
+            "day": 31
+          },
+          "description": "leap second is a valid ISO string for PlainMonthDay"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "12-31",
+          "expected": {
+            "day": 31
+          },
+          "description": "second: 60 is ignored in property bag for PlainMonthDay"
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "12-31",
+          "expected": {
+            "day": 31
+          },
+          "description": "second: 60 is ignored in property bag for PlainMonthDay even with overflow: reject"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainMonthDay/from/one-of-era-erayear-undefined.js",
+      "assertions": [
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": null
+        },
+        {
+          "kind": "assertPlainMonthDay",
+          "actual": "05-02",
+          "expected": {
+            "day": 2
+          },
+          "description": null
+        }
+      ]
+    }
+  ]
+}

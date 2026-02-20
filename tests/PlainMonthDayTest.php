@@ -147,10 +147,12 @@ final class PlainMonthDayTest extends TestCase
         PlainMonthDay::from('not-a-month-day');
     }
 
-    public function testFromStringInvalidFormat(): void
+    public function testFromStringCanonicalFormat(): void
     {
-        $this->expectException(InvalidArgumentException::class);
-        PlainMonthDay::from('03-15'); // Missing leading --
+        // "MM-DD" without "--" prefix is the canonical format per the Temporal spec
+        $md = PlainMonthDay::from('03-15');
+        $this->assertSame(3, $md->month);
+        $this->assertSame(15, $md->day);
     }
 
     public function testFromStringInvalidDay(): void
@@ -285,30 +287,38 @@ final class PlainMonthDayTest extends TestCase
     public function testToStringBasic(): void
     {
         $md = new PlainMonthDay(3, 15);
-        $this->assertSame('--03-15', (string) $md);
+        $this->assertSame('03-15', (string) $md);
     }
 
     public function testToStringJanuaryFirst(): void
     {
         $md = new PlainMonthDay(1, 1);
-        $this->assertSame('--01-01', (string) $md);
+        $this->assertSame('01-01', (string) $md);
     }
 
     public function testToStringDecember31(): void
     {
         $md = new PlainMonthDay(12, 31);
-        $this->assertSame('--12-31', (string) $md);
+        $this->assertSame('12-31', (string) $md);
     }
 
     public function testToStringFebruary29(): void
     {
         $md = new PlainMonthDay(2, 29);
-        $this->assertSame('--02-29', (string) $md);
+        $this->assertSame('02-29', (string) $md);
     }
 
-    public function testRoundTripFromString(): void
+    public function testRoundTripFromLegacyString(): void
     {
-        $original = '--06-15';
+        // Legacy "--MM-DD" format is still accepted as input
+        $md = PlainMonthDay::from('--06-15');
+        // But toString() returns the canonical "MM-DD" format
+        $this->assertSame('06-15', (string) $md);
+    }
+
+    public function testRoundTripFromCanonicalString(): void
+    {
+        $original = '06-15';
         $md = PlainMonthDay::from($original);
         $this->assertSame($original, (string) $md);
     }

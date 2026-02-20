@@ -7,6 +7,10 @@
     <testsuites>
         <testsuite name="Temporal">
             <directory>tests</directory>
+            <exclude>tests/Test262Test.php</exclude>
+        </testsuite>
+        <testsuite name="test262">
+            <file>tests/Test262Test.php</file>
         </testsuite>
     </testsuites>
     <source>

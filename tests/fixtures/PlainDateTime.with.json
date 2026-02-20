@@ -1,0 +1,1045 @@
+{
+  "type": "PlainDateTime",
+  "method": "with",
+  "source": "test/built-ins/Temporal/PlainDateTime/prototype/with",
+  "cases": [
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/with/basic-year-month-day.js",
+      "assertions": [
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2000-01-01T12:34:00",
+          "expected": {
+            "year": 2000,
+            "month": 1,
+            "day": 1,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "year2000 after setting day to 1"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2000-01-01T12:34:00",
+          "expected": {
+            "year": 2000,
+            "month": 1,
+            "day": 1,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "year2000 after setting month to 1"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2220-01-01T12:34:00",
+          "expected": {
+            "year": 2220,
+            "month": 1,
+            "day": 1,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "year2000 after setting year to 2220"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2019-01-01T12:34:00",
+          "expected": {
+            "year": 2019,
+            "month": 1,
+            "day": 1,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "year2000 after setting year to 2019"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2019-05-01T12:34:00",
+          "expected": {
+            "year": 2019,
+            "month": 5,
+            "day": 1,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "year2000 after setting month to 5"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2019-05-17T12:34:00",
+          "expected": {
+            "year": 2019,
+            "month": 5,
+            "day": 17,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "year2000 after setting day to 17"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "1976-11-01T12:34:00",
+          "expected": {
+            "year": 1976,
+            "month": 11,
+            "day": 1,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "year1976 after setting day to 1"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "1976-01-01T12:34:00",
+          "expected": {
+            "year": 1976,
+            "month": 1,
+            "day": 1,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "year1976 after setting month to 1"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2220-01-01T12:34:00",
+          "expected": {
+            "year": 2220,
+            "month": 1,
+            "day": 1,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "year1976 after setting year to 2220"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2019-11-18T12:34:00",
+          "expected": {
+            "year": 2019,
+            "month": 11,
+            "day": 18,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "year1976 after setting year to 2019"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2019-05-18T12:34:00",
+          "expected": {
+            "year": 2019,
+            "month": 5,
+            "day": 18,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "year1976 after setting month to 5"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2019-05-17T12:34:00",
+          "expected": {
+            "year": 2019,
+            "month": 5,
+            "day": 17,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "year1976 after setting day to 17"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "0001-01-01T12:34:00",
+          "expected": {
+            "year": 1,
+            "month": 1,
+            "day": 1,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "year1 after setting day to 1"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "0001-01-01T12:34:00",
+          "expected": {
+            "year": 1,
+            "month": 1,
+            "day": 1,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "year1 after setting month to 1"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2220-01-01T12:34:00",
+          "expected": {
+            "year": 2220,
+            "month": 1,
+            "day": 1,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "year1 after setting year to 2220"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2019-01-01T12:34:00",
+          "expected": {
+            "year": 2019,
+            "month": 1,
+            "day": 1,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "year1 after setting year to 2019"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2019-05-01T12:34:00",
+          "expected": {
+            "year": 2019,
+            "month": 5,
+            "day": 1,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "year1 after setting month to 5"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2019-05-17T12:34:00",
+          "expected": {
+            "year": 2019,
+            "month": 5,
+            "day": 17,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "year1 after setting day to 17"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/with/basic.js",
+      "assertions": [
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2019-11-18T15:23:30.123456789",
+          "expected": {
+            "year": 2019,
+            "month": 11,
+            "day": 18,
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "with year works"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "1976-05-18T15:23:30.123456789",
+          "expected": {
+            "year": 1976,
+            "month": 5,
+            "day": 18,
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "with month works"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "1976-05-18T15:23:30.123456789",
+          "expected": {
+            "year": 1976,
+            "month": 5,
+            "day": 18,
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "with month code works"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "1976-11-05T15:23:30.123456789",
+          "expected": {
+            "year": 1976,
+            "month": 11,
+            "day": 5,
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "with day works"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "1976-11-18T05:23:30.123456789",
+          "expected": {
+            "year": 1976,
+            "month": 11,
+            "day": 18,
+            "hour": 5,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "with hour works"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "1976-11-18T15:05:30.123456789",
+          "expected": {
+            "year": 1976,
+            "month": 11,
+            "day": 18,
+            "hour": 15,
+            "minute": 5,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "with minute works"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "1976-11-18T15:23:05.123456789",
+          "expected": {
+            "year": 1976,
+            "month": 11,
+            "day": 18,
+            "hour": 15,
+            "minute": 23,
+            "second": 5,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "with second works"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "1976-11-18T15:23:30.005456789",
+          "expected": {
+            "year": 1976,
+            "month": 11,
+            "day": 18,
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 5,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "with millisecond works"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "1976-11-18T15:23:30.123005789",
+          "expected": {
+            "year": 1976,
+            "month": 11,
+            "day": 18,
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 5,
+            "nanosecond": 789
+          },
+          "description": "with microsecond works"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "1976-11-18T15:23:30.123456005",
+          "expected": {
+            "year": 1976,
+            "month": 11,
+            "day": 18,
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 5
+          },
+          "description": "with nanosecond works"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "1976-05-18T15:23:15.123456789",
+          "expected": {
+            "year": 1976,
+            "month": 5,
+            "day": 18,
+            "hour": 15,
+            "minute": 23,
+            "second": 15,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "with month and second works"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/with/constrain-day.js",
+      "assertions": [
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2019-02-28T12:34:00",
+          "expected": {
+            "year": 2019,
+            "month": 2,
+            "day": 28,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "common-year Feb constrains to 28"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2019-03-31T12:34:00",
+          "expected": {
+            "year": 2019,
+            "month": 3,
+            "day": 31,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "common-year Mar does not reject 31"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2019-04-30T12:34:00",
+          "expected": {
+            "year": 2019,
+            "month": 4,
+            "day": 30,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "common-year Apr constrains to 30"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2019-05-31T12:34:00",
+          "expected": {
+            "year": 2019,
+            "month": 5,
+            "day": 31,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "common-year May does not reject 31"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2019-06-30T12:34:00",
+          "expected": {
+            "year": 2019,
+            "month": 6,
+            "day": 30,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "common-year Jun constrains to 30"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2019-07-31T12:34:00",
+          "expected": {
+            "year": 2019,
+            "month": 7,
+            "day": 31,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "common-year Jul does not reject 31"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2019-08-31T12:34:00",
+          "expected": {
+            "year": 2019,
+            "month": 8,
+            "day": 31,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "common-year Aug does not reject 31"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2019-09-30T12:34:00",
+          "expected": {
+            "year": 2019,
+            "month": 9,
+            "day": 30,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "common-year Sep constrains to 30"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2019-10-31T12:34:00",
+          "expected": {
+            "year": 2019,
+            "month": 10,
+            "day": 31,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "common-year Oct does not reject 31"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2019-11-30T12:34:00",
+          "expected": {
+            "year": 2019,
+            "month": 11,
+            "day": 30,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "common-year Nov constrains to 30"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2019-12-31T12:34:00",
+          "expected": {
+            "year": 2019,
+            "month": 12,
+            "day": 31,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "common-year Dec does not reject 31"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2016-02-29T12:34:00",
+          "expected": {
+            "year": 2016,
+            "month": 2,
+            "day": 29,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "leap-year Feb constrains to 29"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2016-03-31T12:34:00",
+          "expected": {
+            "year": 2016,
+            "month": 3,
+            "day": 31,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "leap-year Mar does not reject 31"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2016-04-30T12:34:00",
+          "expected": {
+            "year": 2016,
+            "month": 4,
+            "day": 30,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "leap-year Apr constrains to 30"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2016-05-31T12:34:00",
+          "expected": {
+            "year": 2016,
+            "month": 5,
+            "day": 31,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "leap-year May does not reject 31"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2016-06-30T12:34:00",
+          "expected": {
+            "year": 2016,
+            "month": 6,
+            "day": 30,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "leap-year Jun constrains to 30"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2016-07-31T12:34:00",
+          "expected": {
+            "year": 2016,
+            "month": 7,
+            "day": 31,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "leap-year Jul does not reject 31"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2016-08-31T12:34:00",
+          "expected": {
+            "year": 2016,
+            "month": 8,
+            "day": 31,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "leap-year Aug does not reject 31"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2016-09-30T12:34:00",
+          "expected": {
+            "year": 2016,
+            "month": 9,
+            "day": 30,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "leap-year Sep constrains to 30"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2016-10-31T12:34:00",
+          "expected": {
+            "year": 2016,
+            "month": 10,
+            "day": 31,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "leap-year Oct does not reject 31"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2016-11-30T12:34:00",
+          "expected": {
+            "year": 2016,
+            "month": 11,
+            "day": 30,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "leap-year Nov constrains to 30"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2016-12-31T12:34:00",
+          "expected": {
+            "year": 2016,
+            "month": 12,
+            "day": 31,
+            "hour": 12,
+            "minute": 34,
+            "second": 0,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "leap-year Dec does not reject 31"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/with/copy-properties-not-undefined.js",
+      "assertions": [
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "2006-01-08T10:42:58",
+          "expected": {
+            "year": 2006,
+            "month": 1,
+            "day": 8,
+            "hour": 10,
+            "minute": 42,
+            "second": 58,
+            "millisecond": 0,
+            "microsecond": 0,
+            "nanosecond": 0
+          },
+          "description": "only the properties that are present and defined in the plain object are copied"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/with/multiple-unrecognized-properties-ignored.js",
+      "assertions": [
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "1976-12-18T15:23:30.123456789",
+          "expected": {
+            "year": 1976,
+            "month": 12,
+            "day": 18,
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "unrecognized property (years) gets ignored"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "1976-12-18T15:23:30.123456789",
+          "expected": {
+            "year": 1976,
+            "month": 12,
+            "day": 18,
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "unrecognized property (months) gets ignored"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "1976-12-18T15:23:30.123456789",
+          "expected": {
+            "year": 1976,
+            "month": 12,
+            "day": 18,
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "unrecognized property (days) gets ignored"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "1976-12-18T15:23:30.123456789",
+          "expected": {
+            "year": 1976,
+            "month": 12,
+            "day": 18,
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "unrecognized property (hours) gets ignored"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "1976-12-18T15:23:30.123456789",
+          "expected": {
+            "year": 1976,
+            "month": 12,
+            "day": 18,
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "unrecognized property (minutes) gets ignored"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "1976-12-18T15:23:30.123456789",
+          "expected": {
+            "year": 1976,
+            "month": 12,
+            "day": 18,
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "unrecognized property (seconds) gets ignored"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "1976-12-18T15:23:30.123456789",
+          "expected": {
+            "year": 1976,
+            "month": 12,
+            "day": 18,
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "unrecognized property (milliseconds) gets ignored"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "1976-12-18T15:23:30.123456789",
+          "expected": {
+            "year": 1976,
+            "month": 12,
+            "day": 18,
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "unrecognized property (microseconds) gets ignored"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "1976-12-18T15:23:30.123456789",
+          "expected": {
+            "year": 1976,
+            "month": 12,
+            "day": 18,
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "unrecognized property (nanoseconds) gets ignored"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainDateTime/prototype/with/options-empty.js",
+      "assertions": [
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "1976-11-30T15:23:30.123456789",
+          "expected": {
+            "year": 1976,
+            "month": 11,
+            "day": 30,
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "options may be empty object"
+        },
+        {
+          "kind": "assertPlainDateTime",
+          "actual": "1976-11-30T15:23:30.123456789",
+          "expected": {
+            "year": 1976,
+            "month": 11,
+            "day": 30,
+            "hour": 15,
+            "minute": 23,
+            "second": 30,
+            "millisecond": 123,
+            "microsecond": 456,
+            "nanosecond": 789
+          },
+          "description": "read empty options from function object"
+        }
+      ]
+    }
+  ]
+}

@@ -11,6 +11,6 @@ namespace Temporal\Exception;
  * error thrown by the Temporal library, or catch a specific subtype for
  * finer-grained error handling.
  */
-interface TemporalException
+interface TemporalException extends \Throwable
 {
 }

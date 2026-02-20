@@ -1,0 +1,1594 @@
+{
+  "type": "PlainYearMonth",
+  "method": "since",
+  "source": "test/built-ins/Temporal/PlainYearMonth/prototype/since",
+  "cases": [
+    {
+      "file": "test/built-ins/Temporal/PlainYearMonth/prototype/since/argument-casting.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P18Y7M",
+          "expected": {
+            "years": 18,
+            "months": 7,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "Casts object argument"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P18Y7M",
+          "expected": {
+            "years": 18,
+            "months": 7,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "Casts string argument"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainYearMonth/prototype/since/argument-string-calendar-annotation.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "calendar annotation (without time zone)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "calendar annotation (with time zone)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "calendar annotation (with ! and no time zone)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "calendar annotation (with ! and time zone)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "calendar annotation (second annotation ignored)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainYearMonth/prototype/since/argument-string-date-with-utc-offset.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "\"2019-12[Africa/Abidjan]\" is a valid UTC offset with time for PlainYearMonth"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "\"2019-12[!Africa/Abidjan]\" is a valid UTC offset with time for PlainYearMonth"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "\"2019-12[u-ca=iso8601]\" is a valid UTC offset with time for PlainYearMonth"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "\"2019-12[Africa/Abidjan][u-ca=iso8601]\" is a valid UTC offset with time for PlainYearMonth"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "\"2019-12-15T00+00:00\" is a valid UTC offset with time for PlainYearMonth"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "\"2019-12-15T00+00:00[UTC]\" is a valid UTC offset with time for PlainYearMonth"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "\"2019-12-15T00+00:00[!UTC]\" is a valid UTC offset with time for PlainYearMonth"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "\"2019-12-15T00-02:30[America/St_Johns]\" is a valid UTC offset with time for PlainYearMonth"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainYearMonth/prototype/since/argument-string-time-separators.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "variant time separators (uppercase T)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "variant time separators (lowercase T)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "variant time separators (space between date and time)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainYearMonth/prototype/since/argument-string-time-zone-annotation.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "time zone annotation (named, with no offset)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "time zone annotation (named, with ! and no offset)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "time zone annotation (numeric, with no offset)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "time zone annotation (numeric, with ! and no offset)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "time zone annotation (named, with offset)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "time zone annotation (named, with offset and !)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "time zone annotation (numeric, with offset)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "time zone annotation (numeric, with offset and !)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainYearMonth/prototype/since/argument-string-unknown-annotation.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "unknown annotation (alone)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "unknown annotation (with time zone)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "unknown annotation (with calendar)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "unknown annotation (with time zone and calendar)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "unknown annotation (with another unknown annotation)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainYearMonth/prototype/since/blank-result.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "blank result"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainYearMonth/prototype/since/largestunit-auto.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P1Y1M",
+          "expected": {
+            "years": 1,
+            "months": 1,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "auto largestUnit is year (pos)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P1Y1M",
+          "expected": {
+            "years": -1,
+            "months": -1,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "auto largestUnit is year (neg)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainYearMonth/prototype/since/largestunit-months.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P13M",
+          "expected": {
+            "years": 0,
+            "months": 13,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "largestUnit is months (pos)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P13M",
+          "expected": {
+            "years": 0,
+            "months": -13,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "largestUnit is months (neg)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainYearMonth/prototype/since/largestunit-years.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P1Y1M",
+          "expected": {
+            "years": 1,
+            "months": 1,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "largestUnit is years (pos)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P1Y1M",
+          "expected": {
+            "years": -1,
+            "months": -1,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "largestUnit is years (neg)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainYearMonth/prototype/since/leap-second.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "leap second is a valid ISO string for PlainYearMonth"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "second: 60 is ignored in property bag for PlainYearMonth"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainYearMonth/prototype/since/round-cross-unit-boundary.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "-P2Y",
+          "expected": {
+            "years": -2,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "-1 year -12 months balances to -2 years"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainYearMonth/prototype/since/roundingincrement-as-expected.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P4Y",
+          "expected": {
+            "years": 4,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to an increment of years"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P2Y5M",
+          "expected": {
+            "years": 2,
+            "months": 5,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to an increment of months mixed with years"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P30M",
+          "expected": {
+            "years": 0,
+            "months": 30,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to an increment of pure months"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainYearMonth/prototype/since/roundingmode-ceil.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P3Y",
+          "expected": {
+            "years": 3,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (roundingMode = ceil, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P2Y",
+          "expected": {
+            "years": -2,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (rounding mode = ceil, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P2Y8M",
+          "expected": {
+            "years": 2,
+            "months": 8,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (roundingMode = ceil, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P2Y8M",
+          "expected": {
+            "years": -2,
+            "months": -8,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (rounding mode = ceil, negative case)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainYearMonth/prototype/since/roundingmode-expand.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P3Y",
+          "expected": {
+            "years": 3,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (roundingMode = expand, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P3Y",
+          "expected": {
+            "years": -3,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (rounding mode = expand, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P2Y8M",
+          "expected": {
+            "years": 2,
+            "months": 8,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (roundingMode = expand, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P2Y8M",
+          "expected": {
+            "years": -2,
+            "months": -8,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (rounding mode = expand, negative case)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainYearMonth/prototype/since/roundingmode-floor.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P2Y",
+          "expected": {
+            "years": 2,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (roundingMode = floor, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P3Y",
+          "expected": {
+            "years": -3,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (rounding mode = floor, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P2Y8M",
+          "expected": {
+            "years": 2,
+            "months": 8,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (roundingMode = floor, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P2Y8M",
+          "expected": {
+            "years": -2,
+            "months": -8,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (rounding mode = floor, negative case)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainYearMonth/prototype/since/roundingmode-halfCeil.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P3Y",
+          "expected": {
+            "years": 3,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (roundingMode = halfCeil, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P3Y",
+          "expected": {
+            "years": -3,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (rounding mode = halfCeil, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P2Y8M",
+          "expected": {
+            "years": 2,
+            "months": 8,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (roundingMode = halfCeil, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P2Y8M",
+          "expected": {
+            "years": -2,
+            "months": -8,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (rounding mode = halfCeil, negative case)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainYearMonth/prototype/since/roundingmode-halfEven.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P3Y",
+          "expected": {
+            "years": 3,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (roundingMode = halfEven, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P3Y",
+          "expected": {
+            "years": -3,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (rounding mode = halfEven, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P2Y8M",
+          "expected": {
+            "years": 2,
+            "months": 8,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (roundingMode = halfEven, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P2Y8M",
+          "expected": {
+            "years": -2,
+            "months": -8,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (rounding mode = halfEven, negative case)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainYearMonth/prototype/since/roundingmode-halfExpand.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P3Y",
+          "expected": {
+            "years": 3,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (roundingMode = halfExpand, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P3Y",
+          "expected": {
+            "years": -3,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (rounding mode = halfExpand, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P2Y8M",
+          "expected": {
+            "years": 2,
+            "months": 8,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (roundingMode = halfExpand, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P2Y8M",
+          "expected": {
+            "years": -2,
+            "months": -8,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (rounding mode = halfExpand, negative case)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainYearMonth/prototype/since/roundingmode-halfFloor.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P3Y",
+          "expected": {
+            "years": 3,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (roundingMode = halfFloor, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P3Y",
+          "expected": {
+            "years": -3,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (rounding mode = halfFloor, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P2Y8M",
+          "expected": {
+            "years": 2,
+            "months": 8,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (roundingMode = halfFloor, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P2Y8M",
+          "expected": {
+            "years": -2,
+            "months": -8,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (rounding mode = halfFloor, negative case)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainYearMonth/prototype/since/roundingmode-halfTrunc.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P3Y",
+          "expected": {
+            "years": 3,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (roundingMode = halfTrunc, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P3Y",
+          "expected": {
+            "years": -3,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (rounding mode = halfTrunc, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P2Y8M",
+          "expected": {
+            "years": 2,
+            "months": 8,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (roundingMode = halfTrunc, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P2Y8M",
+          "expected": {
+            "years": -2,
+            "months": -8,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (rounding mode = halfTrunc, negative case)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainYearMonth/prototype/since/roundingmode-trunc.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P2Y",
+          "expected": {
+            "years": 2,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (roundingMode = trunc, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P2Y",
+          "expected": {
+            "years": -2,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to years (rounding mode = trunc, negative case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P2Y8M",
+          "expected": {
+            "years": 2,
+            "months": 8,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (roundingMode = trunc, positive case)"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P2Y8M",
+          "expected": {
+            "years": -2,
+            "months": -8,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "rounds to months (rounding mode = trunc, negative case)"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainYearMonth/prototype/since/roundingmode-undefined.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P5Y",
+          "expected": {
+            "years": 5,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "default roundingMode is trunc"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P5Y",
+          "expected": {
+            "years": 5,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "default roundingMode is trunc"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P5Y",
+          "expected": {
+            "years": 5,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "default roundingMode is trunc"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P5Y",
+          "expected": {
+            "years": 5,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "default roundingMode is trunc"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainYearMonth/prototype/since/symmetry.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "P18Y7M",
+          "expected": {
+            "years": 18,
+            "months": 7,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "Since is inverse of until"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/PlainYearMonth/prototype/since/throws-if-year-outside-valid-iso-range.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "minYearMonth.since(minYearMonth)"
+        }
+      ]
+    }
+  ]
+}

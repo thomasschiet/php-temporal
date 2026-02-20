@@ -1,0 +1,247 @@
+{
+  "type": "Instant",
+  "method": "add",
+  "source": "test/built-ins/Temporal/Instant/prototype/add",
+  "cases": [
+    {
+      "file": "test/built-ins/Temporal/Instant/prototype/add/add-large-subseconds.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "1591973847002353569",
+          "expected": "1591973847002353569",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "1573959448492871587",
+          "expected": "1573959448492871587",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "10590165902488603578",
+          "expected": "10590165902488603578",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "-7424232606993378422",
+          "expected": "-7424232606993378422",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "10590165902488603554",
+          "expected": "10590165902488603554",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "-7424232606993378398",
+          "expected": "-7424232606993378398",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "9007199254740990976",
+          "expected": "9007199254740990976",
+          "description": null
+        },
+        {
+          "kind": "sameValue",
+          "actual": "-9007199254740990976",
+          "expected": "-9007199254740990976",
+          "description": null
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Instant/prototype/add/argument-string-fractional-units-rounding-mode.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "3712500000000",
+          "expected": "3712500000000",
+          "description": "positive fractional units rounded with correct rounding mode"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "-3712500000000",
+          "expected": "-3712500000000",
+          "description": "negative fractional units rounded with correct rounding mode"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Instant/prototype/add/argument-string.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "10810000000000",
+          "expected": "10810000000000",
+          "description": "epochNanoseconds result"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Instant/prototype/add/basic.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "3052001",
+          "expected": "3052001",
+          "description": "add positive sub-seconds"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "4003052001",
+          "expected": "4003052001",
+          "description": "add positive seconds"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "304003052001",
+          "expected": "304003052001",
+          "description": "add positive minutes"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "21904003052001",
+          "expected": "21904003052001",
+          "description": "add positive hours"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "-2952001",
+          "expected": "-2952001",
+          "description": "add negative sub-seconds"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "-4002952001",
+          "expected": "-4002952001",
+          "description": "add negative seconds"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "-304002952001",
+          "expected": "-304002952001",
+          "description": "add negative minutes"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "-21904002952001",
+          "expected": "-21904002952001",
+          "description": "add negative hours"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Instant/prototype/add/cross-epoch.js",
+      "assertions": [
+        {
+          "kind": "assertInstant",
+          "actual": "1969-12-15T12:23:45.678900434Z",
+          "expected": "1969-12-15T12:23:45.678900434Z",
+          "description": "(1969-12-25T12:23:45.678901234Z).subtract({ hours: 240, nanoseconds: 800 }) = 1969-12-15T12:23:45.678900434Z"
+        },
+        {
+          "kind": "assertInstant",
+          "actual": "1970-01-04T12:23:45.678902034Z",
+          "expected": "1970-01-04T12:23:45.678902034Z",
+          "description": "(1969-12-25T12:23:45.678901234Z).add({ hours: 240, nanoseconds: 800 }) = 1970-01-04T12:23:45.678902034Z"
+        },
+        {
+          "kind": "assertInstant",
+          "actual": "1969-12-15T12:23:45.678900434Z",
+          "expected": "1969-12-15T12:23:45.678900434Z",
+          "description": "(1970-01-04T12:23:45.678902034Z).subtract({ hours: 480, nanoseconds: 1600 }) = 1969-12-15T12:23:45.678900434Z"
+        },
+        {
+          "kind": "assertInstant",
+          "actual": "1970-01-04T12:23:45.678902034Z",
+          "expected": "1970-01-04T12:23:45.678902034Z",
+          "description": "(1969-12-15T12:23:45.678900434Z).add({ hours: 480, nanoseconds: 1600 }) = 1970-01-04T12:23:45.678902034Z"
+        }
+      ]
+    },
+    {
+      "file": "test/built-ins/Temporal/Instant/prototype/add/minimum-maximum-instant.js",
+      "assertions": [
+        {
+          "kind": "sameValue",
+          "actual": "-8640000000000000000000",
+          "expected": "-8640000000000000000000",
+          "description": "Adding zero to the minimum instant"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "8640000000000000000000",
+          "expected": "8640000000000000000000",
+          "description": "Adding zero to the maximum instant"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "-8639999999999999999999",
+          "expected": "-8639999999999999999999",
+          "description": "Adding one to the minimum instant"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "8639999999999999999999",
+          "expected": "8639999999999999999999",
+          "description": "Subtracting one from the maximum instant"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "8640000000000000000000",
+          "expected": "8640000000000000000000",
+          "description": "Minimum to maximum instant by adding nanoseconds"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "8640000000000000000000",
+          "expected": "8640000000000000000000",
+          "description": "Minimum to maximum instant by adding microseconds"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "8640000000000000000000",
+          "expected": "8640000000000000000000",
+          "description": "Minimum to maximum instant by adding milliseconds"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "8640000000000000000000",
+          "expected": "8640000000000000000000",
+          "description": "Minimum to maximum instant by adding seconds"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "-8640000000000000000000",
+          "expected": "-8640000000000000000000",
+          "description": "Maximum to minimum instant by adding nanoseconds"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "-8640000000000000000000",
+          "expected": "-8640000000000000000000",
+          "description": "Maximum to minimum instant by adding microseconds"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "-8640000000000000000000",
+          "expected": "-8640000000000000000000",
+          "description": "Maximum to minimum instant by adding milliseconds"
+        },
+        {
+          "kind": "sameValue",
+          "actual": "-8640000000000000000000",
+          "expected": "-8640000000000000000000",
+          "description": "Maximum to minimum instant by adding seconds"
+        }
+      ]
+    }
+  ]
+}

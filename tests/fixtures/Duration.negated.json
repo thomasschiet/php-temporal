@@ -1,0 +1,148 @@
+{
+  "type": "Duration",
+  "method": "negated",
+  "source": "test/built-ins/Temporal/Duration/prototype/negated",
+  "cases": [
+    {
+      "file": "test/built-ins/Temporal/Duration/prototype/negated/basic.js",
+      "assertions": [
+        {
+          "kind": "assertDuration",
+          "actual": "PT0S",
+          "expected": {
+            "years": 0,
+            "months": 0,
+            "weeks": 0,
+            "days": 0,
+            "hours": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0
+          },
+          "description": "blank"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P1Y2M3W4DT5H6M7.00800901S",
+          "expected": {
+            "years": -1,
+            "months": -2,
+            "weeks": -3,
+            "days": -4,
+            "hours": -5,
+            "minutes": -6,
+            "seconds": -7,
+            "milliseconds": -8,
+            "microseconds": -9,
+            "nanoseconds": -10
+          },
+          "description": "positive values"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P100000Y200000M300000W400000DT500000H600000M700800.901S",
+          "expected": {
+            "years": -100000,
+            "months": -200000,
+            "weeks": -300000,
+            "days": -400000,
+            "hours": -500000,
+            "minutes": -600000,
+            "seconds": -700000,
+            "milliseconds": -800000,
+            "microseconds": -900000,
+            "nanoseconds": -1000000
+          },
+          "description": "large positive values"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P1Y2M3W4DT5H6M7.00800901S",
+          "expected": {
+            "years": 1,
+            "months": 2,
+            "weeks": 3,
+            "days": 4,
+            "hours": 5,
+            "minutes": 6,
+            "seconds": 7,
+            "milliseconds": 8,
+            "microseconds": 9,
+            "nanoseconds": 10
+          },
+          "description": "negative values"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P100000Y200000M300000W400000DT500000H600000M700800.901S",
+          "expected": {
+            "years": 100000,
+            "months": 200000,
+            "weeks": 300000,
+            "days": 400000,
+            "hours": 500000,
+            "minutes": 600000,
+            "seconds": 700000,
+            "milliseconds": 800000,
+            "microseconds": 900000,
+            "nanoseconds": 1000000
+          },
+          "description": "large negative values"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "-P1Y3WT5H7.000009S",
+          "expected": {
+            "years": -1,
+            "months": 0,
+            "weeks": -3,
+            "days": 0,
+            "hours": -5,
+            "minutes": 0,
+            "seconds": -7,
+            "milliseconds": 0,
+            "microseconds": -9,
+            "nanoseconds": 0
+          },
+          "description": "some zeros with positive values"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P1Y3WT5H7.000009S",
+          "expected": {
+            "years": 1,
+            "months": 0,
+            "weeks": 3,
+            "days": 0,
+            "hours": 5,
+            "minutes": 0,
+            "seconds": 7,
+            "milliseconds": 0,
+            "microseconds": 9,
+            "nanoseconds": 0
+          },
+          "description": "some zeros with negative values"
+        },
+        {
+          "kind": "assertDuration",
+          "actual": "P2M4DT6M0.00800001S",
+          "expected": {
+            "years": 0,
+            "months": 2,
+            "weeks": 0,
+            "days": 4,
+            "hours": 0,
+            "minutes": 6,
+            "seconds": 0,
+            "milliseconds": 8,
+            "microseconds": 0,
+            "nanoseconds": 10
+          },
+          "description": "other zeros with negative values"
+        }
+      ]
+    }
+  ]
+}
