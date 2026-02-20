@@ -941,4 +941,158 @@ final class InstantTest extends TestCase
         $instant = Instant::from('1970-01-01T00:00:00-01:30');
         self::assertSame(5_400_000_000_000, $instant->epochNanoseconds);
     }
+
+    // -------------------------------------------------------------------------
+    // until() / since() — nsToDuration() divisor boundary tests
+    // (kill IncrementInteger/DecrementInteger on 3_600_000_000_000,
+    //  60_000_000_000, 1_000_000_000, 1_000_000, 1_000)
+    // -------------------------------------------------------------------------
+
+    public function test_until_exactly_one_hour(): void
+    {
+        // 3_600_000_000_000 ns = exactly 1 hour
+        $a = Instant::fromEpochNanoseconds(0);
+        $b = Instant::fromEpochNanoseconds(3_600_000_000_000);
+        $d = $a->until($b);
+        // With divisor 3_600_000_000_001: intdiv(3_600_000_000_000, 3_600_000_000_001) = 0 → hours=0 ≠ 1
+        self::assertSame(1, $d->hours);
+        self::assertSame(0, $d->minutes);
+        self::assertSame(0, $d->seconds);
+        self::assertSame(0, $d->nanoseconds);
+    }
+
+    public function test_until_one_hour_minus_one_nanosecond(): void
+    {
+        // 3_599_999_999_999 ns = 1h - 1ns
+        $a = Instant::fromEpochNanoseconds(0);
+        $b = Instant::fromEpochNanoseconds(3_599_999_999_999);
+        $d = $a->until($b);
+        // With divisor 3_599_999_999_999: intdiv(3_599_999_999_999, 3_599_999_999_999) = 1 → hours=1 ≠ 0
+        self::assertSame(0, $d->hours);
+        self::assertSame(59, $d->minutes);
+        self::assertSame(59, $d->seconds);
+        self::assertSame(999, $d->milliseconds);
+        self::assertSame(999, $d->microseconds);
+        self::assertSame(999, $d->nanoseconds);
+    }
+
+    public function test_until_exactly_one_minute(): void
+    {
+        // 60_000_000_000 ns = exactly 1 minute
+        $a = Instant::fromEpochNanoseconds(0);
+        $b = Instant::fromEpochNanoseconds(60_000_000_000);
+        $d = $a->until($b);
+        // With divisor 60_000_000_001: intdiv(60_000_000_000, 60_000_000_001) = 0 → minutes=0 ≠ 1
+        self::assertSame(0, $d->hours);
+        self::assertSame(1, $d->minutes);
+        self::assertSame(0, $d->seconds);
+    }
+
+    public function test_until_one_minute_minus_one_nanosecond(): void
+    {
+        // 59_999_999_999 ns = 1min - 1ns
+        $a = Instant::fromEpochNanoseconds(0);
+        $b = Instant::fromEpochNanoseconds(59_999_999_999);
+        $d = $a->until($b);
+        // With divisor 59_999_999_999: intdiv(59_999_999_999, 59_999_999_999) = 1 → minutes=1 ≠ 0
+        self::assertSame(0, $d->hours);
+        self::assertSame(0, $d->minutes);
+        self::assertSame(59, $d->seconds);
+    }
+
+    public function test_until_exactly_one_second(): void
+    {
+        // 1_000_000_000 ns = exactly 1 second
+        $a = Instant::fromEpochNanoseconds(0);
+        $b = Instant::fromEpochNanoseconds(1_000_000_000);
+        $d = $a->until($b);
+        // With divisor 999_999_999: intdiv(1_000_000_000, 999_999_999) = 1 still, but
+        // intdiv(999_999_999, 999_999_999) = 1 ≠ intdiv(999_999_999, 1_000_000_000) = 0
+        self::assertSame(0, $d->hours);
+        self::assertSame(0, $d->minutes);
+        self::assertSame(1, $d->seconds);
+        self::assertSame(0, $d->milliseconds);
+    }
+
+    public function test_until_one_second_minus_one_nanosecond(): void
+    {
+        // 999_999_999 ns = 1s - 1ns
+        $a = Instant::fromEpochNanoseconds(0);
+        $b = Instant::fromEpochNanoseconds(999_999_999);
+        $d = $a->until($b);
+        // With divisor 999_999_999: intdiv(999_999_999, 999_999_999) = 1 → seconds=1 ≠ 0
+        self::assertSame(0, $d->seconds);
+        self::assertSame(999, $d->milliseconds);
+    }
+
+    public function test_until_exactly_one_millisecond(): void
+    {
+        // 1_000_000 ns = exactly 1 ms
+        $a = Instant::fromEpochNanoseconds(0);
+        $b = Instant::fromEpochNanoseconds(1_000_000);
+        $d = $a->until($b);
+        self::assertSame(1, $d->milliseconds);
+        self::assertSame(0, $d->microseconds);
+        self::assertSame(0, $d->nanoseconds);
+    }
+
+    public function test_until_one_ms_minus_one_nanosecond(): void
+    {
+        // 999_999 ns = 1ms - 1ns
+        $a = Instant::fromEpochNanoseconds(0);
+        $b = Instant::fromEpochNanoseconds(999_999);
+        $d = $a->until($b);
+        // With divisor 999_999: intdiv(999_999, 999_999) = 1 → ms=1 ≠ 0
+        self::assertSame(0, $d->milliseconds);
+        self::assertSame(999, $d->microseconds);
+    }
+
+    public function test_until_exactly_one_microsecond(): void
+    {
+        // 1_000 ns = exactly 1 microsecond
+        $a = Instant::fromEpochNanoseconds(0);
+        $b = Instant::fromEpochNanoseconds(1_000);
+        $d = $a->until($b);
+        self::assertSame(0, $d->milliseconds);
+        self::assertSame(1, $d->microseconds);
+        self::assertSame(0, $d->nanoseconds);
+    }
+
+    public function test_until_one_microsecond_minus_one_nanosecond(): void
+    {
+        // 999 ns = 1us - 1ns
+        $a = Instant::fromEpochNanoseconds(0);
+        $b = Instant::fromEpochNanoseconds(999);
+        $d = $a->until($b);
+        self::assertSame(0, $d->microseconds);
+        self::assertSame(999, $d->nanoseconds);
+    }
+
+    public function test_until_one_hour_nanoseconds_zero(): void
+    {
+        // Verify subtraction is exact: $absNs -= $hours * 3_600_000_000_000 must be precise.
+        // If subtractor is 3_599_999_999_999 instead of 3_600_000_000_000,
+        // remaining nanoseconds would be 1 instead of 0.
+        $a = Instant::fromEpochNanoseconds(0);
+        $b = Instant::fromEpochNanoseconds(3_600_000_000_000);
+        $d = $a->until($b);
+        self::assertSame(0, $d->minutes);
+        self::assertSame(0, $d->seconds);
+        self::assertSame(0, $d->milliseconds);
+        self::assertSame(0, $d->microseconds);
+        self::assertSame(0, $d->nanoseconds);
+    }
+
+    public function test_until_one_minute_seconds_zero(): void
+    {
+        // Verify $absNs -= $minutes * 60_000_000_000 is exact.
+        // If subtractor is 59_999_999_999 instead, remaining is 1 ns.
+        $a = Instant::fromEpochNanoseconds(0);
+        $b = Instant::fromEpochNanoseconds(60_000_000_000);
+        $d = $a->until($b);
+        self::assertSame(0, $d->seconds);
+        self::assertSame(0, $d->milliseconds);
+        self::assertSame(0, $d->microseconds);
+        self::assertSame(0, $d->nanoseconds);
+    }
 }

@@ -3597,7 +3597,79 @@ count = 1
 [[issues]]
 file = "tests/InstantTest.php"
 code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_until_exactly_one_hour`.'
+count = 1
+
+[[issues]]
+file = "tests/InstantTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_until_exactly_one_microsecond`.'
+count = 1
+
+[[issues]]
+file = "tests/InstantTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_until_exactly_one_millisecond`.'
+count = 1
+
+[[issues]]
+file = "tests/InstantTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_until_exactly_one_minute`.'
+count = 1
+
+[[issues]]
+file = "tests/InstantTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_until_exactly_one_second`.'
+count = 1
+
+[[issues]]
+file = "tests/InstantTest.php"
+code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_until_negative`.'
+count = 1
+
+[[issues]]
+file = "tests/InstantTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_until_one_hour_minus_one_nanosecond`.'
+count = 1
+
+[[issues]]
+file = "tests/InstantTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_until_one_hour_nanoseconds_zero`.'
+count = 1
+
+[[issues]]
+file = "tests/InstantTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_until_one_microsecond_minus_one_nanosecond`.'
+count = 1
+
+[[issues]]
+file = "tests/InstantTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_until_one_minute_minus_one_nanosecond`.'
+count = 1
+
+[[issues]]
+file = "tests/InstantTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_until_one_minute_seconds_zero`.'
+count = 1
+
+[[issues]]
+file = "tests/InstantTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_until_one_ms_minus_one_nanosecond`.'
+count = 1
+
+[[issues]]
+file = "tests/InstantTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_until_one_second_minus_one_nanosecond`.'
 count = 1
 
 [[issues]]
@@ -7269,6 +7341,36 @@ count = 1
 [[issues]]
 file = "tests/PlainYearMonthTest.php"
 code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainYearMonthTest::testDaysInMonthAugust`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainYearMonthTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainYearMonthTest::testDaysInMonthDecember`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainYearMonthTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainYearMonthTest::testDaysInMonthFeb1900`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainYearMonthTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainYearMonthTest::testDaysInMonthFeb2000`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainYearMonthTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainYearMonthTest::testDaysInMonthFeb2100`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainYearMonthTest.php"
+code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainYearMonthTest::testDaysInMonthFebruaryLeapYear`.'
 count = 1
 
@@ -7281,7 +7383,55 @@ count = 1
 [[issues]]
 file = "tests/PlainYearMonthTest.php"
 code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainYearMonthTest::testDaysInMonthFebruary`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainYearMonthTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainYearMonthTest::testDaysInMonthJanuary`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainYearMonthTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainYearMonthTest::testDaysInMonthJuly`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainYearMonthTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainYearMonthTest::testDaysInMonthJune`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainYearMonthTest.php"
+code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainYearMonthTest::testDaysInMonthMarch`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainYearMonthTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainYearMonthTest::testDaysInMonthMay`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainYearMonthTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainYearMonthTest::testDaysInMonthNovember`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainYearMonthTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainYearMonthTest::testDaysInMonthOctober`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainYearMonthTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainYearMonthTest::testDaysInMonthSeptember`.'
 count = 1
 
 [[issues]]
@@ -7354,6 +7504,24 @@ count = 1
 file = "tests/PlainYearMonthTest.php"
 code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainYearMonthTest::testFromString`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainYearMonthTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainYearMonthTest::testInLeapYear2000IsLeap`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainYearMonthTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainYearMonthTest::testInLeapYear2100NotLeap`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainYearMonthTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainYearMonthTest::testInLeapYearCenturyNotLeap`.'
 count = 1
 
 [[issues]]
@@ -7467,6 +7635,30 @@ count = 1
 [[issues]]
 file = "tests/PlainYearMonthTest.php"
 code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainYearMonthTest::testToStringYear999`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainYearMonthTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainYearMonthTest::testToStringYearExactly10000`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainYearMonthTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainYearMonthTest::testToStringYearRequiresFourDigitPad`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainYearMonthTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainYearMonthTest::testToStringYearZero`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainYearMonthTest.php"
+code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainYearMonthTest::testUntilAcrossYearBoundary`.'
 count = 1
 
@@ -7474,6 +7666,18 @@ count = 1
 file = "tests/PlainYearMonthTest.php"
 code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainYearMonthTest::testUntilEarlierMonth`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainYearMonthTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainYearMonthTest::testUntilExactly11Months`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainYearMonthTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainYearMonthTest::testUntilExactly12Months`.'
 count = 1
 
 [[issues]]
