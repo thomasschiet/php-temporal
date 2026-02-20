@@ -10,6 +10,7 @@ Key principles:
 - Does not require PHP extensions
 - Supports PHP 8.4, 8.5
 - PHP Temporal will be built by autonomous agents. Therefore it is extremely important to start with good tests before implementing code
+- Use well typed exceptions that extend the relevant PHP exception
 
 ## Tooling
 
