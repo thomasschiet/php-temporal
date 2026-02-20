@@ -58,9 +58,7 @@ final class Duration implements \JsonSerializable
         }
 
         if ($pos > 0 && $neg > 0) {
-            throw new InvalidDurationException(
-                'Duration fields must all have the same sign; got mixed positive and negative values.'
-            );
+            throw InvalidDurationException::mixedSigns();
         }
 
         $this->sign = $pos > 0 ? 1 : ( $neg > 0 ? -1 : 0 );
@@ -110,6 +108,7 @@ final class Duration implements \JsonSerializable
     // Derived / computed
     // -------------------------------------------------------------------------
 
+    #[\NoDiscard]
     public function negated(): self
     {
         return new self(
@@ -126,6 +125,7 @@ final class Duration implements \JsonSerializable
         );
     }
 
+    #[\NoDiscard]
     public function abs(): self
     {
         return new self(
@@ -142,6 +142,7 @@ final class Duration implements \JsonSerializable
         );
     }
 
+    #[\NoDiscard]
     public function with(array $fields): self
     {
         return new self(
@@ -162,6 +163,7 @@ final class Duration implements \JsonSerializable
     // Arithmetic
     // -------------------------------------------------------------------------
 
+    #[\NoDiscard]
     public function add(self|array|string $other): self
     {
         $other = self::from($other);
@@ -196,6 +198,7 @@ final class Duration implements \JsonSerializable
         );
     }
 
+    #[\NoDiscard]
     public function subtract(self|array|string $other): self
     {
         return $this->add(self::from($other)->negated());
@@ -245,16 +248,14 @@ final class Duration implements \JsonSerializable
         $unit = $unitOrOptions['unit'] ?? null;
 
         if ($unit === null) {
-            throw new MissingFieldException("Duration.total() options must include 'unit'.");
+            throw MissingFieldException::totalRequiresUnit();
         }
 
         $relativeTo = $unitOrOptions['relativeTo'] ?? null;
 
         if ($relativeTo === null) {
             if (in_array($unit, ['year', 'years', 'month', 'months'], true)) {
-                throw new MissingFieldException(
-                    "Duration.total() requires a 'relativeTo' option when unit is '{$unit}'."
-                );
+                throw MissingFieldException::totalRequiresRelativeTo((string) $unit);
             }
 
             return $this->totalByUnit($unit);
@@ -279,7 +280,7 @@ final class Duration implements \JsonSerializable
             'hour', 'hours' => $ns / ( 3_600 * 1_000_000_000 ),
             'day', 'days' => $ns / ( 86_400 * 1_000_000_000 ),
             'week', 'weeks' => $ns / ( 7 * 86_400 * 1_000_000_000 ),
-            default => throw new InvalidOptionException("Unknown or unsupported unit for total(): '{$unit}'.")
+            default => throw InvalidOptionException::unknownUnit($unit, 'total()')
         };
     }
 
@@ -315,7 +316,7 @@ final class Duration implements \JsonSerializable
             'week', 'weeks' => $totalDaysFloat / 7.0,
             'month', 'months' => $this->daysToFractionalMonths($totalDaysFloat, $relativeTo),
             'year', 'years' => $this->daysToFractionalYears($totalDaysFloat, $relativeTo),
-            default => throw new InvalidOptionException("Unknown or unsupported unit for total(): '{$unit}'.")
+            default => throw InvalidOptionException::unknownUnit($unit, 'total()')
         };
     }
 
@@ -438,6 +439,7 @@ final class Duration implements \JsonSerializable
      * @throws InvalidArgumentException
      * @throws \RangeException
      */
+    #[\NoDiscard]
     public function round(string|array $smallestUnitOrOptions): self
     {
         if (is_string($smallestUnitOrOptions)) {
@@ -448,7 +450,7 @@ final class Duration implements \JsonSerializable
         $smallestUnit = $options['smallestUnit'] ?? null;
 
         if ($smallestUnit === null) {
-            throw new MissingFieldException("round() options must include 'smallestUnit'.");
+            throw MissingFieldException::missingOption('smallestUnit');
         }
 
         $largestUnit = $options['largestUnit'] ?? null;
@@ -457,7 +459,7 @@ final class Duration implements \JsonSerializable
         $relativeTo = $options['relativeTo'] ?? null;
 
         if ((int) $roundingIncrement < 1) {
-            throw new InvalidOptionException('roundingIncrement must be at least 1.');
+            throw InvalidOptionException::roundingIncrementTooSmall();
         }
 
         // When the duration has calendar units (years/months) and smallestUnit is
@@ -483,10 +485,7 @@ final class Duration implements \JsonSerializable
         ];
 
         if ($hasCalendarUnits && in_array($smallestUnit, $subMonthUnits, true) && $largestUnit === null) {
-            throw new DateRangeException(
-                'When the duration has calendar units (years/months), '
-                . "'largestUnit' is required when 'smallestUnit' is '{$smallestUnit}'."
-            );
+            throw DateRangeException::requiresRelativeTo((string) $smallestUnit);
         }
 
         if ($relativeTo === null) {
@@ -517,6 +516,7 @@ final class Duration implements \JsonSerializable
      * @param string|array<string, mixed> $largestUnitOrOptions
      * @throws InvalidArgumentException
      */
+    #[\NoDiscard]
     public function balance(string|array $largestUnitOrOptions): self
     {
         if (is_string($largestUnitOrOptions)) {
@@ -524,9 +524,7 @@ final class Duration implements \JsonSerializable
             $smallestUnit = 'nanosecond';
         } else {
             $largestUnit = (string) (
-                $largestUnitOrOptions['largestUnit'] ?? throw new MissingFieldException(
-                    'Missing required option: largestUnit.'
-                )
+                $largestUnitOrOptions['largestUnit'] ?? throw MissingFieldException::missingOption('largestUnit')
             );
             $smallestUnit = (string) ( $largestUnitOrOptions['smallestUnit'] ?? 'nanosecond' );
         }
@@ -549,7 +547,7 @@ final class Duration implements \JsonSerializable
             'hour', 'hours' => $this->roundToHours(),
             'day', 'days' => $this->roundToDays(),
             'week', 'weeks' => $this->roundToWeeks(),
-            default => throw new InvalidOptionException("Unknown or unsupported unit for round(): '{$smallestUnit}'.")
+            default => throw InvalidOptionException::unknownUnit($smallestUnit, 'round()')
         };
     }
 
@@ -597,9 +595,7 @@ final class Duration implements \JsonSerializable
             'millisecond', 'milliseconds' => $totalDaysFloat * 86_400_000.0,
             'microsecond', 'microseconds' => $totalDaysFloat * 86_400_000_000.0,
             'nanosecond', 'nanoseconds' => $totalDaysFloat * 86_400_000_000_000.0,
-            default => throw new InvalidOptionException(
-                "Unsupported largestUnit/smallestUnit for round(): '{$effectiveUnit}'."
-            )
+            default => throw InvalidOptionException::unknownUnit($effectiveUnit, 'round()')
         };
 
         // Apply rounding mode and increment.
@@ -666,11 +662,11 @@ final class Duration implements \JsonSerializable
         ];
 
         if (!isset($unitRanks[$smallest])) {
-            throw new InvalidOptionException("Unknown or unsupported unit for round()/balance(): '{$smallest}'.");
+            throw InvalidOptionException::unknownUnit($smallest, 'round()/balance()');
         }
 
         if (!isset($unitRanks[$largest])) {
-            throw new InvalidOptionException("Unknown or unsupported unit for round()/balance(): '{$largest}'.");
+            throw InvalidOptionException::unknownUnit($largest, 'round()/balance()');
         }
 
         $smallestRank = $unitRanks[$smallest];
@@ -707,7 +703,7 @@ final class Duration implements \JsonSerializable
             'halfExpand' => self::halfExpandRoundNs($totalNs, $step),
             'ceil' => (int) ( ceil($totalNs / $step) * $step ),
             'floor', 'trunc' => intdiv($totalNs, $step) * $step,
-            default => throw new InvalidOptionException("Unknown roundingMode: '{$roundingMode}'.")
+            default => throw InvalidOptionException::unknownRoundingMode($roundingMode)
         };
 
         // Distribute from largestUnit down to smallestUnit
@@ -772,7 +768,7 @@ final class Duration implements \JsonSerializable
             'ceil' => ceil($ratio),
             'floor' => floor($ratio),
             'trunc' => $ratio >= 0 ? floor($ratio) : ceil($ratio),
-            default => throw new InvalidOptionException("Unknown roundingMode: '{$mode}'.")
+            default => throw InvalidOptionException::unknownRoundingMode($mode)
         };
     }
 
@@ -852,6 +848,7 @@ final class Duration implements \JsonSerializable
      * Implements \JsonSerializable so that json_encode() produces the
      * same string as __toString().
      */
+    #[\Override]
     public function jsonSerialize(): string
     {
         return (string) $this;
@@ -1139,9 +1136,7 @@ final class Duration implements \JsonSerializable
         }
 
         if (!str_starts_with($s, 'P')) {
-            throw new InvalidTemporalStringException(
-                "Invalid ISO 8601 duration string: missing 'P' designator in '$s'."
-            );
+            throw InvalidTemporalStringException::invalidDurationMissingP($s);
         }
         $s = substr($s, 1); // strip 'P'
 
@@ -1156,7 +1151,7 @@ final class Duration implements \JsonSerializable
         }
 
         if ($datePart === '' && $timePart === '') {
-            throw new InvalidTemporalStringException("Invalid ISO 8601 duration: empty duration after 'P'.");
+            throw InvalidTemporalStringException::invalidDurationEmpty();
         }
 
         [$years, $months, $weeks, $days] = self::parseDatePart($datePart);
@@ -1197,7 +1192,7 @@ final class Duration implements \JsonSerializable
         }
 
         if (!preg_match('/^(?:(\d+)Y)?(?:(\d+)M)?(?:(\d+)W)?(?:(\d+)D)?$/', $part, $m) || $m[0] === '') {
-            throw new InvalidTemporalStringException("Invalid ISO 8601 duration date part: '$part'.");
+            throw InvalidTemporalStringException::invalidDurationDatePart($part);
         }
 
         return [
@@ -1216,7 +1211,7 @@ final class Duration implements \JsonSerializable
         }
 
         if (!preg_match('/^(?:(\d+)H)?(?:(\d+)M)?(?:(\d+(?:\.\d+)?)S)?$/', $part, $m) || $m[0] === '') {
-            throw new InvalidTemporalStringException("Invalid ISO 8601 duration time part: '$part'.");
+            throw InvalidTemporalStringException::invalidDurationTimePart($part);
         }
 
         $hours = isset($m[1]) && $m[1] !== '' ? (int) $m[1] : 0;

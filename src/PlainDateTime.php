@@ -93,9 +93,9 @@ final class PlainDateTime implements \JsonSerializable
 
         if (is_array($item)) {
             return new self(
-                (int) ( $item['year'] ?? throw new MissingFieldException('Missing key: year') ),
-                (int) ( $item['month'] ?? throw new MissingFieldException('Missing key: month') ),
-                (int) ( $item['day'] ?? throw new MissingFieldException('Missing key: day') ),
+                (int) ( $item['year'] ?? throw MissingFieldException::missingKey('year') ),
+                (int) ( $item['month'] ?? throw MissingFieldException::missingKey('month') ),
+                (int) ( $item['day'] ?? throw MissingFieldException::missingKey('day') ),
                 (int) ( $item['hour'] ?? 0 ),
                 (int) ( $item['minute'] ?? 0 ),
                 (int) ( $item['second'] ?? 0 ),
@@ -155,6 +155,7 @@ final class PlainDateTime implements \JsonSerializable
     // Conversion
     // -------------------------------------------------------------------------
 
+    #[\NoDiscard]
     public function toPlainDate(): PlainDate
     {
         return new PlainDate($this->year, $this->month, $this->day);
@@ -172,6 +173,7 @@ final class PlainDateTime implements \JsonSerializable
      *
      * @param TimeZone|string $timeZone IANA timezone name or fixed UTC offset.
      */
+    #[\NoDiscard]
     public function toZonedDateTime(TimeZone|string $timeZone): ZonedDateTime
     {
         $tz = $timeZone instanceof TimeZone ? $timeZone : TimeZone::from($timeZone);
@@ -179,6 +181,7 @@ final class PlainDateTime implements \JsonSerializable
         return $tz->getInstantFor($this)->toZonedDateTimeISO($tz);
     }
 
+    #[\NoDiscard]
     public function toPlainTime(): PlainTime
     {
         return new PlainTime(
@@ -197,6 +200,7 @@ final class PlainDateTime implements \JsonSerializable
      * Corresponds to Temporal.PlainDateTime.prototype.toPlainYearMonth() in
      * the TC39 proposal.
      */
+    #[\NoDiscard]
     public function toPlainYearMonth(): PlainYearMonth
     {
         return new PlainYearMonth($this->year, $this->month);
@@ -208,6 +212,7 @@ final class PlainDateTime implements \JsonSerializable
      * Corresponds to Temporal.PlainDateTime.prototype.toPlainMonthDay() in
      * the TC39 proposal.
      */
+    #[\NoDiscard]
     public function toPlainMonthDay(): PlainMonthDay
     {
         return new PlainMonthDay($this->month, $this->day);
@@ -232,7 +237,7 @@ final class PlainDateTime implements \JsonSerializable
             'isoMillisecond' => $this->millisecond,
             'isoMicrosecond' => $this->microsecond,
             'isoNanosecond' => $this->nanosecond,
-            'calendar' => 'iso8601',
+            'calendar' => 'iso8601'
         ];
     }
 
@@ -243,6 +248,7 @@ final class PlainDateTime implements \JsonSerializable
     /**
      * Return a new PlainDateTime with the date part replaced.
      */
+    #[\NoDiscard]
     public function withPlainDate(PlainDate $date): self
     {
         return new self(
@@ -261,6 +267,7 @@ final class PlainDateTime implements \JsonSerializable
     /**
      * Return a new PlainDateTime with the time part replaced.
      */
+    #[\NoDiscard]
     public function withPlainTime(PlainTime $time): self
     {
         return new self(
@@ -281,6 +288,7 @@ final class PlainDateTime implements \JsonSerializable
      *
      * @param array<string, mixed> $fields
      */
+    #[\NoDiscard]
     public function with(array $fields): self
     {
         return new self(
@@ -305,6 +313,7 @@ final class PlainDateTime implements \JsonSerializable
      * @param Duration|array{years?:int,months?:int,weeks?:int,days?:int,hours?:int,minutes?:int,seconds?:int,milliseconds?:int,microseconds?:int,nanoseconds?:int} $duration
      * @param string $overflow 'constrain' (default) or 'reject' — passed to PlainDate::add()
      */
+    #[\NoDiscard]
     public function add(Duration|array $duration, string $overflow = 'constrain'): self
     {
         if ($duration instanceof Duration) {
@@ -369,6 +378,7 @@ final class PlainDateTime implements \JsonSerializable
      * @param Duration|array{years?:int,months?:int,weeks?:int,days?:int,hours?:int,minutes?:int,seconds?:int,milliseconds?:int,microseconds?:int,nanoseconds?:int} $duration
      * @param string $overflow 'constrain' (default) or 'reject' — passed to PlainDate::subtract()
      */
+    #[\NoDiscard]
     public function subtract(Duration|array $duration, string $overflow = 'constrain'): self
     {
         if ($duration instanceof Duration) {
@@ -400,11 +410,12 @@ final class PlainDateTime implements \JsonSerializable
      *   When a string is passed it is treated as the smallestUnit with
      *   roundingMode='halfExpand' and roundingIncrement=1.
      */
+    #[\NoDiscard]
     public function round(string|array $options): self
     {
         $unit = is_string($options)
             ? $options
-            : $options['smallestUnit'] ?? throw new MissingFieldException('Missing required option: smallestUnit.');
+            : $options['smallestUnit'] ?? throw MissingFieldException::missingOption('smallestUnit');
         $mode = is_string($options) ? 'halfExpand' : $options['roundingMode'] ?? 'halfExpand';
         $increment = is_array($options) ? (int) ( $options['roundingIncrement'] ?? 1 ) : 1;
 
@@ -416,7 +427,7 @@ final class PlainDateTime implements \JsonSerializable
                 'halfExpand' => ( $ns * 2 ) >= $dayNs,
                 'ceil' => $ns > 0,
                 'floor', 'trunc' => false,
-                default => throw new InvalidOptionException("Unknown roundingMode: '{$mode}'.")
+                default => throw InvalidOptionException::unknownRoundingMode((string) $mode)
             };
             $date = $this->toPlainDate();
             if ($roundUp) {
@@ -433,11 +444,11 @@ final class PlainDateTime implements \JsonSerializable
             'second', 'seconds' => [1_000_000_000, 60],
             'minute', 'minutes' => [60_000_000_000, 60],
             'hour', 'hours' => [3_600_000_000_000, 24],
-            default => throw new InvalidOptionException("Unknown or unsupported unit for round(): '{$unit}'.")
+            default => throw InvalidOptionException::unknownUnit((string) $unit, 'round()')
         };
 
         if ($increment !== 1 && ( $maxPerParent % $increment ) !== 0) {
-            throw new InvalidOptionException("roundingIncrement {$increment} does not evenly divide {$maxPerParent}.");
+            throw InvalidOptionException::invalidRoundingIncrement($increment, $maxPerParent);
         }
 
         if ($divisor === 1 && $increment === 1) {
@@ -451,7 +462,7 @@ final class PlainDateTime implements \JsonSerializable
             'halfExpand' => self::roundHalfExpand($ns, $step),
             'ceil' => self::ceilDiv($ns, $step) * $step,
             'floor', 'trunc' => intdiv($ns, $step) * $step,
-            default => throw new InvalidOptionException("Unknown roundingMode: '{$mode}'.")
+            default => throw InvalidOptionException::unknownRoundingMode((string) $mode)
         };
 
         $date = $this->toPlainDate();
@@ -552,6 +563,7 @@ final class PlainDateTime implements \JsonSerializable
      * Implements \JsonSerializable so that json_encode() produces the
      * same string as __toString().
      */
+    #[\Override]
     public function jsonSerialize(): string
     {
         return (string) $this;
@@ -564,7 +576,7 @@ final class PlainDateTime implements \JsonSerializable
     private static function validateMonth(int $month): void
     {
         if ($month < 1 || $month > 12) {
-            throw new DateRangeException("Month must be between 1 and 12, got {$month}");
+            throw DateRangeException::monthOutOfRange($month);
         }
     }
 
@@ -572,14 +584,14 @@ final class PlainDateTime implements \JsonSerializable
     {
         $max = self::daysInMonthFor($year, $month);
         if ($day < 1 || $day > $max) {
-            throw new DateRangeException("Day {$day} is out of range for {$year}-{$month} (1–{$max})");
+            throw DateRangeException::dayOutOfRange($day, $year, $month, $max);
         }
     }
 
     private static function validateField(string $field, int $value, int $min, int $max): void
     {
         if ($value < $min || $value > $max) {
-            throw new DateRangeException("{$field} must be between {$min} and {$max}, got {$value}");
+            throw DateRangeException::fieldOutOfRange($field, $value, $min, $max);
         }
     }
 
@@ -589,7 +601,7 @@ final class PlainDateTime implements \JsonSerializable
             1, 3, 5, 7, 8, 10, 12 => 31,
             4, 6, 9, 11 => 30,
             2 => self::isLeapYear($year) ? 29 : 28,
-            default => throw new DateRangeException("Invalid month: {$month}")
+            default => throw DateRangeException::invalidMonth($month)
         };
     }
 
@@ -634,7 +646,7 @@ final class PlainDateTime implements \JsonSerializable
             . '(?:\[!?[^\]]*\])*$/';
 
         if (!preg_match($pattern, $str, $m)) {
-            throw new InvalidTemporalStringException("Invalid PlainDateTime string: {$str}");
+            throw InvalidTemporalStringException::forType('PlainDateTime', $str);
         }
 
         $millisecond = 0;
@@ -703,7 +715,7 @@ final class PlainDateTime implements \JsonSerializable
         ];
 
         if (!in_array($unit, $valid, true)) {
-            throw new InvalidOptionException("largestUnit '{$unit}' is not valid for PlainDateTime::until()/since().");
+            throw InvalidOptionException::invalidLargestUnit($unit, 'PlainDateTime::until()/since()');
         }
 
         return rtrim($unit, 's');

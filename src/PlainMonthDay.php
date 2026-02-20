@@ -28,13 +28,13 @@ final class PlainMonthDay implements \JsonSerializable
     public function __construct(int $month, int $day)
     {
         if ($month < 1 || $month > 12) {
-            throw new DateRangeException("Month must be between 1 and 12, got {$month}");
+            throw DateRangeException::monthOutOfRange($month);
         }
 
         $max = self::daysInMonthFor(self::REFERENCE_YEAR, $month);
 
         if ($day < 1 || $day > $max) {
-            throw new DateRangeException("Day {$day} is out of range for month {$month} (1–{$max})");
+            throw DateRangeException::dayOutOfRangeForMonth($day, $month, $max);
         }
 
         $this->month = $month;
@@ -58,8 +58,8 @@ final class PlainMonthDay implements \JsonSerializable
 
         if (is_array($item)) {
             return new self(
-                (int) ( $item['month'] ?? throw new MissingFieldException('Missing key: month') ),
-                (int) ( $item['day'] ?? throw new MissingFieldException('Missing key: day') )
+                (int) ( $item['month'] ?? throw MissingFieldException::missingKey('month') ),
+                (int) ( $item['day'] ?? throw MissingFieldException::missingKey('day') )
             );
         }
 
@@ -87,7 +87,7 @@ final class PlainMonthDay implements \JsonSerializable
             return new self((int) $m[1], (int) $m[2]);
         }
 
-        throw new InvalidTemporalStringException("Invalid PlainMonthDay string: {$str}");
+        throw InvalidTemporalStringException::forType('PlainMonthDay', $str);
     }
 
     // -------------------------------------------------------------------------
@@ -116,6 +116,7 @@ final class PlainMonthDay implements \JsonSerializable
      *
      * @param array{month?:int,day?:int} $fields
      */
+    #[\NoDiscard]
     public function with(array $fields): self
     {
         return new self($fields['month'] ?? $this->month, $fields['day'] ?? $this->day);
@@ -130,6 +131,7 @@ final class PlainMonthDay implements \JsonSerializable
      *
      * Throws if the combination is invalid (e.g. Feb 29 in a non-leap year).
      */
+    #[\NoDiscard]
     public function toPlainDate(int $year): PlainDate
     {
         return new PlainDate($year, $this->month, $this->day);
@@ -161,7 +163,7 @@ final class PlainMonthDay implements \JsonSerializable
             'isoYear' => self::REFERENCE_YEAR,
             'isoMonth' => $this->month,
             'isoDay' => $this->day,
-            'calendar' => 'iso8601',
+            'calendar' => 'iso8601'
         ];
     }
 
@@ -175,6 +177,7 @@ final class PlainMonthDay implements \JsonSerializable
      * Implements \JsonSerializable so that json_encode() produces the
      * same string as __toString().
      */
+    #[\Override]
     public function jsonSerialize(): string
     {
         return (string) $this;
@@ -195,7 +198,7 @@ final class PlainMonthDay implements \JsonSerializable
             1, 3, 5, 7, 8, 10, 12 => 31,
             4, 6, 9, 11 => 30,
             2 => self::isLeapYear($year) ? 29 : 28,
-            default => throw new DateRangeException("Invalid month: {$month}")
+            default => throw DateRangeException::invalidMonth($month)
         };
     }
 

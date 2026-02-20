@@ -157,21 +157,25 @@ final class ZonedDateTime implements \JsonSerializable
     // Conversion
     // -------------------------------------------------------------------------
 
+    #[\NoDiscard]
     public function toInstant(): Instant
     {
         return Instant::fromEpochNanoseconds($this->ns);
     }
 
+    #[\NoDiscard]
     public function toPlainDateTime(): PlainDateTime
     {
         return $this->timeZone->getPlainDateTimeFor($this->toInstant());
     }
 
+    #[\NoDiscard]
     public function toPlainDate(): PlainDate
     {
         return $this->toPlainDateTime()->toPlainDate();
     }
 
+    #[\NoDiscard]
     public function toPlainTime(): PlainTime
     {
         return $this->toPlainDateTime()->toPlainTime();
@@ -183,6 +187,7 @@ final class ZonedDateTime implements \JsonSerializable
      * Corresponds to Temporal.ZonedDateTime.prototype.toPlainYearMonth() in
      * the TC39 proposal.
      */
+    #[\NoDiscard]
     public function toPlainYearMonth(): PlainYearMonth
     {
         return $this->toPlainDate()->toPlainYearMonth();
@@ -194,6 +199,7 @@ final class ZonedDateTime implements \JsonSerializable
      * Corresponds to Temporal.ZonedDateTime.prototype.toPlainMonthDay() in
      * the TC39 proposal.
      */
+    #[\NoDiscard]
     public function toPlainMonthDay(): PlainMonthDay
     {
         return $this->toPlainDate()->toPlainMonthDay();
@@ -223,22 +229,28 @@ final class ZonedDateTime implements \JsonSerializable
             'isoNanosecond' => $pdt->nanosecond,
             'offset' => $this->formatOffset($offsetNs),
             'timeZone' => $this->timeZone->id,
-            'calendar' => 'iso8601',
+            'calendar' => 'iso8601'
         ];
     }
 
     /**
      * Return a ZonedDateTime at the start of the current calendar day
-     * (midnight local time) in this timezone.
+     * in this timezone.
+     *
+     * Usually midnight (00:00:00), but if midnight falls in a DST gap
+     * the result is the first valid local time of the day (the transition
+     * instant that ends the gap).
      *
      * Corresponds to Temporal.ZonedDateTime.prototype.startOfDay() in the
      * TC39 proposal.
+     *
+     * @see https://github.com/tc39/proposal-temporal/issues/2910
      */
+    #[\NoDiscard]
     public function startOfDay(): self
     {
         $pdt = $this->toPlainDateTime();
-        $midnight = new PlainDateTime($pdt->year, $pdt->month, $pdt->day);
-        $instant = $this->timeZone->getInstantFor($midnight);
+        $instant = $this->getStartOfDayInstant($pdt->year, $pdt->month, $pdt->day);
 
         return new self($instant->epochNanoseconds, $this->timeZone);
     }
@@ -250,6 +262,7 @@ final class ZonedDateTime implements \JsonSerializable
     /**
      * Return a new ZonedDateTime with the same instant but a different time zone.
      */
+    #[\NoDiscard]
     public function withTimeZone(TimeZone|string $timeZone): self
     {
         $tz = $timeZone instanceof TimeZone ? $timeZone : TimeZone::from($timeZone);
@@ -266,6 +279,7 @@ final class ZonedDateTime implements \JsonSerializable
      * Corresponds to Temporal.ZonedDateTime.prototype.withPlainDate() in the
      * TC39 proposal.
      */
+    #[\NoDiscard]
     public function withPlainDate(PlainDate $date): self
     {
         $time = $this->toPlainTime();
@@ -296,6 +310,7 @@ final class ZonedDateTime implements \JsonSerializable
      * Corresponds to Temporal.ZonedDateTime.prototype.withPlainTime() in the
      * TC39 proposal.
      */
+    #[\NoDiscard]
     public function withPlainTime(?PlainTime $time = null): self
     {
         $t = $time ?? new PlainTime(0, 0, 0);
@@ -323,6 +338,7 @@ final class ZonedDateTime implements \JsonSerializable
      * @param array<string,int> $fields Keys from: year, month, day, hour, minute,
      *   second, millisecond, microsecond, nanosecond.
      */
+    #[\NoDiscard]
     public function with(array $fields): self
     {
         $pdt = $this->toPlainDateTime();
@@ -347,6 +363,7 @@ final class ZonedDateTime implements \JsonSerializable
      *
      * @param Duration|array<string,int> $duration
      */
+    #[\NoDiscard]
     public function add(Duration|array $duration): self
     {
         $d = $duration instanceof Duration ? $duration : Duration::from($duration);
@@ -385,6 +402,7 @@ final class ZonedDateTime implements \JsonSerializable
      *
      * @param Duration|array<string,int> $duration
      */
+    #[\NoDiscard]
     public function subtract(Duration|array $duration): self
     {
         $d = $duration instanceof Duration ? $duration : Duration::from($duration);
@@ -405,13 +423,12 @@ final class ZonedDateTime implements \JsonSerializable
      *   When a string is passed it is treated as the smallestUnit with the
      *   default roundingMode ('halfExpand').
      */
+    #[\NoDiscard]
     public function round(string|array $options): self
     {
         $unit = is_string($options)
             ? $options
-            : (string) (
-                $options['smallestUnit'] ?? throw new MissingFieldException('Missing required option: smallestUnit.')
-            );
+            : (string) ( $options['smallestUnit'] ?? throw MissingFieldException::missingOption('smallestUnit') );
         $mode = is_string($options) ? 'halfExpand' : (string) ( $options['roundingMode'] ?? 'halfExpand' );
 
         if ($unit === 'day' || $unit === 'days') {
@@ -425,7 +442,7 @@ final class ZonedDateTime implements \JsonSerializable
             'second', 'seconds' => 1_000_000_000,
             'minute', 'minutes' => 60_000_000_000,
             'hour', 'hours' => 3_600_000_000_000,
-            default => throw new InvalidOptionException("Unknown or unsupported unit for round(): '{$unit}'.")
+            default => throw InvalidOptionException::unknownUnit($unit, 'round()')
         };
 
         if ($divisor === 1) {
@@ -437,7 +454,7 @@ final class ZonedDateTime implements \JsonSerializable
             'ceil' => self::ceilDiv($this->ns, $divisor) * $divisor,
             'floor' => self::floorDiv($this->ns, $divisor) * $divisor,
             'trunc' => intdiv($this->ns, $divisor) * $divisor,
-            default => throw new InvalidOptionException("Unknown roundingMode: '{$mode}'.")
+            default => throw InvalidOptionException::unknownRoundingMode($mode)
         };
 
         return new self($rounded, $this->timeZone);
@@ -502,6 +519,7 @@ final class ZonedDateTime implements \JsonSerializable
      * Implements \JsonSerializable so that json_encode() produces the
      * same string as __toString().
      */
+    #[\Override]
     public function jsonSerialize(): string
     {
         return (string) $this;
@@ -593,13 +611,13 @@ final class ZonedDateTime implements \JsonSerializable
      */
     private static function fromArray(array $item): self
     {
-        $tzId = $item['timeZone'] ?? throw new MissingFieldException('Missing key: timeZone');
+        $tzId = $item['timeZone'] ?? throw MissingFieldException::missingKey('timeZone');
         $tz = $tzId instanceof TimeZone ? $tzId : TimeZone::from((string) $tzId);
 
         $pdt = new PlainDateTime(
-            (int) ( $item['year'] ?? throw new MissingFieldException('Missing key: year') ),
-            (int) ( $item['month'] ?? throw new MissingFieldException('Missing key: month') ),
-            (int) ( $item['day'] ?? throw new MissingFieldException('Missing key: day') ),
+            (int) ( $item['year'] ?? throw MissingFieldException::missingKey('year') ),
+            (int) ( $item['month'] ?? throw MissingFieldException::missingKey('month') ),
+            (int) ( $item['day'] ?? throw MissingFieldException::missingKey('day') ),
             (int) ( $item['hour'] ?? 0 ),
             (int) ( $item['minute'] ?? 0 ),
             (int) ( $item['second'] ?? 0 ),
@@ -637,7 +655,7 @@ final class ZonedDateTime implements \JsonSerializable
             . '((?:\[!?[^\]]*\])*)$/';
 
         if (!preg_match($pattern, $str, $m)) {
-            throw new InvalidTemporalStringException("Invalid ZonedDateTime string: '{$str}'.");
+            throw InvalidTemporalStringException::forType('ZonedDateTime', $str);
         }
 
         $year = (int) $m[1];
@@ -709,12 +727,10 @@ final class ZonedDateTime implements \JsonSerializable
     {
         $pdt = $this->toPlainDateTime();
 
-        $startOfDay = new PlainDateTime($pdt->year, $pdt->month, $pdt->day);
-        $startNs = $this->timeZone->getInstantFor($startOfDay)->epochNanoseconds;
+        $startNs = $this->getStartOfDayInstant($pdt->year, $pdt->month, $pdt->day)->epochNanoseconds;
 
-        $nextDate = $startOfDay->toPlainDate()->add(['days' => 1]);
-        $startOfNextDay = new PlainDateTime($nextDate->year, $nextDate->month, $nextDate->day);
-        $nextNs = $this->timeZone->getInstantFor($startOfNextDay)->epochNanoseconds;
+        $nextDate = new PlainDate($pdt->year, $pdt->month, $pdt->day)->add(['days' => 1]);
+        $nextNs = $this->getStartOfDayInstant($nextDate->year, $nextDate->month, $nextDate->day)->epochNanoseconds;
 
         $dayNs = $nextNs - $startNs;
         $wholeHours = intdiv($dayNs, 3_600_000_000_000);
@@ -726,22 +742,20 @@ final class ZonedDateTime implements \JsonSerializable
     /**
      * Round this ZonedDateTime to the nearest calendar day in the local timezone.
      *
-     * Finds the epoch-nanosecond positions of midnight at the start of the
-     * current and next calendar days (which may differ by 23, 24, or 25 hours
-     * due to DST transitions), then picks between them based on $mode.
+     * Finds the epoch-nanosecond positions of the start of the current and
+     * next calendar days (which may differ by 23, 24, or 25 hours due to DST
+     * transitions), then picks between them based on $mode.
      */
     private function roundToDay(string $mode): self
     {
         $pdt = $this->toPlainDateTime();
 
-        // Start of current calendar day (midnight) in this timezone.
-        $startOfDay = new PlainDateTime($pdt->year, $pdt->month, $pdt->day);
-        $startNs = $this->timeZone->getInstantFor($startOfDay)->epochNanoseconds;
+        // Start of current calendar day in this timezone.
+        $startNs = $this->getStartOfDayInstant($pdt->year, $pdt->month, $pdt->day)->epochNanoseconds;
 
         // Start of the next calendar day.
-        $nextDate = $startOfDay->toPlainDate()->add(['days' => 1]);
-        $startOfNextDay = new PlainDateTime($nextDate->year, $nextDate->month, $nextDate->day);
-        $nextNs = $this->timeZone->getInstantFor($startOfNextDay)->epochNanoseconds;
+        $nextDate = new PlainDate($pdt->year, $pdt->month, $pdt->day)->add(['days' => 1]);
+        $nextNs = $this->getStartOfDayInstant($nextDate->year, $nextDate->month, $nextDate->day)->epochNanoseconds;
 
         $dayNs = $nextNs - $startNs;
         $positionNs = $this->ns - $startNs;
@@ -750,7 +764,7 @@ final class ZonedDateTime implements \JsonSerializable
             'halfExpand' => ( $positionNs * 2 ) >= $dayNs ? $nextNs : $startNs,
             'ceil' => $positionNs > 0 ? $nextNs : $startNs,
             'floor', 'trunc' => $startNs,
-            default => throw new InvalidOptionException("Unknown roundingMode: '{$mode}'.")
+            default => throw InvalidOptionException::unknownRoundingMode($mode)
         };
 
         return new self($roundedNs, $this->timeZone);
@@ -793,6 +807,35 @@ final class ZonedDateTime implements \JsonSerializable
         }
 
         return $q;
+    }
+
+    /**
+     * Find the Instant at the start of a given calendar day in this timezone.
+     *
+     * Usually midnight (00:00:00), but if midnight falls in a DST gap, the
+     * start of day is the transition instant that ends the gap — i.e. the
+     * first valid local time of the day.
+     *
+     * @see https://github.com/tc39/proposal-temporal/issues/2910
+     */
+    private function getStartOfDayInstant(int $year, int $month, int $day): Instant
+    {
+        $midnight = new PlainDateTime($year, $month, $day);
+        $possibleInstants = $this->timeZone->getPossibleInstantsFor($midnight);
+
+        if ($possibleInstants !== []) {
+            // Midnight exists (possibly ambiguous due to overlap); use the earliest.
+            return $possibleInstants[0];
+        }
+
+        // Midnight falls in a DST gap — the actual start of day is the
+        // transition instant that ends the gap.
+        // "Compatible" disambiguation pushes past the gap; the previous
+        // transition from that point is the gap's boundary = start of day.
+        $afterGap = $this->timeZone->getInstantFor($midnight);
+        $transition = $this->timeZone->getPreviousTransition($afterGap);
+
+        return $transition ?? $afterGap;
     }
 
     /**

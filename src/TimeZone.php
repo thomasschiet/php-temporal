@@ -124,9 +124,7 @@ final class TimeZone
 
         // Ambiguous or gap — determine which case
         if ($disambiguation === 'reject') {
-            throw new AmbiguousTimeException(
-                "The local time is ambiguous or doesn't exist in time zone '{$this->id}'."
-            );
+            throw AmbiguousTimeException::inTimeZone($this->id);
         }
 
         // Build both candidates by recomputing from both offsets
@@ -137,7 +135,7 @@ final class TimeZone
             'earlier' => Instant::fromEpochNanoseconds($earlier),
             'later' => Instant::fromEpochNanoseconds($later),
             'compatible' => Instant::fromEpochNanoseconds($later), // gap: push past; overlap: first
-            default => throw new InvalidOptionException("Unknown disambiguation value: '{$disambiguation}'.")
+            default => throw InvalidOptionException::unknownDisambiguation($disambiguation)
         };
     }
 
@@ -353,7 +351,7 @@ final class TimeZone
     private static function validate(string $id): string
     {
         if ($id === '') {
-            throw new UnknownTimeZoneException('TimeZone ID must not be empty.');
+            throw UnknownTimeZoneException::emptyId();
         }
 
         // Fixed-offset: ±HH:MM
@@ -371,7 +369,7 @@ final class TimeZone
         try {
             new \DateTimeZone($id);
         } catch (\Exception) {
-            throw new UnknownTimeZoneException("Unknown or unsupported time zone: '{$id}'.");
+            throw UnknownTimeZoneException::unknownId($id);
         }
 
         return $id;

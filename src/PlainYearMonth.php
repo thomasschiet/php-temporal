@@ -27,7 +27,7 @@ final class PlainYearMonth implements \JsonSerializable
     public function __construct(int $year, int $month)
     {
         if ($month < 1 || $month > 12) {
-            throw new DateRangeException("Month must be between 1 and 12, got {$month}");
+            throw DateRangeException::monthOutOfRange($month);
         }
 
         $this->year = $year;
@@ -51,8 +51,8 @@ final class PlainYearMonth implements \JsonSerializable
 
         if (is_array($item)) {
             return new self(
-                (int) ( $item['year'] ?? throw new MissingFieldException('Missing key: year') ),
-                (int) ( $item['month'] ?? throw new MissingFieldException('Missing key: month') )
+                (int) ( $item['year'] ?? throw MissingFieldException::missingKey('year') ),
+                (int) ( $item['month'] ?? throw MissingFieldException::missingKey('month') )
             );
         }
 
@@ -68,7 +68,7 @@ final class PlainYearMonth implements \JsonSerializable
         $pattern = '/^([+-]?\d{4,6})-(\d{2})$/';
 
         if (!preg_match($pattern, $str, $m)) {
-            throw new InvalidTemporalStringException("Invalid PlainYearMonth string: {$str}");
+            throw InvalidTemporalStringException::forType('PlainYearMonth', $str);
         }
 
         return new self((int) $m[1], (int) $m[2]);
@@ -114,6 +114,7 @@ final class PlainYearMonth implements \JsonSerializable
      *
      * @param array{year?:int,month?:int} $fields
      */
+    #[\NoDiscard]
     public function with(array $fields): self
     {
         return new self($fields['year'] ?? $this->year, $fields['month'] ?? $this->month);
@@ -124,6 +125,7 @@ final class PlainYearMonth implements \JsonSerializable
      *
      * @param array{years?:int,months?:int}|Duration $duration
      */
+    #[\NoDiscard]
     public function add(array|Duration $duration): self
     {
         if ($duration instanceof Duration) {
@@ -156,6 +158,7 @@ final class PlainYearMonth implements \JsonSerializable
      *
      * @param array{years?:int,months?:int}|Duration $duration
      */
+    #[\NoDiscard]
     public function subtract(array|Duration $duration): self
     {
         if ($duration instanceof Duration) {
@@ -200,6 +203,7 @@ final class PlainYearMonth implements \JsonSerializable
     /**
      * Convert to a PlainDate by supplying the day.
      */
+    #[\NoDiscard]
     public function toPlainDate(int $day): PlainDate
     {
         return new PlainDate($this->year, $this->month, $day);
@@ -243,7 +247,7 @@ final class PlainYearMonth implements \JsonSerializable
             'isoYear' => $this->year,
             'isoMonth' => $this->month,
             'isoDay' => 1,
-            'calendar' => 'iso8601',
+            'calendar' => 'iso8601'
         ];
     }
 
@@ -257,6 +261,7 @@ final class PlainYearMonth implements \JsonSerializable
      * Implements \JsonSerializable so that json_encode() produces the
      * same string as __toString().
      */
+    #[\Override]
     public function jsonSerialize(): string
     {
         return (string) $this;
@@ -287,7 +292,7 @@ final class PlainYearMonth implements \JsonSerializable
             1, 3, 5, 7, 8, 10, 12 => 31,
             4, 6, 9, 11 => 30,
             2 => self::isLeapYear($year) ? 29 : 28,
-            default => throw new DateRangeException("Invalid month: {$month}")
+            default => throw DateRangeException::invalidMonth($month)
         };
     }
 

@@ -17,4 +17,13 @@ namespace Temporal\Exception;
  */
 class AmbiguousTimeException extends \RuntimeException implements TemporalException
 {
+    private function __construct(string $message, int $code = 0, ?\Throwable $previous = null)
+    {
+        parent::__construct($message, $code, $previous);
+    }
+
+    public static function inTimeZone(string $tzId): self
+    {
+        return new self("The local time is ambiguous or doesn't exist in time zone '{$tzId}'.");
+    }
 }

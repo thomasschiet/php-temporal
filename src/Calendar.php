@@ -47,9 +47,7 @@ final class Calendar
             return new self('iso8601');
         }
 
-        throw new UnsupportedCalendarException(
-            "Unsupported calendar: \"{$item}\". Only \"iso8601\" is currently supported."
-        );
+        throw UnsupportedCalendarException::unsupported($item);
     }
 
     // -------------------------------------------------------------------------
@@ -147,9 +145,7 @@ final class Calendar
         $validUnits = ['day', 'week', 'month', 'year'];
 
         if (!in_array($largestUnit, $validUnits, true)) {
-            throw new InvalidOptionException(
-                "Invalid largestUnit: \"{$largestUnit}\". Valid units are: " . implode(', ', $validUnits)
-            );
+            throw InvalidOptionException::invalidLargestUnit($largestUnit, 'dateUntil()', $validUnits);
         }
 
         return $one->until($two);
@@ -174,9 +170,7 @@ final class Calendar
 
         foreach ($fields as $field) {
             if (!in_array($field, $valid, true)) {
-                throw new InvalidOptionException(
-                    "Unknown calendar field: \"{$field}\". Valid fields are: " . implode(', ', $valid)
-                );
+                throw InvalidOptionException::unknownCalendarField($field, $valid);
             }
         }
 
@@ -322,7 +316,7 @@ final class Calendar
     private static function validateOverflow(string $overflow): void
     {
         if ($overflow !== 'constrain' && $overflow !== 'reject') {
-            throw new InvalidOptionException("Invalid overflow: \"{$overflow}\". Must be \"constrain\" or \"reject\".");
+            throw InvalidOptionException::invalidOverflow($overflow);
         }
     }
 }

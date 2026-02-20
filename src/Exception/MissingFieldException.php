@@ -14,4 +14,33 @@ namespace Temporal\Exception;
  */
 class MissingFieldException extends \InvalidArgumentException implements TemporalException
 {
+    private function __construct(string $message, int $code = 0, ?\Throwable $previous = null)
+    {
+        parent::__construct($message, $code, $previous);
+    }
+
+    public static function missingKey(string $key): self
+    {
+        return new self("Missing key: {$key}");
+    }
+
+    public static function missingOption(string $option): self
+    {
+        return new self("Missing required option: {$option}.");
+    }
+
+    public static function totalRequiresUnit(): self
+    {
+        return new self("Duration.total() options must include 'unit'.");
+    }
+
+    public static function totalRequiresRelativeTo(string $unit): self
+    {
+        return new self("Duration.total() requires a 'relativeTo' option when unit is '{$unit}'.");
+    }
+
+    public static function toZonedDateTimeMissingTimeZone(): self
+    {
+        return new self("toZonedDateTime() options array must include 'timeZone'.");
+    }
 }

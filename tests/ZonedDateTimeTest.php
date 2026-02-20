@@ -1058,4 +1058,40 @@ final class ZonedDateTimeTest extends TestCase
         self::assertSame(0, $start->minute);
         self::assertSame(0, $start->second);
     }
+
+    /**
+     * On March 31, 1919 in America/Toronto, clocks jumped from 23:30 EST
+     * directly to 00:30 EDT. Midnight (00:00) doesn't exist — it falls in
+     * the gap. The start of day should be 00:30 EDT, not 01:00 EDT.
+     *
+     * @see https://github.com/tc39/proposal-temporal/issues/2910
+     */
+    public function testStartOfDayMidnightInGap(): void
+    {
+        // Toronto, March 31, 1919: gap from 23:30 (Mar 30) to 00:30 (Mar 31)
+        // Transition at UTC 1919-03-31T04:30:00Z
+        $zdt = ZonedDateTime::from('1919-03-31T12:00:00-04:00[America/Toronto]');
+        $start = $zdt->startOfDay();
+
+        self::assertSame(1919, $start->year);
+        self::assertSame(3, $start->month);
+        self::assertSame(31, $start->day);
+        // Start of day is 00:30, not midnight (which doesn't exist) or 01:00
+        self::assertSame(0, $start->hour);
+        self::assertSame(30, $start->minute);
+        self::assertSame(0, $start->second);
+        self::assertSame('America/Toronto', $start->timeZone->id);
+    }
+
+    /**
+     * hoursInDay should account for the gap correctly when midnight doesn't
+     * exist (Toronto, March 31, 1919).
+     */
+    public function testHoursInDayMidnightInGap(): void
+    {
+        $zdt = ZonedDateTime::from('1919-03-31T12:00:00-04:00[America/Toronto]');
+        // Day starts at 00:30 instead of 00:00, so the day is 30 minutes shorter
+        // than a normal 24-hour day: 23.5 hours.
+        self::assertSame(23.5, $zdt->hoursInDay);
+    }
 }

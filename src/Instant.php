@@ -109,12 +109,13 @@ final class Instant implements \JsonSerializable
      *
      * @param Duration|array<string,int> $duration
      */
+    #[\NoDiscard]
     public function add(Duration|array $duration): self
     {
         $d = $duration instanceof Duration ? $duration : Duration::from($duration);
 
         if ($d->years !== 0 || $d->months !== 0 || $d->weeks !== 0) {
-            throw new InvalidOptionException('Instant::add() does not support calendar fields (years, months, weeks).');
+            throw InvalidOptionException::calendarFieldsNotAllowed();
         }
 
         $ns =
@@ -131,6 +132,7 @@ final class Instant implements \JsonSerializable
      *
      * @param Duration|array<string,int> $duration
      */
+    #[\NoDiscard]
     public function subtract(Duration|array $duration): self
     {
         $d = $duration instanceof Duration ? $duration : Duration::from($duration);
@@ -167,15 +169,14 @@ final class Instant implements \JsonSerializable
      *   When a string is passed it is treated as the smallestUnit with the
      *   default roundingMode ('halfExpand').
      */
+    #[\NoDiscard]
     public function round(string|array $options): self
     {
         if (is_string($options)) {
             $unit = $options;
             $mode = 'halfExpand';
         } else {
-            $unit = $options['smallestUnit'] ?? throw new MissingFieldException(
-                'Missing required option: smallestUnit.'
-            );
+            $unit = $options['smallestUnit'] ?? throw MissingFieldException::missingOption('smallestUnit');
             $mode = $options['roundingMode'] ?? 'halfExpand';
         }
 
@@ -187,7 +188,7 @@ final class Instant implements \JsonSerializable
             'minute', 'minutes' => 60_000_000_000,
             'hour', 'hours' => 3_600_000_000_000,
             'day', 'days' => 86_400_000_000_000,
-            default => throw new InvalidOptionException("Unknown or unsupported unit for round(): '{$unit}'.")
+            default => throw InvalidOptionException::unknownUnit((string) $unit, 'round()')
         };
 
         if ($divisor === 1) {
@@ -199,7 +200,7 @@ final class Instant implements \JsonSerializable
             'ceil' => self::ceilDiv($this->ns, $divisor) * $divisor,
             'floor' => self::floorDiv($this->ns, $divisor) * $divisor,
             'trunc' => intdiv($this->ns, $divisor) * $divisor,
-            default => throw new InvalidOptionException("Unknown roundingMode: '{$mode}'.")
+            default => throw InvalidOptionException::unknownRoundingMode((string) $mode)
         };
 
         return new self($rounded);
@@ -237,15 +238,14 @@ final class Instant implements \JsonSerializable
      *
      * @param TimeZone|string|array<string, mixed> $options
      */
+    #[\NoDiscard]
     public function toZonedDateTime(TimeZone|string|array $options): ZonedDateTime
     {
         if (is_array($options)) {
-            $tzValue = $options['timeZone'] ?? throw new MissingFieldException(
-                "toZonedDateTime() options array must include 'timeZone'."
-            );
+            $tzValue = $options['timeZone'] ?? throw MissingFieldException::toZonedDateTimeMissingTimeZone();
             $calendar = $options['calendar'] ?? 'iso8601';
             if ($calendar !== 'iso8601') {
-                throw new InvalidOptionException("Only the 'iso8601' calendar is supported; got '{$calendar}'.");
+                throw InvalidOptionException::unsupportedCalendar((string) $calendar);
             }
             $tz = $tzValue instanceof TimeZone ? $tzValue : TimeZone::from((string) $tzValue);
         } else {
@@ -264,6 +264,7 @@ final class Instant implements \JsonSerializable
      *
      * @param TimeZone|string $timeZone IANA timezone name or fixed UTC offset.
      */
+    #[\NoDiscard]
     public function toZonedDateTimeISO(TimeZone|string $timeZone): ZonedDateTime
     {
         $tz = $timeZone instanceof TimeZone ? $timeZone : TimeZone::from($timeZone);
@@ -295,6 +296,7 @@ final class Instant implements \JsonSerializable
      * Implements \JsonSerializable so that json_encode() produces the
      * same string as __toString().
      */
+    #[\Override]
     public function jsonSerialize(): string
     {
         return (string) $this;
@@ -438,9 +440,7 @@ final class Instant implements \JsonSerializable
             . '(?:\[!?[^\]]*\])*$/';
 
         if (!preg_match($pattern, $str, $m)) {
-            throw new InvalidTemporalStringException(
-                "Invalid Instant string: '{$str}'. Must be an ISO 8601 date-time with a UTC offset or 'Z'."
-            );
+            throw InvalidTemporalStringException::invalidInstant($str);
         }
 
         $year = (int) $m[1];

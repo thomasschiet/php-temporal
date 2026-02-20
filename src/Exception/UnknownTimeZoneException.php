@@ -14,4 +14,18 @@ namespace Temporal\Exception;
  */
 class UnknownTimeZoneException extends \InvalidArgumentException implements TemporalException
 {
+    private function __construct(string $message, int $code = 0, ?\Throwable $previous = null)
+    {
+        parent::__construct($message, $code, $previous);
+    }
+
+    public static function emptyId(): self
+    {
+        return new self('TimeZone ID must not be empty.');
+    }
+
+    public static function unknownId(string $id): self
+    {
+        return new self("Unknown or unsupported time zone: '{$id}'.");
+    }
 }

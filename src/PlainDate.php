@@ -69,9 +69,9 @@ final class PlainDate implements \JsonSerializable
 
         if (is_array($item)) {
             return new self(
-                (int) ( $item['year'] ?? throw new MissingFieldException('Missing key: year') ),
-                (int) ( $item['month'] ?? throw new MissingFieldException('Missing key: month') ),
-                (int) ( $item['day'] ?? throw new MissingFieldException('Missing key: day') )
+                (int) ( $item['year'] ?? throw MissingFieldException::missingKey('year') ),
+                (int) ( $item['month'] ?? throw MissingFieldException::missingKey('month') ),
+                (int) ( $item['day'] ?? throw MissingFieldException::missingKey('day') )
             );
         }
 
@@ -101,7 +101,7 @@ final class PlainDate implements \JsonSerializable
             . '(?:\[!?[^\]]*\])*$/';
 
         if (!preg_match($pattern, $str, $m)) {
-            throw new InvalidTemporalStringException("Invalid PlainDate string: {$str}");
+            throw InvalidTemporalStringException::forType('PlainDate', $str);
         }
 
         return new self((int) $m[1], (int) $m[2], (int) $m[3]);
@@ -194,12 +194,11 @@ final class PlainDate implements \JsonSerializable
      * @param TimeZone|string|array{timeZone:TimeZone|string,plainTime?:PlainTime} $options
      * @throws \InvalidArgumentException if options are invalid.
      */
+    #[\NoDiscard]
     public function toZonedDateTime(TimeZone|string|array $options): ZonedDateTime
     {
         if (is_array($options)) {
-            $tzValue = $options['timeZone'] ?? throw new MissingFieldException(
-                "toZonedDateTime() options array must include 'timeZone'."
-            );
+            $tzValue = $options['timeZone'] ?? throw MissingFieldException::toZonedDateTimeMissingTimeZone();
             $tz = $tzValue instanceof TimeZone ? $tzValue : TimeZone::from($tzValue);
             $plainTime = $options['plainTime'] ?? new PlainTime(0, 0, 0);
         } else {
@@ -230,6 +229,7 @@ final class PlainDate implements \JsonSerializable
      * Corresponds to Temporal.PlainDate.prototype.toPlainDateTime() in the
      * TC39 proposal.
      */
+    #[\NoDiscard]
     public function toPlainDateTime(?PlainTime $time = null): PlainDateTime
     {
         $t = $time ?? new PlainTime(0, 0, 0);
@@ -253,6 +253,7 @@ final class PlainDate implements \JsonSerializable
      * Corresponds to Temporal.PlainDate.prototype.toPlainYearMonth() in the
      * TC39 proposal.
      */
+    #[\NoDiscard]
     public function toPlainYearMonth(): PlainYearMonth
     {
         return new PlainYearMonth($this->year, $this->month);
@@ -264,6 +265,7 @@ final class PlainDate implements \JsonSerializable
      * Corresponds to Temporal.PlainDate.prototype.toPlainMonthDay() in the
      * TC39 proposal.
      */
+    #[\NoDiscard]
     public function toPlainMonthDay(): PlainMonthDay
     {
         return new PlainMonthDay($this->month, $this->day);
@@ -282,7 +284,7 @@ final class PlainDate implements \JsonSerializable
             'isoYear' => $this->year,
             'isoMonth' => $this->month,
             'isoDay' => $this->day,
-            'calendar' => 'iso8601',
+            'calendar' => 'iso8601'
         ];
     }
 
@@ -319,6 +321,7 @@ final class PlainDate implements \JsonSerializable
      * @throws InvalidArgumentException
      * @throws \RangeException
      */
+    #[\NoDiscard]
     public function with(array $fields): self
     {
         return new self($fields['year'] ?? $this->year, $fields['month'] ?? $this->month, $fields['day'] ?? $this->day);
@@ -332,10 +335,11 @@ final class PlainDate implements \JsonSerializable
      * @throws InvalidArgumentException if overflow is invalid or day overflows with 'reject'.
      * @throws \RangeException if the resulting date is outside the supported range.
      */
+    #[\NoDiscard]
     public function add(array $duration, string $overflow = 'constrain'): self
     {
         if ($overflow !== 'constrain' && $overflow !== 'reject') {
-            throw new InvalidOptionException("overflow must be 'constrain' or 'reject', got '{$overflow}'");
+            throw InvalidOptionException::invalidOverflow($overflow);
         }
 
         $years = (int) ( $duration['years'] ?? 0 );
@@ -362,9 +366,7 @@ final class PlainDate implements \JsonSerializable
         $maxDay = self::daysInMonthFor($y, $m);
         if ($d > $maxDay) {
             if ($overflow === 'reject') {
-                throw new DateRangeException(
-                    "Day {$d} is out of range for {$y}-{$m} (max {$maxDay}) with overflow: reject"
-                );
+                throw DateRangeException::dayRejected($d, $y, $m, $maxDay);
             }
 
             $d = $maxDay;
@@ -385,6 +387,7 @@ final class PlainDate implements \JsonSerializable
      * @throws InvalidArgumentException if overflow is invalid or day overflows with 'reject'.
      * @throws \RangeException if the resulting date is outside the supported range.
      */
+    #[\NoDiscard]
     public function subtract(array $duration, string $overflow = 'constrain'): self
     {
         return $this->add([
@@ -478,6 +481,7 @@ final class PlainDate implements \JsonSerializable
      * Implements \JsonSerializable so that json_encode() produces the
      * same string as __toString().
      */
+    #[\Override]
     public function jsonSerialize(): string
     {
         return (string) $this;
@@ -491,21 +495,14 @@ final class PlainDate implements \JsonSerializable
     private static function validateEpochDays(int $epochDays): void
     {
         if ($epochDays < self::MIN_EPOCH_DAYS || $epochDays > self::MAX_EPOCH_DAYS) {
-            throw new DateRangeException(
-                'PlainDate value is outside the supported range '
-                . "(epoch days {$epochDays} not in ["
-                . self::MIN_EPOCH_DAYS
-                . ', '
-                . self::MAX_EPOCH_DAYS
-                . '])'
-            );
+            throw DateRangeException::epochDayOutOfRange($epochDays, self::MIN_EPOCH_DAYS, self::MAX_EPOCH_DAYS);
         }
     }
 
     private static function validateMonth(int $month): void
     {
         if ($month < 1 || $month > 12) {
-            throw new DateRangeException("Month must be between 1 and 12, got {$month}");
+            throw DateRangeException::monthOutOfRange($month);
         }
     }
 
@@ -513,7 +510,7 @@ final class PlainDate implements \JsonSerializable
     {
         $max = self::daysInMonthFor($year, $month);
         if ($day < 1 || $day > $max) {
-            throw new DateRangeException("Day {$day} is out of range for {$year}-{$month} (1–{$max})");
+            throw DateRangeException::dayOutOfRange($day, $year, $month, $max);
         }
     }
 
@@ -523,7 +520,7 @@ final class PlainDate implements \JsonSerializable
             1, 3, 5, 7, 8, 10, 12 => 31,
             4, 6, 9, 11 => 30,
             2 => self::isLeapYear($year) ? 29 : 28,
-            default => throw new DateRangeException("Invalid month: {$month}")
+            default => throw DateRangeException::invalidMonth($month)
         };
     }
 
@@ -650,9 +647,7 @@ final class PlainDate implements \JsonSerializable
         $valid = ['year', 'years', 'month', 'months', 'week', 'weeks', 'day', 'days'];
 
         if (!in_array($unit, $valid, true)) {
-            throw new InvalidOptionException(
-                "largestUnit must be one of 'year', 'month', 'week', 'day'; got '{$unit}'."
-            );
+            throw InvalidOptionException::invalidLargestUnit($unit, 'PlainDate::until()/since()');
         }
 
         // Normalise to singular

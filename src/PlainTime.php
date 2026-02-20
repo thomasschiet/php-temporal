@@ -71,8 +71,8 @@ final class PlainTime implements \JsonSerializable
 
         if (is_array($item)) {
             return new self(
-                (int) ( $item['hour'] ?? throw new MissingFieldException('Missing key: hour') ),
-                (int) ( $item['minute'] ?? throw new MissingFieldException('Missing key: minute') ),
+                (int) ( $item['hour'] ?? throw MissingFieldException::missingKey('hour') ),
+                (int) ( $item['minute'] ?? throw MissingFieldException::missingKey('minute') ),
                 (int) ( $item['second'] ?? 0 ),
                 (int) ( $item['millisecond'] ?? 0 ),
                 (int) ( $item['microsecond'] ?? 0 ),
@@ -131,6 +131,7 @@ final class PlainTime implements \JsonSerializable
      * Corresponds to Temporal.PlainTime.prototype.toPlainDateTime() in the
      * TC39 proposal.
      */
+    #[\NoDiscard]
     public function toPlainDateTime(PlainDate $date): PlainDateTime
     {
         return new PlainDateTime(
@@ -162,7 +163,7 @@ final class PlainTime implements \JsonSerializable
             'isoMillisecond' => $this->millisecond,
             'isoMicrosecond' => $this->microsecond,
             'isoNanosecond' => $this->nanosecond,
-            'calendar' => 'iso8601',
+            'calendar' => 'iso8601'
         ];
     }
 
@@ -175,6 +176,7 @@ final class PlainTime implements \JsonSerializable
      *
      * @param array{hour?:int,minute?:int,second?:int,millisecond?:int,microsecond?:int,nanosecond?:int} $fields
      */
+    #[\NoDiscard]
     public function with(array $fields): self
     {
         return new self(
@@ -192,6 +194,7 @@ final class PlainTime implements \JsonSerializable
      *
      * @param array{hours?:int,minutes?:int,seconds?:int,milliseconds?:int,microseconds?:int,nanoseconds?:int} $duration
      */
+    #[\NoDiscard]
     public function add(array $duration): self
     {
         $ns = $this->toNanosecondsSinceMidnight();
@@ -210,6 +213,7 @@ final class PlainTime implements \JsonSerializable
      *
      * @param array{hours?:int,minutes?:int,seconds?:int,milliseconds?:int,microseconds?:int,nanoseconds?:int} $duration
      */
+    #[\NoDiscard]
     public function subtract(array $duration): self
     {
         return $this->add([
@@ -260,6 +264,7 @@ final class PlainTime implements \JsonSerializable
      *   When a string is passed it is treated as the smallestUnit with
      *   roundingMode='halfExpand' and roundingIncrement=1.
      */
+    #[\NoDiscard]
     public function round(string|array $options): self
     {
         if (is_string($options)) {
@@ -267,9 +272,7 @@ final class PlainTime implements \JsonSerializable
             $mode = 'halfExpand';
             $increment = 1;
         } else {
-            $unit = $options['smallestUnit'] ?? throw new MissingFieldException(
-                'Missing required option: smallestUnit.'
-            );
+            $unit = $options['smallestUnit'] ?? throw MissingFieldException::missingOption('smallestUnit');
             $mode = $options['roundingMode'] ?? 'halfExpand';
             $increment = isset($options['roundingIncrement']) ? (int) $options['roundingIncrement'] : 1;
         }
@@ -282,14 +285,12 @@ final class PlainTime implements \JsonSerializable
             'second', 'seconds' => [1_000_000_000, 60],
             'minute', 'minutes' => [60_000_000_000, 60],
             'hour', 'hours' => [3_600_000_000_000, 24],
-            default => throw new InvalidOptionException("Unknown or unsupported unit for round(): '{$unit}'.")
+            default => throw InvalidOptionException::unknownUnit((string) $unit, 'round()')
         };
 
         if ($increment !== 1) {
             if (( $maxPerParent % $increment ) !== 0) {
-                throw new InvalidOptionException(
-                    "roundingIncrement {$increment} does not evenly divide {$maxPerParent}."
-                );
+                throw InvalidOptionException::invalidRoundingIncrement($increment, $maxPerParent);
             }
         }
 
@@ -305,7 +306,7 @@ final class PlainTime implements \JsonSerializable
             'ceil' => self::ceilDivFloor($ns, $step) * $step,
             'floor' => intdiv($ns, $step) * $step,
             'trunc' => intdiv($ns, $step) * $step,
-            default => throw new InvalidOptionException("Unknown roundingMode: '{$mode}'.")
+            default => throw InvalidOptionException::unknownRoundingMode((string) $mode)
         };
 
         return self::fromNanosecondsSinceMidnight($rounded);
@@ -343,6 +344,7 @@ final class PlainTime implements \JsonSerializable
      * Implements \JsonSerializable so that json_encode() produces the
      * same string as __toString().
      */
+    #[\Override]
     public function jsonSerialize(): string
     {
         return (string) $this;
@@ -370,7 +372,7 @@ final class PlainTime implements \JsonSerializable
     private static function validate(string $field, int $value, int $min, int $max): void
     {
         if ($value < $min || $value > $max) {
-            throw new DateRangeException("{$field} must be between {$min} and {$max}, got {$value}");
+            throw DateRangeException::fieldOutOfRange($field, $value, $min, $max);
         }
     }
 
@@ -403,7 +405,7 @@ final class PlainTime implements \JsonSerializable
         } elseif (preg_match($timeOnlyPattern, $str, $m)) {
             // matched time-only
         } else {
-            throw new InvalidTemporalStringException("Invalid PlainTime string: {$str}");
+            throw InvalidTemporalStringException::forType('PlainTime', $str);
         }
 
         $hour = (int) $m[1];
@@ -477,10 +479,7 @@ final class PlainTime implements \JsonSerializable
         ];
 
         if (!in_array($unit, $valid, true)) {
-            throw new InvalidOptionException(
-                "largestUnit '{$unit}' is not valid for PlainTime::until()/since(). "
-                . 'Must be one of: hour, minute, second, millisecond, microsecond, nanosecond.'
-            );
+            throw InvalidOptionException::invalidLargestUnit($unit, 'PlainTime::until()/since()');
         }
 
         return rtrim($unit, 's');

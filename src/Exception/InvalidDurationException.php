@@ -12,4 +12,13 @@ namespace Temporal\Exception;
  */
 class InvalidDurationException extends \InvalidArgumentException implements TemporalException
 {
+    private function __construct(string $message, int $code = 0, ?\Throwable $previous = null)
+    {
+        parent::__construct($message, $code, $previous);
+    }
+
+    public static function mixedSigns(): self
+    {
+        return new self('Duration fields must all have the same sign; got mixed positive and negative values.');
+    }
 }

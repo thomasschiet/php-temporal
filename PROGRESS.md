@@ -624,17 +624,55 @@ Fixed two mago static analysis errors introduced by the test262 bridge (`Test262
 
 **Total: 5210 tests passing, 2 skipped — 0 mago errors**
 
+### 23. Named Constructor Pattern for Typed Exceptions (2026-02-20)
+
+Refactored all 8 typed exception classes in `src/Exception/` to use the Named Constructor
+pattern: private `__construct()` and descriptive static factory methods.
+
+#### Exception classes updated
+
+All 8 concrete exception classes now have `private function __construct(...)` and expose
+named static factory methods that produce contextual error messages:
+
+| Class | Static factory methods |
+|---|---|
+| `InvalidOptionException` | `unknownUnit()`, `unknownRoundingMode()`, `invalidRoundingIncrement()`, `roundingIncrementTooSmall()`, `invalidOverflow()`, `invalidLargestUnit()`, `unknownDisambiguation()`, `calendarFieldsNotAllowed()`, `unsupportedCalendar()`, `unknownCalendarField()` |
+| `DateRangeException` | `monthOutOfRange()`, `invalidMonth()`, `dayOutOfRange()`, `dayOutOfRangeForMonth()`, `dayRejected()`, `fieldOutOfRange()`, `epochDayOutOfRange()`, `requiresRelativeTo()` |
+| `MissingFieldException` | `missingKey()`, `missingOption()`, `totalRequiresUnit()`, `totalRequiresRelativeTo()`, `toZonedDateTimeMissingTimeZone()` |
+| `InvalidTemporalStringException` | `forType()`, `invalidInstant()`, `invalidDurationMissingP()`, `invalidDurationEmpty()`, `invalidDurationDatePart()`, `invalidDurationTimePart()` |
+| `InvalidDurationException` | `mixedSigns()` |
+| `AmbiguousTimeException` | `inTimeZone()` |
+| `UnknownTimeZoneException` | `emptyId()`, `unknownId()` |
+| `UnsupportedCalendarException` | `unsupported()` |
+
+#### Source files updated (10 files)
+
+All 53 `throw new ExceptionClass(...)` sites replaced with `throw ExceptionClass::method()`:
+`Duration.php`, `Instant.php`, `PlainDate.php`, `PlainDateTime.php`, `PlainMonthDay.php`,
+`PlainTime.php`, `PlainYearMonth.php`, `Calendar.php`, `TimeZone.php`, `ZonedDateTime.php`.
+
+#### Static analysis fixes
+
+- Added `(string)` casts at 7 call sites in `PlainTime.php`, `PlainDateTime.php`, and
+  `Instant.php` where match-expression variables were typed as `nonnull` by mago
+- Added `#[\Override]` attribute to `jsonSerialize()` in all 8 classes that implement
+  `\JsonSerializable`: `PlainDate`, `PlainTime`, `PlainDateTime`, `Duration`, `Instant`,
+  `ZonedDateTime`, `PlainYearMonth`, `PlainMonthDay`
+
+**Total: 5212 tests passing, 2 skipped — 0 mago errors**
+
 ## Current Task
 
 - All planned tasks complete.
 
 ## Next Tasks
 
+- Run infection to check for interesting mutants to kill
 - None — all planned tasks are complete. The implementation covers all TC39 Temporal types:
   `PlainDate`, `PlainTime`, `PlainDateTime`, `Duration`, `Instant`, `ZonedDateTime`,
   `TimeZone`, `Calendar`, `PlainYearMonth`, `PlainMonthDay`, ISO 8601 parsing, and the
   `Temporal\Now` utility class. All classes are immutable. test262 behaviours are covered
-  by the 5210-test PHPUnit suite (1008 hand-written + 4202 data-driven from test262).
+  by the 5212-test PHPUnit suite (1008 hand-written + 4202 data-driven from test262).
   The library has a complete typed exception hierarchy under `Temporal\Exception\`.
   mago passes with 0 errors.
 
@@ -642,7 +680,7 @@ Fixed two mago static analysis errors introduced by the test262 bridge (`Test262
 
 **Status: COMPLETE**
 
-- **5210 tests passing** (2 skipped — known polyfill precision edge cases), 11308 assertions
+- **5212 tests passing** (2 skipped — known polyfill precision edge cases), 11316 assertions
 - **0 mago errors** (fmt + lint + analyze all clean)
 - **All TC39 Temporal API surface covered**:
   - `PlainDate`, `PlainTime`, `PlainDateTime` — full arithmetic, comparison, conversion
@@ -654,7 +692,7 @@ Fixed two mago static analysis errors introduced by the test262 bridge (`Test262
   - `PlainYearMonth`, `PlainMonthDay` — partial date types
   - `Temporal\Now` — current time utilities
   - ISO 8601 parsing for all types (extended years, calendar annotations, offset suffixes)
-- **Typed exception hierarchy** under `Temporal\Exception\` (9 exception classes)
+- **Typed exception hierarchy** under `Temporal\Exception\` (9 exception classes, Named Constructor pattern)
 - **test262 data-driven bridge**: 44 fixture files, 4202 automated TC39 reference tests
 - **Fully immutable**: all public API returns new instances; 87 `return new …` sites
 - **No PHP extension dependencies** — pure PHP 8.4+
