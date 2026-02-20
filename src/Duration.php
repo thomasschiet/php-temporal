@@ -470,7 +470,10 @@ final class Duration
         }
 
         if ($relativeTo === null) {
-            // No relativeTo: fall back to simple rounding (ignores largestUnit).
+            if ($largestUnit !== null) {
+                return $this->roundWithBalance($smallestUnit, $largestUnit, $roundingMode, (int) $roundingIncrement);
+            }
+
             return $this->roundSimple($smallestUnit);
         }
 
@@ -481,6 +484,32 @@ final class Duration
             (int) $roundingIncrement,
             PlainDate::from($relativeTo)
         );
+    }
+
+    /**
+     * Balance this duration by redistributing weeks/days/time fields from
+     * largestUnit downward, without rounding (i.e. no precision loss).
+     *
+     * Calendar fields (years, months) are preserved unchanged.  Only the
+     * sub-year portion (weeks, days, hours … nanoseconds) is re-expressed
+     * starting from largestUnit.
+     *
+     * @param string|array{largestUnit:string,smallestUnit?:string} $largestUnitOrOptions
+     * @throws InvalidArgumentException
+     */
+    public function balance(string|array $largestUnitOrOptions): self
+    {
+        if (is_string($largestUnitOrOptions)) {
+            $largestUnit = $largestUnitOrOptions;
+            $smallestUnit = 'nanosecond';
+        } else {
+            $largestUnit = $largestUnitOrOptions['largestUnit'] ?? throw new InvalidArgumentException(
+                'Missing required option: largestUnit.'
+            );
+            $smallestUnit = $largestUnitOrOptions['smallestUnit'] ?? 'nanosecond';
+        }
+
+        return $this->roundWithBalance($smallestUnit, $largestUnit, 'trunc', 1);
     }
 
     /**
@@ -569,6 +598,146 @@ final class Duration
             'microsecond', 'microseconds' => new self(microseconds: $intRounded),
             default => new self(nanoseconds: $intRounded)
         };
+    }
+
+    /**
+     * Balance the duration's sub-year fields from largestUnit down to smallestUnit,
+     * applying the given rounding mode and increment at the smallestUnit level.
+     *
+     * Calendar fields (years, months) are preserved as-is.
+     * Day and time fields are treated as fixed: 1 week = 7 days, 1 day = 24 h.
+     *
+     * @throws InvalidArgumentException
+     */
+    private function roundWithBalance(
+        string $smallestUnit,
+        string $largestUnit,
+        string $roundingMode,
+        int $roundingIncrement
+    ): self {
+        $normalize = static fn(string $u): string => match ($u) {
+            'years' => 'year',
+            'months' => 'month',
+            'weeks' => 'week',
+            'days' => 'day',
+            'hours' => 'hour',
+            'minutes' => 'minute',
+            'seconds' => 'second',
+            'milliseconds' => 'millisecond',
+            'microseconds' => 'microsecond',
+            'nanoseconds' => 'nanosecond',
+            default => $u
+        };
+
+        $smallest = $normalize($smallestUnit);
+        $largest = $normalize($largestUnit);
+
+        $unitRanks = [
+            'nanosecond' => 0,
+            'microsecond' => 1,
+            'millisecond' => 2,
+            'second' => 3,
+            'minute' => 4,
+            'hour' => 5,
+            'day' => 6,
+            'week' => 7
+        ];
+
+        if (!isset($unitRanks[$smallest])) {
+            throw new InvalidArgumentException("Unknown or unsupported unit for round()/balance(): '{$smallest}'.");
+        }
+
+        if (!isset($unitRanks[$largest])) {
+            throw new InvalidArgumentException("Unknown or unsupported unit for round()/balance(): '{$largest}'.");
+        }
+
+        $smallestRank = $unitRanks[$smallest];
+        $largestRank = $unitRanks[$largest];
+
+        // Nanoseconds per unit (for the non-calendar hierarchy)
+        $nsPerUnit = [
+            'week' => 604_800_000_000_000,
+            'day' => 86_400_000_000_000,
+            'hour' => 3_600_000_000_000,
+            'minute' => 60_000_000_000,
+            'second' => 1_000_000_000,
+            'millisecond' => 1_000_000,
+            'microsecond' => 1_000,
+            'nanosecond' => 1
+        ];
+
+        $sign = $this->sign >= 0 ? 1 : -1;
+
+        // Compute total nanoseconds from ALL sub-year/month fields
+        $totalNs =
+            ( abs($this->weeks) * 604_800_000_000_000 )
+            + ( abs($this->days) * 86_400_000_000_000 )
+            + ( abs($this->hours) * 3_600_000_000_000 )
+            + ( abs($this->minutes) * 60_000_000_000 )
+            + ( abs($this->seconds) * 1_000_000_000 )
+            + ( abs($this->milliseconds) * 1_000_000 )
+            + ( abs($this->microseconds) * 1_000 )
+            + abs($this->nanoseconds);
+
+        // Apply rounding at the smallestUnit level
+        $step = $nsPerUnit[$smallest] * $roundingIncrement;
+        $totalNs = match ($roundingMode) {
+            'halfExpand' => self::halfExpandRoundNs($totalNs, $step),
+            'ceil' => (int) ( ceil($totalNs / $step) * $step ),
+            'floor', 'trunc' => intdiv($totalNs, $step) * $step,
+            default => throw new InvalidArgumentException("Unknown roundingMode: '{$roundingMode}'.")
+        };
+
+        // Distribute from largestUnit down to smallestUnit
+        $unitOrder = ['week', 'day', 'hour', 'minute', 'second', 'millisecond', 'microsecond', 'nanosecond'];
+        $fields = [];
+        $remaining = $totalNs;
+        $started = false;
+
+        foreach ($unitOrder as $unit) {
+            $rank = $unitRanks[$unit];
+
+            if ($rank === $largestRank) {
+                $started = true;
+            }
+
+            if (!$started) {
+                continue;
+            }
+
+            if ($rank < $smallestRank) {
+                break;
+            }
+
+            if ($rank === $smallestRank) {
+                $fields[$unit] = intdiv($remaining, $nsPerUnit[$unit]);
+                break;
+            }
+
+            $fields[$unit] = intdiv($remaining, $nsPerUnit[$unit]);
+            $remaining -= $fields[$unit] * $nsPerUnit[$unit];
+        }
+
+        return new self(
+            years: $this->years,
+            months: $this->months,
+            weeks: $sign * ( $fields['week'] ?? 0 ),
+            days: $sign * ( $fields['day'] ?? 0 ),
+            hours: $sign * ( $fields['hour'] ?? 0 ),
+            minutes: $sign * ( $fields['minute'] ?? 0 ),
+            seconds: $sign * ( $fields['second'] ?? 0 ),
+            milliseconds: $sign * ( $fields['millisecond'] ?? 0 ),
+            microseconds: $sign * ( $fields['microsecond'] ?? 0 ),
+            nanoseconds: $sign * ( $fields['nanosecond'] ?? 0 )
+        );
+    }
+
+    /** Half-expand rounding for non-negative integers. */
+    private static function halfExpandRoundNs(int $ns, int $step): int
+    {
+        $remainder = $ns % $step;
+
+        return ( $remainder * 2 ) >= $step ? ( intdiv($ns, $step) + 1 ) * $step : intdiv($ns, $step) * $step;
     }
 
     /**

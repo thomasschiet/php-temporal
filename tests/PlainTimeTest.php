@@ -1,13 +1,12 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Temporal\Tests;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Temporal\PlainTime;
-use Temporal\Duration;
 
 final class PlainTimeTest extends TestCase
 {
@@ -185,12 +184,12 @@ final class PlainTimeTest extends TestCase
     public function testFromArrayWithAllFields(): void
     {
         $t = PlainTime::from([
-            'hour'        => 1,
-            'minute'      => 2,
-            'second'      => 3,
+            'hour' => 1,
+            'minute' => 2,
+            'second' => 3,
             'millisecond' => 4,
             'microsecond' => 5,
-            'nanosecond'  => 6,
+            'nanosecond' => 6
         ]);
         $this->assertSame(1, $t->hour);
         $this->assertSame(2, $t->minute);
@@ -544,5 +543,210 @@ final class PlainTimeTest extends TestCase
         $this->assertSame(0, $t->hour);
         $this->assertSame(0, $t->minute);
         $this->assertSame(0, $t->second);
+    }
+
+    // -------------------------------------------------------------------------
+    // round()
+    // -------------------------------------------------------------------------
+
+    public function testRoundToSecondHalfExpand(): void
+    {
+        // 500ms is exactly half — rounds up (halfExpand)
+        $t = new PlainTime(12, 34, 56, 500);
+        $r = $t->round('second');
+        $this->assertSame(12, $r->hour);
+        $this->assertSame(34, $r->minute);
+        $this->assertSame(57, $r->second);
+        $this->assertSame(0, $r->millisecond);
+        $this->assertSame(0, $r->microsecond);
+        $this->assertSame(0, $r->nanosecond);
+    }
+
+    public function testRoundToSecondDown(): void
+    {
+        $t = new PlainTime(12, 34, 56, 499);
+        $r = $t->round('second');
+        $this->assertSame(12, $r->hour);
+        $this->assertSame(34, $r->minute);
+        $this->assertSame(56, $r->second);
+        $this->assertSame(0, $r->millisecond);
+    }
+
+    public function testRoundToMinuteHalfExpand(): void
+    {
+        $t = new PlainTime(12, 34, 30);
+        $r = $t->round('minute');
+        $this->assertSame(12, $r->hour);
+        $this->assertSame(35, $r->minute);
+        $this->assertSame(0, $r->second);
+    }
+
+    public function testRoundToMinuteDown(): void
+    {
+        $t = new PlainTime(12, 34, 29);
+        $r = $t->round('minute');
+        $this->assertSame(12, $r->hour);
+        $this->assertSame(34, $r->minute);
+        $this->assertSame(0, $r->second);
+    }
+
+    public function testRoundToHourHalfExpand(): void
+    {
+        $t = new PlainTime(12, 30, 0);
+        $r = $t->round('hour');
+        $this->assertSame(13, $r->hour);
+        $this->assertSame(0, $r->minute);
+        $this->assertSame(0, $r->second);
+    }
+
+    public function testRoundToHourDown(): void
+    {
+        $t = new PlainTime(12, 29, 59);
+        $r = $t->round('hour');
+        $this->assertSame(12, $r->hour);
+        $this->assertSame(0, $r->minute);
+        $this->assertSame(0, $r->second);
+    }
+
+    public function testRoundToMillisecond(): void
+    {
+        // 499µs rounds down to 0ms
+        $t = new PlainTime(0, 0, 0, 0, 499);
+        $r = $t->round('millisecond');
+        $this->assertSame(0, $r->millisecond);
+        // 500µs is exactly half — halfExpand rounds up to 1ms
+        $t2 = new PlainTime(0, 0, 0, 0, 500, 0);
+        $r2 = $t2->round('millisecond');
+        $this->assertSame(1, $r2->millisecond);
+        $this->assertSame(0, $r2->microsecond);
+    }
+
+    public function testRoundToMicrosecond(): void
+    {
+        // 499ns rounds down to 0µs
+        $t = new PlainTime(0, 0, 0, 0, 0, 499);
+        $r = $t->round('microsecond');
+        $this->assertSame(0, $r->microsecond);
+        // 500ns is exactly half — halfExpand rounds up to 1µs
+        $t2 = new PlainTime(0, 0, 0, 0, 0, 500);
+        $r2 = $t2->round('microsecond');
+        $this->assertSame(1, $r2->microsecond);
+        $this->assertSame(0, $r2->nanosecond);
+    }
+
+    public function testRoundToNanosecondIsNoop(): void
+    {
+        $t = new PlainTime(12, 34, 56, 789, 123, 456);
+        $r = $t->round('nanosecond');
+        $this->assertTrue($t->equals($r));
+    }
+
+    public function testRoundModeFloor(): void
+    {
+        $t = new PlainTime(12, 34, 56, 999);
+        $r = $t->round(['smallestUnit' => 'second', 'roundingMode' => 'floor']);
+        $this->assertSame(56, $r->second);
+        $this->assertSame(0, $r->millisecond);
+    }
+
+    public function testRoundModeCeil(): void
+    {
+        $t = new PlainTime(12, 34, 56, 1);
+        $r = $t->round(['smallestUnit' => 'second', 'roundingMode' => 'ceil']);
+        $this->assertSame(57, $r->second);
+        $this->assertSame(0, $r->millisecond);
+    }
+
+    public function testRoundModeTrunc(): void
+    {
+        $t = new PlainTime(12, 34, 56, 999);
+        $r = $t->round(['smallestUnit' => 'second', 'roundingMode' => 'trunc']);
+        $this->assertSame(56, $r->second);
+        $this->assertSame(0, $r->millisecond);
+    }
+
+    public function testRoundWithIncrement(): void
+    {
+        // Round to nearest 15 minutes
+        $t = new PlainTime(12, 7, 0);
+        $r = $t->round(['smallestUnit' => 'minute', 'roundingIncrement' => 15]);
+        $this->assertSame(12, $r->hour);
+        $this->assertSame(0, $r->minute);
+
+        $t2 = new PlainTime(12, 8, 0);
+        $r2 = $t2->round(['smallestUnit' => 'minute', 'roundingIncrement' => 15]);
+        $this->assertSame(12, $r2->hour);
+        $this->assertSame(15, $r2->minute);
+    }
+
+    public function testRoundWithIncrementHour(): void
+    {
+        // Round to nearest 6 hours
+        $t = new PlainTime(8, 0, 0);
+        $r = $t->round(['smallestUnit' => 'hour', 'roundingIncrement' => 6]);
+        $this->assertSame(6, $r->hour);
+
+        $t2 = new PlainTime(9, 0, 0);
+        $r2 = $t2->round(['smallestUnit' => 'hour', 'roundingIncrement' => 6]);
+        $this->assertSame(12, $r2->hour);
+    }
+
+    public function testRoundWrapsMidnight(): void
+    {
+        // 23:59:59.5 rounds up to 00:00:00 (midnight, next day)
+        $t = new PlainTime(23, 59, 59, 500);
+        $r = $t->round('second');
+        $this->assertSame(0, $r->hour);
+        $this->assertSame(0, $r->minute);
+        $this->assertSame(0, $r->second);
+        $this->assertSame(0, $r->millisecond);
+    }
+
+    public function testRoundHourWrapsMidnight(): void
+    {
+        // 23:30 rounds up to 00:00
+        $t = new PlainTime(23, 30, 0);
+        $r = $t->round('hour');
+        $this->assertSame(0, $r->hour);
+        $this->assertSame(0, $r->minute);
+        $this->assertSame(0, $r->second);
+    }
+
+    public function testRoundStringUnitSingular(): void
+    {
+        // Accept singular and plural forms
+        $t = new PlainTime(12, 34, 56, 500);
+        $r1 = $t->round('second');
+        $r2 = $t->round('seconds');
+        $this->assertTrue($r1->equals($r2));
+    }
+
+    public function testRoundMissingSmallestUnitThrows(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $t = new PlainTime(12, 0, 0);
+        $t->round([]);
+    }
+
+    public function testRoundUnknownUnitThrows(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $t = new PlainTime(12, 0, 0);
+        $t->round('week');
+    }
+
+    public function testRoundUnknownModeThrows(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $t = new PlainTime(12, 0, 0);
+        $t->round(['smallestUnit' => 'second', 'roundingMode' => 'invalid']);
+    }
+
+    public function testRoundIncrementDoesNotDivideUnitThrows(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $t = new PlainTime(12, 0, 0);
+        // 7 minutes does not evenly divide 60
+        $t->round(['smallestUnit' => 'minute', 'roundingIncrement' => 7]);
     }
 }

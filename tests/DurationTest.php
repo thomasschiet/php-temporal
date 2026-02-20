@@ -870,4 +870,160 @@ class DurationTest extends TestCase
         $this->assertSame(2, $result->hours);
         $this->assertSame(0, $result->minutes);
     }
+
+    // -------------------------------------------------------------------------
+    // round() with largestUnit but no relativeTo (balancing time fields)
+    // -------------------------------------------------------------------------
+
+    public function testRoundLargestUnitBalances90SecondsToMinutes(): void
+    {
+        $d = Duration::from('PT90S');
+        $result = $d->round(['smallestUnit' => 'second', 'largestUnit' => 'minute']);
+        $this->assertSame(1, $result->minutes);
+        $this->assertSame(30, $result->seconds);
+        $this->assertSame(0, $result->hours);
+    }
+
+    public function testRoundLargestUnitBalances3700SecondsToHours(): void
+    {
+        $d = Duration::from('PT3700S');
+        $result = $d->round(['smallestUnit' => 'second', 'largestUnit' => 'hour']);
+        $this->assertSame(1, $result->hours);
+        $this->assertSame(1, $result->minutes);
+        $this->assertSame(40, $result->seconds);
+    }
+
+    public function testRoundLargestUnitBalancesWithRounding(): void
+    {
+        // PT90.6S rounded to nearest second then balanced to minutes
+        $d = new Duration(seconds: 90, milliseconds: 600);
+        $result = $d->round(['smallestUnit' => 'second', 'largestUnit' => 'minute']);
+        $this->assertSame(1, $result->minutes);
+        $this->assertSame(31, $result->seconds);
+        $this->assertSame(0, $result->milliseconds);
+    }
+
+    public function testRoundLargestUnitPreservesDateFields(): void
+    {
+        // Duration with date fields: only time portion is balanced
+        $d = new Duration(days: 1, hours: 90);
+        $result = $d->round(['smallestUnit' => 'hour', 'largestUnit' => 'day']);
+        // 1 day + 90 hours = 1 day + 3 days + 18 hours = 4 days 18 hours
+        $this->assertSame(4, $result->days);
+        $this->assertSame(18, $result->hours);
+    }
+
+    public function testRoundLargestUnitWeeks(): void
+    {
+        // 14 days should balance to 2 weeks
+        $d = new Duration(days: 14);
+        $result = $d->round(['smallestUnit' => 'day', 'largestUnit' => 'week']);
+        $this->assertSame(2, $result->weeks);
+        $this->assertSame(0, $result->days);
+    }
+
+    // -------------------------------------------------------------------------
+    // Duration::balance()
+    // -------------------------------------------------------------------------
+
+    public function testBalance90SecondsToMinutes(): void
+    {
+        $d = Duration::from('PT90S');
+        $result = $d->balance('minute');
+        $this->assertSame(1, $result->minutes);
+        $this->assertSame(30, $result->seconds);
+        $this->assertSame(0, $result->hours);
+        $this->assertSame(0, $result->milliseconds);
+    }
+
+    public function testBalance3700SecondsToHours(): void
+    {
+        $d = Duration::from('PT3700S');
+        $result = $d->balance('hour');
+        $this->assertSame(1, $result->hours);
+        $this->assertSame(1, $result->minutes);
+        $this->assertSame(40, $result->seconds);
+    }
+
+    public function testBalanceDayToHours(): void
+    {
+        // 1 day + 2 hours balanced to 'hour' → 26 hours
+        $d = new Duration(days: 1, hours: 2);
+        $result = $d->balance('hour');
+        $this->assertSame(26, $result->hours);
+        $this->assertSame(0, $result->days);
+    }
+
+    public function testBalanceWeeks(): void
+    {
+        // 168 hours = 1 week
+        $d = new Duration(hours: 168);
+        $result = $d->balance('week');
+        $this->assertSame(1, $result->weeks);
+        $this->assertSame(0, $result->days);
+        $this->assertSame(0, $result->hours);
+    }
+
+    public function testBalanceWeeksWithRemainder(): void
+    {
+        // 170 hours = 1 week + 2 hours
+        $d = new Duration(hours: 170);
+        $result = $d->balance('week');
+        $this->assertSame(1, $result->weeks);
+        $this->assertSame(0, $result->days);
+        $this->assertSame(2, $result->hours);
+    }
+
+    public function testBalanceAlreadyBalanced(): void
+    {
+        $d = new Duration(minutes: 1, seconds: 30);
+        $result = $d->balance('minute');
+        $this->assertSame(1, $result->minutes);
+        $this->assertSame(30, $result->seconds);
+    }
+
+    public function testBalanceNegativeDuration(): void
+    {
+        $d = Duration::from('-PT90S');
+        $result = $d->balance('minute');
+        $this->assertSame(-1, $result->minutes);
+        $this->assertSame(-30, $result->seconds);
+    }
+
+    public function testBalanceZeroDuration(): void
+    {
+        $d = new Duration();
+        $result = $d->balance('hour');
+        $this->assertSame(0, $result->hours);
+        $this->assertSame(0, $result->minutes);
+        $this->assertSame(0, $result->seconds);
+    }
+
+    public function testBalancePreservesCalendarFields(): void
+    {
+        // Years and months are preserved; only sub-month fields are balanced
+        $d = new Duration(years: 1, months: 2, days: 1, hours: 26);
+        $result = $d->balance('day');
+        $this->assertSame(1, $result->years);
+        $this->assertSame(2, $result->months);
+        $this->assertSame(2, $result->days);
+        $this->assertSame(2, $result->hours);
+    }
+
+    public function testBalanceMissingLargestUnitThrows(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $d = new Duration(seconds: 90);
+        $d->balance([]);
+    }
+
+    public function testBalanceStringPluralForms(): void
+    {
+        // Accept 'minutes' (plural) as well as 'minute'
+        $d = Duration::from('PT90S');
+        $r1 = $d->balance('minute');
+        $r2 = $d->balance('minutes');
+        $this->assertSame($r1->minutes, $r2->minutes);
+        $this->assertSame($r1->seconds, $r2->seconds);
+    }
 }

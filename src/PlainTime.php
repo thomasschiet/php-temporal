@@ -197,6 +197,66 @@ final class PlainTime
         return $other->until($this);
     }
 
+    /**
+     * Round this time to the given unit.
+     *
+     * Wraps around midnight when rounding up past 23:59:59.999999999.
+     *
+     * @param string|array{smallestUnit:string,roundingMode?:string,roundingIncrement?:int} $options
+     *   When a string is passed it is treated as the smallestUnit with
+     *   roundingMode='halfExpand' and roundingIncrement=1.
+     */
+    public function round(string|array $options): self
+    {
+        if (is_string($options)) {
+            $unit = $options;
+            $mode = 'halfExpand';
+            $increment = 1;
+        } else {
+            $unit = $options['smallestUnit'] ?? throw new InvalidArgumentException(
+                'Missing required option: smallestUnit.'
+            );
+            $mode = $options['roundingMode'] ?? 'halfExpand';
+            $increment = isset($options['roundingIncrement']) ? (int) $options['roundingIncrement'] : 1;
+        }
+
+        // Resolve unit to nanosecond divisor and max-per-parent for validation
+        [$divisor, $maxPerParent] = match ($unit) {
+            'nanosecond', 'nanoseconds' => [1, 1_000],
+            'microsecond', 'microseconds' => [1_000, 1_000],
+            'millisecond', 'milliseconds' => [1_000_000, 1_000],
+            'second', 'seconds' => [1_000_000_000, 60],
+            'minute', 'minutes' => [60_000_000_000, 60],
+            'hour', 'hours' => [3_600_000_000_000, 24],
+            default => throw new InvalidArgumentException("Unknown or unsupported unit for round(): '{$unit}'.")
+        };
+
+        if ($increment !== 1) {
+            if (( $maxPerParent % $increment ) !== 0) {
+                throw new InvalidArgumentException(
+                    "roundingIncrement {$increment} does not evenly divide {$maxPerParent}."
+                );
+            }
+        }
+
+        if ($divisor === 1 && $increment === 1) {
+            return $this;
+        }
+
+        $step = $divisor * $increment;
+        $ns = $this->toNanosecondsSinceMidnight();
+
+        $rounded = match ($mode) {
+            'halfExpand' => self::roundHalfExpand($ns, $step),
+            'ceil' => self::ceilDivFloor($ns, $step) * $step,
+            'floor' => intdiv($ns, $step) * $step,
+            'trunc' => intdiv($ns, $step) * $step,
+            default => throw new InvalidArgumentException("Unknown roundingMode: '{$mode}'.")
+        };
+
+        return self::fromNanosecondsSinceMidnight($rounded);
+    }
+
     // -------------------------------------------------------------------------
     // Comparison
     // -------------------------------------------------------------------------
@@ -302,6 +362,26 @@ final class PlainTime
         }
 
         return new self($hour, $minute, $second, $millisecond, $microsecond, $nanosecond);
+    }
+
+    /** Round ns to nearest multiple of step using half-expand (round half away from zero toward +inf). */
+    private static function roundHalfExpand(int $ns, int $step): int
+    {
+        $remainder = $ns % $step;
+        if ($remainder < 0) {
+            $remainder += $step;
+        }
+
+        return ( $remainder * 2 ) >= $step
+            ? ( intdiv($ns, $step) + ( $ns >= 0 ? 1 : 0 ) ) * $step
+            : intdiv($ns, $step) * $step;
+    }
+
+    /** Ceiling division: smallest integer k such that k * step >= ns (for ns >= 0). */
+    private static function ceilDivFloor(int $ns, int $step): int
+    {
+        $q = intdiv($ns, $step);
+        return ( $ns % $step ) !== 0 ? $q + 1 : $q;
     }
 
     /**

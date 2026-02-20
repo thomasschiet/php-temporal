@@ -8,9 +8,6 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Temporal\Duration;
 use Temporal\Instant;
-use Temporal\PlainDate;
-use Temporal\PlainDateTime;
-use Temporal\PlainTime;
 use Temporal\TimeZone;
 use Temporal\ZonedDateTime;
 

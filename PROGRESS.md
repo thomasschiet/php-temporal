@@ -256,6 +256,40 @@ Implemented the `Temporal\Now` utility class and cross-type conversion methods:
 
 **Total: 759 tests passing (+25 new)**
 
+### 13. PlainTime::round() + Duration::balance() (2026-02-20)
+
+#### `PlainTime::round()` — new method
+- Accepts `string|array{smallestUnit, roundingMode?, roundingIncrement?}`
+  (same interface as `Instant::round()` / `ZonedDateTime::round()`)
+- Supported units: `nanosecond` … `hour` (not `day` — PlainTime has no date)
+- Rounding modes: `halfExpand` (default), `ceil`, `floor`, `trunc`
+- `roundingIncrement` validated: must evenly divide the parent unit's size
+  (e.g. for `minute`, increment must divide 60)
+- Wraps around midnight when rounding up past 23:59:59.999999999 (result is 00:00:00)
+- Private helpers `roundHalfExpand()` and `ceilDivFloor()` added to `PlainTime`
+- Added 22 tests to `tests/PlainTimeTest.php` covering all units, all modes,
+  increment validation, midnight wrapping, and error cases
+
+#### `Duration::balance()` — new method
+- Accepts `string|array{largestUnit, smallestUnit?}`
+- Re-expresses the duration from `largestUnit` down to `smallestUnit`
+  (default `nanosecond`) without rounding (no precision loss)
+- Uses fixed conversions: 1 week = 7 days, 1 day = 24 h (no calendar awareness)
+- Calendar fields (years, months) are preserved unchanged
+- Delegates to the new private `roundWithBalance()` method with `trunc` mode
+
+#### `Duration::round()` with `largestUnit` and no `relativeTo` — fixed
+- Previously, when `largestUnit` was provided without `relativeTo`, the
+  method silently ignored `largestUnit` and fell back to `roundSimple()`
+- Now calls `roundWithBalance()` which correctly distributes the total ns
+  across the unit hierarchy from `largestUnit` down to `smallestUnit`
+- Example: `PT90S.round({ smallestUnit: 'second', largestUnit: 'minute' })` → `PT1M30S`
+- Private `roundWithBalance(smallestUnit, largestUnit, mode, increment)` method
+  handles all time-unit balancing for both `round()` and `balance()`
+- Added 5 round-with-largestUnit tests and 11 balance() tests to `DurationTest.php`
+
+**Total: 796 tests passing (+37 new)**
+
 ## Current Task
 
 - All planned tasks complete.
@@ -263,5 +297,4 @@ Implemented the `Temporal\Now` utility class and cross-type conversion methods:
 ## Next Tasks
 
 - Additional DST-transition edge cases in `ZonedDateTime` (add/subtract across spring/fall transitions)
-- Duration balancing with mixed calendar + time units (`Duration::balance()`)
-- `PlainTime::round()` — round to nearest unit
+- `PlainDateTime::round()` — round to nearest unit (mirrors `ZonedDateTime::round()`)
