@@ -63,13 +63,27 @@
 - Created `tests/DurationTest.php` — 77 tests, all passing
 - Total: 277 tests, all passing
 
+### 5. Instant (2026-02-20)
+- Created `src/Instant.php` — full implementation:
+  - Private constructor; epoch nanoseconds stored as a single `int` (range ~1678–2262)
+  - `fromEpochNanoseconds()` / `fromEpochMicroseconds()` / `fromEpochMilliseconds()` / `fromEpochSeconds()` static constructors
+  - `from()` static constructor (accepts string or Instant)
+  - ISO 8601 parsing: `YYYY-MM-DDTHH:MM:SS[.fraction](Z|±HH:MM)` with extended years and lowercase `t`/`z`
+  - Computed properties via `__get()`: `epochNanoseconds`, `epochMicroseconds`, `epochMilliseconds`, `epochSeconds` (all truncate toward zero, matching JS BigInt semantics)
+  - `add()` / `subtract()` — rejects calendar fields (years/months/weeks); days treated as exactly 24 h
+  - `until()` / `since()` — return Duration with hours…nanoseconds (no calendar fields)
+  - `round(unit|options)` — halfExpand/ceil/floor/trunc modes; pure integer arithmetic avoids float precision issues
+  - `compare()` static method / `equals()` instance method
+  - `__toString()` — UTC ISO 8601 string with `Z` suffix, delegates to PlainDate/PlainTime for formatting
+- Created `tests/InstantTest.php` — 83 tests, all passing
+- Total: 360 tests, all passing
+
 ## Current Task
 
-- **Instant** — epoch-based timestamp with nanosecond precision
+- **ZonedDateTime** — Instant + TimeZone + Calendar
 
 ## Next Tasks
 
-5. `ZonedDateTime` — Instant + TimeZone + Calendar
 6. `TimeZone` — IANA time zones via OS
 7. `Calendar` — ISO 8601 calendar
 8. `PlainYearMonth`, `PlainMonthDay` — partial date types
