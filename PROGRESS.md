@@ -104,12 +104,35 @@
 - Created `tests/ZonedDateTimeTest.php` — 57 tests, all passing
 - Total: 447 tests, all passing
 
+### 7. PlainYearMonth + PlainMonthDay (2026-02-20)
+- Created `src/PlainYearMonth.php` — full implementation:
+  - Constructor with month validation
+  - `from()` static constructor (accepts string, array, or PlainYearMonth)
+  - ISO 8601 parsing: `YYYY-MM` with extended years and leading sign
+  - Computed properties via `__get()`: `daysInMonth`, `daysInYear`, `inLeapYear`, `monthsInYear`
+  - `with()` for field overrides
+  - `add()` / `subtract()` — accepts array or Duration; normalises month overflow/underflow
+  - `until()` / `since()` — returns Duration with years and months
+  - `toPlainDate(day)` — converts to PlainDate with a given day
+  - `compare()` static method / `equals()` instance method
+  - `__toString()` — `YYYY-MM` with extended year support
+- Created `tests/PlainYearMonthTest.php` — 66 tests, all passing
+- Created `src/PlainMonthDay.php` — full implementation:
+  - Constructor with month and day validation (reference year 1972 for Feb 29 support)
+  - `from()` static constructor (accepts string, array, or PlainMonthDay)
+  - ISO 8601 parsing: `--MM-DD`
+  - `with()` for field overrides
+  - `toPlainDate(year)` — converts to PlainDate; throws if invalid (e.g. Feb 29 in non-leap year)
+  - `equals()` instance method
+  - `__toString()` — `--MM-DD`
+- Created `tests/PlainMonthDayTest.php` — 43 tests, all passing
+- Total: 553 tests, all passing
+
 ## Current Task
 
-- **PlainYearMonth + PlainMonthDay** — partial date types
+- **Parsing improvements** — ISO 8601 string parsing edge cases
 
 ## Next Tasks
 
-7. `PlainYearMonth`, `PlainMonthDay` — partial date types
 8. Parsing improvements — ISO 8601 string parsing edge cases
 9. `Calendar` — ISO 8601 calendar (if needed for completeness)
