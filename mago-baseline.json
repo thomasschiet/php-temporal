@@ -703,6 +703,84 @@ message = 'Potentially unhandled exception `temporal\exception\invalidoptionexce
 count = 1
 
 [[issues]]
+file = "src/JapaneseCalendar.php"
+code = "missing-constant-type"
+message = "Class constant `ERAS` is missing a type hint."
+count = 1
+
+[[issues]]
+file = "src/JapaneseCalendar.php"
+code = "missing-constant-type"
+message = "Class constant `ERA_FALLBACK` is missing a type hint."
+count = 1
+
+[[issues]]
+file = "src/JapaneseCalendar.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\JapaneseCalendar::dateFromFields`.'
+count = 1
+
+[[issues]]
+file = "src/JapaneseCalendar.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\JapaneseCalendar::dateFromFields`.'
+count = 1
+
+[[issues]]
+file = "src/JapaneseCalendar.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `Temporal\Exception\DateRangeException` in `Temporal\JapaneseCalendar::dateFromFields`.'
+count = 1
+
+[[issues]]
+file = "src/JapaneseCalendar.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `Temporal\Exception\DateRangeException` in `Temporal\JapaneseCalendar::daysInMonth`.'
+count = 1
+
+[[issues]]
+file = "src/JapaneseCalendar.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `temporal\exception\daterangeexception` in `Temporal\JapaneseCalendar::dateFromFields`.'
+count = 1
+
+[[issues]]
+file = "src/JapaneseCalendar.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `temporal\exception\invalidoptionexception` in `Temporal\JapaneseCalendar::fields`.'
+count = 1
+
+[[issues]]
+file = "src/JapaneseCalendar.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `temporal\exception\invalidoptionexception` in `Temporal\JapaneseCalendar::resolveIsoYear`.'
+count = 1
+
+[[issues]]
+file = "src/JapaneseCalendar.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `temporal\exception\missingfieldexception` in `Temporal\JapaneseCalendar::dateFromFields`.'
+count = 1
+
+[[issues]]
+file = "src/JapaneseCalendar.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `temporal\exception\missingfieldexception` in `Temporal\JapaneseCalendar::monthDayFromFields`.'
+count = 1
+
+[[issues]]
+file = "src/JapaneseCalendar.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `temporal\exception\missingfieldexception` in `Temporal\JapaneseCalendar::resolveIsoYear`.'
+count = 1
+
+[[issues]]
+file = "src/JapaneseCalendar.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `temporal\exception\missingfieldexception` in `Temporal\JapaneseCalendar::yearMonthFromFields`.'
+count = 1
+
+[[issues]]
 file = "src/PlainDate.php"
 code = "less-specific-nested-argument-type"
 message = 'Argument type mismatch for argument #2 of `Temporal\CalendarProtocol::dateadd`: expected `array<string, int>`, but provided type `array<string, mixed>` is less specific.'
@@ -838,7 +916,7 @@ count = 2
 file = "src/PlainDateTime.php"
 code = "possibly-undefined-array-index"
 message = "Possibly undefined array key `int(1)` accessed on `array<array-key, string>`."
-count = 1
+count = 2
 
 [[issues]]
 file = "src/PlainDateTime.php"
@@ -874,6 +952,12 @@ count = 1
 file = "src/PlainDateTime.php"
 code = "reference-to-undefined-variable"
 message = "Reference created from a previously undefined variable `$m`."
+count = 1
+
+[[issues]]
+file = "src/PlainDateTime.php"
+code = "reference-to-undefined-variable"
+message = "Reference created from a previously undefined variable `$matches`."
 count = 1
 
 [[issues]]
@@ -1276,6 +1360,72 @@ count = 1
 file = "src/PlainYearMonth.php"
 code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `temporal\exception\missingfieldexception` in `Temporal\PlainYearMonth::from`.'
+count = 1
+
+[[issues]]
+file = "src/RocCalendar.php"
+code = "missing-constant-type"
+message = "Class constant `EPOCH_ISO_YEAR` is missing a type hint."
+count = 1
+
+[[issues]]
+file = "src/RocCalendar.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\RocCalendar::dateFromFields`.'
+count = 1
+
+[[issues]]
+file = "src/RocCalendar.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\RocCalendar::dateFromFields`.'
+count = 1
+
+[[issues]]
+file = "src/RocCalendar.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `Temporal\Exception\DateRangeException` in `Temporal\RocCalendar::dateFromFields`.'
+count = 1
+
+[[issues]]
+file = "src/RocCalendar.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `Temporal\Exception\DateRangeException` in `Temporal\RocCalendar::daysInMonth`.'
+count = 1
+
+[[issues]]
+file = "src/RocCalendar.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `temporal\exception\daterangeexception` in `Temporal\RocCalendar::dateFromFields`.'
+count = 1
+
+[[issues]]
+file = "src/RocCalendar.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `temporal\exception\invalidoptionexception` in `Temporal\RocCalendar::fields`.'
+count = 1
+
+[[issues]]
+file = "src/RocCalendar.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `temporal\exception\missingfieldexception` in `Temporal\RocCalendar::dateFromFields`.'
+count = 1
+
+[[issues]]
+file = "src/RocCalendar.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `temporal\exception\missingfieldexception` in `Temporal\RocCalendar::monthDayFromFields`.'
+count = 1
+
+[[issues]]
+file = "src/RocCalendar.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `temporal\exception\missingfieldexception` in `Temporal\RocCalendar::resolveIsoYear`.'
+count = 1
+
+[[issues]]
+file = "src/RocCalendar.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `temporal\exception\missingfieldexception` in `Temporal\RocCalendar::yearMonthFromFields`.'
 count = 1
 
 [[issues]]
@@ -2327,6 +2477,822 @@ file = "tests/ApiGapsTest.php"
 code = "unused-method-call"
 message = "The return value of 'withCalendar' must be used."
 count = 3
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarSupportTest::testCalendarFromJapaneseCaseInsensitive`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarSupportTest::testCalendarFromJapanese`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarSupportTest::testCalendarFromRocCaseInsensitive`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarSupportTest::testCalendarFromRoc`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarSupportTest::testJapaneseCalendarFromCalendarFactory`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarSupportTest::testJapaneseToStringIncludesAnnotation`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeCalendarPreservedInAdd`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeCalendarPreservedInRound`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeCalendarPreservedInSubtract`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeCalendarPreservedInWithPlainTime`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeCalendarPreservedInWith`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeFromPreservesCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeGetISOFieldsCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeToPlainDatePreservesCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeToStringAppendCalendarForNonIso`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeWithCalendarCalendarInstance`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeWithCalendarMethod`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeWithCalendarProtocolInstance`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeWithJapaneseCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeWithPlainDateTakesCalendarFromDate`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeWithRocCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarSupportTest::testPlainDateToPlainDateTimePreservesCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarSupportTest::testPlainDateToZonedDateTimePreservesCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarSupportTest::testPlainDateWithJapaneseCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarSupportTest::testPlainDateWithRocCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarSupportTest::testRocCalendarFromCalendarFactory`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarSupportTest::testRocToStringIncludesAnnotation`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarSupportTest::testZonedDateTimeWithCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarSupportTest::testZonedDateTimeWithPlainDateTakesCalendarFromDate`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\Exception` in `Temporal\Tests\CalendarSupportTest::testCalendarFromJapanese`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\Exception` in `Temporal\Tests\CalendarSupportTest::testCalendarFromRoc`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\Exception` in `Temporal\Tests\CalendarSupportTest::testJapaneseImplementsCalendarProtocol`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\Exception` in `Temporal\Tests\CalendarSupportTest::testRocImplementsCalendarProtocol`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testCalendarFromJapaneseCaseInsensitive`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testCalendarFromJapanese`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testCalendarFromRocCaseInsensitive`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testCalendarFromRoc`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testJapaneseBeforeMeijiFallback`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testJapaneseCalendarFromCalendarFactory`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testJapaneseDateFromFieldsOverflowConstrain`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testJapaneseDateFromFieldsShowa`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testJapaneseDateFromFieldsWithEra`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testJapaneseDateFromFieldsWithYear`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testJapaneseDayPassThrough`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testJapaneseDaysInMonth`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testJapaneseGetId`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testJapaneseHeisei1989`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testJapaneseImplementsCalendarProtocol`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testJapaneseInLeapYear`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testJapaneseLastDayHeisei`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testJapaneseLastDayShowa`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testJapaneseMeiji1`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testJapaneseMonthCode`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testJapaneseMonthPassThrough`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testJapaneseMonthsInYear`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testJapaneseReiwa2024`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testJapaneseReiwaStartDate`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testJapaneseShowa1`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testJapaneseSingletonReturnsSameInstance`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testJapaneseTaisho1`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testJapaneseToStringIncludesAnnotation`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeBceEraFields`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeCalendarPreservedInAdd`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeCalendarPreservedInRound`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeCalendarPreservedInSubtract`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeCalendarPreservedInWithPlainTime`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeCalendarPreservedInWith`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeDefaultCalendarIsIso`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeFromPreservesCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeFromStringParsesCalendarAnnotation`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeFromStringUnknownCalendarFallsBackToIso`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeGetCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeGetISOFieldsCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeToPlainDatePreservesCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeToStringAppendCalendarForNonIso`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeToStringNoAnnotationForIso`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeWithCalendarCalendarInstance`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeWithCalendarMethod`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeWithCalendarProtocolInstance`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeWithGregoryCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeWithJapaneseCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeWithPlainDateTakesCalendarFromDate`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeWithRocCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testPlainDateToPlainDateTimePreservesCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testPlainDateToZonedDateTimePreservesCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testPlainDateWithJapaneseCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testPlainDateWithRocCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testRocCalendarFromCalendarFactory`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testRocDateFromFieldsBeforeRocEra`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testRocDateFromFieldsOverflowConstrain`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testRocDateFromFieldsWithEra`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testRocDateFromFieldsWithYear`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testRocDayPassThrough`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testRocDaysInMonth`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testRocDaysInWeek`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testRocEraForCEYear`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testRocEraYearFor2024`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testRocGetId`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testRocImplementsCalendarProtocol`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testRocInLeapYear`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testRocMonthCode`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testRocMonthPassThrough`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testRocMonthsInYear`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testRocSingletonReturnsSameInstance`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testRocToStringIncludesAnnotation`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testRocYear1910IsBeforeRocYear2`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testRocYear1911IsBeforeRoc`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testRocYear1912IsYear1`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testRocYear2024IsYear113`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testZonedDateTimeCalendarPreservedInAdd`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testZonedDateTimeCalendarPreservedInFrom`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testZonedDateTimeCalendarPreservedInRound`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testZonedDateTimeCalendarPreservedInWithPlainTime`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testZonedDateTimeCalendarPreservedInWithTimeZone`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testZonedDateTimeDefaultCalendarIsIso`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testZonedDateTimeEraFieldWithGregoryCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testZonedDateTimeFromStringParsesCalendarAnnotation`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testZonedDateTimeFromStringUnknownCalendarFallsBackToIso`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testZonedDateTimeGetCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testZonedDateTimeGetISOFieldsCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testZonedDateTimeToPlainDatePreservesCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testZonedDateTimeToPlainDateTimePreservesCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testZonedDateTimeToStringAppendCalendarForNonIso`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testZonedDateTimeToStringNoAnnotationForIso`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testZonedDateTimeWithCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarSupportTest::testZonedDateTimeWithPlainDateTakesCalendarFromDate`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\UnknownClassOrInterfaceException` in `Temporal\Tests\CalendarSupportTest::testCalendarFromJapanese`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\UnknownClassOrInterfaceException` in `Temporal\Tests\CalendarSupportTest::testCalendarFromRoc`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\UnknownClassOrInterfaceException` in `Temporal\Tests\CalendarSupportTest::testJapaneseImplementsCalendarProtocol`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\UnknownClassOrInterfaceException` in `Temporal\Tests\CalendarSupportTest::testRocImplementsCalendarProtocol`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\CalendarSupportTest::testPlainDateTimeWithPlainDateTakesCalendarFromDate`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\CalendarSupportTest::testPlainDateToPlainDateTimePreservesCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\CalendarSupportTest::testPlainDateToZonedDateTimePreservesCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\CalendarSupportTest::testPlainDateWithJapaneseCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\CalendarSupportTest::testPlainDateWithRocCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarSupportTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\CalendarSupportTest::testZonedDateTimeWithPlainDateTakesCalendarFromDate`.'
+count = 1
 
 [[issues]]
 file = "tests/CalendarTest.php"

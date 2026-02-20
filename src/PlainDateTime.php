@@ -14,7 +14,10 @@ use Temporal\Exception\MissingFieldException;
  *
  * Immutable. Corresponds to the Temporal.PlainDateTime type in the TC39 proposal.
  *
- * @property-read string      $calendarId    Always 'iso8601'.
+ * Stores ISO 8601 fields internally. The attached CalendarProtocol translates
+ * those fields to calendar-relative values (always identity for ISO 8601).
+ *
+ * @property-read string      $calendarId    Calendar identifier (e.g. 'iso8601').
  * @property-read string      $monthCode     Calendar month code (e.g. 'M01').
  * @property-read string|null $era           Era name, or null for ISO 8601.
  * @property-read int|null    $eraYear       Year within the era, or null for ISO 8601.
@@ -40,6 +43,8 @@ final class PlainDateTime implements \JsonSerializable
     public readonly int $microsecond;
     public readonly int $nanosecond;
 
+    private readonly CalendarProtocol $calendar;
+
     public function __construct(
         int $year,
         int $month,
@@ -49,7 +54,8 @@ final class PlainDateTime implements \JsonSerializable
         int $second = 0,
         int $millisecond = 0,
         int $microsecond = 0,
-        int $nanosecond = 0
+        int $nanosecond = 0,
+        ?CalendarProtocol $calendar = null
     ) {
         self::validateMonth($month);
         self::validateDay($year, $month, $day);
@@ -69,6 +75,7 @@ final class PlainDateTime implements \JsonSerializable
         $this->millisecond = $millisecond;
         $this->microsecond = $microsecond;
         $this->nanosecond = $nanosecond;
+        $this->calendar = $calendar ?? IsoCalendar::instance();
     }
 
     // -------------------------------------------------------------------------
@@ -92,7 +99,8 @@ final class PlainDateTime implements \JsonSerializable
                 $item->second,
                 $item->millisecond,
                 $item->microsecond,
-                $item->nanosecond
+                $item->nanosecond,
+                $item->calendar
             );
         }
 
@@ -124,23 +132,20 @@ final class PlainDateTime implements \JsonSerializable
      */
     public function __get(string $name): mixed
     {
-        $cal = IsoCalendar::instance();
-
         return match ($name) {
-            'calendarId' => 'iso8601',
-            'monthCode' => $cal->monthCode($this->year, $this->month, $this->day),
-            'era' => $cal->era($this->year, $this->month, $this->day),
-            'eraYear' => $cal->eraYear($this->year, $this->month, $this->day),
-            'daysInWeek' => $cal->daysInWeek(),
-            'monthsInYear' => $cal->monthsInYear(),
-            'dayOfWeek',
-            'dayOfYear',
-            'weekOfYear',
-            'yearOfWeek',
-            'daysInMonth',
-            'daysInYear',
-            'inLeapYear'
-                => $this->toPlainDate()->{$name},
+            'calendarId' => $this->calendar->getId(),
+            'monthCode' => $this->calendar->monthCode($this->year, $this->month, $this->day),
+            'era' => $this->calendar->era($this->year, $this->month, $this->day),
+            'eraYear' => $this->calendar->eraYear($this->year, $this->month, $this->day),
+            'daysInWeek' => $this->calendar->daysInWeek(),
+            'monthsInYear' => $this->calendar->monthsInYear(),
+            'dayOfWeek' => $this->calendar->dayOfWeek($this->year, $this->month, $this->day),
+            'dayOfYear' => $this->calendar->dayOfYear($this->year, $this->month, $this->day),
+            'weekOfYear' => $this->calendar->weekOfYear($this->year, $this->month, $this->day),
+            'yearOfWeek' => $this->calendar->yearOfWeek($this->year, $this->month, $this->day),
+            'daysInMonth' => $this->calendar->daysInMonth($this->year, $this->month, $this->day),
+            'daysInYear' => $this->calendar->daysInYear($this->year, $this->month, $this->day),
+            'inLeapYear' => $this->calendar->inLeapYear($this->year, $this->month, $this->day),
             default => throw new \Error("Undefined property: {$name}")
         };
     }
@@ -172,10 +177,18 @@ final class PlainDateTime implements \JsonSerializable
     // Conversion
     // -------------------------------------------------------------------------
 
+    /**
+     * Return the CalendarProtocol used by this datetime.
+     */
+    public function getCalendar(): CalendarProtocol
+    {
+        return $this->calendar;
+    }
+
     #[\NoDiscard]
     public function toPlainDate(): PlainDate
     {
-        return new PlainDate($this->year, $this->month, $this->day);
+        return new PlainDate($this->year, $this->month, $this->day, $this->calendar);
     }
 
     /**
@@ -194,8 +207,9 @@ final class PlainDateTime implements \JsonSerializable
     public function toZonedDateTime(TimeZone|string $timeZone): ZonedDateTime
     {
         $tz = $timeZone instanceof TimeZone ? $timeZone : TimeZone::from($timeZone);
+        $instant = $tz->getInstantFor($this);
 
-        return $tz->getInstantFor($this)->toZonedDateTimeISO($tz);
+        return ZonedDateTime::fromEpochNanoseconds($instant->epochNanoseconds, $tz, $this->calendar);
     }
 
     #[\NoDiscard]
@@ -254,7 +268,7 @@ final class PlainDateTime implements \JsonSerializable
             'isoMillisecond' => $this->millisecond,
             'isoMicrosecond' => $this->microsecond,
             'isoNanosecond' => $this->nanosecond,
-            'calendar' => 'iso8601'
+            'calendar' => $this->calendar->getId()
         ];
     }
 
@@ -263,7 +277,41 @@ final class PlainDateTime implements \JsonSerializable
     // -------------------------------------------------------------------------
 
     /**
+     * Return a new PlainDateTime with the same fields but using the given calendar.
+     *
+     * Corresponds to Temporal.PlainDateTime.prototype.withCalendar() in the TC39 proposal.
+     *
+     * @throws \InvalidArgumentException if the calendar identifier is unknown.
+     */
+    #[\NoDiscard]
+    public function withCalendar(CalendarProtocol|Calendar|string $calendar): self
+    {
+        if ($calendar instanceof Calendar) {
+            $protocol = $calendar->getProtocol();
+        } elseif ($calendar instanceof CalendarProtocol) {
+            $protocol = $calendar;
+        } else {
+            $protocol = Calendar::from($calendar)->getProtocol();
+        }
+
+        return new self(
+            $this->year,
+            $this->month,
+            $this->day,
+            $this->hour,
+            $this->minute,
+            $this->second,
+            $this->millisecond,
+            $this->microsecond,
+            $this->nanosecond,
+            $protocol
+        );
+    }
+
+    /**
      * Return a new PlainDateTime with the date part replaced.
+     *
+     * The calendar is taken from the supplied PlainDate.
      */
     #[\NoDiscard]
     public function withPlainDate(PlainDate $date): self
@@ -277,7 +325,8 @@ final class PlainDateTime implements \JsonSerializable
             $this->second,
             $this->millisecond,
             $this->microsecond,
-            $this->nanosecond
+            $this->nanosecond,
+            $date->getCalendar()
         );
     }
 
@@ -296,7 +345,8 @@ final class PlainDateTime implements \JsonSerializable
             $time->second,
             $time->millisecond,
             $time->microsecond,
-            $time->nanosecond
+            $time->nanosecond,
+            $this->calendar
         );
     }
 
@@ -317,7 +367,8 @@ final class PlainDateTime implements \JsonSerializable
             (int) ( $fields['second'] ?? $this->second ),
             (int) ( $fields['millisecond'] ?? $this->millisecond ),
             (int) ( $fields['microsecond'] ?? $this->microsecond ),
-            (int) ( $fields['nanosecond'] ?? $this->nanosecond )
+            (int) ( $fields['nanosecond'] ?? $this->nanosecond ),
+            $this->calendar
         );
     }
 
@@ -385,7 +436,8 @@ final class PlainDateTime implements \JsonSerializable
             $time->second,
             $time->millisecond,
             $time->microsecond,
-            $time->nanosecond
+            $time->nanosecond,
+            $this->calendar
         );
     }
 
@@ -451,7 +503,7 @@ final class PlainDateTime implements \JsonSerializable
                 $date = $date->add(['days' => 1]);
             }
 
-            return new self($date->year, $date->month, $date->day);
+            return new self($date->year, $date->month, $date->day, 0, 0, 0, 0, 0, 0, $this->calendar);
         }
 
         [$divisor, $maxPerParent] = match ($unit) {
@@ -499,7 +551,8 @@ final class PlainDateTime implements \JsonSerializable
             $time->second,
             $time->millisecond,
             $time->microsecond,
-            $time->nanosecond
+            $time->nanosecond,
+            $this->calendar
         );
     }
 
@@ -571,7 +624,13 @@ final class PlainDateTime implements \JsonSerializable
 
     public function __toString(): string
     {
-        return $this->toPlainDate() . 'T' . $this->toPlainTime();
+        $str = $this->toPlainDate() . 'T' . $this->toPlainTime();
+
+        if ($this->calendar->getId() !== 'iso8601') {
+            $str .= '[u-ca=' . $this->calendar->getId() . ']';
+        }
+
+        return $str;
     }
 
     /**
@@ -631,6 +690,20 @@ final class PlainDateTime implements \JsonSerializable
     }
 
     /**
+     * Extract the [u-ca=...] calendar identifier from a bracket annotation string.
+     *
+     * Returns the calendar identifier string, or null if not found.
+     */
+    private static function extractCalendarAnnotation(string $brackets): ?string
+    {
+        if (preg_match('/\[u-ca=([^\]]+)\]/', $brackets, $matches)) {
+            return $matches[1];
+        }
+
+        return null;
+    }
+
+    /**
      * Parse an ISO 8601 datetime string.
      *
      * Accepted formats:
@@ -646,7 +719,7 @@ final class PlainDateTime implements \JsonSerializable
         $pattern =
             '/^([+-]?\d{4,6})-(\d{2})-(\d{2})[Tt](\d{2}):(\d{2}):(\d{2})(?:\.(\d{1,9}))?'
             . '(?:[Zz]|[+-]\d{2}(?::\d{2}(?::\d{2})?)?)?'
-            . '(?:\[!?[^\]]*\])*$/';
+            . '((?:\[!?[^\]]*\])*)$/';
 
         if (!preg_match($pattern, $str, $m)) {
             throw InvalidTemporalStringException::forType('PlainDateTime', $str);
@@ -663,6 +736,21 @@ final class PlainDateTime implements \JsonSerializable
             $nanosecond = (int) substr($frac, 6, 3);
         }
 
+        // Parse optional [u-ca=calId] annotation.
+        $calendar = null;
+
+        if (isset($m[8]) && $m[8] !== '') {
+            $calId = self::extractCalendarAnnotation($m[8]);
+
+            if ($calId !== null) {
+                try {
+                    $calendar = Calendar::from($calId)->getProtocol();
+                } catch (\InvalidArgumentException) {
+                    // Unknown calendar — ignore and fall back to ISO 8601.
+                }
+            }
+        }
+
         return new self(
             (int) $m[1],
             (int) $m[2],
@@ -672,7 +760,8 @@ final class PlainDateTime implements \JsonSerializable
             (int) $m[6],
             $millisecond,
             $microsecond,
-            $nanosecond
+            $nanosecond,
+            $calendar
         );
     }
 
@@ -768,7 +857,8 @@ final class PlainDateTime implements \JsonSerializable
             $this->second,
             $this->millisecond,
             $this->microsecond,
-            $this->nanosecond
+            $this->nanosecond,
+            $this->calendar
         );
 
         // Remaining nanoseconds between the anchor and the target.

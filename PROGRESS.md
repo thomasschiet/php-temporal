@@ -1,6 +1,6 @@
 # PHP Temporal Progress
 
-## Status: Complete
+## Status: Complete (all planned tasks done)
 
 ## Completed Tasks
 
@@ -87,7 +87,34 @@
   - **5548 tests passing** (1344 core + 4204 test262 data-driven, 2 skipped), 0 mago errors
   - mago-baseline.json updated to cover 2117 pre-existing suppressions
 
-## Next Tasks
+- **CalendarProtocol support for PlainDateTime and ZonedDateTime**:
+  - `PlainDateTime` now stores a `CalendarProtocol` (default `IsoCalendar`); constructor accepts `?CalendarProtocol $calendar = null` as 10th parameter
+  - `PlainDateTime::withCalendar(CalendarProtocol|Calendar|string)` — switch the calendar while keeping ISO fields
+  - `PlainDateTime::getCalendar(): CalendarProtocol` — access the calendar protocol
+  - `PlainDateTime::__get()` delegates all computed fields to `$this->calendar` (monthCode, era, eraYear, dayOfWeek, etc.)
+  - `PlainDateTime::__toString()` appends `[u-ca=calId]` annotation for non-ISO calendars
+  - `PlainDateTime::fromString()` parses `[u-ca=...]` annotations to restore the calendar
+  - `PlainDateTime::toPlainDate()` passes the calendar through to PlainDate
+  - `PlainDateTime::toZonedDateTime()` passes the calendar through to ZonedDateTime
+  - `PlainDateTime::getISOFields()` returns the actual calendar ID in the `'calendar'` field
+  - All mutation methods (with, add, subtract, round, withPlainTime) preserve the calendar; `withPlainDate()` takes the calendar from the supplied PlainDate
+  - `ZonedDateTime` same pattern: stores CalendarProtocol, `withCalendar()`, `getCalendar()`, all `new self()` pass calendar through
+  - `ZonedDateTime::fromEpochNanoseconds()` accepts optional `?CalendarProtocol $calendar` parameter
+  - `ZonedDateTime::toPlainDateTime()` passes the calendar through
+  - `ZonedDateTime::parse()` parses `[u-ca=...]` annotations from the string
+  - `PlainDate::getCalendar()` added — public accessor for the private calendar protocol
+  - `PlainDate::toPlainDateTime()` and `toZonedDateTime()` now pass the calendar through
+- **ROC calendar** (`src/RocCalendar.php`): Republic of China / Minguo calendar (ISO year - 1911), eras `roc` / `before-roc`, `dateFromFields` supporting `year` or `era`+`eraYear`
+- **Japanese calendar** (`src/JapaneseCalendar.php`): Imperial Japanese calendar with eras Meiji (1868), Taisho (1912-07-30), Showa (1926-12-25), Heisei (1989-01-08), Reiwa (2019-05-01); fallback `japanese` for pre-Meiji dates; `dateFromFields` supporting era+eraYear or proleptic ISO year
+- `Calendar::from()` updated to recognise `'roc'` and `'japanese'` identifiers (case-insensitive)
+- `CalendarSupportTest` — 93 tests covering PlainDateTime/ZonedDateTime calendar protocol, ROC and Japanese calendar eras, factory methods, round-trips, annotation serialisation
+- **5641 tests passing** (1437 core + 4204 test262 data-driven, 2 skipped), 0 mago errors
+- mago-baseline.json regenerated to cover all pre-existing suppressions
 
-- Add `CalendarProtocol` support to `PlainDateTime` and `ZonedDateTime` so they can use non-ISO calendars (e.g. `withCalendar()` on `PlainDateTime` returning a different-calendar view)
-- Add more non-ISO calendar implementations (ROC, Japanese, Hebrew, Islamic, Chinese)
+## All Tasks Complete
+
+All planned tasks from the `multi-calendar-support.md` design document and the PROGRESS.md next-task list have been implemented. The library now has:
+- 5 calendar implementations (ISO 8601, Gregory, Buddhist, ROC, Japanese)
+- Full CalendarProtocol support in all date/datetime types (PlainDate, PlainDateTime, ZonedDateTime, PlainYearMonth, PlainMonthDay)
+- Calendar annotation serialisation/parsing in all relevant types
+- Comprehensive test coverage (5641 tests)

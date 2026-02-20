@@ -50,11 +50,13 @@ final class ZonedDateTime implements \JsonSerializable
 {
     private readonly int $ns;
     public readonly TimeZone $timeZone;
+    private readonly CalendarProtocol $calendar;
 
-    private function __construct(int $ns, TimeZone $timeZone)
+    private function __construct(int $ns, TimeZone $timeZone, ?CalendarProtocol $calendar = null)
     {
         $this->ns = $ns;
         $this->timeZone = $timeZone;
+        $this->calendar = $calendar ?? IsoCalendar::instance();
     }
 
     // -------------------------------------------------------------------------
@@ -63,10 +65,15 @@ final class ZonedDateTime implements \JsonSerializable
 
     /**
      * Create a ZonedDateTime from epoch nanoseconds and a time zone.
+     *
+     * An optional CalendarProtocol may be supplied to use a non-ISO calendar.
      */
-    public static function fromEpochNanoseconds(int $ns, TimeZone|string $timeZone): self
-    {
-        return new self($ns, $timeZone instanceof TimeZone ? $timeZone : TimeZone::from($timeZone));
+    public static function fromEpochNanoseconds(
+        int $ns,
+        TimeZone|string $timeZone,
+        ?CalendarProtocol $calendar = null
+    ): self {
+        return new self($ns, $timeZone instanceof TimeZone ? $timeZone : TimeZone::from($timeZone), $calendar);
     }
 
     /**
@@ -82,7 +89,7 @@ final class ZonedDateTime implements \JsonSerializable
     public static function from(string|array|self $item): self
     {
         if ($item instanceof self) {
-            return new self($item->ns, $item->timeZone);
+            return new self($item->ns, $item->timeZone, $item->calendar);
         }
 
         if (is_array($item)) {
@@ -110,7 +117,7 @@ final class ZonedDateTime implements \JsonSerializable
     public function __get(string $name): mixed
     {
         return match ($name) {
-            'calendarId' => IsoCalendar::instance()->getId(),
+            'calendarId' => $this->calendar->getId(),
             'epochNanoseconds' => $this->ns,
             'epochMicroseconds' => intdiv($this->ns, 1_000),
             'epochMilliseconds' => intdiv($this->ns, 1_000_000),
@@ -176,7 +183,28 @@ final class ZonedDateTime implements \JsonSerializable
     #[\NoDiscard]
     public function toPlainDateTime(): PlainDateTime
     {
-        return $this->timeZone->getPlainDateTimeFor($this->toInstant());
+        $raw = $this->timeZone->getPlainDateTimeFor($this->toInstant());
+
+        return new PlainDateTime(
+            $raw->year,
+            $raw->month,
+            $raw->day,
+            $raw->hour,
+            $raw->minute,
+            $raw->second,
+            $raw->millisecond,
+            $raw->microsecond,
+            $raw->nanosecond,
+            $this->calendar
+        );
+    }
+
+    /**
+     * Return the CalendarProtocol used by this ZonedDateTime.
+     */
+    public function getCalendar(): CalendarProtocol
+    {
+        return $this->calendar;
     }
 
     #[\NoDiscard]
@@ -239,7 +267,7 @@ final class ZonedDateTime implements \JsonSerializable
             'isoNanosecond' => $pdt->nanosecond,
             'offset' => $this->formatOffset($offsetNs),
             'timeZone' => $this->timeZone->id,
-            'calendar' => 'iso8601'
+            'calendar' => $this->calendar->getId()
         ];
     }
 
@@ -262,7 +290,7 @@ final class ZonedDateTime implements \JsonSerializable
         $pdt = $this->toPlainDateTime();
         $instant = $this->getStartOfDayInstant($pdt->year, $pdt->month, $pdt->day);
 
-        return new self($instant->epochNanoseconds, $this->timeZone);
+        return new self($instant->epochNanoseconds, $this->timeZone, $this->calendar);
     }
 
     // -------------------------------------------------------------------------
@@ -277,7 +305,28 @@ final class ZonedDateTime implements \JsonSerializable
     {
         $tz = $timeZone instanceof TimeZone ? $timeZone : TimeZone::from($timeZone);
 
-        return new self($this->ns, $tz);
+        return new self($this->ns, $tz, $this->calendar);
+    }
+
+    /**
+     * Return a new ZonedDateTime with the same instant and time zone but using the given calendar.
+     *
+     * Corresponds to Temporal.ZonedDateTime.prototype.withCalendar() in the TC39 proposal.
+     *
+     * @throws \InvalidArgumentException if the calendar identifier is unknown.
+     */
+    #[\NoDiscard]
+    public function withCalendar(CalendarProtocol|Calendar|string $calendar): self
+    {
+        if ($calendar instanceof Calendar) {
+            $protocol = $calendar->getProtocol();
+        } elseif ($calendar instanceof CalendarProtocol) {
+            $protocol = $calendar;
+        } else {
+            $protocol = Calendar::from($calendar)->getProtocol();
+        }
+
+        return new self($this->ns, $this->timeZone, $protocol);
     }
 
     /**
@@ -306,7 +355,8 @@ final class ZonedDateTime implements \JsonSerializable
         );
         $instant = $this->timeZone->getInstantFor($pdt);
 
-        return new self($instant->epochNanoseconds, $this->timeZone);
+        // Calendar follows the supplied PlainDate (matching TC39 spec).
+        return new self($instant->epochNanoseconds, $this->timeZone, $date->getCalendar());
     }
 
     /**
@@ -338,7 +388,7 @@ final class ZonedDateTime implements \JsonSerializable
         );
         $instant = $this->timeZone->getInstantFor($pdt);
 
-        return new self($instant->epochNanoseconds, $this->timeZone);
+        return new self($instant->epochNanoseconds, $this->timeZone, $this->calendar);
     }
 
     /**
@@ -356,7 +406,7 @@ final class ZonedDateTime implements \JsonSerializable
 
         $instant = $this->timeZone->getInstantFor($newPdt);
 
-        return new self($instant->epochNanoseconds, $this->timeZone);
+        return new self($instant->epochNanoseconds, $this->timeZone, $this->calendar);
     }
 
     // -------------------------------------------------------------------------
@@ -390,7 +440,7 @@ final class ZonedDateTime implements \JsonSerializable
                 'days' => $d->days
             ]);
             $instant = $current->timeZone->getInstantFor($pdt);
-            $current = new self($instant->epochNanoseconds, $current->timeZone);
+            $current = new self($instant->epochNanoseconds, $current->timeZone, $current->calendar);
         }
 
         // Step 2: Add time fields directly to the Instant (nanosecond precision).
@@ -401,7 +451,7 @@ final class ZonedDateTime implements \JsonSerializable
             + $d->nanoseconds;
 
         if ($deltaNs !== 0) {
-            $current = new self($current->ns + $deltaNs, $current->timeZone);
+            $current = new self($current->ns + $deltaNs, $current->timeZone, $current->calendar);
         }
 
         return $current;
@@ -467,7 +517,7 @@ final class ZonedDateTime implements \JsonSerializable
             default => throw InvalidOptionException::unknownRoundingMode($mode)
         };
 
-        return new self($rounded, $this->timeZone);
+        return new self($rounded, $this->timeZone, $this->calendar);
     }
 
     /**
@@ -517,10 +567,15 @@ final class ZonedDateTime implements \JsonSerializable
      */
     public function __toString(): string
     {
-        $pdt = $this->toPlainDateTime();
+        $pdt = $this->timeZone->getPlainDateTimeFor($this->toInstant());
         $offset = $this->formatOffset($this->timeZone->getOffsetNanosecondsFor($this->toInstant()));
+        $str = (string) $pdt . $offset . '[' . $this->timeZone->id . ']';
 
-        return (string) $pdt . $offset . '[' . $this->timeZone->id . ']';
+        if ($this->calendar->getId() !== 'iso8601') {
+            $str .= '[u-ca=' . $this->calendar->getId() . ']';
+        }
+
+        return $str;
     }
 
     /**
@@ -706,12 +761,22 @@ final class ZonedDateTime implements \JsonSerializable
         // Parse trailing bracket groups: first timezone ID, then annotations.
         // A timezone ID is a bracket group whose content does NOT contain '='.
         $tzId = null;
+        $calendar = null;
         $brackets = $m[9];
         preg_match_all('/\[(!?)([^\]]*)\]/', $brackets, $groups, PREG_SET_ORDER);
         foreach ($groups as $group) {
             $content = $group[2];
             if (str_contains($content, '=')) {
-                // This is a key=value annotation — ignore it.
+                // key=value annotation: check for u-ca calendar identifier.
+                if (str_starts_with($content, 'u-ca=') && $calendar === null) {
+                    $calId = substr($content, 5);
+                    try {
+                        $calendar = Calendar::from($calId)->getProtocol();
+                    } catch (\InvalidArgumentException) {
+                        // Unknown calendar — ignore and fall back to ISO 8601.
+                    }
+                }
+
                 continue;
             }
             if ($tzId === null) {
@@ -724,7 +789,7 @@ final class ZonedDateTime implements \JsonSerializable
         $tzId ??= self::offsetSecondsToId($offsetSeconds);
         $tz = TimeZone::from($tzId);
 
-        return new self($epochNs, $tz);
+        return new self($epochNs, $tz, $calendar);
     }
 
     /**
@@ -778,7 +843,7 @@ final class ZonedDateTime implements \JsonSerializable
             default => throw InvalidOptionException::unknownRoundingMode($mode)
         };
 
-        return new self($roundedNs, $this->timeZone);
+        return new self($roundedNs, $this->timeZone, $this->calendar);
     }
 
     /** Round half away from zero using integer arithmetic only. */

@@ -240,7 +240,9 @@ final class PlainDate implements \JsonSerializable
             $plainTime->nanosecond
         );
 
-        return $tz->getInstantFor($pdt)->toZonedDateTimeISO($tz);
+        $instant = $tz->getInstantFor($pdt);
+
+        return ZonedDateTime::fromEpochNanoseconds($instant->epochNanoseconds, $tz, $this->calendar);
     }
 
     /**
@@ -265,7 +267,8 @@ final class PlainDate implements \JsonSerializable
             $t->second,
             $t->millisecond,
             $t->microsecond,
-            $t->nanosecond
+            $t->nanosecond,
+            $this->calendar
         );
     }
 
@@ -308,6 +311,14 @@ final class PlainDate implements \JsonSerializable
             'isoDay' => $this->day,
             'calendar' => $this->calendar->getId()
         ];
+    }
+
+    /**
+     * Return the CalendarProtocol used by this date.
+     */
+    public function getCalendar(): CalendarProtocol
+    {
+        return $this->calendar;
     }
 
     /**
