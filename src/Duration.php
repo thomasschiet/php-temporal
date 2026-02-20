@@ -86,16 +86,16 @@ final class Duration
 
         if (is_array($value)) {
             return new self(
-                years: $value['years'] ?? 0,
-                months: $value['months'] ?? 0,
-                weeks: $value['weeks'] ?? 0,
-                days: $value['days'] ?? 0,
-                hours: $value['hours'] ?? 0,
-                minutes: $value['minutes'] ?? 0,
-                seconds: $value['seconds'] ?? 0,
-                milliseconds: $value['milliseconds'] ?? 0,
-                microseconds: $value['microseconds'] ?? 0,
-                nanoseconds: $value['nanoseconds'] ?? 0
+                years: (int) ( $value['years'] ?? 0 ),
+                months: (int) ( $value['months'] ?? 0 ),
+                weeks: (int) ( $value['weeks'] ?? 0 ),
+                days: (int) ( $value['days'] ?? 0 ),
+                hours: (int) ( $value['hours'] ?? 0 ),
+                minutes: (int) ( $value['minutes'] ?? 0 ),
+                seconds: (int) ( $value['seconds'] ?? 0 ),
+                milliseconds: (int) ( $value['milliseconds'] ?? 0 ),
+                microseconds: (int) ( $value['microseconds'] ?? 0 ),
+                nanoseconds: (int) ( $value['nanoseconds'] ?? 0 )
             );
         }
 
@@ -141,16 +141,16 @@ final class Duration
     public function with(array $fields): self
     {
         return new self(
-            years: $fields['years'] ?? $this->years,
-            months: $fields['months'] ?? $this->months,
-            weeks: $fields['weeks'] ?? $this->weeks,
-            days: $fields['days'] ?? $this->days,
-            hours: $fields['hours'] ?? $this->hours,
-            minutes: $fields['minutes'] ?? $this->minutes,
-            seconds: $fields['seconds'] ?? $this->seconds,
-            milliseconds: $fields['milliseconds'] ?? $this->milliseconds,
-            microseconds: $fields['microseconds'] ?? $this->microseconds,
-            nanoseconds: $fields['nanoseconds'] ?? $this->nanoseconds
+            years: (int) ( $fields['years'] ?? $this->years ),
+            months: (int) ( $fields['months'] ?? $this->months ),
+            weeks: (int) ( $fields['weeks'] ?? $this->weeks ),
+            days: (int) ( $fields['days'] ?? $this->days ),
+            hours: (int) ( $fields['hours'] ?? $this->hours ),
+            minutes: (int) ( $fields['minutes'] ?? $this->minutes ),
+            seconds: (int) ( $fields['seconds'] ?? $this->seconds ),
+            milliseconds: (int) ( $fields['milliseconds'] ?? $this->milliseconds ),
+            microseconds: (int) ( $fields['microseconds'] ?? $this->microseconds ),
+            nanoseconds: (int) ( $fields['nanoseconds'] ?? $this->nanoseconds )
         );
     }
 
@@ -162,17 +162,33 @@ final class Duration
     {
         $other = self::from($other);
 
+        // Calendar fields (years, months) are summed as-is; they cannot be
+        // balanced without a relativeTo reference date.
+        $years = $this->years + $other->years;
+        $months = $this->months + $other->months;
+
+        // Compute the combined nanosecond total from all non-calendar fields
+        // (weeks, days, hours, …, nanoseconds) of both durations.
+        $totalNs = self::toTotalNanoseconds($this) + self::toTotalNanoseconds($other);
+
+        // Determine the largestUnit for balancing: the largest non-calendar
+        // unit that is non-zero in either input duration.
+        $largestUnit = self::largestNonCalendarUnit($this, $other);
+
+        // Balance the combined nanoseconds from largestUnit downward.
+        $balanced = self::balanceNanosecondsByUnit($totalNs, $largestUnit);
+
         return new self(
-            $this->years + $other->years,
-            $this->months + $other->months,
-            $this->weeks + $other->weeks,
-            $this->days + $other->days,
-            $this->hours + $other->hours,
-            $this->minutes + $other->minutes,
-            $this->seconds + $other->seconds,
-            $this->milliseconds + $other->milliseconds,
-            $this->microseconds + $other->microseconds,
-            $this->nanoseconds + $other->nanoseconds
+            $years,
+            $months,
+            $balanced['weeks'],
+            $balanced['days'],
+            $balanced['hours'],
+            $balanced['minutes'],
+            $balanced['seconds'],
+            $balanced['milliseconds'],
+            $balanced['microseconds'],
+            $balanced['nanoseconds']
         );
     }
 
@@ -850,6 +866,120 @@ final class Duration
             + ( $d->microseconds * 1_000 )
             + $d->nanoseconds
         );
+    }
+
+    /**
+     * Return the largest non-calendar unit (week … nanosecond) that is
+     * non-zero in either of the two given durations.  Used by add() to
+     * determine the balancing target.
+     */
+    private static function largestNonCalendarUnit(self $a, self $b): string
+    {
+        $units = [
+            'week' => 'weeks',
+            'day' => 'days',
+            'hour' => 'hours',
+            'minute' => 'minutes',
+            'second' => 'seconds',
+            'millisecond' => 'milliseconds',
+            'microsecond' => 'microseconds',
+            'nanosecond' => 'nanoseconds'
+        ];
+
+        foreach ($units as $unit => $field) {
+            if ($a->$field !== 0 || $b->$field !== 0) {
+                return $unit;
+            }
+        }
+
+        return 'nanosecond';
+    }
+
+    /**
+     * Distribute a nanosecond total (positive or negative) into Duration
+     * fields, starting from $largestUnit and working down to nanosecond.
+     *
+     * @return array{weeks:int,days:int,hours:int,minutes:int,seconds:int,milliseconds:int,microseconds:int,nanoseconds:int}
+     */
+    private static function balanceNanosecondsByUnit(int $totalNs, string $largestUnit): array
+    {
+        $sign = $totalNs >= 0 ? 1 : -1;
+        $r = abs($totalNs);
+
+        // Unit ranks: week=7, day=6, hour=5, minute=4, second=3, millisecond=2, microsecond=1, nanosecond=0
+        $ranks = [
+            'week' => 7,
+            'day' => 6,
+            'hour' => 5,
+            'minute' => 4,
+            'second' => 3,
+            'millisecond' => 2,
+            'microsecond' => 1,
+            'nanosecond' => 0
+        ];
+        $startRank = $ranks[$largestUnit] ?? 0;
+
+        $weeks = 0;
+
+        if ($startRank >= 7) {
+            $weeks = intdiv($r, 604_800_000_000_000);
+            $r -= $weeks * 604_800_000_000_000;
+        }
+
+        $days = 0;
+
+        if ($startRank >= 6) {
+            $days = intdiv($r, 86_400_000_000_000);
+            $r -= $days * 86_400_000_000_000;
+        }
+
+        $hours = 0;
+
+        if ($startRank >= 5) {
+            $hours = intdiv($r, 3_600_000_000_000);
+            $r -= $hours * 3_600_000_000_000;
+        }
+
+        $minutes = 0;
+
+        if ($startRank >= 4) {
+            $minutes = intdiv($r, 60_000_000_000);
+            $r -= $minutes * 60_000_000_000;
+        }
+
+        $seconds = 0;
+
+        if ($startRank >= 3) {
+            $seconds = intdiv($r, 1_000_000_000);
+            $r -= $seconds * 1_000_000_000;
+        }
+
+        $milliseconds = 0;
+
+        if ($startRank >= 2) {
+            $milliseconds = intdiv($r, 1_000_000);
+            $r -= $milliseconds * 1_000_000;
+        }
+
+        $microseconds = 0;
+
+        if ($startRank >= 1) {
+            $microseconds = intdiv($r, 1_000);
+            $r -= $microseconds * 1_000;
+        }
+
+        $nanoseconds = $r; // whatever is left
+
+        return [
+            'weeks' => $sign * $weeks,
+            'days' => $sign * $days,
+            'hours' => $sign * $hours,
+            'minutes' => $sign * $minutes,
+            'seconds' => $sign * $seconds,
+            'milliseconds' => $sign * $milliseconds,
+            'microseconds' => $sign * $microseconds,
+            'nanoseconds' => $sign * $nanoseconds
+        ];
     }
 
     private function roundToMicroseconds(): self

@@ -963,4 +963,105 @@ class PlainDateTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         new PlainDate(2024, 1, 1)->until(new PlainDate(2024, 6, 1), ['largestUnit' => 'hour']);
     }
+
+    // -------------------------------------------------------------------------
+    // test262: PlainDate.prototype.add/basic.js — comprehensive data matrix
+    // 62 cases covering leap years, month-end constraints, cross-year boundaries
+    // -------------------------------------------------------------------------
+
+    /**
+     * @return array<string, array{string, array<string,int>, string}>
+     */
+    public static function addDataProvider(): array
+    {
+        return [
+            // leap year Feb 29 constraining
+            'leap-p1y-constrain' => ['2020-02-29', ['years' => 1], '2021-02-28'],
+            'leap-p4y-preserves' => ['2020-02-29', ['years' => 4], '2024-02-29'],
+            // simple year
+            'simple-p1y' => ['2021-07-16', ['years' => 1], '2022-07-16'],
+            // 5-month additions
+            '5m-no-overflow' => ['2021-07-16', ['months' => 5], '2021-12-16'],
+            '5m-crosses-year' => ['2021-08-16', ['months' => 5], '2022-01-16'],
+            '5m-31-to-31' => ['2021-10-31', ['months' => 5], '2022-03-31'],
+            '5m-30-to-28' => ['2021-09-30', ['months' => 5], '2022-02-28'],
+            '5m-30-to-29-leap' => ['2019-09-30', ['months' => 5], '2020-02-29'],
+            '5m-01-to-01' => ['2019-10-01', ['months' => 5], '2020-03-01'],
+            // 1y2m combos
+            '1y2m-basic' => ['2021-07-16', ['years' => 1, 'months' => 2], '2022-09-16'],
+            '1y2m-30day' => ['2021-11-30', ['years' => 1, 'months' => 2], '2023-01-30'],
+            '1y2m-31-to-28' => ['2021-12-31', ['years' => 1, 'months' => 2], '2023-02-28'],
+            '1y2m-31-to-29-leap' => ['2022-12-31', ['years' => 1, 'months' => 2], '2024-02-29'],
+            // 1y4d combos
+            '1y4d-basic' => ['2021-07-16', ['years' => 1, 'days' => 4], '2022-07-20'],
+            '1y4d-feb-overflow' => ['2021-02-27', ['years' => 1, 'days' => 4], '2022-03-03'],
+            '1y4d-leap-no-overflow' => ['2023-02-27', ['years' => 1, 'days' => 4], '2024-03-02'],
+            '1y4d-cross-year' => ['2021-12-30', ['years' => 1, 'days' => 4], '2023-01-03'],
+            '1y4d-jul30' => ['2021-07-30', ['years' => 1, 'days' => 4], '2022-08-03'],
+            '1y4d-jun30' => ['2021-06-30', ['years' => 1, 'days' => 4], '2022-07-04'],
+            // 1y2m4d combos
+            '1y2m4d-basic' => ['2021-07-16', ['years' => 1, 'months' => 2, 'days' => 4], '2022-09-20'],
+            '1y2m4d-feb27' => ['2021-02-27', ['years' => 1, 'months' => 2, 'days' => 4], '2022-05-01'],
+            '1y2m4d-feb26' => ['2021-02-26', ['years' => 1, 'months' => 2, 'days' => 4], '2022-04-30'],
+            '1y2m4d-leap-feb26' => ['2023-02-26', ['years' => 1, 'months' => 2, 'days' => 4], '2024-04-30'],
+            '1y2m4d-dec30' => ['2021-12-30', ['years' => 1, 'months' => 2, 'days' => 4], '2023-03-04'],
+            '1y2m4d-jul30' => ['2021-07-30', ['years' => 1, 'months' => 2, 'days' => 4], '2022-10-04'],
+            '1y2m4d-jun30' => ['2021-06-30', ['years' => 1, 'months' => 2, 'days' => 4], '2022-09-03'],
+            // 10-day additions
+            '10d-basic' => ['2021-07-16', ['days' => 10], '2021-07-26'],
+            '10d-crosses-month' => ['2021-07-26', ['days' => 10], '2021-08-05'],
+            '10d-crosses-year' => ['2021-12-26', ['days' => 10], '2022-01-05'],
+            '10d-feb-leap' => ['2020-02-26', ['days' => 10], '2020-03-07'],
+            '10d-feb-nonleap' => ['2021-02-26', ['days' => 10], '2021-03-08'],
+            '10d-leap-exact' => ['2020-02-19', ['days' => 10], '2020-02-29'],
+            '10d-nonleap-march' => ['2021-02-19', ['days' => 10], '2021-03-01'],
+            // 1-week additions
+            '1w-basic' => ['2021-02-19', ['weeks' => 1], '2021-02-26'],
+            '1w-crosses-month' => ['2021-02-27', ['weeks' => 1], '2021-03-06'],
+            '1w-crosses-leap-month' => ['2020-02-27', ['weeks' => 1], '2020-03-05'],
+            '1w-dec31' => ['2021-12-24', ['weeks' => 1], '2021-12-31'],
+            '1w-crosses-year' => ['2021-12-27', ['weeks' => 1], '2022-01-03'],
+            '1w-jan27' => ['2021-01-27', ['weeks' => 1], '2021-02-03'],
+            '1w-jun27' => ['2021-06-27', ['weeks' => 1], '2021-07-04'],
+            '1w-jul27' => ['2021-07-27', ['weeks' => 1], '2021-08-03'],
+            // 6-week additions
+            '6w-feb19' => ['2021-02-19', ['weeks' => 6], '2021-04-02'],
+            '6w-feb27' => ['2021-02-27', ['weeks' => 6], '2021-04-10'],
+            '6w-leap-feb27' => ['2020-02-27', ['weeks' => 6], '2020-04-09'],
+            '6w-dec24' => ['2021-12-24', ['weeks' => 6], '2022-02-04'],
+            '6w-dec27' => ['2021-12-27', ['weeks' => 6], '2022-02-07'],
+            '6w-jan27' => ['2021-01-27', ['weeks' => 6], '2021-03-10'],
+            '6w-jun27' => ['2021-06-27', ['weeks' => 6], '2021-08-08'],
+            '6w-jul27' => ['2021-07-27', ['weeks' => 6], '2021-09-07'],
+            // 2w3d additions
+            '2w3d-leap-feb29' => ['2020-02-29', ['weeks' => 2, 'days' => 3], '2020-03-17'],
+            '2w3d-leap-feb28' => ['2020-02-28', ['weeks' => 2, 'days' => 3], '2020-03-16'],
+            '2w3d-nonleap-feb28' => ['2021-02-28', ['weeks' => 2, 'days' => 3], '2021-03-17'],
+            '2w3d-dec28' => ['2020-12-28', ['weeks' => 2, 'days' => 3], '2021-01-14'],
+            // 1y2w additions
+            '1y2w-leap-feb29' => ['2020-02-29', ['years' => 1, 'weeks' => 2], '2021-03-14'],
+            '1y2w-leap-feb28' => ['2020-02-28', ['years' => 1, 'weeks' => 2], '2021-03-14'],
+            '1y2w-nonleap-feb28' => ['2021-02-28', ['years' => 1, 'weeks' => 2], '2022-03-14'],
+            '1y2w-dec28' => ['2020-12-28', ['years' => 1, 'weeks' => 2], '2022-01-11'],
+            // 2m3w additions
+            '2m3w-leap-feb29' => ['2020-02-29', ['months' => 2, 'weeks' => 3], '2020-05-20'],
+            '2m3w-leap-feb28' => ['2020-02-28', ['months' => 2, 'weeks' => 3], '2020-05-19'],
+            '2m3w-nonleap-feb28' => ['2021-02-28', ['months' => 2, 'weeks' => 3], '2021-05-19'],
+            '2m3w-dec28' => ['2020-12-28', ['months' => 2, 'weeks' => 3], '2021-03-21'],
+            '2m3w-dec28-nonleap' => ['2019-12-28', ['months' => 2, 'weeks' => 3], '2020-03-20'],
+            '2m3w-oct28' => ['2019-10-28', ['months' => 2, 'weeks' => 3], '2020-01-18'],
+            '2m3w-oct31' => ['2019-10-31', ['months' => 2, 'weeks' => 3], '2020-01-21']
+        ];
+    }
+
+    /**
+     * @param array<string,int> $duration
+     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('addDataProvider')]
+    public function testAddMatrix(string $start, array $duration, string $expected): void
+    {
+        $date = PlainDate::from($start);
+        $result = $date->add($duration);
+        $this->assertSame($expected, (string) $result);
+    }
 }

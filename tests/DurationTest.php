@@ -333,6 +333,108 @@ class DurationTest extends TestCase
         $this->assertSame(2, $result->years);
     }
 
+    // test262: Duration.prototype.add/basic.js — balancing tests
+
+    public function testAddBalancesPositiveSameUnits(): void
+    {
+        // P1DT5M + {days:2, minutes:5} = P3DT10M (simple, no overflow)
+        $d = Duration::from(['days' => 1, 'minutes' => 5]);
+        $r = $d->add(['days' => 2, 'minutes' => 5]);
+        $this->assertSame(0, $r->years);
+        $this->assertSame(0, $r->months);
+        $this->assertSame(0, $r->weeks);
+        $this->assertSame(3, $r->days);
+        $this->assertSame(0, $r->hours);
+        $this->assertSame(10, $r->minutes);
+        $this->assertSame(0, $r->seconds);
+    }
+
+    public function testAddBalancesPositiveDifferentUnits(): void
+    {
+        // P1DT5M + {hours:12, seconds:30} = P1DT12H5M30S (days → largest unit)
+        $d = Duration::from(['days' => 1, 'minutes' => 5]);
+        $r = $d->add(['hours' => 12, 'seconds' => 30]);
+        $this->assertSame(1, $r->days);
+        $this->assertSame(12, $r->hours);
+        $this->assertSame(5, $r->minutes);
+        $this->assertSame(30, $r->seconds);
+    }
+
+    public function testAddBalancesNegativeSameUnits(): void
+    {
+        // P3DT10M + {days:-2, minutes:-5} = P1DT5M
+        $d = Duration::from('P3DT10M');
+        $r = $d->add(['days' => -2, 'minutes' => -5]);
+        $this->assertSame(1, $r->days);
+        $this->assertSame(0, $r->hours);
+        $this->assertSame(5, $r->minutes);
+        $this->assertSame(0, $r->seconds);
+    }
+
+    public function testAddBalancesNegativeDifferentUnits(): void
+    {
+        // P1DT12H5M30S + {hours:-12, seconds:-30} = P1DT5M
+        $d = Duration::from('P1DT12H5M30S');
+        $r = $d->add(['hours' => -12, 'seconds' => -30]);
+        $this->assertSame(1, $r->days);
+        $this->assertSame(0, $r->hours);
+        $this->assertSame(5, $r->minutes);
+        $this->assertSame(0, $r->seconds);
+    }
+
+    public function testAddBalancesPositiveLarge(): void
+    {
+        // P50DT50H50M50.500500500S + itself = P104DT5H41M41.001001S
+        // This exercises balancing: 100 hours → 4 days 4 hours, etc.
+        $d = Duration::from('P50DT50H50M50.500500500S');
+        $r = $d->add($d);
+        $this->assertSame(0, $r->years);
+        $this->assertSame(0, $r->months);
+        $this->assertSame(0, $r->weeks);
+        $this->assertSame(104, $r->days);
+        $this->assertSame(5, $r->hours);
+        $this->assertSame(41, $r->minutes);
+        $this->assertSame(41, $r->seconds);
+        $this->assertSame(1, $r->milliseconds);
+        $this->assertSame(1, $r->microseconds);
+        $this->assertSame(0, $r->nanoseconds);
+    }
+
+    public function testAddBalancesFlippedSign1(): void
+    {
+        // {hours:-1, seconds:-60} + {minutes:122} = PT1H1M
+        // Mixed-sign intermediate: balanced via total nanoseconds.
+        $d = Duration::from(['hours' => -1, 'seconds' => -60]);
+        $r = $d->add(['minutes' => 122]);
+        $this->assertSame(0, $r->days);
+        $this->assertSame(1, $r->hours);
+        $this->assertSame(1, $r->minutes);
+        $this->assertSame(0, $r->seconds);
+    }
+
+    public function testAddBalancesFlippedSign2(): void
+    {
+        // {hours:-1, seconds:-3721} + {minutes:61, nanoseconds:3722000000001}
+        // = PT1M1S1ns
+        $d = Duration::from(['hours' => -1, 'seconds' => -3721]);
+        $r = $d->add(['minutes' => 61, 'nanoseconds' => 3_722_000_000_001]);
+        $this->assertSame(0, $r->hours);
+        $this->assertSame(1, $r->minutes);
+        $this->assertSame(1, $r->seconds);
+        $this->assertSame(0, $r->milliseconds);
+        $this->assertSame(0, $r->microseconds);
+        $this->assertSame(1, $r->nanoseconds);
+    }
+
+    public function testAddIgnoresMisspelledProperties(): void
+    {
+        // {month:1, days:1} — 'month' (singular, no 's') is ignored; only 'days' counts.
+        $d = Duration::from(['days' => 1, 'minutes' => 5]);
+        $r = $d->add(['month' => 1, 'days' => 1]);
+        $this->assertSame(2, $r->days);
+        $this->assertSame(5, $r->minutes);
+    }
+
     // -------------------------------------------------------------------------
     // subtract()
     // -------------------------------------------------------------------------
@@ -1025,5 +1127,31 @@ class DurationTest extends TestCase
         $r2 = $d->balance('minutes');
         $this->assertSame($r1->minutes, $r2->minutes);
         $this->assertSame($r1->seconds, $r2->seconds);
+    }
+
+    // test262: Duration.prototype.total/balance-negative-result.js
+
+    public function testTotalNegativeDaysFromHours(): void
+    {
+        // Duration({hours: -60}).total("days") = -2.5
+        // Tests that a negative duration is balanced correctly.
+        $d = new Duration(hours: -60);
+        $this->assertSame(-2.5, $d->total('days'));
+    }
+
+    // test262: Duration.prototype.total/balance-subseconds.js
+
+    public function testTotalSecondsSubsecondBalancingPositive(): void
+    {
+        // (999ms + 999999us + 999999999ns).total("seconds") = 2.998998999
+        $d = new Duration(milliseconds: 999, microseconds: 999_999, nanoseconds: 999_999_999);
+        $this->assertSame(2.998998999, $d->total('seconds'));
+    }
+
+    public function testTotalSecondsSubsecondBalancingNegative(): void
+    {
+        // (-999ms + -999999us + -999999999ns).total("seconds") = -2.998998999
+        $d = new Duration(milliseconds: -999, microseconds: -999_999, nanoseconds: -999_999_999);
+        $this->assertSame(-2.998998999, $d->total('seconds'));
     }
 }

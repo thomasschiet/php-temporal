@@ -451,6 +451,39 @@ The full TC39 test262 suite for Temporal cannot be run against a PHP library dir
 
 The 933 tests (1787 assertions) provide comprehensive coverage of the behaviors validated by test262. A future enhancement would be a bridge that invokes the JavaScript test262 runner and maps failures back to PHP test gaps.
 
+### 18. Duration.add() balancing + test262 data matrix (2026-02-20)
+
+#### Bug fix: `Duration::add()` was not balancing its result
+
+- **Root cause**: `Duration::add()` performed simple field-by-field addition without
+  balancing. This caused two categories of failures:
+  1. **Overflow not carried**: e.g. `P50DT50H50M50.500500500S + itself` returned
+     `{days:100, hours:100, …}` instead of the correct `P104DT5H41M41.001001S`.
+  2. **Mixed-sign intermediate throw**: e.g. `{hours:-1, seconds:-60}.add({minutes:122})`
+     threw because the naive sum had mixed signs, even though the result `PT1H1M` is valid.
+- **Fix**: Rewrote `Duration::add()` to:
+  1. Sum calendar fields (`years`, `months`) directly.
+  2. Compute combined nanosecond total from both inputs' non-calendar fields.
+  3. Determine `largestUnit` from the largest non-zero non-calendar unit in either input
+     (new `largestNonCalendarUnit()` helper).
+  4. Balance total nanoseconds from `largestUnit` down via new `balanceNanosecondsByUnit()`
+     helper using explicit rank-based extraction (no dynamic keys — passes static analysis).
+- All 8 test262 `Duration.prototype.add/basic.js` cases now pass including sign-flip cases.
+
+#### New tests from test262 reference data
+
+- **DurationTest.php** — 11 new tests:
+  - 8 cases from `Duration.prototype.add/basic.js`
+  - `Duration({hours:-60}).total("days") = -2.5` (from `balance-negative-result.js`)
+  - Subsecond balancing: `(999ms + 999999us + 999999999ns).total("seconds") = 2.998998999`
+    and its negative variant (from `balance-subseconds.js`)
+- **PlainDateTest.php** — 62 new data-driven tests via `#[DataProvider]`:
+  - Full `PlainDate.prototype.add/basic.js` test matrix (62 cases)
+  - Covers: leap-year Feb 29, month-end clamping, year-boundary crossing, week arithmetic,
+    mixed duration combos (P1Y2M, P1Y4D, P1Y2M4D, P1Y2W, P2M3W)
+
+**Total: 1008 tests passing (+75 new)**
+
 ## Current Task
 
 - All planned tasks complete.
@@ -461,4 +494,5 @@ The 933 tests (1787 assertions) provide comprehensive coverage of the behaviors 
   `PlainDate`, `PlainTime`, `PlainDateTime`, `Duration`, `Instant`, `ZonedDateTime`,
   `TimeZone`, `Calendar`, `PlainYearMonth`, `PlainMonthDay`, ISO 8601 parsing, and the
   `Temporal\Now` utility class. All classes are immutable. test262 behaviours are covered
-  by the 933-test PHPUnit suite.
+  by the 1008-test PHPUnit suite (including the full `PlainDate.add` matrix and
+  `Duration.add` balancing tests from the TC39 test262 repository).
