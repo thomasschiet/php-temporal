@@ -48,13 +48,27 @@
 - Created `tests/PlainDateTimeTest.php` — 70 tests, all passing
 - Total: 200 tests, all passing
 
+### 4. Duration (2026-02-20)
+- Replaced `src/Duration.php` stub with full implementation:
+  - Constructor with mixed-sign validation; `sign` and `blank` computed readonly properties
+  - `from()` static constructor accepting Duration, array, or ISO 8601 string
+  - ISO 8601 parsing: `P[n]Y[n]M[n]W[n]DT[n]H[n]M[n]S` with fractional seconds (up to 9 digits)
+  - `negated()` / `abs()` for sign manipulation
+  - `with()` for field overrides
+  - `add()` / `subtract()` field-by-field arithmetic
+  - `compare()` static method (time-field comparison via nanosecond totals)
+  - `total(unit)` — convert to a given unit as a float (nanoseconds through weeks)
+  - `round(unit)` — half-expand rounding to a given smallest unit
+  - `__toString()` — ISO 8601 format with sub-second decimal fractions, sign prefix
+- Created `tests/DurationTest.php` — 77 tests, all passing
+- Total: 277 tests, all passing
+
 ## Current Task
 
-- **Duration** — full implementation (years, months, weeks, days, hours, minutes, seconds, etc.)
+- **Instant** — epoch-based timestamp with nanosecond precision
 
 ## Next Tasks
 
-4. `Instant` — epoch-based timestamp with nanosecond precision
 5. `ZonedDateTime` — Instant + TimeZone + Calendar
 6. `TimeZone` — IANA time zones via OS
 7. `Calendar` — ISO 8601 calendar
