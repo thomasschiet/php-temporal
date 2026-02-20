@@ -643,4 +643,78 @@ class PlainDateTest extends TestCase
         $this->expectException(\RangeException::class);
         PlainDate::fromEpochDays(PlainDate::MIN_EPOCH_DAYS - 1);
     }
+
+    // -------------------------------------------------------------------------
+    // toZonedDateTime
+    // -------------------------------------------------------------------------
+
+    public function testToZonedDateTimeWithStringTimezone(): void
+    {
+        $date = new PlainDate(2024, 3, 15);
+        $zdt = $date->toZonedDateTime('UTC');
+        $this->assertInstanceOf(\Temporal\ZonedDateTime::class, $zdt);
+        $this->assertSame(2024, $zdt->year);
+        $this->assertSame(3, $zdt->month);
+        $this->assertSame(15, $zdt->day);
+    }
+
+    public function testToZonedDateTimeDefaultsMidnight(): void
+    {
+        $date = new PlainDate(2024, 3, 15);
+        $zdt = $date->toZonedDateTime('UTC');
+        $this->assertSame(0, $zdt->hour);
+        $this->assertSame(0, $zdt->minute);
+        $this->assertSame(0, $zdt->second);
+    }
+
+    public function testToZonedDateTimeWithTimezoneObject(): void
+    {
+        $date = new PlainDate(2024, 3, 15);
+        $tz = \Temporal\TimeZone::from('UTC');
+        $zdt = $date->toZonedDateTime($tz);
+        $this->assertSame('UTC', (string) $zdt->timeZone);
+    }
+
+    public function testToZonedDateTimeWithPlainTime(): void
+    {
+        $date = new PlainDate(2024, 3, 15);
+        $time = new \Temporal\PlainTime(10, 30, 45);
+        $zdt = $date->toZonedDateTime(['timeZone' => 'UTC', 'plainTime' => $time]);
+        $this->assertSame(2024, $zdt->year);
+        $this->assertSame(3, $zdt->month);
+        $this->assertSame(15, $zdt->day);
+        $this->assertSame(10, $zdt->hour);
+        $this->assertSame(30, $zdt->minute);
+        $this->assertSame(45, $zdt->second);
+    }
+
+    public function testToZonedDateTimeWithArrayTimezoneOnly(): void
+    {
+        $date = new PlainDate(2024, 6, 1);
+        $zdt = $date->toZonedDateTime(['timeZone' => 'UTC']);
+        $this->assertSame(2024, $zdt->year);
+        $this->assertSame(6, $zdt->month);
+        $this->assertSame(1, $zdt->day);
+        $this->assertSame(0, $zdt->hour);
+    }
+
+    public function testToZonedDateTimeWithOffsetTimezone(): void
+    {
+        // 2024-03-15 midnight in +05:30 → epoch ns = (2024-03-15T00:00:00 - 5h30m)
+        $date = new PlainDate(2024, 3, 15);
+        $zdt = $date->toZonedDateTime('+05:30');
+        $this->assertSame(2024, $zdt->year);
+        $this->assertSame(3, $zdt->month);
+        $this->assertSame(15, $zdt->day);
+        $this->assertSame(0, $zdt->hour);
+        $this->assertSame(0, $zdt->minute);
+    }
+
+    public function testToZonedDateTimeEpochNsIsCorrect(): void
+    {
+        // 1970-01-01 midnight UTC → epoch ns = 0
+        $date = new PlainDate(1970, 1, 1);
+        $zdt = $date->toZonedDateTime('UTC');
+        $this->assertSame(0, $zdt->epochNanoseconds);
+    }
 }

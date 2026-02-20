@@ -174,6 +174,49 @@ final class PlainDate
     // -------------------------------------------------------------------------
 
     /**
+     * Convert this PlainDate to a ZonedDateTime in the given timezone.
+     *
+     * Accepts:
+     *   - A TimeZone or timezone ID string → use that timezone, midnight as the time.
+     *   - An array with keys:
+     *       'timeZone'  (required) — TimeZone|string
+     *       'plainTime' (optional) — PlainTime; defaults to midnight if omitted.
+     *
+     * Corresponds to Temporal.PlainDate.prototype.toZonedDateTime() in the TC39
+     * proposal.
+     *
+     * @param TimeZone|string|array{timeZone:TimeZone|string,plainTime?:PlainTime} $options
+     * @throws \InvalidArgumentException if options are invalid.
+     */
+    public function toZonedDateTime(TimeZone|string|array $options): ZonedDateTime
+    {
+        if (is_array($options)) {
+            $tzValue = $options['timeZone'] ?? throw new \InvalidArgumentException(
+                "toZonedDateTime() options array must include 'timeZone'."
+            );
+            $tz = $tzValue instanceof TimeZone ? $tzValue : TimeZone::from($tzValue);
+            $plainTime = $options['plainTime'] ?? new PlainTime(0, 0, 0);
+        } else {
+            $tz = $options instanceof TimeZone ? $options : TimeZone::from($options);
+            $plainTime = new PlainTime(0, 0, 0);
+        }
+
+        $pdt = new PlainDateTime(
+            $this->year,
+            $this->month,
+            $this->day,
+            $plainTime->hour,
+            $plainTime->minute,
+            $plainTime->second,
+            $plainTime->millisecond,
+            $plainTime->microsecond,
+            $plainTime->nanosecond
+        );
+
+        return $tz->getInstantFor($pdt)->toZonedDateTimeISO($tz);
+    }
+
+    /**
      * Returns the number of days since the Unix epoch (1970-01-01).
      */
     public function toEpochDays(): int

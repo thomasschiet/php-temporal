@@ -154,6 +154,25 @@ final class PlainDateTime
         return new PlainDate($this->year, $this->month, $this->day);
     }
 
+    /**
+     * Convert this PlainDateTime to a ZonedDateTime in the given timezone.
+     *
+     * The local date-time is interpreted as a wall-clock time in the given
+     * timezone. DST gaps are resolved with the 'compatible' disambiguation
+     * (the same behaviour as JavaScript Temporal).
+     *
+     * Corresponds to Temporal.PlainDateTime.prototype.toZonedDateTime() in the
+     * TC39 proposal.
+     *
+     * @param TimeZone|string $timeZone IANA timezone name or fixed UTC offset.
+     */
+    public function toZonedDateTime(TimeZone|string $timeZone): ZonedDateTime
+    {
+        $tz = $timeZone instanceof TimeZone ? $timeZone : TimeZone::from($timeZone);
+
+        return $tz->getInstantFor($this)->toZonedDateTimeISO($tz);
+    }
+
     public function toPlainTime(): PlainTime
     {
         return new PlainTime(

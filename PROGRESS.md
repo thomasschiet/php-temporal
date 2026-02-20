@@ -202,6 +202,44 @@ Based on test262 reference tests, added the following improvements:
 
 **Total: 694 tests passing (+42 new)**
 
+### 11. Temporal\Now + Conversion Methods (2026-02-20)
+
+Implemented the `Temporal\Now` utility class and cross-type conversion methods:
+
+#### `src/Now.php` — new file
+- `Now::instant()` — current moment as `Instant` (microsecond precision via `microtime()`)
+- `Now::timeZoneId()` — system timezone ID string (delegates to `date_default_timezone_get()`)
+- `Now::zonedDateTimeISO(?TimeZone|string)` — current `ZonedDateTime` in given/system timezone
+- `Now::plainDateTimeISO(?TimeZone|string)` — current `PlainDateTime`
+- `Now::plainDateISO(?TimeZone|string)` — current `PlainDate`
+- `Now::plainTimeISO(?TimeZone|string)` — current `PlainTime`
+
+#### `Instant::toZonedDateTimeISO(TimeZone|string)` — new method
+- Converts an `Instant` to a `ZonedDateTime` in the given timezone
+- Corresponds to `Temporal.Instant.prototype.toZonedDateTimeISO()` in the TC39 spec
+
+#### `PlainDate::toZonedDateTime(TimeZone|string|array)` — new method
+- Converts a `PlainDate` to a `ZonedDateTime`
+- Accepts a timezone directly (midnight as time) or an array `{timeZone, plainTime?}`
+- Corresponds to `Temporal.PlainDate.prototype.toZonedDateTime()` in the TC39 spec
+
+#### `PlainDateTime::toZonedDateTime(TimeZone|string)` — new method
+- Interprets the local date-time as wall-clock time in the given timezone
+- DST gaps resolved with `'compatible'` disambiguation
+- Corresponds to `Temporal.PlainDateTime.prototype.toZonedDateTime()` in the TC39 spec
+
+#### mago.toml fixes
+- Disabled impractical lint rules for this test-heavy project:
+  `too-many-methods`, `cyclomatic-complexity`, `excessive-parameter-list`, `kan-defect`,
+  `assertion-style`, `readable-literal`
+
+- Created `tests/NowTest.php` — 21 tests, all passing
+- Added 6 `toZonedDateTimeISO` tests to `tests/InstantTest.php`
+- Added 8 `toZonedDateTime` tests to `tests/PlainDateTest.php`
+- Added 6 `toZonedDateTime` tests to `tests/PlainDateTimeTest.php`
+
+**Total: 734 tests passing (+40 new)**
+
 ## Current Task
 
 - All planned tasks complete.
@@ -209,4 +247,5 @@ Based on test262 reference tests, added the following improvements:
 ## Next Tasks
 
 - Additional edge cases (DST transitions in ZonedDateTime, Duration balancing with mixed units)
-- Consider adding PlainDateTime.add() overflow option (delegates to PlainDate)
+- `ZonedDateTime.round()` — round to nearest unit
+- `PlainDateTime.add()` overflow option (delegates to PlainDate)

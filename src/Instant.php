@@ -216,6 +216,26 @@ final class Instant
     }
 
     // -------------------------------------------------------------------------
+    // Conversion
+    // -------------------------------------------------------------------------
+
+    /**
+     * Convert this Instant to a ZonedDateTime in the given timezone using the
+     * ISO 8601 calendar.
+     *
+     * Corresponds to Temporal.Instant.prototype.toZonedDateTimeISO() in the
+     * TC39 proposal.
+     *
+     * @param TimeZone|string $timeZone IANA timezone name or fixed UTC offset.
+     */
+    public function toZonedDateTimeISO(TimeZone|string $timeZone): ZonedDateTime
+    {
+        $tz = $timeZone instanceof TimeZone ? $timeZone : TimeZone::from($timeZone);
+
+        return ZonedDateTime::fromEpochNanoseconds($this->ns, $tz);
+    }
+
+    // -------------------------------------------------------------------------
     // ISO 8601 serialisation
     // -------------------------------------------------------------------------
 

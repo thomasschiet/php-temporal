@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 use PHPUnit\Framework\TestCase;
 use Temporal\Duration;
@@ -176,11 +176,11 @@ class PlainDateTimeTest extends TestCase
     public function testFromArray(): void
     {
         $dt = PlainDateTime::from([
-            'year'   => 2024,
-            'month'  => 3,
-            'day'    => 15,
-            'hour'   => 10,
-            'minute' => 30,
+            'year' => 2024,
+            'month' => 3,
+            'day' => 15,
+            'hour' => 10,
+            'minute' => 30
         ]);
         $this->assertSame(2024, $dt->year);
         $this->assertSame(10, $dt->hour);
@@ -191,15 +191,15 @@ class PlainDateTimeTest extends TestCase
     public function testFromArrayWithAllFields(): void
     {
         $dt = PlainDateTime::from([
-            'year'        => 2024,
-            'month'       => 3,
-            'day'         => 15,
-            'hour'        => 10,
-            'minute'      => 30,
-            'second'      => 45,
+            'year' => 2024,
+            'month' => 3,
+            'day' => 15,
+            'hour' => 10,
+            'minute' => 30,
+            'second' => 45,
             'millisecond' => 100,
             'microsecond' => 200,
-            'nanosecond'  => 300,
+            'nanosecond' => 300
         ]);
         $this->assertSame(45, $dt->second);
         $this->assertSame(100, $dt->millisecond);
@@ -251,7 +251,7 @@ class PlainDateTimeTest extends TestCase
 
     public function testToPlainDate(): void
     {
-        $dt   = new PlainDateTime(2024, 3, 15, 10, 30, 0);
+        $dt = new PlainDateTime(2024, 3, 15, 10, 30, 0);
         $date = $dt->toPlainDate();
         $this->assertInstanceOf(PlainDate::class, $date);
         $this->assertSame(2024, $date->year);
@@ -261,7 +261,7 @@ class PlainDateTimeTest extends TestCase
 
     public function testToPlainTime(): void
     {
-        $dt   = new PlainDateTime(2024, 3, 15, 10, 30, 45, 123, 456, 789);
+        $dt = new PlainDateTime(2024, 3, 15, 10, 30, 45, 123, 456, 789);
         $time = $dt->toPlainTime();
         $this->assertInstanceOf(PlainTime::class, $time);
         $this->assertSame(10, $time->hour);
@@ -278,9 +278,9 @@ class PlainDateTimeTest extends TestCase
 
     public function testWithPlainDate(): void
     {
-        $dt      = new PlainDateTime(2024, 3, 15, 10, 30, 0);
+        $dt = new PlainDateTime(2024, 3, 15, 10, 30, 0);
         $newDate = new PlainDate(2025, 6, 20);
-        $dt2     = $dt->withPlainDate($newDate);
+        $dt2 = $dt->withPlainDate($newDate);
         $this->assertSame(2025, $dt2->year);
         $this->assertSame(6, $dt2->month);
         $this->assertSame(20, $dt2->day);
@@ -290,9 +290,9 @@ class PlainDateTimeTest extends TestCase
 
     public function testWithPlainTime(): void
     {
-        $dt      = new PlainDateTime(2024, 3, 15, 10, 30, 0);
+        $dt = new PlainDateTime(2024, 3, 15, 10, 30, 0);
         $newTime = new PlainTime(14, 45, 30, 100, 200, 300);
-        $dt2     = $dt->withPlainTime($newTime);
+        $dt2 = $dt->withPlainTime($newTime);
         $this->assertSame(2024, $dt2->year);
         $this->assertSame(3, $dt2->month);
         $this->assertSame(15, $dt2->day);
@@ -308,7 +308,7 @@ class PlainDateTimeTest extends TestCase
 
     public function testWithOverrideYear(): void
     {
-        $dt  = new PlainDateTime(2024, 3, 15, 10, 30, 0);
+        $dt = new PlainDateTime(2024, 3, 15, 10, 30, 0);
         $dt2 = $dt->with(['year' => 2025]);
         $this->assertSame(2025, $dt2->year);
         $this->assertSame(3, $dt2->month);
@@ -317,7 +317,7 @@ class PlainDateTimeTest extends TestCase
 
     public function testWithOverrideHour(): void
     {
-        $dt  = new PlainDateTime(2024, 3, 15, 10, 30, 0);
+        $dt = new PlainDateTime(2024, 3, 15, 10, 30, 0);
         $dt2 = $dt->with(['hour' => 15]);
         $this->assertSame(2024, $dt2->year);
         $this->assertSame(15, $dt2->hour);
@@ -326,7 +326,7 @@ class PlainDateTimeTest extends TestCase
 
     public function testWithMultipleFields(): void
     {
-        $dt  = new PlainDateTime(2024, 3, 15, 10, 30, 0);
+        $dt = new PlainDateTime(2024, 3, 15, 10, 30, 0);
         $dt2 = $dt->with(['month' => 6, 'day' => 20, 'hour' => 8, 'minute' => 0]);
         $this->assertSame(6, $dt2->month);
         $this->assertSame(20, $dt2->day);
@@ -340,7 +340,7 @@ class PlainDateTimeTest extends TestCase
 
     public function testAddDays(): void
     {
-        $dt  = new PlainDateTime(2024, 3, 15, 10, 30, 0);
+        $dt = new PlainDateTime(2024, 3, 15, 10, 30, 0);
         $dt2 = $dt->add(['days' => 5]);
         $this->assertSame(20, $dt2->day);
         $this->assertSame(10, $dt2->hour);
@@ -349,7 +349,7 @@ class PlainDateTimeTest extends TestCase
 
     public function testAddHours(): void
     {
-        $dt  = new PlainDateTime(2024, 3, 15, 10, 30, 0);
+        $dt = new PlainDateTime(2024, 3, 15, 10, 30, 0);
         $dt2 = $dt->add(['hours' => 3]);
         $this->assertSame(13, $dt2->hour);
         $this->assertSame(15, $dt2->day);
@@ -357,7 +357,7 @@ class PlainDateTimeTest extends TestCase
 
     public function testAddHoursCrossesDay(): void
     {
-        $dt  = new PlainDateTime(2024, 3, 15, 22, 0, 0);
+        $dt = new PlainDateTime(2024, 3, 15, 22, 0, 0);
         $dt2 = $dt->add(['hours' => 4]);
         $this->assertSame(16, $dt2->day);
         $this->assertSame(2, $dt2->hour);
@@ -365,7 +365,7 @@ class PlainDateTimeTest extends TestCase
 
     public function testAddHoursCrossesMultipleDays(): void
     {
-        $dt  = new PlainDateTime(2024, 3, 15, 10, 0, 0);
+        $dt = new PlainDateTime(2024, 3, 15, 10, 0, 0);
         $dt2 = $dt->add(['hours' => 48]);
         $this->assertSame(17, $dt2->day);
         $this->assertSame(10, $dt2->hour);
@@ -373,7 +373,7 @@ class PlainDateTimeTest extends TestCase
 
     public function testAddCrossesMonth(): void
     {
-        $dt  = new PlainDateTime(2024, 1, 31, 10, 0, 0);
+        $dt = new PlainDateTime(2024, 1, 31, 10, 0, 0);
         $dt2 = $dt->add(['days' => 1]);
         $this->assertSame(2024, $dt2->year);
         $this->assertSame(2, $dt2->month);
@@ -382,7 +382,7 @@ class PlainDateTimeTest extends TestCase
 
     public function testAddYears(): void
     {
-        $dt  = new PlainDateTime(2024, 3, 15, 10, 30, 0);
+        $dt = new PlainDateTime(2024, 3, 15, 10, 30, 0);
         $dt2 = $dt->add(['years' => 1]);
         $this->assertSame(2025, $dt2->year);
         $this->assertSame(3, $dt2->month);
@@ -392,7 +392,7 @@ class PlainDateTimeTest extends TestCase
 
     public function testAddMonths(): void
     {
-        $dt  = new PlainDateTime(2024, 11, 15, 10, 0, 0);
+        $dt = new PlainDateTime(2024, 11, 15, 10, 0, 0);
         $dt2 = $dt->add(['months' => 3]);
         $this->assertSame(2025, $dt2->year);
         $this->assertSame(2, $dt2->month);
@@ -400,14 +400,14 @@ class PlainDateTimeTest extends TestCase
 
     public function testAddWeeks(): void
     {
-        $dt  = new PlainDateTime(2024, 3, 15, 10, 0, 0);
+        $dt = new PlainDateTime(2024, 3, 15, 10, 0, 0);
         $dt2 = $dt->add(['weeks' => 2]);
         $this->assertSame(29, $dt2->day);
     }
 
     public function testAddMinutes(): void
     {
-        $dt  = new PlainDateTime(2024, 3, 15, 10, 45, 0);
+        $dt = new PlainDateTime(2024, 3, 15, 10, 45, 0);
         $dt2 = $dt->add(['minutes' => 30]);
         $this->assertSame(11, $dt2->hour);
         $this->assertSame(15, $dt2->minute);
@@ -415,7 +415,7 @@ class PlainDateTimeTest extends TestCase
 
     public function testAddSeconds(): void
     {
-        $dt  = new PlainDateTime(2024, 3, 15, 10, 59, 50);
+        $dt = new PlainDateTime(2024, 3, 15, 10, 59, 50);
         $dt2 = $dt->add(['seconds' => 30]);
         $this->assertSame(11, $dt2->hour);
         $this->assertSame(0, $dt2->minute);
@@ -425,19 +425,19 @@ class PlainDateTimeTest extends TestCase
     public function testAddMilliseconds(): void
     {
         // 900ms + 200ms = 1100ms → 1s + 100ms
-        $dt  = new PlainDateTime(2024, 3, 15, 10, 0, 0, 900);
+        $dt = new PlainDateTime(2024, 3, 15, 10, 0, 0, 900);
         $dt2 = $dt->add(['milliseconds' => 200]);
         $this->assertSame(100, $dt2->millisecond);
         $this->assertSame(1, $dt2->second);
         // 900ms + 100ms = 1000ms → 1s + 0ms
-        $dt3 = (new PlainDateTime(2024, 3, 15, 10, 0, 0, 900))->add(['milliseconds' => 100]);
+        $dt3 = new PlainDateTime(2024, 3, 15, 10, 0, 0, 900)->add(['milliseconds' => 100]);
         $this->assertSame(0, $dt3->millisecond);
         $this->assertSame(1, $dt3->second);
     }
 
     public function testAddNanoseconds(): void
     {
-        $dt  = new PlainDateTime(2024, 3, 15, 10, 0, 0, 0, 0, 999);
+        $dt = new PlainDateTime(2024, 3, 15, 10, 0, 0, 0, 0, 999);
         $dt2 = $dt->add(['nanoseconds' => 1]);
         $this->assertSame(0, $dt2->nanosecond);
         $this->assertSame(1, $dt2->microsecond);
@@ -445,7 +445,7 @@ class PlainDateTimeTest extends TestCase
 
     public function testAddMixedDuration(): void
     {
-        $dt  = new PlainDateTime(2024, 3, 15, 23, 30, 0);
+        $dt = new PlainDateTime(2024, 3, 15, 23, 30, 0);
         $dt2 = $dt->add(['hours' => 1, 'minutes' => 45]);
         // 23:30 + 1h45m = 25:15 → next day 01:15
         $this->assertSame(16, $dt2->day);
@@ -459,7 +459,7 @@ class PlainDateTimeTest extends TestCase
 
     public function testSubtractDays(): void
     {
-        $dt  = new PlainDateTime(2024, 3, 15, 10, 30, 0);
+        $dt = new PlainDateTime(2024, 3, 15, 10, 30, 0);
         $dt2 = $dt->subtract(['days' => 5]);
         $this->assertSame(10, $dt2->day);
         $this->assertSame(10, $dt2->hour);
@@ -467,7 +467,7 @@ class PlainDateTimeTest extends TestCase
 
     public function testSubtractHoursCrossesDay(): void
     {
-        $dt  = new PlainDateTime(2024, 3, 15, 2, 0, 0);
+        $dt = new PlainDateTime(2024, 3, 15, 2, 0, 0);
         $dt2 = $dt->subtract(['hours' => 4]);
         $this->assertSame(14, $dt2->day);
         $this->assertSame(22, $dt2->hour);
@@ -475,7 +475,7 @@ class PlainDateTimeTest extends TestCase
 
     public function testSubtractMonths(): void
     {
-        $dt  = new PlainDateTime(2024, 3, 15, 10, 0, 0);
+        $dt = new PlainDateTime(2024, 3, 15, 10, 0, 0);
         $dt2 = $dt->subtract(['months' => 4]);
         $this->assertSame(2023, $dt2->year);
         $this->assertSame(11, $dt2->month);
@@ -483,7 +483,7 @@ class PlainDateTimeTest extends TestCase
 
     public function testSubtractMinutes(): void
     {
-        $dt  = new PlainDateTime(2024, 3, 15, 10, 10, 0);
+        $dt = new PlainDateTime(2024, 3, 15, 10, 10, 0);
         $dt2 = $dt->subtract(['minutes' => 20]);
         $this->assertSame(9, $dt2->hour);
         $this->assertSame(50, $dt2->minute);
@@ -672,7 +672,7 @@ class PlainDateTimeTest extends TestCase
     public function testToStringRoundTrip(): void
     {
         $str = '2024-03-15T10:30:45.123456789';
-        $dt  = PlainDateTime::from($str);
+        $dt = PlainDateTime::from($str);
         $this->assertSame($str, (string) $dt);
     }
 
@@ -682,7 +682,7 @@ class PlainDateTimeTest extends TestCase
 
     public function testAddDoesNotMutate(): void
     {
-        $dt  = new PlainDateTime(2024, 3, 15, 10, 0, 0);
+        $dt = new PlainDateTime(2024, 3, 15, 10, 0, 0);
         $dt2 = $dt->add(['days' => 1]);
         $this->assertSame(15, $dt->day);
         $this->assertSame(16, $dt2->day);
@@ -690,9 +690,67 @@ class PlainDateTimeTest extends TestCase
 
     public function testSubtractDoesNotMutate(): void
     {
-        $dt  = new PlainDateTime(2024, 3, 15, 10, 0, 0);
+        $dt = new PlainDateTime(2024, 3, 15, 10, 0, 0);
         $dt2 = $dt->subtract(['hours' => 1]);
         $this->assertSame(10, $dt->hour);
         $this->assertSame(9, $dt2->hour);
+    }
+
+    // -------------------------------------------------------------------------
+    // toZonedDateTime
+    // -------------------------------------------------------------------------
+
+    public function testToZonedDateTimeWithStringTimezone(): void
+    {
+        $dt = new PlainDateTime(2024, 3, 15, 10, 30, 0);
+        $zdt = $dt->toZonedDateTime('UTC');
+        $this->assertInstanceOf(\Temporal\ZonedDateTime::class, $zdt);
+        $this->assertSame(2024, $zdt->year);
+        $this->assertSame(3, $zdt->month);
+        $this->assertSame(15, $zdt->day);
+        $this->assertSame(10, $zdt->hour);
+        $this->assertSame(30, $zdt->minute);
+    }
+
+    public function testToZonedDateTimeWithTimezoneObject(): void
+    {
+        $dt = new PlainDateTime(2024, 3, 15, 0, 0, 0);
+        $tz = \Temporal\TimeZone::from('UTC');
+        $zdt = $dt->toZonedDateTime($tz);
+        $this->assertSame('UTC', (string) $zdt->timeZone);
+    }
+
+    public function testToZonedDateTimeEpochNsAtEpoch(): void
+    {
+        // 1970-01-01T00:00:00 UTC → epoch ns = 0
+        $dt = new PlainDateTime(1970, 1, 1, 0, 0, 0);
+        $zdt = $dt->toZonedDateTime('UTC');
+        $this->assertSame(0, $zdt->epochNanoseconds);
+    }
+
+    public function testToZonedDateTimeWithOffsetTimezone(): void
+    {
+        // 1970-01-01T05:30:00 in +05:30 → epoch ns = 0
+        $dt = new PlainDateTime(1970, 1, 1, 5, 30, 0);
+        $zdt = $dt->toZonedDateTime('+05:30');
+        $this->assertSame(0, $zdt->epochNanoseconds);
+    }
+
+    public function testToZonedDateTimePreservesSubSeconds(): void
+    {
+        $dt = new PlainDateTime(2024, 3, 15, 10, 30, 45, 123, 456, 789);
+        $zdt = $dt->toZonedDateTime('UTC');
+        $this->assertSame(45, $zdt->second);
+        $this->assertSame(123, $zdt->millisecond);
+        $this->assertSame(456, $zdt->microsecond);
+        $this->assertSame(789, $zdt->nanosecond);
+    }
+
+    public function testToZonedDateTimeRoundTrip(): void
+    {
+        $dt = new PlainDateTime(2024, 6, 15, 12, 0, 0);
+        $zdt = $dt->toZonedDateTime('UTC');
+        $dt2 = $zdt->toPlainDateTime();
+        $this->assertTrue($dt->equals($dt2));
     }
 }

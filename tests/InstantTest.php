@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Temporal\Tests;
 
@@ -301,7 +301,7 @@ final class InstantTest extends TestCase
 
     public function test_to_string_roundtrip(): void
     {
-        $str     = '2021-08-04T12:30:00.123456789Z';
+        $str = '2021-08-04T12:30:00.123456789Z';
         $instant = Instant::from($str);
         self::assertSame($str, (string) $instant);
     }
@@ -328,36 +328,36 @@ final class InstantTest extends TestCase
     public function test_add_seconds_from_array(): void
     {
         $instant = Instant::fromEpochNanoseconds(0);
-        $result  = $instant->add(['seconds' => 1]);
+        $result = $instant->add(['seconds' => 1]);
         self::assertSame(1_000_000_000, $result->epochNanoseconds);
     }
 
     public function test_add_duration_object(): void
     {
-        $instant  = Instant::fromEpochNanoseconds(0);
+        $instant = Instant::fromEpochNanoseconds(0);
         $duration = new Duration(hours: 1, minutes: 30);
-        $result   = $instant->add($duration);
-        self::assertSame((1 * 3_600 + 30 * 60) * 1_000_000_000, $result->epochNanoseconds);
+        $result = $instant->add($duration);
+        self::assertSame(( ( 1 * 3_600 ) + ( 30 * 60 ) ) * 1_000_000_000, $result->epochNanoseconds);
     }
 
     public function test_add_days_as_exact_24h(): void
     {
         $instant = Instant::fromEpochNanoseconds(0);
-        $result  = $instant->add(['days' => 1]);
+        $result = $instant->add(['days' => 1]);
         self::assertSame(86_400 * 1_000_000_000, $result->epochNanoseconds);
     }
 
     public function test_add_nanoseconds(): void
     {
         $instant = Instant::fromEpochNanoseconds(1000);
-        $result  = $instant->add(['nanoseconds' => 500]);
+        $result = $instant->add(['nanoseconds' => 500]);
         self::assertSame(1500, $result->epochNanoseconds);
     }
 
     public function test_add_negative_makes_it_earlier(): void
     {
         $instant = Instant::fromEpochSeconds(10);
-        $result  = $instant->add(['seconds' => -3]);
+        $result = $instant->add(['seconds' => -3]);
         self::assertSame(7_000_000_000, $result->epochNanoseconds);
     }
 
@@ -396,22 +396,22 @@ final class InstantTest extends TestCase
     public function test_subtract_seconds(): void
     {
         $instant = Instant::fromEpochSeconds(5);
-        $result  = $instant->subtract(['seconds' => 3]);
+        $result = $instant->subtract(['seconds' => 3]);
         self::assertSame(2_000_000_000, $result->epochNanoseconds);
     }
 
     public function test_subtract_to_before_epoch(): void
     {
         $instant = Instant::fromEpochNanoseconds(0);
-        $result  = $instant->subtract(['nanoseconds' => 1]);
+        $result = $instant->subtract(['nanoseconds' => 1]);
         self::assertSame(-1, $result->epochNanoseconds);
     }
 
     public function test_subtract_duration_object(): void
     {
-        $instant  = Instant::fromEpochSeconds(3_600);
+        $instant = Instant::fromEpochSeconds(3_600);
         $duration = new Duration(hours: 1);
-        $result   = $instant->subtract($duration);
+        $result = $instant->subtract($duration);
         self::assertSame(0, $result->epochNanoseconds);
     }
 
@@ -546,77 +546,77 @@ final class InstantTest extends TestCase
     public function test_round_nanosecond_is_identity(): void
     {
         $instant = Instant::fromEpochNanoseconds(12345);
-        $result  = $instant->round('nanosecond');
+        $result = $instant->round('nanosecond');
         self::assertSame(12345, $result->epochNanoseconds);
     }
 
     public function test_round_to_microsecond_down(): void
     {
         $instant = Instant::fromEpochNanoseconds(1_499);
-        $result  = $instant->round('microsecond');
+        $result = $instant->round('microsecond');
         self::assertSame(1_000, $result->epochNanoseconds);
     }
 
     public function test_round_to_microsecond_up(): void
     {
         $instant = Instant::fromEpochNanoseconds(1_500);
-        $result  = $instant->round('microsecond');
+        $result = $instant->round('microsecond');
         self::assertSame(2_000, $result->epochNanoseconds);
     }
 
     public function test_round_to_millisecond(): void
     {
         $instant = Instant::fromEpochNanoseconds(1_499_999);
-        $result  = $instant->round('millisecond');
+        $result = $instant->round('millisecond');
         self::assertSame(1_000_000, $result->epochNanoseconds);
     }
 
     public function test_round_to_second_down(): void
     {
         $instant = Instant::fromEpochNanoseconds(1_499_999_999);
-        $result  = $instant->round('second');
+        $result = $instant->round('second');
         self::assertSame(1_000_000_000, $result->epochNanoseconds);
     }
 
     public function test_round_to_second_half_expands_up(): void
     {
         $instant = Instant::fromEpochNanoseconds(1_500_000_000);
-        $result  = $instant->round('second');
+        $result = $instant->round('second');
         self::assertSame(2_000_000_000, $result->epochNanoseconds);
     }
 
     public function test_round_to_minute(): void
     {
         $instant = Instant::fromEpochSeconds(89); // 1m 29s → rounds to 1m
-        $result  = $instant->round('minute');
+        $result = $instant->round('minute');
         self::assertSame(60_000_000_000, $result->epochNanoseconds);
     }
 
     public function test_round_to_hour(): void
     {
         $instant = Instant::fromEpochSeconds(3_599); // 59m 59s → rounds to 1h
-        $result  = $instant->round('hour');
+        $result = $instant->round('hour');
         self::assertSame(3_600_000_000_000, $result->epochNanoseconds);
     }
 
     public function test_round_with_floor_mode(): void
     {
         $instant = Instant::fromEpochNanoseconds(1_999_999_999);
-        $result  = $instant->round(['smallestUnit' => 'second', 'roundingMode' => 'floor']);
+        $result = $instant->round(['smallestUnit' => 'second', 'roundingMode' => 'floor']);
         self::assertSame(1_000_000_000, $result->epochNanoseconds);
     }
 
     public function test_round_with_ceil_mode(): void
     {
         $instant = Instant::fromEpochNanoseconds(1_000_000_001);
-        $result  = $instant->round(['smallestUnit' => 'second', 'roundingMode' => 'ceil']);
+        $result = $instant->round(['smallestUnit' => 'second', 'roundingMode' => 'ceil']);
         self::assertSame(2_000_000_000, $result->epochNanoseconds);
     }
 
     public function test_round_with_trunc_mode(): void
     {
         $instant = Instant::fromEpochNanoseconds(1_999_999_999);
-        $result  = $instant->round(['smallestUnit' => 'second', 'roundingMode' => 'trunc']);
+        $result = $instant->round(['smallestUnit' => 'second', 'roundingMode' => 'trunc']);
         self::assertSame(1_000_000_000, $result->epochNanoseconds);
     }
 
@@ -624,7 +624,7 @@ final class InstantTest extends TestCase
     {
         // -0.5 seconds → rounds away from zero → -1 second
         $instant = Instant::fromEpochNanoseconds(-500_000_000);
-        $result  = $instant->round('second');
+        $result = $instant->round('second');
         self::assertSame(-1_000_000_000, $result->epochNanoseconds);
     }
 
@@ -632,7 +632,7 @@ final class InstantTest extends TestCase
     {
         // -0.4999... seconds → rounds to 0
         $instant = Instant::fromEpochNanoseconds(-499_999_999);
-        $result  = $instant->round('second');
+        $result = $instant->round('second');
         self::assertSame(0, $result->epochNanoseconds);
     }
 
@@ -654,7 +654,68 @@ final class InstantTest extends TestCase
     {
         // 12 hours → rounds to 1 day
         $instant = Instant::fromEpochSeconds(43_200); // 12h
-        $result  = $instant->round('day');
+        $result = $instant->round('day');
         self::assertSame(86_400_000_000_000, $result->epochNanoseconds);
+    }
+
+    // -------------------------------------------------------------------------
+    // toZonedDateTimeISO
+    // -------------------------------------------------------------------------
+
+    public function test_to_zoned_date_time_iso_returns_zoned_date_time(): void
+    {
+        $instant = Instant::fromEpochSeconds(0);
+        $zdt = $instant->toZonedDateTimeISO('UTC');
+        self::assertInstanceOf(\Temporal\ZonedDateTime::class, $zdt);
+    }
+
+    public function test_to_zoned_date_time_iso_epoch_utc(): void
+    {
+        $instant = Instant::fromEpochSeconds(0);
+        $zdt = $instant->toZonedDateTimeISO('UTC');
+        self::assertSame(1970, $zdt->year);
+        self::assertSame(1, $zdt->month);
+        self::assertSame(1, $zdt->day);
+        self::assertSame(0, $zdt->hour);
+        self::assertSame(0, $zdt->minute);
+        self::assertSame(0, $zdt->second);
+    }
+
+    public function test_to_zoned_date_time_iso_preserves_epoch_ns(): void
+    {
+        $instant = Instant::fromEpochNanoseconds(1_000_000_000_000);
+        $zdt = $instant->toZonedDateTimeISO('UTC');
+        self::assertSame(1_000_000_000_000, $zdt->epochNanoseconds);
+    }
+
+    public function test_to_zoned_date_time_iso_with_offset_timezone(): void
+    {
+        // 2024-03-15T12:00:00Z → in +05:30 should be 2024-03-15T17:30:00
+        $instant = Instant::from('2024-03-15T12:00:00Z');
+        $zdt = $instant->toZonedDateTimeISO('+05:30');
+        self::assertSame(2024, $zdt->year);
+        self::assertSame(3, $zdt->month);
+        self::assertSame(15, $zdt->day);
+        self::assertSame(17, $zdt->hour);
+        self::assertSame(30, $zdt->minute);
+    }
+
+    public function test_to_zoned_date_time_iso_with_timezone_object(): void
+    {
+        $instant = Instant::fromEpochSeconds(0);
+        $tz = \Temporal\TimeZone::from('UTC');
+        $zdt = $instant->toZonedDateTimeISO($tz);
+        self::assertSame('UTC', (string) $zdt->timeZone);
+    }
+
+    public function test_to_zoned_date_time_iso_negative_offset(): void
+    {
+        // 2024-03-15T03:00:00Z → in -05:00 should be 2024-03-14T22:00:00
+        $instant = Instant::from('2024-03-15T03:00:00Z');
+        $zdt = $instant->toZonedDateTimeISO('-05:00');
+        self::assertSame(2024, $zdt->year);
+        self::assertSame(3, $zdt->month);
+        self::assertSame(14, $zdt->day);
+        self::assertSame(22, $zdt->hour);
     }
 }
