@@ -1,0 +1,53 @@
+---
+title: PHP Temporal
+description: A PHP port of the JavaScript Temporal API — precise, immutable date/time types for PHP 8.4+.
+template: splash
+hero:
+  tagline: Precise, immutable date/time types for PHP 8.4+. A faithful port of the TC39 Temporal proposal.
+  actions:
+    - text: Get Started
+      link: /php-temporal/getting-started/installation/
+      icon: right-arrow
+      variant: primary
+    - text: View on GitHub
+      link: https://github.com/php-temporal/php-temporal
+      icon: external
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## Why PHP Temporal?
+
+PHP's built-in `DateTime` and `DateTimeImmutable` classes carry decades of legacy baggage: mutable by default, confusing timezone handling, limited nanosecond precision, and an API that doesn't compose well.
+
+**PHP Temporal** brings the clean, modern design of the [TC39 Temporal proposal](https://tc39.es/proposal-temporal/docs/) to PHP:
+
+<CardGrid stagger>
+  <Card title="Truly Immutable" icon="approve-check">
+    Every operation returns a new instance. Shared references are always safe.
+  </Card>
+  <Card title="Nanosecond Precision" icon="star">
+    `Instant` and `ZonedDateTime` support full nanosecond-precision timestamps.
+  </Card>
+  <Card title="No DateTime Dependency" icon="puzzle">
+    Pure PHP 8.4+ implementation. No `\DateTime`, no extensions required.
+  </Card>
+  <Card title="Tested Against TC39" icon="document">
+    4,200+ automated tests derived from the official JavaScript test262 suite.
+  </Card>
+</CardGrid>
+
+## Type Overview
+
+| Type | Description |
+|------|-------------|
+| [`PlainDate`](/php-temporal/api/plain-date/) | A calendar date with no time or timezone (`2025-03-14`) |
+| [`PlainTime`](/php-temporal/api/plain-time/) | A wall-clock time with no date (`09:30:00`) |
+| [`PlainDateTime`](/php-temporal/api/plain-date-time/) | Date + time, no timezone (`2025-03-14T09:30:00`) |
+| [`Duration`](/php-temporal/api/duration/) | A length of time (`P1Y2M3DT4H5M6S`) |
+| [`Instant`](/php-temporal/api/instant/) | A precise moment in UTC, nanosecond precision |
+| [`ZonedDateTime`](/php-temporal/api/zoned-date-time/) | A moment in a specific IANA timezone |
+| [`TimeZone`](/php-temporal/api/time-zone/) | IANA timezone or fixed UTC offset |
+| [`PlainYearMonth`](/php-temporal/api/plain-year-month/) | A month with no specific day (`2025-03`) |
+| [`PlainMonthDay`](/php-temporal/api/plain-month-day/) | A recurring day in a year (`--03-14`) |
+| [`Temporal\Now`](/php-temporal/api/now/) | Static helpers for the current moment |

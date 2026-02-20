@@ -25,6 +25,13 @@
 - **Mago baseline updated**: 1428 pre-existing test-file issues baselined so `mago analyze` exits cleanly in CI
 
 
+- **Starlight documentation site** (`docs/`) — Astro + Starlight static site with:
+  - Home page (`index.mdx`) with type overview table
+  - Getting Started: Installation, Quick Start
+  - Core Concepts: Immutability, ISO 8601 Parsing, Overflow Handling, Exceptions
+  - API Reference: all 11 types (PlainDate, PlainTime, PlainDateTime, Duration, Instant, ZonedDateTime, TimeZone, Calendar, PlainYearMonth, PlainMonthDay, Temporal\Now)
+  - **GitHub Actions CI** (`.github/workflows/docs.yml`) — builds and deploys to GitHub Pages on push to `main`
+
 ## Next Tasks
 
 - **Mutation testing** Run infection scripts on the following classes
@@ -39,4 +46,3 @@
   - `PlainYearMonth`
   - `TimeZone`
   - `ZonedDateTime`
-- Write documentation using Starlight. Hosted on GitHub Pages.
