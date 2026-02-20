@@ -1,0 +1,31 @@
+Done. Here's a summary of what was implemented:
+
+## ISO 8601 Parsing Improvements
+
+Added 35 new tests covering edge cases, all passing. Total: **588 tests**.
+
+### Changes by class
+
+**`PlainDate::fromString`** — Now accepts:
+- Full datetime strings: `2024-03-15T10:30:00Z[America/New_York]` → extracts date part
+- Calendar annotations: `2024-03-15[u-ca=iso8601]` → silently ignored
+
+**`PlainTime::fromString`** — Now accepts:
+- `T`-prefixed strings: `T10:30:00` (per TC39 spec)
+- Full datetime strings: `2024-03-15T10:30:00` → extracts time part
+- Calendar annotations: `10:30:00[u-ca=iso8601]` → silently ignored
+
+**`PlainDateTime::fromString`** — Now accepts:
+- Optional UTC offset suffix (`Z`, `±HH:MM`) → silently ignored
+- Optional timezone ID bracket → silently ignored  
+- Calendar annotations → silently ignored
+
+**`Instant::parse`** — Now accepts:
+- Offsets with seconds: `+05:30:00` (previously only `+05:30`)
+- `-00:00` treated as UTC (same as `+00:00`/`Z`)
+- Calendar annotations after the offset: `Z[u-ca=iso8601]`
+
+**`ZonedDateTime::parse`** — Now accepts:
+- Offsets with seconds: `+05:30:00[Asia/Kolkata]`
+- Multiple trailing bracket groups: `Z[UTC][u-ca=iso8601][x-foo=bar]`
+- Bracket classification: TZID (no `=` in content) vs annotation (`key=value`)

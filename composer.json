@@ -7,6 +7,7 @@
     "php": "^8.4"
   },
   "require-dev": {
+    "carthage-software/mago": "^1.9.1",
     "phpunit/phpunit": "^11.0"
   },
   "autoload": {
@@ -21,7 +22,10 @@
   },
   "config": {
     "optimize-autoloader": true,
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "carthage-software/mago": true
+    }
   },
   "minimum-stability": "stable"
 }

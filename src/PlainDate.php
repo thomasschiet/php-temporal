@@ -15,6 +15,7 @@ use InvalidArgumentException;
  * @property-read int    $dayOfWeek   ISO day of week: Monday = 1, …, Sunday = 7.
  * @property-read int    $dayOfYear   Day of year (1-based).
  * @property-read int    $weekOfYear  ISO week number (1–53).
+ * @property-read int    $yearOfWeek  ISO week-numbering year (may differ from $year near year boundaries).
  * @property-read int    $daysInMonth Number of days in the month.
  * @property-read int    $daysInYear  Number of days in the year (365 or 366).
  * @property-read bool   $inLeapYear  Whether the year is a leap year.
@@ -145,6 +146,7 @@ final class PlainDate
             'dayOfWeek' => $this->computeDayOfWeek(),
             'dayOfYear' => $this->computeDayOfYear(),
             'weekOfYear' => $this->computeWeekOfYear(),
+            'yearOfWeek' => $this->computeYearOfWeek(),
             'daysInMonth' => self::daysInMonthFor($this->year, $this->month),
             'daysInYear' => self::isLeapYear($this->year) ? 366 : 365,
             'inLeapYear' => self::isLeapYear($this->year),
@@ -161,6 +163,7 @@ final class PlainDate
                 'dayOfWeek',
                 'dayOfYear',
                 'weekOfYear',
+                'yearOfWeek',
                 'daysInMonth',
                 'daysInYear',
                 'inLeapYear'
@@ -375,18 +378,34 @@ final class PlainDate
     /**
      * Compute the Duration from this date until the given date.
      */
-    public function until(self $other): Duration
+    /**
+     * Compute the Duration from this date to $other.
+     *
+     * Accepts an optional options array or largestUnit string:
+     *   - 'day'   (default) — returns only days
+     *   - 'week'            — returns weeks + days
+     *   - 'month'           — returns months + days
+     *   - 'year'            — returns years + months + days
+     *
+     * @param string|array{largestUnit?:string} $options
+     * @throws InvalidArgumentException if largestUnit is invalid.
+     */
+    public function until(self $other, string|array $options = []): Duration
     {
-        $days = $other->toEpochDays() - $this->toEpochDays();
-        return new Duration(days: $days);
+        $largestUnit = $this->parseLargestUnit($options, 'day');
+        return $this->diffWithLargestUnit($other, $largestUnit);
     }
 
     /**
      * Compute the Duration since the given date (i.e. other until this).
+     *
+     * @param string|array{largestUnit?:string} $options
+     * @throws InvalidArgumentException if largestUnit is invalid.
      */
-    public function since(self $other): Duration
+    public function since(self $other, string|array $options = []): Duration
     {
-        return $other->until($this);
+        $largestUnit = $this->parseLargestUnit($options, 'day');
+        return $other->diffWithLargestUnit($this, $largestUnit);
     }
 
     // -------------------------------------------------------------------------
@@ -544,6 +563,31 @@ final class PlainDate
     }
 
     /**
+     * The ISO week-numbering year (yearOfWeek). For dates near year boundaries the
+     * ISO week may belong to the previous or next calendar year:
+     *   - If weekOfYear is 52/53 and the month is January → yearOfWeek = year - 1
+     *   - If weekOfYear is 1 and the month is December   → yearOfWeek = year + 1
+     *   - Otherwise                                       → yearOfWeek = year
+     *
+     * @throws InvalidArgumentException
+     * @throws \RangeException
+     */
+    private function computeYearOfWeek(): int
+    {
+        $w = $this->computeWeekOfYear();
+
+        if ($w >= 52 && $this->month === 1) {
+            return $this->year - 1;
+        }
+
+        if ($w === 1 && $this->month === 12) {
+            return $this->year + 1;
+        }
+
+        return $this->year;
+    }
+
+    /**
      * @throws InvalidArgumentException
      * @throws \RangeException
      */
@@ -555,5 +599,106 @@ final class PlainDate
         $dec31Dow = new self($year, 12, 31)->computeDayOfWeek();
 
         return $jan1Dow === 4 || $dec31Dow === 4 ? 53 : 52;
+    }
+
+    /**
+     * Parse a largestUnit value from a string|array options argument.
+     *
+     * @param string|array{largestUnit?:string} $options
+     * @throws InvalidArgumentException
+     */
+    private function parseLargestUnit(string|array $options, string $default): string
+    {
+        if (is_string($options)) {
+            $unit = $options;
+        } else {
+            $unit = $options['largestUnit'] ?? $default;
+        }
+
+        $valid = ['year', 'years', 'month', 'months', 'week', 'weeks', 'day', 'days'];
+
+        if (!in_array($unit, $valid, true)) {
+            throw new InvalidArgumentException(
+                "largestUnit must be one of 'year', 'month', 'week', 'day'; got '{$unit}'."
+            );
+        }
+
+        // Normalise to singular
+        return rtrim($unit, 's');
+    }
+
+    /**
+     * Core implementation for until()/since() with a largestUnit option.
+     *
+     * Computes the Duration from $this to $other, expressed with the given
+     * largestUnit ('year', 'month', 'week', or 'day').
+     *
+     * @throws InvalidArgumentException
+     * @throws \RangeException
+     */
+    private function diffWithLargestUnit(self $other, string $largestUnit): Duration
+    {
+        $cmp = self::compare($this, $other);
+
+        if ($cmp === 0) {
+            return new Duration();
+        }
+
+        // durationSign: +1 when other is after this (the normal "until" direction).
+        $durationSign = $cmp === -1 ? 1 : -1;
+
+        // Always count from the earlier date to the later date.
+        [$earlier, $later] = $cmp < 0 ? [$this, $other] : [$other, $this];
+
+        if ($largestUnit === 'day') {
+            $days = $later->toEpochDays() - $earlier->toEpochDays();
+            return new Duration(days: $durationSign * $days);
+        }
+
+        if ($largestUnit === 'week') {
+            $days = $later->toEpochDays() - $earlier->toEpochDays();
+            $weeks = intdiv($days, 7);
+            $remDays = $days % 7;
+            return new Duration(weeks: $durationSign * $weeks, days: $durationSign * $remDays);
+        }
+
+        // 'month' or 'year': calendar-aware counting
+        $years = 0;
+        $months = 0;
+
+        if ($largestUnit === 'year') {
+            // Count full years
+            while (true) {
+                $candidate = $earlier->add(['years' => $years + 1]);
+
+                if (self::compare($candidate, $later) > 0) {
+                    break;
+                }
+
+                $years++;
+            }
+        }
+
+        // Count full months beyond the full years
+        $afterYears = $earlier->add(['years' => $years]);
+
+        while (true) {
+            $candidate = $afterYears->add(['months' => $months + 1]);
+
+            if (self::compare($candidate, $later) > 0) {
+                break;
+            }
+
+            $months++;
+        }
+
+        $afterMonths = $afterYears->add(['months' => $months]);
+        $remDays = $later->toEpochDays() - $afterMonths->toEpochDays();
+
+        return new Duration(
+            years: $durationSign * $years,
+            months: $durationSign * $months,
+            days: $durationSign * $remDays
+        );
     }
 }

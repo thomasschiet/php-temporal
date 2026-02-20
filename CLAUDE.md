@@ -10,3 +10,13 @@ Key principles:
 - Does not require PHP extensions
 - Supports PHP 8.4, 8.5
 - PHP Temporal will be built by autonomous agents. Therefore it is extremely important to start with good tests before implementing code
+
+## Tooling
+
+Use **mago** (`./vendor/bin/mago`) for formatting, linting, and static analysis:
+
+- Format: `./vendor/bin/mago fmt`
+- Lint: `./vendor/bin/mago lint`
+- Analyze: `./vendor/bin/mago analyze`
+
+Run all three after implementing any code and fix any issues before committing.

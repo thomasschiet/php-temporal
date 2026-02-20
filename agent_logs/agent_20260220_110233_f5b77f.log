@@ -1,0 +1,12 @@
+`Instant` is complete. Here's a summary of what was implemented:
+
+**`src/Instant.php`** — 83 tests, all passing (360 total):
+
+- **Storage**: single `int $ns` (nanoseconds since Unix epoch); covers ~1678–2262 with nanosecond precision
+- **Static constructors**: `fromEpochNanoseconds()`, `fromEpochMicroseconds()`, `fromEpochMilliseconds()`, `fromEpochSeconds()`, `from(string|Instant)`
+- **ISO 8601 parsing**: requires Z or UTC offset (`±HH:MM`); supports extended years, lowercase `t`/`z`
+- **Computed properties** (via `__get`): `epochNanoseconds`, `epochMicroseconds`, `epochMilliseconds`, `epochSeconds` — all use truncation toward zero, matching JS BigInt division semantics
+- **Arithmetic**: `add()`/`subtract()` reject calendar fields (years/months/weeks), treat days as exactly 24 h
+- **`until()`/`since()`**: return `Duration` with hours…nanoseconds (no calendar fields)
+- **`round()`**: supports halfExpand/ceil/floor/trunc modes using pure integer arithmetic (no float precision issues)
+- **`compare()`** / **`equals()`** / **`__toString()`** (UTC ISO 8601 with `Z`)

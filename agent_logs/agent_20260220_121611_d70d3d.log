@@ -1,0 +1,23 @@
+Done. Here's a summary of what was implemented in this session:
+
+## Changes Made
+
+### `PlainTime::round()` (new method)
+- Accepts `string|array{smallestUnit, roundingMode?, roundingIncrement?}`
+- Units: `nanosecond` through `hour` (not `day` — PlainTime has no date context)
+- Modes: `halfExpand` (default), `ceil`, `floor`, `trunc`
+- `roundingIncrement` validated — must evenly divide the parent unit (e.g. 15 divides 60 ✓, 7 does not ✗)
+- Wraps around midnight on overflow (e.g. `23:59:59.5` → `00:00:00`)
+
+### `Duration::balance()` (new method)
+- Re-expresses a duration from `largestUnit` down to `nanosecond` without rounding
+- Fixed conversions: 1 week = 7 days, 1 day = 24 h
+- Calendar fields (years/months) preserved unchanged
+- Example: `PT90S.balance('minute')` → `PT1M30S`
+
+### `Duration::round()` with `largestUnit` (fixed)
+- Previously ignored `largestUnit` when no `relativeTo` was given
+- Now properly distributes across the unit hierarchy
+- Example: `PT90S.round({smallestUnit:'second',largestUnit:'minute'})` → `PT1M30S`
+
+**796 tests passing (+37 new)**

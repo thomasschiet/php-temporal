@@ -1,0 +1,20 @@
+Done. Here's a summary of what was completed:
+
+## Completed: PlainDate
+
+**Files created:**
+- `phpunit.xml` — PHPUnit 11 configuration
+- `src/PlainDate.php` — Full implementation including:
+  - Constructor with validation (month 1–12, day 1–N per month, leap year aware)
+  - `from()` static constructor (accepts ISO string, array, or PlainDate)
+  - `fromEpochDays()` / `toEpochDays()` using Hinnant's civil-calendar algorithm
+  - Computed properties: `dayOfWeek` (Mon=1…Sun=7), `dayOfYear`, `weekOfYear`, `daysInMonth`, `daysInYear`, `inLeapYear`
+  - `add()` / `subtract()` with year/month/week/day fields
+  - `with()` for field overrides (immutable)
+  - `until()` / `since()` returning a `Duration`
+  - `compare()` / `equals()`
+  - `__toString()` with extended ISO 8601 year format
+- `src/Duration.php` — Minimal stub needed by `PlainDate::until()`/`since()`
+- `tests/PlainDateTest.php` — 57 tests, 108 assertions, all passing
+
+**Next task:** `PlainTime` (hour, minute, second, millisecond, microsecond, nanosecond)

@@ -1,0 +1,17 @@
+Done. Here's a summary of what was implemented:
+
+**`TimeZone`** (`src/TimeZone.php`, 30 tests):
+- Accepts IANA names (`America/New_York`), fixed offsets (`+05:30`, `-08:00`), and `UTC`
+- Validates via PHP's `DateTimeZone` — no `\DateTime`/`\DateTimeImmutable` instances ever created
+- `getOffsetNanosecondsFor(Instant)` — queries `DateTimeZone::getTransitions()` with a 25-hour look-back window to reliably find the active offset
+- `getPlainDateTimeFor(Instant)` — converts epoch nanoseconds to local wall-clock time
+- `getInstantFor(PlainDateTime, $disambiguation)` — two-pass iterative algorithm for local→UTC conversion, handles DST gaps and overlaps with `'compatible'`/`'earlier'`/`'later'`/`'reject'` modes
+
+**`ZonedDateTime`** (`src/ZonedDateTime.php`, 57 tests):
+- Stores epoch nanoseconds + `TimeZone`; all local fields computed on demand
+- Parses `YYYY-MM-DDTHH:MM:SS[.frac](Z|±HH:MM)[TZID]` strings
+- `add()`/`subtract()`: calendar fields (years, months, weeks, days) use wall-clock arithmetic; time fields use Instant arithmetic
+- `withTimeZone()` keeps the same instant; `with()` keeps the same timezone and adjusts the instant
+- `compare()` by instant; `equals()` requires matching instant AND timezone ID
+
+**447 tests total, all passing.**

@@ -17,11 +17,15 @@ This is a WIP library that ports the JavaScript Temporal API to PHP. Key princip
 
 1. **Check what has been done** by reading `PROGRESS.md` (create it if it doesn't exist).
 2. **Pick the next logical task** — prefer small, well-defined units of work.
-3. **Write tests first**, then implement.
+3. **Write tests first**, then implement. Try and download test data from test262
 4. **Run tests** with `./vendor/bin/phpunit` and make sure they pass before moving on.
-5. **Update `PROGRESS.md`** with what you completed and what the next task is.
-6. **Commit your changes** with a descriptive message.
-7. **Stop** — the ralph loop will restart you for the next task.
+5. **Format, lint, and analyze** with mago — run all three and fix any issues:
+   - `./vendor/bin/mago fmt`
+   - `./vendor/bin/mago lint`
+   - `./vendor/bin/mago analyze`
+6. **Update `PROGRESS.md`** with what you completed and what the next task is.
+7. **Commit your changes** with a descriptive message.
+8. **Stop** — the ralph loop will restart you for the next task.
 
 ## Task Order (suggested)
 
@@ -45,6 +49,8 @@ Work through the Temporal API surface area roughly in this order:
 - PSR-4 autoloading under namespace `Temporal\`
 - All public API should be immutable (return new instances)
 - Follow PSR-12 coding style
+- Code must pass `./vendor/bin/mago fmt`, `./vendor/bin/mago lint`, and `./vendor/bin/mago analyze` with no errors
+- Arrays should be typed in PHPDoc as strictly as possible
 
 ## Reference
 

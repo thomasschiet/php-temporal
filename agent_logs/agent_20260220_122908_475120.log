@@ -1,0 +1,21 @@
+Done. Here's a summary of what was accomplished:
+
+## Summary
+
+**Bug Fix: DST transition boundary offset**
+
+`TimeZone::getOffsetSecondsAtEpoch()` had an off-by-one bug: `DateTimeZone::getTransitions($begin, $end)` treats `$end` as exclusive, so any instant falling exactly on a DST transition second returned the wrong (pre-transition) offset. Fixed by using `$epochSeconds + 1` as the end argument.
+
+This meant, for example, that `2024-11-03T01:00:00-05:00[America/New_York]` (the first instant after the fall-back) was incorrectly resolved as `2024-11-03T02:00:00-04:00`.
+
+**New feature: `ZonedDateTime::$hoursInDay`**
+
+Returns the real-world hour count for the current calendar day:
+- `23` on spring-forward days (America/New_York March 10, 2024)
+- `25` on fall-back days (America/New_York November 3, 2024)
+- `24` for normal days and fixed-offset zones
+
+**31 new tests (824 → 855)**
+
+- `TimeZoneTest`: offset lookups at exact transition boundaries; `getInstantFor()` with all 4 disambiguation modes for gap and fold times
+- `ZonedDateTimeTest`: offset before/after transitions; adding hours/days across both transitions; 24h vs 1 calendar day differ by 1h around spring-forward; `until()` returns 23h/25h for DST days; `hoursInDay` property

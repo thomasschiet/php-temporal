@@ -812,4 +812,155 @@ class PlainDateTest extends TestCase
 
         $this->assertTrue($date1->toPlainMonthDay()->equals($date2->toPlainMonthDay()));
     }
+
+    // -------------------------------------------------------------------------
+    // yearOfWeek
+    // -------------------------------------------------------------------------
+
+    /** ISO week year matches calendar year for a mid-year date. */
+    public function testYearOfWeekNormalDate(): void
+    {
+        // 2024-03-15 is in week 11 of 2024 — yearOfWeek matches year.
+        $date = new PlainDate(2024, 3, 15);
+        $this->assertSame(2024, $date->yearOfWeek);
+        $this->assertSame(11, $date->weekOfYear);
+    }
+
+    /** Dates in early January belonging to the last week of the previous year. */
+    public function testYearOfWeekEarlyJanuary(): void
+    {
+        // 2021-01-01 (Friday) is in week 53 of 2020.
+        $date = new PlainDate(2021, 1, 1);
+        $this->assertSame(53, $date->weekOfYear);
+        $this->assertSame(2020, $date->yearOfWeek);
+    }
+
+    /** 2021-01-04 (Monday) is the first day of week 1 of 2021. */
+    public function testYearOfWeekFirstWeekOfYear(): void
+    {
+        $date = new PlainDate(2021, 1, 4);
+        $this->assertSame(1, $date->weekOfYear);
+        $this->assertSame(2021, $date->yearOfWeek);
+    }
+
+    /** Dates in late December belonging to week 1 of the next year. */
+    public function testYearOfWeekLateDecember(): void
+    {
+        // 2020-12-31 (Thursday) is in week 53 of 2020 (not week 1 of 2021).
+        // Use a date that wraps to the next year instead.
+        // 2019-12-30 (Monday) is in week 1 of 2020.
+        $date = new PlainDate(2019, 12, 30);
+        $this->assertSame(1, $date->weekOfYear);
+        $this->assertSame(2020, $date->yearOfWeek);
+    }
+
+    /** 2019-12-29 (Sunday) is in week 52 of 2019 — yearOfWeek matches year. */
+    public function testYearOfWeekLateDec_SameYear(): void
+    {
+        $date = new PlainDate(2019, 12, 29);
+        $this->assertSame(52, $date->weekOfYear);
+        $this->assertSame(2019, $date->yearOfWeek);
+    }
+
+    // -------------------------------------------------------------------------
+    // until() / since() with largestUnit
+    // -------------------------------------------------------------------------
+
+    /** Default behavior (largestUnit = 'day') is unchanged. */
+    public function testUntilDefaultLargestUnit(): void
+    {
+        $a = new PlainDate(2024, 1, 1);
+        $b = new PlainDate(2024, 3, 15);
+        $d = $a->until($b);
+        $this->assertSame(74, $d->days);
+        $this->assertSame(0, $d->months);
+        $this->assertSame(0, $d->years);
+    }
+
+    /** largestUnit = 'week' breaks days into weeks + remainder days. */
+    public function testUntilLargestUnitWeek(): void
+    {
+        $a = new PlainDate(2024, 1, 1);
+        $b = new PlainDate(2024, 1, 22); // 21 days = 3 weeks exactly
+        $d = $a->until($b, ['largestUnit' => 'week']);
+        $this->assertSame(3, $d->weeks);
+        $this->assertSame(0, $d->days);
+    }
+
+    public function testUntilLargestUnitWeekWithRemainder(): void
+    {
+        $a = new PlainDate(2024, 1, 1);
+        $b = new PlainDate(2024, 1, 25); // 24 days = 3 weeks + 3 days
+        $d = $a->until($b, ['largestUnit' => 'week']);
+        $this->assertSame(3, $d->weeks);
+        $this->assertSame(3, $d->days);
+    }
+
+    /** largestUnit = 'month' returns months + remainder days. */
+    public function testUntilLargestUnitMonth(): void
+    {
+        $a = new PlainDate(2024, 1, 15);
+        $b = new PlainDate(2024, 4, 15); // exactly 3 months
+        $d = $a->until($b, ['largestUnit' => 'month']);
+        $this->assertSame(0, $d->years);
+        $this->assertSame(3, $d->months);
+        $this->assertSame(0, $d->days);
+    }
+
+    public function testUntilLargestUnitMonthWithRemainder(): void
+    {
+        $a = new PlainDate(2024, 1, 15);
+        $b = new PlainDate(2024, 4, 20); // 3 months + 5 days
+        $d = $a->until($b, ['largestUnit' => 'month']);
+        $this->assertSame(3, $d->months);
+        $this->assertSame(5, $d->days);
+    }
+
+    /** largestUnit = 'year' returns years + months + remainder days. */
+    public function testUntilLargestUnitYear(): void
+    {
+        $a = new PlainDate(2020, 3, 15);
+        $b = new PlainDate(2022, 5, 20); // 2 years + 2 months + 5 days
+        $d = $a->until($b, ['largestUnit' => 'year']);
+        $this->assertSame(2, $d->years);
+        $this->assertSame(2, $d->months);
+        $this->assertSame(5, $d->days);
+    }
+
+    /** Negative duration when other is before this. */
+    public function testUntilLargestUnitNegative(): void
+    {
+        $a = new PlainDate(2024, 4, 15);
+        $b = new PlainDate(2024, 1, 10); // b is before a
+        $d = $a->until($b, ['largestUnit' => 'month']);
+        $this->assertSame(-3, $d->months);
+        $this->assertSame(-5, $d->days);
+    }
+
+    /** since() is the reverse of until(). */
+    public function testSinceLargestUnitMonth(): void
+    {
+        $a = new PlainDate(2024, 1, 15);
+        $b = new PlainDate(2024, 4, 15);
+        $d = $b->since($a, ['largestUnit' => 'month']);
+        $this->assertSame(3, $d->months);
+        $this->assertSame(0, $d->days);
+    }
+
+    /** Accepts unit string directly instead of options array. */
+    public function testUntilLargestUnitStringArg(): void
+    {
+        $a = new PlainDate(2024, 1, 1);
+        $b = new PlainDate(2024, 4, 1); // 3 months
+        $d = $a->until($b, 'month');
+        $this->assertSame(3, $d->months);
+        $this->assertSame(0, $d->days);
+    }
+
+    /** Invalid largestUnit throws. */
+    public function testUntilInvalidLargestUnit(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new PlainDate(2024, 1, 1)->until(new PlainDate(2024, 6, 1), ['largestUnit' => 'hour']);
+    }
 }

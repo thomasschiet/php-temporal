@@ -1,0 +1,15 @@
+Done. Here's a summary of what was implemented:
+
+**`PlainYearMonth`** (`src/PlainYearMonth.php`, 66 tests):
+- Constructor with month validation (1–12)
+- `from()` accepting string (`YYYY-MM` with extended year support), array, or `PlainYearMonth`
+- Computed properties: `daysInMonth`, `daysInYear`, `inLeapYear`, `monthsInYear`
+- `with()`, `add()`/`subtract()` (accepting array or `Duration`, with month normalisation), `until()`/`since()`
+- `toPlainDate(int $day)`, `compare()`, `equals()`, `__toString()`
+
+**`PlainMonthDay`** (`src/PlainMonthDay.php`, 43 tests):
+- Constructor validates month + day against reference year 1972 (leap year, so Feb 29 is valid)
+- `from()` accepting string (`--MM-DD`), array, or `PlainMonthDay`
+- `with()`, `toPlainDate(int $year)` (throws for invalid combos like Feb 29 in non-leap years), `equals()`, `__toString()`
+
+**Total: 553 tests, all passing.**

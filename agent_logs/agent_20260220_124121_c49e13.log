@@ -1,0 +1,34 @@
+All done. Here's a summary of what was implemented:
+
+## Completed: 16 Missing TC39 Temporal API Methods
+
+**901 tests passing** (up from 855), with 46 new tests added.
+
+### New methods by class:
+
+**`PlainDate`**
+- `toPlainDateTime(?PlainTime)` — combines date with a time (defaults to midnight)
+- `toPlainYearMonth()` — extracts year+month as `PlainYearMonth`
+- `toPlainMonthDay()` — extracts month+day as `PlainMonthDay`
+
+**`PlainTime`**
+- `toPlainDateTime(PlainDate)` — combines time with a date to produce `PlainDateTime`
+
+**`PlainDateTime`**
+- `toPlainYearMonth()` — extracts year+month
+- `toPlainMonthDay()` — extracts month+day
+
+**`ZonedDateTime`**
+- `withPlainDate(PlainDate)` — replaces the date part
+- `withPlainTime(?PlainTime)` — replaces the time part (null = midnight)
+- `toPlainYearMonth()` / `toPlainMonthDay()` — delegates to `toPlainDate()`
+- `startOfDay()` — returns the `ZonedDateTime` at local midnight
+
+**`Instant`**
+- `toZonedDateTime(TimeZone|string|array)` — converts to `ZonedDateTime` with optional `{timeZone, calendar}` options array
+
+**`TimeZone`**
+- `getOffsetStringFor(Instant)` — returns offset as `±HH:MM` string
+- `getPossibleInstantsFor(PlainDateTime)` — round-trip verification algorithm; returns `[]` for gaps, `[earlier, later]` for overlaps
+- `getNextTransition(Instant)` — next DST transition (null for fixed-offset/UTC)
+- `getPreviousTransition(Instant)` — previous DST transition (null for fixed-offset/UTC)

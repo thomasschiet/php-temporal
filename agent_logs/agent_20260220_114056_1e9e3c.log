@@ -1,0 +1,25 @@
+All done. Here's a summary of what was implemented this iteration:
+
+## Summary
+
+Added **42 new tests** (694 total, all passing) covering test262 edge cases:
+
+### 1. `PlainDate` overflow option
+- `add(array $duration, string $overflow = 'constrain')` and `subtract()` now accept:
+  - `'constrain'` (default) — clamps day to last valid day of the resulting month
+  - `'reject'` — throws `InvalidArgumentException` if day overflows
+
+### 2. `PlainDate` year bounds validation
+- Added `MIN_EPOCH_DAYS = -100_000_001` (April 19, −271821) and `MAX_EPOCH_DAYS = 100_000_000` (Sept 13, +275760)
+- Constructor and `fromEpochDays()` throw `\RangeException` for out-of-range dates
+- Arithmetic past boundaries (e.g. `maxDate->add(['months' => 5432])`) throws automatically
+
+### 3. `Duration.total()` with `relativeTo`
+- Now accepts `['unit' => 'months', 'relativeTo' => '2020-02-01']`
+- Calendar units (`months`, `years`) use calendar-aware fractional computation
+- Example: 40 days from Feb 1, 2020 = 1 + 11/31 months (Feb 2020 has 29 days, March has 31)
+
+### 4. `Duration.round()` with options object
+- Accepts `['smallestUnit' => 'weeks', 'largestUnit' => 'weeks', 'roundingMode' => 'ceil', 'roundingIncrement' => 6, 'relativeTo' => '2024-01-01']`
+- Throws `\RangeException` when duration has calendar units but `largestUnit` is omitted (matching TC39 spec)
+- Example: `P1M1D.round({...ceil, increment: 6})` = `P6W`

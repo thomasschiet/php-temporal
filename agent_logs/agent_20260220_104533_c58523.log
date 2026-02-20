@@ -1,0 +1,17 @@
+Done. Here's what was completed this run:
+
+**`PlainTime` — implemented and tested**
+
+- `src/PlainTime.php` — full implementation:
+  - Constructor validating all 6 fields: hour (0–23), minute/second (0–59), millisecond/microsecond/nanosecond (0–999)
+  - `from()` — accepts ISO 8601 string (`HH:MM:SS[.fraction]`), array, or `PlainTime`
+  - `fromNanosecondsSinceMidnight()` / `toNanosecondsSinceMidnight()` — lossless conversion
+  - `with()` — immutable field override
+  - `add()` / `subtract()` — nanosecond-precision arithmetic, wraps around midnight
+  - `until()` / `since()` — returns `Duration`
+  - `compare()` / `equals()` — comparison
+  - `__toString()` — ISO 8601 output, omits trailing zero sub-second groups
+
+- `tests/PlainTimeTest.php` — 65 tests covering all of the above
+
+- **Total: 122 tests, all passing**

@@ -15,6 +15,7 @@ use InvalidArgumentException;
  * @property-read int    $dayOfWeek   ISO day of week: Monday = 1, …, Sunday = 7.
  * @property-read int    $dayOfYear   Day of year (1-based).
  * @property-read int    $weekOfYear  ISO week number (1–53).
+ * @property-read int    $yearOfWeek  ISO week-numbering year (may differ from $year near year boundaries).
  * @property-read int    $daysInMonth Number of days in the month.
  * @property-read int    $daysInYear  Number of days in the year (365 or 366).
  * @property-read bool   $inLeapYear  Whether the year is a leap year.
@@ -120,6 +121,7 @@ final class PlainDateTime
             'dayOfWeek',
             'dayOfYear',
             'weekOfYear',
+            'yearOfWeek',
             'daysInMonth',
             'daysInYear',
             'inLeapYear'
@@ -137,6 +139,7 @@ final class PlainDateTime
                 'dayOfWeek',
                 'dayOfYear',
                 'weekOfYear',
+                'yearOfWeek',
                 'daysInMonth',
                 'daysInYear',
                 'inLeapYear'
@@ -451,55 +454,34 @@ final class PlainDateTime
     /**
      * Compute the Duration from this datetime until the given datetime.
      *
-     * The result is expressed in days plus sub-day time components, balanced
-     * so that the time part never exceeds one day in magnitude.
+     * Accepts an optional largestUnit option (string or array):
+     *   Date units   : 'year', 'month', 'week', 'day' (default)
+     *   Time units   : 'hour', 'minute', 'second', 'millisecond', 'microsecond', 'nanosecond'
+     *
+     * When a date unit is given the date difference is expressed in that unit
+     * plus days; the time portion is always appended as sub-day components.
+     * When a time unit is given the entire difference collapses to sub-day
+     * components (no years/months/weeks/days in the result).
+     *
+     * @param string|array{largestUnit?:string} $options
+     * @throws \InvalidArgumentException
      */
-    public function until(self $other): Duration
+    public function until(self $other, string|array $options = []): Duration
     {
-        $daysDiff = $other->toPlainDate()->toEpochDays() - $this->toPlainDate()->toEpochDays();
-        $nsDiff =
-            $other->toPlainTime()->toNanosecondsSinceMidnight() - $this->toPlainTime()->toNanosecondsSinceMidnight();
-
-        // Balance: borrow a day when the time part's sign disagrees with the date part.
-        if ($daysDiff > 0 && $nsDiff < 0) {
-            $daysDiff--;
-            $nsDiff += 86_400_000_000_000;
-        } elseif ($daysDiff < 0 && $nsDiff > 0) {
-            $daysDiff++;
-            $nsDiff -= 86_400_000_000_000;
-        }
-
-        $sign = $nsDiff < 0 ? -1 : 1;
-        $absNs = abs($nsDiff);
-
-        $nanoseconds = $absNs % 1_000;
-        $absNs = intdiv($absNs, 1_000);
-        $microseconds = $absNs % 1_000;
-        $absNs = intdiv($absNs, 1_000);
-        $milliseconds = $absNs % 1_000;
-        $absNs = intdiv($absNs, 1_000);
-        $seconds = $absNs % 60;
-        $absNs = intdiv($absNs, 60);
-        $minutes = $absNs % 60;
-        $hours = intdiv($absNs, 60);
-
-        return new Duration(
-            days: $daysDiff,
-            hours: $sign * $hours,
-            minutes: $sign * $minutes,
-            seconds: $sign * $seconds,
-            milliseconds: $sign * $milliseconds,
-            microseconds: $sign * $microseconds,
-            nanoseconds: $sign * $nanoseconds
-        );
+        $largestUnit = self::parsePDTLargestUnit($options);
+        return $this->diffWithLargestUnit($other, $largestUnit);
     }
 
     /**
      * Compute the Duration since the given datetime (i.e. other until this).
+     *
+     * @param string|array{largestUnit?:string} $options
+     * @throws \InvalidArgumentException
      */
-    public function since(self $other): Duration
+    public function since(self $other, string|array $options = []): Duration
     {
-        return $other->until($this);
+        $largestUnit = self::parsePDTLargestUnit($options);
+        return $other->diffWithLargestUnit($this, $largestUnit);
     }
 
     // -------------------------------------------------------------------------
@@ -641,6 +623,221 @@ final class PlainDateTime
             $millisecond,
             $microsecond,
             $nanosecond
+        );
+    }
+
+    // -------------------------------------------------------------------------
+    // Private helpers for until() / since()
+    // -------------------------------------------------------------------------
+
+    /**
+     * Parse largestUnit from string|array options for PlainDateTime diff methods.
+     *
+     * Valid units: year(s), month(s), week(s), day(s), hour(s), minute(s),
+     *              second(s), millisecond(s), microsecond(s), nanosecond(s).
+     * Default: 'day'.
+     *
+     * @param string|array{largestUnit?:string} $options
+     * @throws \InvalidArgumentException
+     */
+    private static function parsePDTLargestUnit(string|array $options): string
+    {
+        $unit = is_string($options) ? $options : $options['largestUnit'] ?? 'day';
+
+        $valid = [
+            'year',
+            'years',
+            'month',
+            'months',
+            'week',
+            'weeks',
+            'day',
+            'days',
+            'hour',
+            'hours',
+            'minute',
+            'minutes',
+            'second',
+            'seconds',
+            'millisecond',
+            'milliseconds',
+            'microsecond',
+            'microseconds',
+            'nanosecond',
+            'nanoseconds'
+        ];
+
+        if (!in_array($unit, $valid, true)) {
+            throw new \InvalidArgumentException(
+                "largestUnit '{$unit}' is not valid for PlainDateTime::until()/since()."
+            );
+        }
+
+        return rtrim($unit, 's');
+    }
+
+    /**
+     * Core diff implementation shared by until() and since().
+     *
+     * Computes the Duration from $this to $other respecting $largestUnit.
+     *
+     * @throws \InvalidArgumentException
+     * @throws \RangeException
+     */
+    private function diffWithLargestUnit(self $other, string $largestUnit): Duration
+    {
+        $NS_PER_DAY = 86_400_000_000_000;
+        $timeUnits = ['hour', 'minute', 'second', 'millisecond', 'microsecond', 'nanosecond'];
+
+        if (in_array($largestUnit, $timeUnits, true)) {
+            // Collapse the entire difference to sub-day time components.
+            $totalNs =
+                ( ( $other->toPlainDate()->toEpochDays() - $this->toPlainDate()->toEpochDays() ) * $NS_PER_DAY )
+                + (
+                    $other->toPlainTime()->toNanosecondsSinceMidnight()
+                    - $this->toPlainTime()->toNanosecondsSinceMidnight()
+                );
+
+            return self::nsToTimeDuration($totalNs, $largestUnit);
+        }
+
+        // Date-unit largestUnit: compute date part first, remainder is time.
+        $dateDiff = $this->toPlainDate()->until($other->toPlainDate(), ['largestUnit' => $largestUnit]);
+
+        // Compute the "anchor" date after applying the date portion.
+        $anchorDate = $this->toPlainDate()->add([
+            'years' => $dateDiff->years,
+            'months' => $dateDiff->months,
+            'weeks' => $dateDiff->weeks,
+            'days' => $dateDiff->days
+        ]);
+        $anchorPDT = new self(
+            $anchorDate->year,
+            $anchorDate->month,
+            $anchorDate->day,
+            $this->hour,
+            $this->minute,
+            $this->second,
+            $this->millisecond,
+            $this->microsecond,
+            $this->nanosecond
+        );
+
+        // Remaining nanoseconds between the anchor and the target.
+        $remNs =
+            $other->toPlainTime()->toNanosecondsSinceMidnight()
+            - $anchorPDT->toPlainTime()->toNanosecondsSinceMidnight();
+
+        // If the sign of remNs disagrees with the date part, borrow one day.
+        $dateSign = $dateDiff->years !== 0
+            ? $dateDiff->years <=> 0
+            : (
+                $dateDiff->months !== 0
+                    ? $dateDiff->months <=> 0
+                    : ( $dateDiff->weeks !== 0 ? $dateDiff->weeks <=> 0 : $dateDiff->days <=> 0 )
+            );
+
+        if ($dateSign > 0 && $remNs < 0) {
+            // Borrow one day: reduce the date diff by 1 day and add 1 day of ns.
+            $newDateDiff = $this->toPlainDate()->add([
+                'years' => $dateDiff->years,
+                'months' => $dateDiff->months,
+                'weeks' => $dateDiff->weeks,
+                'days' => $dateDiff->days - 1
+            ]);
+            $dateDiff = $this->toPlainDate()->until($newDateDiff, ['largestUnit' => $largestUnit]);
+            $remNs += $NS_PER_DAY;
+        } elseif ($dateSign < 0 && $remNs > 0) {
+            $newDateDiff = $this->toPlainDate()->add([
+                'years' => $dateDiff->years,
+                'months' => $dateDiff->months,
+                'weeks' => $dateDiff->weeks,
+                'days' => $dateDiff->days + 1
+            ]);
+            $dateDiff = $this->toPlainDate()->until($newDateDiff, ['largestUnit' => $largestUnit]);
+            $remNs -= $NS_PER_DAY;
+        }
+
+        $timePart = self::nsToTimeDuration($remNs, 'hour');
+
+        return new Duration(
+            years: $dateDiff->years,
+            months: $dateDiff->months,
+            weeks: $dateDiff->weeks,
+            days: $dateDiff->days,
+            hours: $timePart->hours,
+            minutes: $timePart->minutes,
+            seconds: $timePart->seconds,
+            milliseconds: $timePart->milliseconds,
+            microseconds: $timePart->microseconds,
+            nanoseconds: $timePart->nanoseconds
+        );
+    }
+
+    /**
+     * Convert a signed nanosecond count to a Duration using a given largestUnit.
+     * All components use the same sign (matching the sign of $totalNs).
+     */
+    private static function nsToTimeDuration(int $totalNs, string $largestUnit): Duration
+    {
+        $sign = $totalNs < 0 ? -1 : 1;
+        $abs = abs($totalNs);
+
+        $hours = 0;
+        $minutes = 0;
+        $seconds = 0;
+        $milliseconds = 0;
+        $microseconds = 0;
+        $nanoseconds = 0;
+
+        // Extract from smallest up, but only start at largestUnit.
+        $nanoseconds = $abs % 1_000;
+        $abs = intdiv($abs, 1_000);
+        $microseconds = $abs % 1_000;
+        $abs = intdiv($abs, 1_000);
+        $milliseconds = $abs % 1_000;
+        $abs = intdiv($abs, 1_000);
+        $seconds = $abs % 60;
+        $abs = intdiv($abs, 60);
+        $minutes = $abs % 60;
+        $hours = intdiv($abs, 60);
+
+        // Collapse smaller units into largestUnit
+        if ($largestUnit === 'minute') {
+            $minutes += $hours * 60;
+            $hours = 0;
+        } elseif ($largestUnit === 'second') {
+            $seconds += ( $hours * 3600 ) + ( $minutes * 60 );
+            $hours = 0;
+            $minutes = 0;
+        } elseif ($largestUnit === 'millisecond') {
+            $milliseconds += ( ( $hours * 3600 ) + ( $minutes * 60 ) + $seconds ) * 1_000;
+            $hours = 0;
+            $minutes = 0;
+            $seconds = 0;
+        } elseif ($largestUnit === 'microsecond') {
+            $microseconds +=
+                ( ( ( $hours * 3600 ) + ( $minutes * 60 ) + $seconds ) * 1_000_000 ) + ( $milliseconds * 1_000 );
+            $hours = 0;
+            $minutes = 0;
+            $seconds = 0;
+            $milliseconds = 0;
+        } elseif ($largestUnit === 'nanosecond') {
+            $nanoseconds = abs($totalNs);
+            $hours = 0;
+            $minutes = 0;
+            $seconds = 0;
+            $milliseconds = 0;
+            $microseconds = 0;
+        }
+
+        return new Duration(
+            hours: $sign * $hours,
+            minutes: $sign * $minutes,
+            seconds: $sign * $seconds,
+            milliseconds: $sign * $milliseconds,
+            microseconds: $sign * $microseconds,
+            nanoseconds: $sign * $nanoseconds
         );
     }
 }

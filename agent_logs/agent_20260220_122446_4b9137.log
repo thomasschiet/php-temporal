@@ -1,0 +1,16 @@
+Done. Here's a summary of what was implemented:
+
+### `PlainDateTime::round()` — new method
+
+**Interface:** `string|array{smallestUnit, roundingMode?, roundingIncrement?}` — matches the same pattern as `PlainTime::round()` and `ZonedDateTime::round()`.
+
+**Units:** `nanosecond` through `day`
+
+**Behavior:**
+- **Time units (`nanosecond` … `hour`):** Rounds the nanoseconds-since-midnight value of the time part; overflow carries into the date (e.g. `2024-03-15T23:30:00` rounded to `hour` → `2024-03-16T00:00:00`)
+- **`day`:** Rounds to the nearest midnight with no timezone awareness — `halfExpand` treats noon (12:00:00) as the midpoint, `ceil` rounds any non-midnight time up, `floor`/`trunc` always returns current midnight
+- `roundingIncrement` validation: must evenly divide the parent unit's size
+
+**Tests:** 28 new tests added to `PlainDateTimeTest.php` covering all units, all rounding modes, increments, month-end overflow, and error cases.
+
+**Total: 824 tests passing.**

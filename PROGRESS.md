@@ -392,6 +392,37 @@ multiple classes. All new methods include full test coverage (+46 new tests).
 
 **Total: 901 tests passing (+46 new)**
 
+### 17. yearOfWeek + largestUnit for until()/since() (2026-02-20)
+
+Filled two remaining gaps in the TC39 API surface area identified via spec review.
+
+#### `yearOfWeek` computed property
+- Added `yearOfWeek` (ISO week-numbering year) to `PlainDate`, `PlainDateTime`, and `ZonedDateTime`
+- The week year matches the calendar year for most dates but differs near year boundaries:
+  - Dates in early January that fall in the last ISO week of the previous year return `year - 1`
+  - Dates in late December that fall in the first ISO week of the next year return `year + 1`
+- Implemented via `computeYearOfWeek()` private helper on `PlainDate`, delegated via `__get()` on `PlainDateTime` and `ZonedDateTime`
+- Added `@property-read int $yearOfWeek` PHPDoc annotations
+
+#### `largestUnit` option for `until()`/`since()` on all date/time types
+
+**`PlainDate::until()`/`since()`** now accept `string|array{largestUnit?: string}`:
+- `'day'` (default) — existing behaviour
+- `'week'` — weeks + remainder days
+- `'month'` — calendar-aware: full calendar months + remainder days
+- `'year'` — calendar-aware: full years + full months + remainder days
+- Private `diffWithLargestUnit()` uses forward-counting calendar arithmetic
+
+**`PlainTime::until()`/`since()`** now accept `string|array{largestUnit?: string}`:
+- Valid units: `'hour'` (default) … `'nanosecond'`
+- `nanosecondsToDuration()` accepts an optional `$largestUnit` parameter
+
+**`PlainDateTime::until()`/`since()`** now accept `string|array{largestUnit?: string}`:
+- Date units: date portion expressed in given unit + sub-day time components; day-borrowing when time offset crosses midnight
+- Time units: entire difference collapsed to sub-day components (no date fields)
+
+**32 new tests (+32): 933 total passing**
+
 ## Current Task
 
 - All planned tasks complete.

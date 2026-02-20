@@ -1,0 +1,16 @@
+`Duration` is fully implemented and committed. Here's a summary of what was done:
+
+**`src/Duration.php`** — full implementation replacing the stub:
+- Constructor validates all non-zero fields share the same sign (throws `InvalidArgumentException` on mixed signs)
+- Computed readonly properties: `sign` (-1/0/1) and `blank`
+- `from()` — accepts `Duration`, `array`, or ISO 8601 string (`-P1Y2M3W4DT5H6M7S`, fractional seconds up to 9 digits)
+- `negated()`, `abs()`, `with()` — immutable transformations
+- `add()`, `subtract()` — field-by-field arithmetic
+- `compare()` — static comparison via nanosecond totals (weeks & days use fixed 7-day/24-hour conversions)
+- `total(unit)` — convert to a float in the given unit (nanoseconds through weeks)
+- `round(unit)` — half-expand rounding to a given smallest unit
+- `__toString()` — ISO 8601 with sub-second decimal fractions and leading `-` for negative durations
+
+**`tests/DurationTest.php`** — 77 tests covering all methods, edge cases, and immutability.
+
+Total test suite: **277 tests, all passing**.

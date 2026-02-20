@@ -117,6 +117,7 @@ final class ZonedDateTime
                 'dayOfWeek',
                 'dayOfYear',
                 'weekOfYear',
+                'yearOfWeek',
                 'daysInMonth',
                 'daysInYear',
                 'inLeapYear'
@@ -463,6 +464,7 @@ final class ZonedDateTime
             'dayOfWeek',
             'dayOfYear',
             'weekOfYear',
+            'yearOfWeek',
             'daysInMonth',
             'daysInYear',
             'inLeapYear'

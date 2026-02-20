@@ -202,20 +202,30 @@ final class PlainTime
     /**
      * Compute the Duration from this time until the given time.
      *
-     * The result may be negative if other is earlier than this.
+     * Accepts an optional largestUnit option (string or array). Valid units:
+     *   'hour' (default), 'minute', 'second', 'millisecond', 'microsecond', 'nanosecond'.
+     *
+     * @param string|array{largestUnit?:string} $options
+     * @throws \InvalidArgumentException if largestUnit is invalid.
      */
-    public function until(self $other): Duration
+    public function until(self $other, string|array $options = []): Duration
     {
+        $largestUnit = self::parseTimeLargestUnit($options);
         $diffNs = $other->toNanosecondsSinceMidnight() - $this->toNanosecondsSinceMidnight();
-        return self::nanosecondsToDuration($diffNs);
+        return self::nanosecondsToDuration($diffNs, $largestUnit);
     }
 
     /**
      * Compute the Duration since the given time (i.e. other until this).
+     *
+     * @param string|array{largestUnit?:string} $options
+     * @throws \InvalidArgumentException if largestUnit is invalid.
      */
-    public function since(self $other): Duration
+    public function since(self $other, string|array $options = []): Duration
     {
-        return $other->until($this);
+        $largestUnit = self::parseTimeLargestUnit($options);
+        $diffNs = $this->toNanosecondsSinceMidnight() - $other->toNanosecondsSinceMidnight();
+        return self::nanosecondsToDuration($diffNs, $largestUnit);
     }
 
     /**
@@ -408,7 +418,45 @@ final class PlainTime
     /**
      * Convert a signed nanosecond count to a Duration with time components.
      */
-    private static function nanosecondsToDuration(int $totalNs): Duration
+    /**
+     * Parse a largestUnit value from string|array options for PlainTime diff methods.
+     *
+     * Valid units: hour(s), minute(s), second(s), millisecond(s),
+     *              microsecond(s), nanosecond(s). Default: 'hour'.
+     *
+     * @param string|array{largestUnit?:string} $options
+     * @throws \InvalidArgumentException
+     */
+    private static function parseTimeLargestUnit(string|array $options): string
+    {
+        $unit = is_string($options) ? $options : $options['largestUnit'] ?? 'hour';
+
+        $valid = [
+            'hour',
+            'hours',
+            'minute',
+            'minutes',
+            'second',
+            'seconds',
+            'millisecond',
+            'milliseconds',
+            'microsecond',
+            'microseconds',
+            'nanosecond',
+            'nanoseconds'
+        ];
+
+        if (!in_array($unit, $valid, true)) {
+            throw new \InvalidArgumentException(
+                "largestUnit '{$unit}' is not valid for PlainTime::until()/since(). "
+                . 'Must be one of: hour, minute, second, millisecond, microsecond, nanosecond.'
+            );
+        }
+
+        return rtrim($unit, 's');
+    }
+
+    private static function nanosecondsToDuration(int $totalNs, string $largestUnit = 'hour'): Duration
     {
         $sign = $totalNs < 0 ? -1 : 1;
         $abs = abs($totalNs);
@@ -423,6 +471,35 @@ final class PlainTime
         $abs = intdiv($abs, 60);
         $minute = $abs % 60;
         $hour = intdiv($abs, 60);
+
+        // Roll up into largestUnit
+        if ($largestUnit === 'minute') {
+            $minute += $hour * 60;
+            $hour = 0;
+        } elseif ($largestUnit === 'second') {
+            $second += ( $hour * 3600 ) + ( $minute * 60 );
+            $hour = 0;
+            $minute = 0;
+        } elseif ($largestUnit === 'millisecond') {
+            $millisecond += ( ( $hour * 3600 ) + ( $minute * 60 ) + $second ) * 1_000;
+            $hour = 0;
+            $minute = 0;
+            $second = 0;
+        } elseif ($largestUnit === 'microsecond') {
+            $microsecond +=
+                ( ( ( $hour * 3600 ) + ( $minute * 60 ) + $second ) * 1_000_000 ) + ( $millisecond * 1_000 );
+            $hour = 0;
+            $minute = 0;
+            $second = 0;
+            $millisecond = 0;
+        } elseif ($largestUnit === 'nanosecond') {
+            $nanosecond = abs($totalNs);
+            $hour = 0;
+            $minute = 0;
+            $second = 0;
+            $millisecond = 0;
+            $microsecond = 0;
+        }
 
         return new Duration(
             hours: $sign * $hour,

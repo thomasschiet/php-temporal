@@ -1,0 +1,16 @@
+Done. Here's what was implemented:
+
+## Summary
+
+**Task 9: Calendar class** — Implemented `src/Calendar.php` with full ISO 8601 calendar support:
+
+- **`Calendar::from('iso8601')`** — static constructor (case-insensitive), throws for unknown calendars
+- **Factory methods** — `dateFromFields()`, `yearMonthFromFields()`, `monthDayFromFields()` create temporal objects from field arrays
+- **Arithmetic** — `dateAdd()` adds a Duration to a PlainDate; `dateUntil()` returns the Duration between two PlainDates
+- **Field helpers** — `fields()` validates field names; `mergeFields()` merges arrays with override semantics
+- **Computed property accessors** — `year()`, `month()`, `monthCode()`, `day()`, `dayOfWeek()`, `dayOfYear()`, `weekOfYear()`, `daysInWeek()`, `daysInMonth()`, `daysInYear()`, `monthsInYear()`, `inLeapYear()`, `era()`, `eraYear()`
+- **`calendarId` property** added to `PlainDate`, `PlainDateTime`, `PlainYearMonth`, `PlainMonthDay`, and `ZonedDateTime` (always returns `'iso8601'`)
+- **`__get`/`__isset`** added to `PlainDateTime` for computed date properties (`dayOfWeek`, etc.)
+- **`@property-read` PHPDoc** annotations added to all relevant classes for static analysis
+
+**652 tests, all passing.** Committed as `1e9e3cd`.

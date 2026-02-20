@@ -788,4 +788,77 @@ final class PlainTimeTest extends TestCase
 
         $this->assertSame('1970-01-01T00:00:00', (string) $pdt);
     }
+
+    // -------------------------------------------------------------------------
+    // until() / since() with largestUnit
+    // -------------------------------------------------------------------------
+
+    /** Default largestUnit ('hour') is unchanged. */
+    public function testUntilDefaultLargestUnit(): void
+    {
+        $a = new PlainTime(1, 0, 0);
+        $b = new PlainTime(3, 30, 0);
+        $d = $a->until($b);
+        $this->assertSame(2, $d->hours);
+        $this->assertSame(30, $d->minutes);
+    }
+
+    /** largestUnit = 'minute' rolls hours into minutes. */
+    public function testUntilLargestUnitMinute(): void
+    {
+        $a = new PlainTime(1, 0, 0);
+        $b = new PlainTime(2, 30, 0); // 90 minutes
+        $d = $a->until($b, ['largestUnit' => 'minute']);
+        $this->assertSame(0, $d->hours);
+        $this->assertSame(90, $d->minutes);
+        $this->assertSame(0, $d->seconds);
+    }
+
+    /** largestUnit = 'second' rolls everything into seconds. */
+    public function testUntilLargestUnitSecond(): void
+    {
+        $a = new PlainTime(0, 0, 0);
+        $b = new PlainTime(0, 1, 30); // 90 seconds
+        $d = $a->until($b, ['largestUnit' => 'second']);
+        $this->assertSame(0, $d->hours);
+        $this->assertSame(0, $d->minutes);
+        $this->assertSame(90, $d->seconds);
+    }
+
+    /** largestUnit = 'nanosecond' rolls everything into nanoseconds. */
+    public function testUntilLargestUnitNanosecond(): void
+    {
+        $a = new PlainTime(0, 0, 0, 0, 0, 500);
+        $b = new PlainTime(0, 0, 0, 0, 1, 200);
+        // 700 ns difference
+        $d = $a->until($b, ['largestUnit' => 'nanosecond']);
+        $this->assertSame(0, $d->microseconds);
+        $this->assertSame(700, $d->nanoseconds);
+    }
+
+    /** since() with largestUnit. */
+    public function testSinceLargestUnitMinute(): void
+    {
+        $a = new PlainTime(1, 0, 0);
+        $b = new PlainTime(2, 30, 0);
+        $d = $b->since($a, ['largestUnit' => 'minute']);
+        $this->assertSame(90, $d->minutes);
+        $this->assertSame(0, $d->hours);
+    }
+
+    /** Accepts string directly as largestUnit. */
+    public function testUntilLargestUnitStringArg(): void
+    {
+        $a = new PlainTime(0, 0, 0);
+        $b = new PlainTime(0, 2, 30); // 150 seconds
+        $d = $a->until($b, 'second');
+        $this->assertSame(150, $d->seconds);
+    }
+
+    /** Invalid largestUnit throws. */
+    public function testUntilInvalidLargestUnit(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new PlainTime(1, 0, 0)->until(new PlainTime(2, 0, 0), ['largestUnit' => 'day']);
+    }
 }

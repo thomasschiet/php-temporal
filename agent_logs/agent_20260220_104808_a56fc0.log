@@ -1,0 +1,12 @@
+`PlainDateTime` is complete. Here's a summary of what was done:
+
+**Implemented `src/PlainDateTime.php`:**
+- Constructor validates all 9 fields (year/month/day + hour/minute/second/millisecond/microsecond/nanosecond)
+- `from()` — accepts ISO 8601 string (e.g. `2024-03-15T10:30:45.123`), array, or `PlainDateTime`
+- `toPlainDate()` / `toPlainTime()` — extract components
+- `withPlainDate()` / `withPlainTime()` / `with()` — field overrides returning new instances
+- `add()` / `subtract()` — calendar arithmetic for date parts + nanosecond arithmetic for time parts, with correct day carry-over using floor division (handles negative nanoseconds properly)
+- `until()` / `since()` — returns a `Duration` balanced at the day boundary (time component never exceeds one day)
+- `compare()` / `equals()` / `__toString()`
+
+**Tests:** 70 new tests covering all methods, edge cases (leap years, midnight crossings, negative durations, extended years), and immutability — all 200 tests pass.

@@ -1071,4 +1071,114 @@ class PlainDateTimeTest extends TestCase
 
         $this->assertTrue($dt1->toPlainMonthDay()->equals($dt2->toPlainMonthDay()));
     }
+
+    // -------------------------------------------------------------------------
+    // yearOfWeek
+    // -------------------------------------------------------------------------
+
+    /** Mid-year date: yearOfWeek equals the calendar year. */
+    public function testYearOfWeek_MidYear(): void
+    {
+        $dt = new PlainDateTime(2024, 6, 15, 12, 0, 0);
+        $this->assertSame(2024, $dt->yearOfWeek);
+    }
+
+    /** Jan 1, 2021 (Friday) is in week 53 of 2020 → yearOfWeek = 2020. */
+    public function testYearOfWeek_EarlyJan(): void
+    {
+        $dt = new PlainDateTime(2021, 1, 1, 0, 0, 0);
+        $this->assertSame(2020, $dt->yearOfWeek);
+    }
+
+    // -------------------------------------------------------------------------
+    // until() / since() with largestUnit
+    // -------------------------------------------------------------------------
+
+    /** Default largestUnit ('day') preserves existing behaviour. */
+    public function testUntilDefaultLargestUnit(): void
+    {
+        $a = new PlainDateTime(2024, 1, 1, 0, 0, 0);
+        $b = new PlainDateTime(2024, 1, 10, 6, 0, 0); // 9 days + 6 hours
+        $d = $a->until($b);
+        $this->assertSame(9, $d->days);
+        $this->assertSame(6, $d->hours);
+    }
+
+    /** largestUnit = 'month': date part expressed as months + days. */
+    public function testUntilLargestUnitMonth(): void
+    {
+        $a = new PlainDateTime(2024, 1, 15, 10, 0, 0);
+        $b = new PlainDateTime(2024, 4, 15, 14, 0, 0); // 3 months + 4 hours
+        $d = $a->until($b, ['largestUnit' => 'month']);
+        $this->assertSame(0, $d->years);
+        $this->assertSame(3, $d->months);
+        $this->assertSame(0, $d->days);
+        $this->assertSame(4, $d->hours);
+    }
+
+    /** largestUnit = 'year': date part expressed as years + months + days. */
+    public function testUntilLargestUnitYear(): void
+    {
+        $a = new PlainDateTime(2020, 3, 15, 0, 0, 0);
+        $b = new PlainDateTime(2022, 5, 20, 3, 0, 0); // 2y + 2m + 5d + 3h
+        $d = $a->until($b, ['largestUnit' => 'year']);
+        $this->assertSame(2, $d->years);
+        $this->assertSame(2, $d->months);
+        $this->assertSame(5, $d->days);
+        $this->assertSame(3, $d->hours);
+    }
+
+    /** largestUnit = 'hour': everything collapses to hours + smaller. */
+    public function testUntilLargestUnitHour(): void
+    {
+        $a = new PlainDateTime(2024, 1, 1, 0, 0, 0);
+        $b = new PlainDateTime(2024, 1, 2, 6, 30, 0); // 30 hours + 30 minutes
+        $d = $a->until($b, ['largestUnit' => 'hour']);
+        $this->assertSame(0, $d->days);
+        $this->assertSame(30, $d->hours);
+        $this->assertSame(30, $d->minutes);
+    }
+
+    /** largestUnit = 'minute': everything collapses to minutes + smaller. */
+    public function testUntilLargestUnitMinute(): void
+    {
+        $a = new PlainDateTime(2024, 1, 1, 0, 0, 0);
+        $b = new PlainDateTime(2024, 1, 1, 1, 30, 0); // 90 minutes
+        $d = $a->until($b, ['largestUnit' => 'minute']);
+        $this->assertSame(0, $d->hours);
+        $this->assertSame(90, $d->minutes);
+    }
+
+    /** Day-borrow with largestUnit = 'month': time offset crosses midnight. */
+    public function testUntilMonthDayBorrow(): void
+    {
+        // 2024-01-15T23:00 to 2024-04-15T01:00 → 3m - 22h = 2m + 30d + 2h
+        $a = new PlainDateTime(2024, 1, 15, 23, 0, 0);
+        $b = new PlainDateTime(2024, 4, 15, 1, 0, 0);
+        $d = $a->until($b, ['largestUnit' => 'month']);
+        // Date part: 3 months would overshoot (anchor=Apr15T23, but b=Apr15T01),
+        // so borrow → 2 months + some days + 2 hours.
+        $this->assertSame(2, $d->months);
+        $this->assertSame(2, $d->hours); // 1:00 - 23:00 + 24h = 2h
+        $this->assertSame(0, $d->minutes);
+    }
+
+    /** since() with largestUnit. */
+    public function testSinceLargestUnitMonth(): void
+    {
+        $a = new PlainDateTime(2024, 1, 15, 10, 0, 0);
+        $b = new PlainDateTime(2024, 4, 15, 14, 0, 0);
+        $d = $b->since($a, ['largestUnit' => 'month']);
+        $this->assertSame(3, $d->months);
+        $this->assertSame(4, $d->hours);
+    }
+
+    /** Invalid largestUnit throws. */
+    public function testUntilInvalidLargestUnit(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new PlainDateTime(2024, 1, 1, 0, 0, 0)->until(new PlainDateTime(2024, 6, 1, 0, 0, 0), [
+            'largestUnit' => 'decade'
+        ]);
+    }
 }
