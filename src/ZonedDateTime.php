@@ -70,7 +70,7 @@ final class ZonedDateTime
      * Local date-time fields: year, month, day, hour, minute, second,
      *   millisecond, microsecond, nanosecond.
      * Computed date fields: dayOfWeek, dayOfYear, weekOfYear, daysInMonth,
-     *   daysInYear, inLeapYear.
+     *   daysInYear, inLeapYear, hoursInDay.
      * Instant fields: epochNanoseconds, epochMicroseconds, epochMilliseconds,
      *   epochSeconds.
      * Zone fields: offsetNanoseconds, offset (string, e.g. "+05:30").
@@ -86,6 +86,7 @@ final class ZonedDateTime
             'offsetNanoseconds' => $this->timeZone->getOffsetNanosecondsFor(Instant::fromEpochNanoseconds($this->ns)),
             'offset'
                 => $this->formatOffset($this->timeZone->getOffsetNanosecondsFor(Instant::fromEpochNanoseconds($this->ns))),
+            'hoursInDay' => $this->computeHoursInDay(),
             // All local fields delegate to the cached PlainDateTime
             default => $this->getLocalField($name)
         };
@@ -103,6 +104,7 @@ final class ZonedDateTime
                 'epochSeconds',
                 'offsetNanoseconds',
                 'offset',
+                'hoursInDay',
                 'year',
                 'month',
                 'day',
@@ -527,6 +529,31 @@ final class ZonedDateTime
         $tz = TimeZone::from($tzId);
 
         return new self($epochNs, $tz);
+    }
+
+    /**
+     * Compute the number of real-world hours in the current calendar day.
+     *
+     * This is 24 for most days, but may be 23 or 25 when a DST transition
+     * occurs during the day (spring-forward or fall-back respectively).
+     * Fractional hours are possible in theory but extremely rare.
+     */
+    private function computeHoursInDay(): int|float
+    {
+        $pdt = $this->toPlainDateTime();
+
+        $startOfDay = new PlainDateTime($pdt->year, $pdt->month, $pdt->day);
+        $startNs = $this->timeZone->getInstantFor($startOfDay)->epochNanoseconds;
+
+        $nextDate = $startOfDay->toPlainDate()->add(['days' => 1]);
+        $startOfNextDay = new PlainDateTime($nextDate->year, $nextDate->month, $nextDate->day);
+        $nextNs = $this->timeZone->getInstantFor($startOfNextDay)->epochNanoseconds;
+
+        $dayNs = $nextNs - $startNs;
+        $wholeHours = intdiv($dayNs, 3_600_000_000_000);
+        $remainder = $dayNs % 3_600_000_000_000;
+
+        return $remainder === 0 ? $wholeHours : $wholeHours + ( $remainder / 3_600_000_000_000 );
     }
 
     /**

@@ -337,7 +337,7 @@ final class InstantTest extends TestCase
         $instant = Instant::fromEpochNanoseconds(0);
         $duration = new Duration(hours: 1, minutes: 30);
         $result = $instant->add($duration);
-        self::assertSame(( ( 1 * 3_600 ) + ( 30 * 60 ) ) * 1_000_000_000, $result->epochNanoseconds);
+        self::assertSame(( ( 3_600 ) + ( 30 * 60 ) ) * 1_000_000_000, $result->epochNanoseconds);
     }
 
     public function test_add_days_as_exact_24h(): void

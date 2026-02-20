@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Temporal;
 
@@ -59,32 +59,38 @@ final class TimeZone
      */
     public function getPlainDateTimeFor(Instant $instant): PlainDateTime
     {
-        $ns          = $instant->epochNanoseconds;
-        $offsetSec   = $this->getOffsetSecondsAtEpoch($this->instantToEpochSeconds($instant));
-        $localNs     = $ns + $offsetSec * 1_000_000_000;
+        $ns = $instant->epochNanoseconds;
+        $offsetSec = $this->getOffsetSecondsAtEpoch($this->instantToEpochSeconds($instant));
+        $localNs = $ns + ( $offsetSec * 1_000_000_000 );
 
         // Split into whole seconds and sub-second nanoseconds
-        $localSec  = intdiv($localNs, 1_000_000_000);
-        $subNs     = $localNs - $localSec * 1_000_000_000;
+        $localSec = intdiv($localNs, 1_000_000_000);
+        $subNs = $localNs - ( $localSec * 1_000_000_000 );
         if ($subNs < 0) {
             $subNs += 1_000_000_000;
             $localSec--;
         }
 
-        $days      = intdiv($localSec, 86_400);
-        $secOfDay  = $localSec - $days * 86_400;
+        $days = intdiv($localSec, 86_400);
+        $secOfDay = $localSec - ( $days * 86_400 );
         if ($secOfDay < 0) {
             $secOfDay += 86_400;
             $days--;
         }
 
         $date = PlainDate::fromEpochDays($days);
-        $time = PlainTime::fromNanosecondsSinceMidnight($secOfDay * 1_000_000_000 + $subNs);
+        $time = PlainTime::fromNanosecondsSinceMidnight(( $secOfDay * 1_000_000_000 ) + $subNs);
 
         return new PlainDateTime(
-            $date->year, $date->month, $date->day,
-            $time->hour, $time->minute, $time->second,
-            $time->millisecond, $time->microsecond, $time->nanosecond,
+            $date->year,
+            $date->month,
+            $date->day,
+            $time->hour,
+            $time->minute,
+            $time->second,
+            $time->millisecond,
+            $time->microsecond,
+            $time->nanosecond
         );
     }
 
@@ -103,11 +109,11 @@ final class TimeZone
 
         // First guess: subtract the offset computed at the naive UTC moment
         $offsetSec1 = $this->getOffsetSecondsAtEpoch(intdiv($naiveNs, 1_000_000_000));
-        $candidate1 = $naiveNs - $offsetSec1 * 1_000_000_000;
+        $candidate1 = $naiveNs - ( $offsetSec1 * 1_000_000_000 );
 
         // Refine: get the offset at the candidate instant
         $offsetSec2 = $this->getOffsetSecondsAtEpoch(intdiv($candidate1, 1_000_000_000));
-        $candidate2 = $naiveNs - $offsetSec2 * 1_000_000_000;
+        $candidate2 = $naiveNs - ( $offsetSec2 * 1_000_000_000 );
 
         if ($offsetSec1 === $offsetSec2) {
             // Unambiguous
@@ -123,15 +129,13 @@ final class TimeZone
 
         // Build both candidates by recomputing from both offsets
         $earlier = min($candidate1, $candidate2);
-        $later   = max($candidate1, $candidate2);
+        $later = max($candidate1, $candidate2);
 
         return match ($disambiguation) {
-            'earlier'     => Instant::fromEpochNanoseconds($earlier),
-            'later'       => Instant::fromEpochNanoseconds($later),
-            'compatible'  => Instant::fromEpochNanoseconds($later), // gap: push past; overlap: first
-            default       => throw new InvalidArgumentException(
-                "Unknown disambiguation value: '{$disambiguation}'."
-            ),
+            'earlier' => Instant::fromEpochNanoseconds($earlier),
+            'later' => Instant::fromEpochNanoseconds($later),
+            'compatible' => Instant::fromEpochNanoseconds($later), // gap: push past; overlap: first
+            default => throw new InvalidArgumentException("Unknown disambiguation value: '{$disambiguation}'.")
         };
     }
 
@@ -184,9 +188,7 @@ final class TimeZone
         try {
             new \DateTimeZone($id);
         } catch (\Exception) {
-            throw new InvalidArgumentException(
-                "Unknown or unsupported time zone: '{$id}'."
-            );
+            throw new InvalidArgumentException("Unknown or unsupported time zone: '{$id}'.");
         }
 
         return $id;
@@ -198,11 +200,11 @@ final class TimeZone
      */
     private function instantToEpochSeconds(Instant $instant): int
     {
-        $ns  = $instant->epochNanoseconds;
+        $ns = $instant->epochNanoseconds;
         $sec = intdiv($ns, 1_000_000_000);
 
         // intdiv truncates toward zero; for negative $ns we need floor.
-        if ($ns < 0 && $ns !== $sec * 1_000_000_000) {
+        if ($ns < 0 && $ns !== ( $sec * 1_000_000_000 )) {
             $sec--;
         }
 
@@ -223,7 +225,7 @@ final class TimeZone
         if (preg_match('/^([+-])(\d{2}):(\d{2})$/', $this->id, $m)) {
             $sign = $m[1] === '+' ? 1 : -1;
 
-            return $sign * ((int) $m[2] * 3_600 + (int) $m[3] * 60);
+            return $sign * ( ( (int) $m[2] * 3_600 ) + ( (int) $m[3] * 60 ) );
         }
 
         if ($this->id === 'UTC') {
@@ -233,11 +235,13 @@ final class TimeZone
         // General path: query PHP's timezone database
         $tz = new \DateTimeZone($this->id);
 
-        // getTransitions($begin, $end) returns every transition in [$begin, $end]
-        // plus a synthetic "initial" entry that describes the state just before $begin.
-        // By looking back 25 hours we always catch the most recent transition,
-        // and the LAST returned element has the offset active at $epochSeconds.
-        $transitions = $tz->getTransitions($epochSeconds - 90_000, $epochSeconds);
+        // getTransitions($begin, $end) returns every transition in [$begin, $end).
+        // The end is exclusive: a transition with ts === $end is NOT included.
+        // By passing $epochSeconds + 1 as the end we ensure that a transition
+        // occurring exactly at $epochSeconds is captured.
+        // Looking back 25 hours (90 000 s) guarantees we find the most recent
+        // transition; the LAST returned element holds the offset at $epochSeconds.
+        $transitions = $tz->getTransitions($epochSeconds - 90_000, $epochSeconds + 1);
 
         if ($transitions === false || $transitions === []) {
             return 0; // Should never happen for a valid IANA zone
@@ -253,10 +257,10 @@ final class TimeZone
      */
     private function plainDateTimeToNaiveEpochNs(PlainDateTime $dt): int
     {
-        $epochDays = (new PlainDate($dt->year, $dt->month, $dt->day))->toEpochDays();
-        $secOfDay  = $dt->hour * 3_600 + $dt->minute * 60 + $dt->second;
-        $subNs     = $dt->millisecond * 1_000_000 + $dt->microsecond * 1_000 + $dt->nanosecond;
+        $epochDays = new PlainDate($dt->year, $dt->month, $dt->day)->toEpochDays();
+        $secOfDay = ( $dt->hour * 3_600 ) + ( $dt->minute * 60 ) + $dt->second;
+        $subNs = ( $dt->millisecond * 1_000_000 ) + ( $dt->microsecond * 1_000 ) + $dt->nanosecond;
 
-        return ($epochDays * 86_400 + $secOfDay) * 1_000_000_000 + $subNs;
+        return ( ( ( $epochDays * 86_400 ) + $secOfDay ) * 1_000_000_000 ) + $subNs;
     }
 }

@@ -710,4 +710,210 @@ final class ZonedDateTimeTest extends TestCase
         self::assertSame(13, $result->hour);
         self::assertSame(0, $result->minute);
     }
+
+    // -------------------------------------------------------------------------
+    // DST transitions — America/New_York 2024
+    //
+    // Spring forward: 2024-03-10T07:00:00Z  (ts=1710054000) -05:00→-04:00
+    //   At 2:00 AM EST, clocks jump forward to 3:00 AM EDT (1-hour gap).
+    //
+    // Fall back:      2024-11-03T06:00:00Z  (ts=1730613600) -04:00→-05:00
+    //   At 2:00 AM EDT, clocks fall back to 1:00 AM EST (1-hour fold).
+    // -------------------------------------------------------------------------
+
+    public function testOffsetIsEstJustBeforeSpringForward(): void
+    {
+        // ts=1710053999 → 2024-03-10T01:59:59-05:00 (last second of EST)
+        $zdt = ZonedDateTime::fromEpochNanoseconds(1710053999 * 1_000_000_000, 'America/New_York');
+        self::assertSame('-05:00', $zdt->offset);
+        self::assertSame(1, $zdt->hour);
+        self::assertSame(59, $zdt->minute);
+        self::assertSame(59, $zdt->second);
+    }
+
+    public function testOffsetIsEdtAtSpringForward(): void
+    {
+        // ts=1710054000 → 2024-03-10T03:00:00-04:00 (first second of EDT)
+        $zdt = ZonedDateTime::fromEpochNanoseconds(1710054000 * 1_000_000_000, 'America/New_York');
+        self::assertSame('-04:00', $zdt->offset);
+        self::assertSame(3, $zdt->hour);
+        self::assertSame(0, $zdt->minute);
+        self::assertSame(0, $zdt->second);
+    }
+
+    public function testOffsetIsEdtJustBeforeFallBack(): void
+    {
+        // ts=1730613599 → 2024-11-03T01:59:59-04:00 (last second of EDT)
+        $zdt = ZonedDateTime::fromEpochNanoseconds(1730613599 * 1_000_000_000, 'America/New_York');
+        self::assertSame('-04:00', $zdt->offset);
+        self::assertSame(1, $zdt->hour);
+        self::assertSame(59, $zdt->minute);
+        self::assertSame(59, $zdt->second);
+    }
+
+    public function testOffsetIsEstAtFallBack(): void
+    {
+        // ts=1730613600 → 2024-11-03T01:00:00-05:00 (first second of EST after fold)
+        $zdt = ZonedDateTime::fromEpochNanoseconds(1730613600 * 1_000_000_000, 'America/New_York');
+        self::assertSame('-05:00', $zdt->offset);
+        self::assertSame(1, $zdt->hour);
+        self::assertSame(0, $zdt->minute);
+        self::assertSame(0, $zdt->second);
+    }
+
+    public function testAddHoursAcrossSpringForward(): void
+    {
+        // 2024-03-10T01:00:00 EST (ts=1710050400) + 2 hours = 2024-03-10T04:00:00 EDT
+        // (absolute time skips over the 2am–3am gap; local time goes 01:00→04:00)
+        $zdt = ZonedDateTime::fromEpochNanoseconds(1710050400 * 1_000_000_000, 'America/New_York');
+        $result = $zdt->add(['hours' => 2]);
+        self::assertSame(4, $result->hour);
+        self::assertSame(0, $result->minute);
+        self::assertSame('-04:00', $result->offset);
+    }
+
+    public function testAddCalendarDayLandingInSpringForwardGap(): void
+    {
+        // 2024-03-09T02:30:00 EST + 1 day → 2024-03-10T02:30:00 (in the gap)
+        // 'compatible' disambiguation pushes past the gap → 03:30 EDT (ts=1710055800)
+        $zdt = ZonedDateTime::fromEpochNanoseconds(1709969400 * 1_000_000_000, 'America/New_York');
+        self::assertSame(2, $zdt->hour); // 02:30 EST
+        $result = $zdt->add(['days' => 1]);
+        self::assertSame(3, $result->hour);
+        self::assertSame(30, $result->minute);
+        self::assertSame('-04:00', $result->offset);
+        self::assertSame(1710055800, $result->epochSeconds);
+    }
+
+    public function testAdd24HoursVs1DayAcrossSpringForward(): void
+    {
+        // Adding absolute hours vs. calendar days gives different results when
+        // a DST transition falls in between.
+        // Start: 2024-03-10T01:00:00 EST (ts=1710050400)
+        $start = ZonedDateTime::fromEpochNanoseconds(1710050400 * 1_000_000_000, 'America/New_York');
+
+        // +24 absolute hours → 2024-03-11T02:00:00 EDT (24 hours later in real time)
+        $plus24h = $start->add(['hours' => 24]);
+        self::assertSame(2, $plus24h->hour);
+        self::assertSame('-04:00', $plus24h->offset);
+
+        // +1 calendar day → 2024-03-11T01:00:00 EDT (same local time, 23 hours later)
+        $plus1d = $start->add(['days' => 1]);
+        self::assertSame(1, $plus1d->hour);
+        self::assertSame('-04:00', $plus1d->offset);
+
+        // The two results differ by exactly 1 hour
+        $diff = $plus24h->epochNanoseconds - $plus1d->epochNanoseconds;
+        self::assertSame(3_600_000_000_000, $diff);
+    }
+
+    public function testAddHoursAcrossFallBack(): void
+    {
+        // 2024-11-03T00:30:00 EDT (ts=1730608200) + 2 hours → 01:30:00 EST (after fold)
+        // Absolute time arithmetic crosses the fold: local time goes 00:30→01:30 but
+        // the offset changes from -04:00 to -05:00.
+        $zdt = ZonedDateTime::fromEpochNanoseconds(1730608200 * 1_000_000_000, 'America/New_York');
+        self::assertSame('-04:00', $zdt->offset);
+        $result = $zdt->add(['hours' => 2]);
+        self::assertSame(1, $result->hour);
+        self::assertSame(30, $result->minute);
+        self::assertSame('-05:00', $result->offset);
+        self::assertSame(1730615400, $result->epochSeconds);
+    }
+
+    public function testAddCalendarDayAcrossFallBack(): void
+    {
+        // 2024-11-02T12:00:00 EDT (ts=1730563200) + 1 day → 2024-11-03T12:00:00 EST
+        // The result is 25 absolute hours later because of the fall-back.
+        $zdt = ZonedDateTime::fromEpochNanoseconds(1730563200 * 1_000_000_000, 'America/New_York');
+        $result = $zdt->add(['days' => 1]);
+        self::assertSame(2024, $result->year);
+        self::assertSame(11, $result->month);
+        self::assertSame(3, $result->day);
+        self::assertSame(12, $result->hour);
+        self::assertSame(0, $result->minute);
+        self::assertSame('-05:00', $result->offset);
+        // ts=1730653200 (25h after start, not 24h)
+        self::assertSame(1730653200, $result->epochSeconds);
+    }
+
+    public function testUntilAcrossSpringForwardIs23Hours(): void
+    {
+        // 2024-03-10 is only 23 h long (spring forward).
+        // From midnight EST (ts=1710046800) to midnight EDT the next day (ts=1710129600).
+        $start = ZonedDateTime::fromEpochNanoseconds(1710046800 * 1_000_000_000, 'America/New_York');
+        $end = ZonedDateTime::fromEpochNanoseconds(1710129600 * 1_000_000_000, 'America/New_York');
+        self::assertSame(0, $start->hour);
+        self::assertSame(0, $end->hour);
+        $dur = $start->until($end);
+        self::assertSame(23, $dur->hours);
+        self::assertSame(0, $dur->minutes);
+    }
+
+    public function testUntilAcrossFallBackIs25Hours(): void
+    {
+        // 2024-11-03 is 25 h long (fall back).
+        // From midnight EDT (ts=1730606400) to midnight EST the next day (ts=1730696400).
+        $start = ZonedDateTime::fromEpochNanoseconds(1730606400 * 1_000_000_000, 'America/New_York');
+        $end = ZonedDateTime::fromEpochNanoseconds(1730696400 * 1_000_000_000, 'America/New_York');
+        self::assertSame(0, $start->hour);
+        self::assertSame(0, $end->hour);
+        $dur = $start->until($end);
+        self::assertSame(25, $dur->hours);
+        self::assertSame(0, $dur->minutes);
+    }
+
+    public function testSubtractHoursAcrossSpringForward(): void
+    {
+        // 2024-03-10T04:00:00 EDT (ts=1710057600) - 2 hours → 01:00:00 EST (before gap)
+        $zdt = ZonedDateTime::fromEpochNanoseconds(1710057600 * 1_000_000_000, 'America/New_York');
+        self::assertSame('-04:00', $zdt->offset);
+        $result = $zdt->subtract(['hours' => 2]);
+        self::assertSame(1, $result->hour);
+        self::assertSame(0, $result->minute);
+        self::assertSame('-05:00', $result->offset);
+    }
+
+    public function testSubtractCalendarDayAcrossFallBack(): void
+    {
+        // 2024-11-03T12:00:00 EST (ts=1730653200) - 1 day → 2024-11-02T12:00:00 EDT
+        $zdt = ZonedDateTime::fromEpochNanoseconds(1730653200 * 1_000_000_000, 'America/New_York');
+        $result = $zdt->subtract(['days' => 1]);
+        self::assertSame(2024, $result->year);
+        self::assertSame(11, $result->month);
+        self::assertSame(2, $result->day);
+        self::assertSame(12, $result->hour);
+        self::assertSame('-04:00', $result->offset);
+    }
+
+    // -------------------------------------------------------------------------
+    // hoursInDay property
+    // -------------------------------------------------------------------------
+
+    public function testHoursInDayNormal(): void
+    {
+        // Regular summer day: 24 hours
+        $zdt = ZonedDateTime::from('2024-07-04T12:00:00-04:00[America/New_York]');
+        self::assertSame(24, $zdt->hoursInDay);
+    }
+
+    public function testHoursInDaySpringForward(): void
+    {
+        // 2024-03-10: spring-forward day — only 23 hours
+        $zdt = ZonedDateTime::fromEpochNanoseconds(1710050400 * 1_000_000_000, 'America/New_York');
+        self::assertSame(23, $zdt->hoursInDay);
+    }
+
+    public function testHoursInDayFallBack(): void
+    {
+        // 2024-11-03: fall-back day — 25 hours
+        $zdt = ZonedDateTime::fromEpochNanoseconds(1730608200 * 1_000_000_000, 'America/New_York');
+        self::assertSame(25, $zdt->hoursInDay);
+    }
+
+    public function testHoursInDayUtcIsAlways24(): void
+    {
+        $zdt = ZonedDateTime::from('2024-03-10T12:00:00+00:00[UTC]');
+        self::assertSame(24, $zdt->hoursInDay);
+    }
 }

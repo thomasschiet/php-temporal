@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Temporal\Tests;
 
@@ -87,22 +87,22 @@ final class TimeZoneTest extends TestCase
 
     public function testOffsetForUtcIsZero(): void
     {
-        $tz      = TimeZone::from('UTC');
+        $tz = TimeZone::from('UTC');
         $instant = Instant::fromEpochSeconds(0);
         self::assertSame(0, $tz->getOffsetNanosecondsFor($instant));
     }
 
     public function testOffsetForFixedPlus0530(): void
     {
-        $tz      = TimeZone::from('+05:30');
+        $tz = TimeZone::from('+05:30');
         $instant = Instant::fromEpochSeconds(0);
-        $expected = (5 * 3600 + 30 * 60) * 1_000_000_000; // 19800000000000
+        $expected = ( ( 5 * 3600 ) + ( 30 * 60 ) ) * 1_000_000_000; // 19800000000000
         self::assertSame($expected, $tz->getOffsetNanosecondsFor($instant));
     }
 
     public function testOffsetForFixedMinus0800(): void
     {
-        $tz      = TimeZone::from('-08:00');
+        $tz = TimeZone::from('-08:00');
         $instant = Instant::fromEpochSeconds(0);
         $expected = -8 * 3600 * 1_000_000_000; // -28800000000000
         self::assertSame($expected, $tz->getOffsetNanosecondsFor($instant));
@@ -111,7 +111,7 @@ final class TimeZoneTest extends TestCase
     public function testOffsetForNewYorkSummerIsEdtMinus4(): void
     {
         // 2024-07-04T12:00:00Z — America/New_York is in EDT (-4 hours)
-        $tz      = TimeZone::from('America/New_York');
+        $tz = TimeZone::from('America/New_York');
         $instant = Instant::from('2024-07-04T12:00:00Z');
         $expected = -4 * 3600 * 1_000_000_000;
         self::assertSame($expected, $tz->getOffsetNanosecondsFor($instant));
@@ -120,7 +120,7 @@ final class TimeZoneTest extends TestCase
     public function testOffsetForNewYorkWinterIsEstMinus5(): void
     {
         // 2024-01-15T12:00:00Z — America/New_York is in EST (-5 hours)
-        $tz      = TimeZone::from('America/New_York');
+        $tz = TimeZone::from('America/New_York');
         $instant = Instant::from('2024-01-15T12:00:00Z');
         $expected = -5 * 3600 * 1_000_000_000;
         self::assertSame($expected, $tz->getOffsetNanosecondsFor($instant));
@@ -128,7 +128,7 @@ final class TimeZoneTest extends TestCase
 
     public function testOffsetForZeroPlusZero(): void
     {
-        $tz      = TimeZone::from('+00:00');
+        $tz = TimeZone::from('+00:00');
         $instant = Instant::fromEpochSeconds(0);
         self::assertSame(0, $tz->getOffsetNanosecondsFor($instant));
     }
@@ -139,10 +139,10 @@ final class TimeZoneTest extends TestCase
 
     public function testGetPlainDateTimeForUtc(): void
     {
-        $tz      = TimeZone::from('UTC');
+        $tz = TimeZone::from('UTC');
         // 2021-08-04T12:30:00Z
         $instant = Instant::from('2021-08-04T12:30:00Z');
-        $pdt     = $tz->getPlainDateTimeFor($instant);
+        $pdt = $tz->getPlainDateTimeFor($instant);
 
         self::assertSame(2021, $pdt->year);
         self::assertSame(8, $pdt->month);
@@ -154,10 +154,10 @@ final class TimeZoneTest extends TestCase
 
     public function testGetPlainDateTimeForFixedOffset(): void
     {
-        $tz      = TimeZone::from('+05:30');
+        $tz = TimeZone::from('+05:30');
         // 2021-08-04T07:00:00Z → local 2021-08-04T12:30:00+05:30
         $instant = Instant::from('2021-08-04T07:00:00Z');
-        $pdt     = $tz->getPlainDateTimeFor($instant);
+        $pdt = $tz->getPlainDateTimeFor($instant);
 
         self::assertSame(2021, $pdt->year);
         self::assertSame(8, $pdt->month);
@@ -169,10 +169,10 @@ final class TimeZoneTest extends TestCase
 
     public function testGetPlainDateTimeForNegativeOffset(): void
     {
-        $tz      = TimeZone::from('-05:00');
+        $tz = TimeZone::from('-05:00');
         // 2021-08-04T17:00:00Z → local 2021-08-04T12:00:00-05:00
         $instant = Instant::from('2021-08-04T17:00:00Z');
-        $pdt     = $tz->getPlainDateTimeFor($instant);
+        $pdt = $tz->getPlainDateTimeFor($instant);
 
         self::assertSame(2021, $pdt->year);
         self::assertSame(8, $pdt->month);
@@ -184,10 +184,10 @@ final class TimeZoneTest extends TestCase
 
     public function testGetPlainDateTimeForNewYorkSummer(): void
     {
-        $tz      = TimeZone::from('America/New_York');
+        $tz = TimeZone::from('America/New_York');
         // 2024-07-04T16:00:00Z → local 2024-07-04T12:00:00-04:00
         $instant = Instant::from('2024-07-04T16:00:00Z');
-        $pdt     = $tz->getPlainDateTimeFor($instant);
+        $pdt = $tz->getPlainDateTimeFor($instant);
 
         self::assertSame(2024, $pdt->year);
         self::assertSame(7, $pdt->month);
@@ -197,9 +197,9 @@ final class TimeZoneTest extends TestCase
 
     public function testGetPlainDateTimeWithSubSeconds(): void
     {
-        $tz      = TimeZone::from('UTC');
+        $tz = TimeZone::from('UTC');
         $instant = Instant::from('2021-01-01T00:00:00.123456789Z');
-        $pdt     = $tz->getPlainDateTimeFor($instant);
+        $pdt = $tz->getPlainDateTimeFor($instant);
 
         self::assertSame(123, $pdt->millisecond);
         self::assertSame(456, $pdt->microsecond);
@@ -212,7 +212,7 @@ final class TimeZoneTest extends TestCase
 
     public function testGetInstantForUtc(): void
     {
-        $tz  = TimeZone::from('UTC');
+        $tz = TimeZone::from('UTC');
         $pdt = PlainDateTime::from('2021-08-04T12:30:00');
         $instant = $tz->getInstantFor($pdt);
 
@@ -222,7 +222,7 @@ final class TimeZoneTest extends TestCase
 
     public function testGetInstantForFixedOffset(): void
     {
-        $tz  = TimeZone::from('+05:30');
+        $tz = TimeZone::from('+05:30');
         $pdt = PlainDateTime::from('2021-08-04T12:30:00');
         // UTC = 12:30 - 5:30 = 07:00
         $instant = $tz->getInstantFor($pdt);
@@ -232,7 +232,7 @@ final class TimeZoneTest extends TestCase
 
     public function testGetInstantForNegativeOffset(): void
     {
-        $tz  = TimeZone::from('-05:00');
+        $tz = TimeZone::from('-05:00');
         $pdt = PlainDateTime::from('2021-08-04T12:00:00');
         // UTC = 12:00 + 5:00 = 17:00
         $instant = $tz->getInstantFor($pdt);
@@ -242,7 +242,7 @@ final class TimeZoneTest extends TestCase
 
     public function testGetInstantForNewYorkSummer(): void
     {
-        $tz  = TimeZone::from('America/New_York');
+        $tz = TimeZone::from('America/New_York');
         $pdt = PlainDateTime::from('2024-07-04T12:00:00');
         // EDT = -4, so UTC = 16:00
         $instant = $tz->getInstantFor($pdt);
@@ -252,7 +252,7 @@ final class TimeZoneTest extends TestCase
 
     public function testGetInstantForNewYorkWinter(): void
     {
-        $tz  = TimeZone::from('America/New_York');
+        $tz = TimeZone::from('America/New_York');
         $pdt = PlainDateTime::from('2024-01-15T12:00:00');
         // EST = -5, so UTC = 17:00
         $instant = $tz->getInstantFor($pdt);
@@ -290,5 +290,168 @@ final class TimeZoneTest extends TestCase
         $a = TimeZone::from('+05:30');
         $b = TimeZone::from('+05:00');
         self::assertFalse($a->equals($b));
+    }
+
+    // -------------------------------------------------------------------------
+    // DST transition — getOffsetNanosecondsFor() at exact transition boundaries
+    //
+    // 2024 US Eastern Time transitions (America/New_York):
+    //   Spring forward: 2024-03-10T07:00:00Z  (ts=1710054000) -05:00 → -04:00
+    //   Fall back:      2024-11-03T06:00:00Z  (ts=1730613600) -04:00 → -05:00
+    // -------------------------------------------------------------------------
+
+    public function testOffsetAtSpringForwardJustBefore(): void
+    {
+        // ts=1710053999 — 1 second before spring forward; offset still EST (-5h)
+        $tz = TimeZone::from('America/New_York');
+        $instant = Instant::fromEpochNanoseconds(1710053999 * 1_000_000_000);
+        self::assertSame(-5 * 3_600_000_000_000, $tz->getOffsetNanosecondsFor($instant));
+    }
+
+    public function testOffsetAtSpringForwardExact(): void
+    {
+        // ts=1710054000 — exactly at spring forward; offset now EDT (-4h)
+        $tz = TimeZone::from('America/New_York');
+        $instant = Instant::fromEpochNanoseconds(1710054000 * 1_000_000_000);
+        self::assertSame(-4 * 3_600_000_000_000, $tz->getOffsetNanosecondsFor($instant));
+    }
+
+    public function testOffsetAtFallBackJustBefore(): void
+    {
+        // ts=1730613599 — 1 second before fall back; offset still EDT (-4h)
+        $tz = TimeZone::from('America/New_York');
+        $instant = Instant::fromEpochNanoseconds(1730613599 * 1_000_000_000);
+        self::assertSame(-4 * 3_600_000_000_000, $tz->getOffsetNanosecondsFor($instant));
+    }
+
+    public function testOffsetAtFallBackExact(): void
+    {
+        // ts=1730613600 — exactly at fall back; offset now EST (-5h)
+        $tz = TimeZone::from('America/New_York');
+        $instant = Instant::fromEpochNanoseconds(1730613600 * 1_000_000_000);
+        self::assertSame(-5 * 3_600_000_000_000, $tz->getOffsetNanosecondsFor($instant));
+    }
+
+    // -------------------------------------------------------------------------
+    // DST transition — getPlainDateTimeFor() at exact transition boundaries
+    // -------------------------------------------------------------------------
+
+    public function testLocalTimeAtSpringForwardJustBefore(): void
+    {
+        // ts=1710053999 → local 2024-03-10T01:59:59-05:00 (EST, last second before gap)
+        $tz = TimeZone::from('America/New_York');
+        $instant = Instant::fromEpochNanoseconds(1710053999 * 1_000_000_000);
+        $pdt = $tz->getPlainDateTimeFor($instant);
+        self::assertSame(2024, $pdt->year);
+        self::assertSame(3, $pdt->month);
+        self::assertSame(10, $pdt->day);
+        self::assertSame(1, $pdt->hour);
+        self::assertSame(59, $pdt->minute);
+        self::assertSame(59, $pdt->second);
+    }
+
+    public function testLocalTimeAtSpringForwardExact(): void
+    {
+        // ts=1710054000 → local 2024-03-10T03:00:00-04:00 (EDT, first second after gap)
+        $tz = TimeZone::from('America/New_York');
+        $instant = Instant::fromEpochNanoseconds(1710054000 * 1_000_000_000);
+        $pdt = $tz->getPlainDateTimeFor($instant);
+        self::assertSame(3, $pdt->hour);
+        self::assertSame(0, $pdt->minute);
+        self::assertSame(0, $pdt->second);
+    }
+
+    public function testLocalTimeAtFallBackJustBefore(): void
+    {
+        // ts=1730613599 → local 2024-11-03T01:59:59-04:00 (EDT, just before fold)
+        $tz = TimeZone::from('America/New_York');
+        $instant = Instant::fromEpochNanoseconds(1730613599 * 1_000_000_000);
+        $pdt = $tz->getPlainDateTimeFor($instant);
+        self::assertSame(1, $pdt->hour);
+        self::assertSame(59, $pdt->minute);
+        self::assertSame(59, $pdt->second);
+    }
+
+    public function testLocalTimeAtFallBackExact(): void
+    {
+        // ts=1730613600 → local 2024-11-03T01:00:00-05:00 (EST, first second after fold)
+        $tz = TimeZone::from('America/New_York');
+        $instant = Instant::fromEpochNanoseconds(1730613600 * 1_000_000_000);
+        $pdt = $tz->getPlainDateTimeFor($instant);
+        self::assertSame(1, $pdt->hour);
+        self::assertSame(0, $pdt->minute);
+        self::assertSame(0, $pdt->second);
+    }
+
+    // -------------------------------------------------------------------------
+    // DST transition — getInstantFor() disambiguation for gap (spring forward)
+    //
+    // 2024-03-10T02:30:00 in America/New_York is in the spring-forward gap.
+    // The gap runs from 02:00:00 EST to 02:59:59 EST (= 07:00:00Z to 07:59:59Z).
+    // -------------------------------------------------------------------------
+
+    public function testGetInstantForGapCompatiblePushesPastGap(): void
+    {
+        $tz = TimeZone::from('America/New_York');
+        $pdt = new PlainDateTime(2024, 3, 10, 2, 30, 0);
+        // compatible (default) resolves gaps to the "later" instant (after gap)
+        // → 2024-03-10T03:30:00-04:00 = 2024-03-10T07:30:00Z (ts=1710055800)
+        $instant = $tz->getInstantFor($pdt, 'compatible');
+        self::assertSame(1710055800, $instant->epochSeconds);
+    }
+
+    public function testGetInstantForGapLaterPushesPastGap(): void
+    {
+        $tz = TimeZone::from('America/New_York');
+        $pdt = new PlainDateTime(2024, 3, 10, 2, 30, 0);
+        // later resolves to the first instant after the gap
+        // → ts=1710055800 (same as compatible for a gap)
+        $instant = $tz->getInstantFor($pdt, 'later');
+        self::assertSame(1710055800, $instant->epochSeconds);
+    }
+
+    public function testGetInstantForGapEarlierGivesLastInstantBeforeGap(): void
+    {
+        $tz = TimeZone::from('America/New_York');
+        $pdt = new PlainDateTime(2024, 3, 10, 2, 30, 0);
+        // earlier resolves to the last instant before the gap
+        // → 2024-03-10T01:30:00-05:00 = 2024-03-10T06:30:00Z (ts=1710052200)
+        $instant = $tz->getInstantFor($pdt, 'earlier');
+        self::assertSame(1710052200, $instant->epochSeconds);
+    }
+
+    public function testGetInstantForGapRejectThrows(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $tz = TimeZone::from('America/New_York');
+        $pdt = new PlainDateTime(2024, 3, 10, 2, 30, 0);
+        $tz->getInstantFor($pdt, 'reject');
+    }
+
+    // -------------------------------------------------------------------------
+    // DST transition — getInstantFor() disambiguation for fold (fall back)
+    //
+    // 2024-11-03T01:30:00 in America/New_York is during the fall-back fold.
+    // The fold runs from 02:00:00 EDT to 01:00:00 EST at 2024-11-03T06:00:00Z.
+    // -------------------------------------------------------------------------
+
+    public function testGetInstantForFoldCompatibleGivesFirstOccurrence(): void
+    {
+        $tz = TimeZone::from('America/New_York');
+        $pdt = new PlainDateTime(2024, 11, 3, 1, 30, 0);
+        // compatible for folds gives the earlier (first) occurrence: EDT
+        // → 2024-11-03T01:30:00-04:00 = 2024-11-03T05:30:00Z (ts=1730611800)
+        $instant = $tz->getInstantFor($pdt, 'compatible');
+        self::assertSame(1730611800, $instant->epochSeconds);
+    }
+
+    public function testGetInstantForUnambiguousTimeWorksNormally(): void
+    {
+        $tz = TimeZone::from('America/New_York');
+        // 2024-11-03T12:00:00 is unambiguous (well past both fold instants)
+        $pdt = new PlainDateTime(2024, 11, 3, 12, 0, 0);
+        $instant = $tz->getInstantFor($pdt);
+        // 12:00 EST = 17:00Z
+        self::assertSame(17, (int) gmdate('G', $instant->epochSeconds));
     }
 }

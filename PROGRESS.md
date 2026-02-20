@@ -310,10 +310,52 @@ Implemented the `Temporal\Now` utility class and cross-type conversion methods:
 
 **Total: 824 tests passing (+28 new)**
 
+### 15. DST Transition Edge Cases + hoursInDay (2026-02-20)
+
+#### Bug fix: `TimeZone::getOffsetSecondsAtEpoch()` off-by-one in `getTransitions()`
+- Root cause: PHP's `DateTimeZone::getTransitions($begin, $end)` treats `$end` as exclusive — a
+  transition with `ts === $end` was silently skipped.
+- Fix: changed `$end` argument from `$epochSeconds` to `$epochSeconds + 1` so that transitions
+  occurring exactly at the queried instant are correctly captured.
+- Impact: any `ZonedDateTime` or `TimeZone` method that queried the offset at a DST transition
+  boundary was returning the pre-transition offset instead of the post-transition one.
+
+#### `ZonedDateTime::hoursInDay` — new computed property
+- Returns the number of real-world hours in the current calendar day (usually 24).
+- Spring-forward days return 23; fall-back days return 25.
+- Computed by finding the epoch-nanosecond position of midnight at the start of the current
+  calendar day and the next, then dividing their difference by 3 600 000 000 000 ns.
+- Returns `int` for whole-hour days (the common case) and `float` for theoretical sub-hour DST transitions.
+
+#### DST tests added to `tests/TimeZoneTest.php` (20 new tests)
+- `getOffsetNanosecondsFor()` at the exact spring-forward and fall-back transition seconds
+- `getPlainDateTimeFor()` at the transition boundaries (last second before / first second after)
+- `getInstantFor()` with all four disambiguation modes for a time inside the spring-forward gap:
+  `compatible` and `later` push past the gap; `earlier` gives the last instant before the gap;
+  `reject` throws `InvalidArgumentException`
+- `getInstantFor()` with `compatible` for a time inside the fall-back fold (returns first occurrence)
+- `getInstantFor()` for an unambiguous time after the fold
+
+#### DST tests added to `tests/ZonedDateTimeTest.php` (18 new tests)
+- Offset is EST/EDT at the spring-forward and fall-back boundary seconds
+- `add(['hours' => 2])` across spring-forward: absolute time skips the gap (01:00 EST → 04:00 EDT)
+- `add(['days' => 1])` landing in the spring-forward gap: compatible disambiguation → 03:30 EDT
+- `add(['hours' => 24])` vs `add(['days' => 1])` differ by 1 h across spring-forward
+- `add(['hours' => 2])` across fall-back: absolute time crosses the fold (00:30 EDT → 01:30 EST)
+- `add(['days' => 1])` across fall-back: wall-clock preserved, 25 real hours later
+- `until()` across spring-forward (23-hour day) and fall-back (25-hour day)
+- `subtract()` hours and calendar days across both transitions
+- `hoursInDay` is 24 (normal), 23 (spring-forward day), 25 (fall-back day), 24 (UTC)
+
+**Total: 855 tests passing (+31 new)**
+
 ## Current Task
 
 - All planned tasks complete.
 
 ## Next Tasks
 
-- Additional DST-transition edge cases in `ZonedDateTime` (add/subtract across spring/fall transitions)
+- None — all planned tasks are complete. The implementation covers all TC39 Temporal types:
+  `PlainDate`, `PlainTime`, `PlainDateTime`, `Duration`, `Instant`, `ZonedDateTime`,
+  `TimeZone`, `Calendar`, `PlainYearMonth`, `PlainMonthDay`, ISO 8601 parsing, and the
+  `Temporal\Now` utility class.
