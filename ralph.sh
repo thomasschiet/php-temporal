@@ -3,6 +3,7 @@
 # Inspired by: https://www.anthropic.com/engineering/building-c-compiler
 
 set -euo pipefail
+trap 'echo " Interrupted. Stopping ralph loop."; exit 130' INT
 
 LOGDIR="agent_logs"
 mkdir -p "$LOGDIR"

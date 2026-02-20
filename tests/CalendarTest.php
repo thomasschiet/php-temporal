@@ -120,6 +120,13 @@ final class CalendarTest extends TestCase
         $cal->dateFromFields(['year' => 2024, 'month' => 3]);
     }
 
+    public function testDateFromFieldsInvalidOverflowThrows(): void
+    {
+        $cal = Calendar::from('iso8601');
+        $this->expectException(InvalidArgumentException::class);
+        $cal->dateFromFields(['year' => 2024, 'month' => 3, 'day' => 15], 'invalid');
+    }
+
     // -------------------------------------------------------------------------
     // yearMonthFromFields
     // -------------------------------------------------------------------------
@@ -146,6 +153,13 @@ final class CalendarTest extends TestCase
         $cal->yearMonthFromFields(['year' => 2024]);
     }
 
+    public function testYearMonthFromFieldsInvalidOverflowThrows(): void
+    {
+        $cal = Calendar::from('iso8601');
+        $this->expectException(InvalidArgumentException::class);
+        $cal->yearMonthFromFields(['year' => 2024, 'month' => 3], 'invalid');
+    }
+
     // -------------------------------------------------------------------------
     // monthDayFromFields
     // -------------------------------------------------------------------------
@@ -170,6 +184,13 @@ final class CalendarTest extends TestCase
         $cal = Calendar::from('iso8601');
         $this->expectException(InvalidArgumentException::class);
         $cal->monthDayFromFields(['month' => 3]);
+    }
+
+    public function testMonthDayFromFieldsInvalidOverflowThrows(): void
+    {
+        $cal = Calendar::from('iso8601');
+        $this->expectException(InvalidArgumentException::class);
+        $cal->monthDayFromFields(['month' => 3, 'day' => 15], 'invalid');
     }
 
     // -------------------------------------------------------------------------
@@ -211,6 +232,25 @@ final class CalendarTest extends TestCase
         $duration = new Duration(days: -5);
         $result = $cal->dateAdd($date, $duration);
         $this->assertSame('2024-03-10', (string) $result);
+    }
+
+    public function testDateAddWeeks(): void
+    {
+        $cal = Calendar::from('iso8601');
+        $date = new PlainDate(2024, 3, 15);
+        $duration = new Duration(weeks: 2);
+        $result = $cal->dateAdd($date, $duration);
+        // 2 weeks = 14 days → 2024-03-29
+        $this->assertSame('2024-03-29', (string) $result);
+    }
+
+    public function testDateAddInvalidOverflowThrows(): void
+    {
+        $cal = Calendar::from('iso8601');
+        $date = new PlainDate(2024, 3, 15);
+        $duration = new Duration(days: 1);
+        $this->expectException(InvalidArgumentException::class);
+        $cal->dateAdd($date, $duration, 'invalid');
     }
 
     // -------------------------------------------------------------------------
@@ -267,6 +307,14 @@ final class CalendarTest extends TestCase
         $cal = Calendar::from('iso8601');
         $this->expectException(InvalidArgumentException::class);
         $cal->fields(['year', 'invalid']);
+    }
+
+    public function testFieldsReturnsIndexedArray(): void
+    {
+        $cal = Calendar::from('iso8601');
+        // Pass array with non-sequential integer keys; result must be re-indexed.
+        $result = $cal->fields([2 => 'year', 5 => 'month']);
+        $this->assertSame([0 => 'year', 1 => 'month'], $result);
     }
 
     public function testMergeFields(): void

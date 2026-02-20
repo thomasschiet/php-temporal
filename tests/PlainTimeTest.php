@@ -7,6 +7,7 @@ namespace Temporal\Tests;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Temporal\Exception\DateRangeException;
+use Temporal\Exception\MissingFieldException;
 use Temporal\PlainTime;
 
 final class PlainTimeTest extends TestCase
@@ -861,5 +862,229 @@ final class PlainTimeTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         new PlainTime(1, 0, 0)->until(new PlainTime(2, 0, 0), ['largestUnit' => 'day']);
+    }
+
+    // -------------------------------------------------------------------------
+    // Constructor default parameters (kill DecrementInteger/IncrementInteger
+    // on default values at lines 28-30)
+    // -------------------------------------------------------------------------
+
+    public function testConstructorNoArgsDefaultsToMidnight(): void
+    {
+        $t = new PlainTime();
+        $this->assertSame(0, $t->hour);
+        $this->assertSame(0, $t->minute);
+        $this->assertSame(0, $t->second);
+        $this->assertSame(0, $t->millisecond);
+        $this->assertSame(0, $t->microsecond);
+        $this->assertSame(0, $t->nanosecond);
+    }
+
+    // -------------------------------------------------------------------------
+    // from() array — missing minute throws (kill Throw_ at line 75)
+    // and optional fields default to zero (kill ?? mutations lines 76-79)
+    // -------------------------------------------------------------------------
+
+    public function testFromArrayMissingMinuteThrows(): void
+    {
+        $this->expectException(MissingFieldException::class);
+        PlainTime::from(['hour' => 5]);
+    }
+
+    public function testFromArrayOptionalFieldsDefaultToZero(): void
+    {
+        $t = PlainTime::from(['hour' => 5, 'minute' => 30]);
+        $this->assertSame(0, $t->second);
+        $this->assertSame(0, $t->millisecond);
+        $this->assertSame(0, $t->microsecond);
+        $this->assertSame(0, $t->nanosecond);
+    }
+
+    public function testFromArraySecondDefaultsToZero(): void
+    {
+        $t = PlainTime::from(['hour' => 1, 'minute' => 2]);
+        $this->assertSame(0, $t->second);
+    }
+
+    public function testFromArrayMillisecondDefaultsToZero(): void
+    {
+        $t = PlainTime::from(['hour' => 1, 'minute' => 2, 'second' => 3]);
+        $this->assertSame(0, $t->millisecond);
+    }
+
+    public function testFromArrayMicrosecondDefaultsToZero(): void
+    {
+        $t = PlainTime::from(['hour' => 1, 'minute' => 2, 'second' => 3]);
+        $this->assertSame(0, $t->microsecond);
+    }
+
+    public function testFromArrayNanosecondDefaultsToZero(): void
+    {
+        $t = PlainTime::from(['hour' => 1, 'minute' => 2, 'second' => 3]);
+        $this->assertSame(0, $t->nanosecond);
+    }
+
+    // -------------------------------------------------------------------------
+    // with() — microsecond and nanosecond override (kill Coalesce at 187-188)
+    // -------------------------------------------------------------------------
+
+    public function testWithMicrosecond(): void
+    {
+        $t = new PlainTime(10, 20, 30, 100, 200, 300);
+        $t2 = $t->with(['microsecond' => 750]);
+        $this->assertSame(200, $t->microsecond); // original unchanged
+        $this->assertSame(750, $t2->microsecond);
+        $this->assertSame(300, $t2->nanosecond); // sibling unchanged
+    }
+
+    public function testWithNanosecond(): void
+    {
+        $t = new PlainTime(10, 20, 30, 100, 200, 300);
+        $t2 = $t->with(['nanosecond' => 999]);
+        $this->assertSame(300, $t->nanosecond); // original unchanged
+        $this->assertSame(200, $t2->microsecond); // sibling unchanged
+        $this->assertSame(999, $t2->nanosecond);
+    }
+
+    // -------------------------------------------------------------------------
+    // add() — exact nanosecond precision (kill IncrementInteger at 202-206)
+    // -------------------------------------------------------------------------
+
+    public function testAddOneMinuteExactNanoseconds(): void
+    {
+        $t = new PlainTime(0, 0, 0);
+        $result = $t->add(['minutes' => 1]);
+        $this->assertSame(60_000_000_000, $result->toNanosecondsSinceMidnight());
+    }
+
+    public function testAddOneSecondExactNanoseconds(): void
+    {
+        $t = new PlainTime(0, 0, 0);
+        $result = $t->add(['seconds' => 1]);
+        $this->assertSame(1_000_000_000, $result->toNanosecondsSinceMidnight());
+    }
+
+    public function testAddOneMillisecondExactNanoseconds(): void
+    {
+        $t = new PlainTime(0, 0, 0);
+        $result = $t->add(['milliseconds' => 1]);
+        $this->assertSame(1_000_000, $result->toNanosecondsSinceMidnight());
+    }
+
+    public function testAddOneMicrosecondExactNanoseconds(): void
+    {
+        $t = new PlainTime(0, 0, 0);
+        $result = $t->add(['microseconds' => 1]);
+        $this->assertSame(1_000, $result->toNanosecondsSinceMidnight());
+    }
+
+    public function testAddEmptyDurationIsNoop(): void
+    {
+        $t = new PlainTime(5, 30, 15, 100, 200, 300);
+        $result = $t->add([]);
+        $this->assertSame(5, $result->hour);
+        $this->assertSame(30, $result->minute);
+        $this->assertSame(15, $result->second);
+        $this->assertSame(100, $result->millisecond);
+        $this->assertSame(200, $result->microsecond);
+        $this->assertSame(300, $result->nanosecond);
+    }
+
+    // -------------------------------------------------------------------------
+    // subtract() — missing fields default to 0 (kill Decrement/Increment at 220+)
+    // -------------------------------------------------------------------------
+
+    public function testSubtractWithOnlyHoursDoesNotChangeOtherFields(): void
+    {
+        $t = new PlainTime(10, 30, 45, 100, 200, 300);
+        $result = $t->subtract(['hours' => 1]);
+        $this->assertSame(9, $result->hour);
+        $this->assertSame(30, $result->minute);
+        $this->assertSame(45, $result->second);
+        $this->assertSame(100, $result->millisecond);
+        $this->assertSame(200, $result->microsecond);
+        $this->assertSame(300, $result->nanosecond);
+    }
+
+    public function testSubtractEmptyDurationIsNoop(): void
+    {
+        $t = new PlainTime(10, 30, 45, 100, 200, 300);
+        $result = $t->subtract([]);
+        $this->assertSame(10, $result->hour);
+        $this->assertSame(30, $result->minute);
+        $this->assertSame(45, $result->second);
+        $this->assertSame(100, $result->millisecond);
+        $this->assertSame(200, $result->microsecond);
+        $this->assertSame(300, $result->nanosecond);
+    }
+
+    // -------------------------------------------------------------------------
+    // fromNanosecondsSinceMidnight() — decomposition precision
+    // -------------------------------------------------------------------------
+
+    public function testFromNanosecondsSinceMidnightDecomposesAllComponents(): void
+    {
+        // 2h + 3m + 4s + 5ms + 6µs + 7ns
+        $ns =
+            ( 2 * 3_600_000_000_000 )
+            + ( 3 * 60_000_000_000 )
+            + ( 4 * 1_000_000_000 )
+            + ( 5 * 1_000_000 )
+            + ( 6 * 1_000 )
+            + 7;
+        $t = PlainTime::fromNanosecondsSinceMidnight($ns);
+        $this->assertSame(2, $t->hour);
+        $this->assertSame(3, $t->minute);
+        $this->assertSame(4, $t->second);
+        $this->assertSame(5, $t->millisecond);
+        $this->assertSame(6, $t->microsecond);
+        $this->assertSame(7, $t->nanosecond);
+    }
+
+    public function testFromNanosecondsSinceMidnightSubSecond(): void
+    {
+        // 1ms + 2µs + 3ns = 1_002_003 ns
+        $t = PlainTime::fromNanosecondsSinceMidnight(1_002_003);
+        $this->assertSame(0, $t->hour);
+        $this->assertSame(0, $t->minute);
+        $this->assertSame(0, $t->second);
+        $this->assertSame(1, $t->millisecond);
+        $this->assertSame(2, $t->microsecond);
+        $this->assertSame(3, $t->nanosecond);
+    }
+
+    // -------------------------------------------------------------------------
+    // until() largestUnit rollup — exact constants in nanosecondsToDuration()
+    // -------------------------------------------------------------------------
+
+    public function testUntilLargestUnitSecondRollsUpHours(): void
+    {
+        // 1h + 0m + 30s = 3630 seconds
+        $a = new PlainTime(0, 0, 0);
+        $b = new PlainTime(1, 0, 30);
+        $d = $a->until($b, ['largestUnit' => 'second']);
+        $this->assertSame(0, $d->hours);
+        $this->assertSame(0, $d->minutes);
+        $this->assertSame(3630, $d->seconds);
+    }
+
+    public function testUntilLargestUnitMillisecondRollsUpSeconds(): void
+    {
+        // 1s + 500ms = 1500ms
+        $a = new PlainTime(0, 0, 0);
+        $b = new PlainTime(0, 0, 1, 500);
+        $d = $a->until($b, ['largestUnit' => 'millisecond']);
+        $this->assertSame(0, $d->seconds);
+        $this->assertSame(1500, $d->milliseconds);
+    }
+
+    public function testUntilLargestUnitMicrosecondRollsUpMilliseconds(): void
+    {
+        // 1ms + 500µs = 1500µs
+        $a = new PlainTime(0, 0, 0);
+        $b = new PlainTime(0, 0, 0, 1, 500);
+        $d = $a->until($b, ['largestUnit' => 'microsecond']);
+        $this->assertSame(0, $d->milliseconds);
+        $this->assertSame(1500, $d->microseconds);
     }
 }

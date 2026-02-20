@@ -6,6 +6,7 @@ namespace Temporal\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Temporal\Duration;
+use Temporal\Exception\MissingFieldException;
 use InvalidArgumentException;
 
 class DurationTest extends TestCase
@@ -185,6 +186,27 @@ class DurationTest extends TestCase
         Duration::from('1Y2M');
     }
 
+    public function testFromArrayWeeks(): void
+    {
+        $d = Duration::from(['weeks' => 5]);
+        $this->assertSame(5, $d->weeks);
+        $this->assertSame(0, $d->days);
+    }
+
+    public function testFromArrayMilliseconds(): void
+    {
+        $d = Duration::from(['milliseconds' => 250]);
+        $this->assertSame(250, $d->milliseconds);
+        $this->assertSame(0, $d->microseconds);
+    }
+
+    public function testFromArrayMicroseconds(): void
+    {
+        $d = Duration::from(['microseconds' => 300]);
+        $this->assertSame(300, $d->microseconds);
+        $this->assertSame(0, $d->nanoseconds);
+    }
+
     // -------------------------------------------------------------------------
     // sign and blank properties
     // -------------------------------------------------------------------------
@@ -302,6 +324,63 @@ class DurationTest extends TestCase
         $d2 = $d->with(['years' => 5]);
         $this->assertSame(1, $d->years); // original unchanged
         $this->assertSame(5, $d2->years);
+    }
+
+    public function testWithMonths(): void
+    {
+        $d = new Duration(years: 1, months: 3);
+        $result = $d->with(['months' => 7]);
+        $this->assertSame(1, $result->years);
+        $this->assertSame(7, $result->months);
+    }
+
+    public function testWithWeeks(): void
+    {
+        $d = new Duration(weeks: 2);
+        $result = $d->with(['weeks' => 5]);
+        $this->assertSame(5, $result->weeks);
+    }
+
+    public function testWithHours(): void
+    {
+        $d = new Duration(hours: 1);
+        $result = $d->with(['hours' => 8]);
+        $this->assertSame(8, $result->hours);
+    }
+
+    public function testWithMinutes(): void
+    {
+        $d = new Duration(minutes: 10);
+        $result = $d->with(['minutes' => 45]);
+        $this->assertSame(45, $result->minutes);
+    }
+
+    public function testWithSeconds(): void
+    {
+        $d = new Duration(seconds: 10);
+        $result = $d->with(['seconds' => 59]);
+        $this->assertSame(59, $result->seconds);
+    }
+
+    public function testWithMilliseconds(): void
+    {
+        $d = new Duration(milliseconds: 100);
+        $result = $d->with(['milliseconds' => 500]);
+        $this->assertSame(500, $result->milliseconds);
+    }
+
+    public function testWithMicroseconds(): void
+    {
+        $d = new Duration(microseconds: 100);
+        $result = $d->with(['microseconds' => 750]);
+        $this->assertSame(750, $result->microseconds);
+    }
+
+    public function testWithNanoseconds(): void
+    {
+        $d = new Duration(nanoseconds: 100);
+        $result = $d->with(['nanoseconds' => 999]);
+        $this->assertSame(999, $result->nanoseconds);
     }
 
     // -------------------------------------------------------------------------
@@ -1153,5 +1232,121 @@ class DurationTest extends TestCase
         // (-999ms + -999999us + -999999999ns).total("seconds") = -2.998998999
         $d = new Duration(milliseconds: -999, microseconds: -999_999, nanoseconds: -999_999_999);
         $this->assertSame(-2.998998999, $d->total('seconds'));
+    }
+
+    // -------------------------------------------------------------------------
+    // total() singular unit forms (kill MatchArmRemoval mutants)
+    // -------------------------------------------------------------------------
+
+    public function testTotalSingularNanosecond(): void
+    {
+        $d = new Duration(microseconds: 1);
+        $this->assertSame(1_000.0, $d->total('nanosecond'));
+    }
+
+    public function testTotalSingularMicrosecond(): void
+    {
+        $d = new Duration(milliseconds: 1);
+        $this->assertSame(1_000.0, $d->total('microsecond'));
+    }
+
+    public function testTotalSingularMillisecond(): void
+    {
+        $d = new Duration(seconds: 1);
+        $this->assertSame(1_000.0, $d->total('millisecond'));
+    }
+
+    public function testTotalSingularSecond(): void
+    {
+        $d = new Duration(minutes: 1);
+        $this->assertSame(60.0, $d->total('second'));
+    }
+
+    public function testTotalSingularMinute(): void
+    {
+        $d = new Duration(hours: 1);
+        $this->assertSame(60.0, $d->total('minute'));
+    }
+
+    public function testTotalSingularHour(): void
+    {
+        $d = new Duration(hours: 3);
+        $this->assertSame(3.0, $d->total('hour'));
+    }
+
+    public function testTotalSingularDay(): void
+    {
+        $d = new Duration(days: 5);
+        $this->assertSame(5.0, $d->total('day'));
+    }
+
+    public function testTotalSingularWeek(): void
+    {
+        $d = new Duration(weeks: 2);
+        $this->assertSame(2.0, $d->total('week'));
+    }
+
+    // -------------------------------------------------------------------------
+    // total() with relativeTo — singular forms (kill MatchArmRemoval in totalRelativeTo)
+    // -------------------------------------------------------------------------
+
+    public function testTotalSingularMonthWithRelativeTo(): void
+    {
+        $d = new Duration(days: 31);
+        $result = $d->total(['unit' => 'month', 'relativeTo' => '2020-01-01']);
+        $this->assertEqualsWithDelta(1.0, $result, 1e-10);
+    }
+
+    public function testTotalSingularYearWithRelativeTo(): void
+    {
+        $d = new Duration(days: 366);
+        $result = $d->total(['unit' => 'year', 'relativeTo' => '2020-01-01']);
+        $this->assertEqualsWithDelta(1.0, $result, 1e-10);
+    }
+
+    public function testTotalSingularDayWithRelativeTo(): void
+    {
+        $d = new Duration(years: 1, months: 0);
+        $result = $d->total(['unit' => 'day', 'relativeTo' => '2020-01-01']);
+        $this->assertSame(366.0, $result); // 2020 is leap year
+    }
+
+    public function testTotalSingularWeekWithRelativeTo(): void
+    {
+        $d = new Duration(days: 14);
+        $result = $d->total(['unit' => 'week', 'relativeTo' => '2020-01-01']);
+        $this->assertSame(2.0, $result);
+    }
+
+    // -------------------------------------------------------------------------
+    // total() without relativeTo throws MissingFieldException (kill Throw_ mutant)
+    // -------------------------------------------------------------------------
+
+    public function testTotalMonthWithoutRelativeToThrowsMissingFieldException(): void
+    {
+        $d = new Duration(days: 40);
+        $this->expectException(MissingFieldException::class);
+        $d->total(['unit' => 'month']);
+    }
+
+    public function testTotalYearWithoutRelativeToThrowsMissingFieldException(): void
+    {
+        $d = new Duration(days: 365);
+        $this->expectException(MissingFieldException::class);
+        $d->total(['unit' => 'year']);
+    }
+
+    public function testTotalMonthsWithoutRelativeToThrowsMissingFieldException(): void
+    {
+        $d = new Duration(days: 40);
+        $this->expectException(MissingFieldException::class);
+        $d->total(['unit' => 'months']);
+    }
+
+    public function testTotalYearsWithoutRelativeToThrowsMissingFieldException(): void
+    {
+        $d = new Duration(days: 365);
+        $this->expectException(MissingFieldException::class);
+        $d->total(['unit' => 'years']);
     }
 }

@@ -7,6 +7,7 @@ namespace Temporal\Tests;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Temporal\Duration;
+use Temporal\Exception\MissingFieldException;
 use Temporal\Instant;
 
 final class InstantTest extends TestCase
@@ -778,5 +779,166 @@ final class InstantTest extends TestCase
 
         self::assertSame($viaISO->epochNanoseconds, $via->epochNanoseconds);
         self::assertTrue($viaISO->timeZone->equals($via->timeZone));
+    }
+
+    // -------------------------------------------------------------------------
+    // epochMilliseconds precision (kill DecrementInteger/IncrementInteger on 1_000_000)
+    // -------------------------------------------------------------------------
+
+    public function test_epoch_milliseconds_exact_boundary(): void
+    {
+        // ns = 1_000_000 → epochMilliseconds must be exactly 1
+        // With mutant 1_000_001: intdiv(1_000_000, 1_000_001) = 0 ≠ 1
+        $instant = Instant::fromEpochNanoseconds(1_000_000);
+        self::assertSame(1, $instant->epochMilliseconds);
+    }
+
+    public function test_epoch_milliseconds_just_under_two(): void
+    {
+        // ns = 1_999_998 → epochMilliseconds must be exactly 1
+        // With mutant 999_999: intdiv(1_999_998, 999_999) = 2 ≠ 1
+        $instant = Instant::fromEpochNanoseconds(1_999_998);
+        self::assertSame(1, $instant->epochMilliseconds);
+    }
+
+    // -------------------------------------------------------------------------
+    // add() with milliseconds and microseconds
+    // -------------------------------------------------------------------------
+
+    public function test_add_milliseconds(): void
+    {
+        $instant = Instant::fromEpochNanoseconds(0);
+        $result = $instant->add(['milliseconds' => 2]);
+        self::assertSame(2_000_000, $result->epochNanoseconds);
+    }
+
+    public function test_add_microseconds(): void
+    {
+        $instant = Instant::fromEpochNanoseconds(0);
+        $result = $instant->add(['microseconds' => 2]);
+        self::assertSame(2_000, $result->epochNanoseconds);
+    }
+
+    public function test_add_milliseconds_and_microseconds_additive(): void
+    {
+        // Verifies that ms and us are added (not subtracted) together
+        $instant = Instant::fromEpochNanoseconds(0);
+        $result = $instant->add(['milliseconds' => 1, 'microseconds' => 1]);
+        self::assertSame(1_001_000, $result->epochNanoseconds);
+    }
+
+    public function test_add_hours_and_minutes(): void
+    {
+        $instant = Instant::fromEpochNanoseconds(0);
+        $result = $instant->add(['hours' => 1, 'minutes' => 1]);
+        // 1h = 3600s, 1m = 60s → 3660 * 1e9
+        self::assertSame(3_660_000_000_000, $result->epochNanoseconds);
+    }
+
+    // -------------------------------------------------------------------------
+    // round() with plural unit forms (kill MatchArmRemoval at line 183)
+    // -------------------------------------------------------------------------
+
+    public function test_round_to_nanoseconds_plural(): void
+    {
+        $instant = Instant::fromEpochNanoseconds(12345);
+        $result = $instant->round('nanoseconds');
+        self::assertSame(12345, $result->epochNanoseconds);
+    }
+
+    public function test_round_to_microseconds_plural(): void
+    {
+        $instant = Instant::fromEpochNanoseconds(1_499);
+        $result = $instant->round('microseconds');
+        self::assertSame(1_000, $result->epochNanoseconds);
+    }
+
+    public function test_round_to_milliseconds_plural(): void
+    {
+        $instant = Instant::fromEpochNanoseconds(1_499_999);
+        $result = $instant->round('milliseconds');
+        self::assertSame(1_000_000, $result->epochNanoseconds);
+    }
+
+    public function test_round_to_seconds_plural(): void
+    {
+        $instant = Instant::fromEpochNanoseconds(499_999_999);
+        $result = $instant->round('seconds');
+        self::assertSame(0, $result->epochNanoseconds);
+    }
+
+    public function test_round_to_minutes_plural(): void
+    {
+        $instant = Instant::fromEpochSeconds(89);
+        $result = $instant->round('minutes');
+        self::assertSame(60_000_000_000, $result->epochNanoseconds);
+    }
+
+    public function test_round_to_hours_plural(): void
+    {
+        $instant = Instant::fromEpochSeconds(3_599);
+        $result = $instant->round('hours');
+        self::assertSame(3_600_000_000_000, $result->epochNanoseconds);
+    }
+
+    public function test_round_to_days_plural(): void
+    {
+        $instant = Instant::fromEpochSeconds(43_200);
+        $result = $instant->round('days');
+        self::assertSame(86_400_000_000_000, $result->epochNanoseconds);
+    }
+
+    // -------------------------------------------------------------------------
+    // round() returns $this for nanosecond (kill IncrementInteger at line 194)
+    // -------------------------------------------------------------------------
+
+    public function test_round_nanosecond_returns_same_object(): void
+    {
+        $instant = Instant::fromEpochNanoseconds(12345);
+        $result = $instant->round('nanosecond');
+        self::assertSame($instant, $result);
+    }
+
+    public function test_round_nanoseconds_plural_returns_same_object(): void
+    {
+        $instant = Instant::fromEpochNanoseconds(99);
+        $result = $instant->round('nanoseconds');
+        self::assertSame($instant, $result);
+    }
+
+    // -------------------------------------------------------------------------
+    // round() missing smallestUnit throws MissingFieldException (kill Throw_ line 179)
+    // -------------------------------------------------------------------------
+
+    public function test_round_missing_smallest_unit_throws_missing_field_exception(): void
+    {
+        $instant = Instant::fromEpochNanoseconds(0);
+        $this->expectException(MissingFieldException::class);
+        $instant->round(['roundingMode' => 'floor']);
+    }
+
+    // -------------------------------------------------------------------------
+    // parse() offset arithmetic (kill arithmetic mutants at line 467)
+    // -------------------------------------------------------------------------
+
+    public function test_parse_with_plus_one_hour_offset(): void
+    {
+        // 1970-01-01T01:00:00+01:00 = 1970-01-01T00:00:00Z = epoch 0
+        $instant = Instant::from('1970-01-01T01:00:00+01:00');
+        self::assertSame(0, $instant->epochNanoseconds);
+    }
+
+    public function test_parse_with_plus_one_minute_offset(): void
+    {
+        // 1970-01-01T00:01:00+00:01 = 1970-01-01T00:00:00Z = epoch 0
+        $instant = Instant::from('1970-01-01T00:01:00+00:01');
+        self::assertSame(0, $instant->epochNanoseconds);
+    }
+
+    public function test_parse_with_negative_offset_hours_and_minutes(): void
+    {
+        // 1970-01-01T00:00:00-01:30 → UTC = 1970-01-01T01:30:00Z = 5400s
+        $instant = Instant::from('1970-01-01T00:00:00-01:30');
+        self::assertSame(5_400_000_000_000, $instant->epochNanoseconds);
     }
 }

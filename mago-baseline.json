@@ -1293,6 +1293,12 @@ count = 1
 [[issues]]
 file = "tests/CalendarTest.php"
 code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarTest::testDateAddWeeks`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarTest::testDateAddYears`.'
 count = 1
 
@@ -1420,6 +1426,12 @@ count = 1
 file = "tests/CalendarTest.php"
 code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarTest::testEraYearReturnsNull`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\CalendarTest::testFieldsReturnsIndexedArray`.'
 count = 1
 
 [[issues]]
@@ -1605,6 +1617,12 @@ count = 1
 [[issues]]
 file = "tests/CalendarTest.php"
 code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\CalendarTest::testDateAddInvalidOverflowThrows`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\CalendarTest::testDateAddMonths`.'
 count = 1
 
@@ -1612,6 +1630,12 @@ count = 1
 file = "tests/CalendarTest.php"
 code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\CalendarTest::testDateAddNegative`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\CalendarTest::testDateAddWeeks`.'
 count = 1
 
 [[issues]]
@@ -1954,6 +1978,24 @@ count = 1
 file = "tests/DurationTest.php"
 code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\DurationTest::testConstructorNegativeFields`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\DurationTest::testFromArrayMicroseconds`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\DurationTest::testFromArrayMilliseconds`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\DurationTest::testFromArrayWeeks`.'
 count = 1
 
 [[issues]]
@@ -2421,6 +2463,78 @@ count = 1
 [[issues]]
 file = "tests/DurationTest.php"
 code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\DurationTest::testTotalSingularDayWithRelativeTo`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\DurationTest::testTotalSingularDay`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\DurationTest::testTotalSingularHour`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\DurationTest::testTotalSingularMicrosecond`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\DurationTest::testTotalSingularMillisecond`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\DurationTest::testTotalSingularMinute`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\DurationTest::testTotalSingularMonthWithRelativeTo`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\DurationTest::testTotalSingularNanosecond`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\DurationTest::testTotalSingularSecond`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\DurationTest::testTotalSingularWeekWithRelativeTo`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\DurationTest::testTotalSingularWeek`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\DurationTest::testTotalSingularYearWithRelativeTo`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\DurationTest::testTotalStringUnitStillWorks`.'
 count = 1
 
@@ -2439,7 +2553,55 @@ count = 1
 [[issues]]
 file = "tests/DurationTest.php"
 code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\DurationTest::testWithHours`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\DurationTest::testWithImmutable`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\DurationTest::testWithMicroseconds`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\DurationTest::testWithMilliseconds`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\DurationTest::testWithMinutes`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\DurationTest::testWithMonths`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\DurationTest::testWithNanoseconds`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\DurationTest::testWithSeconds`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\DurationTest::testWithWeeks`.'
 count = 1
 
 [[issues]]
@@ -2625,6 +2787,12 @@ count = 1
 [[issues]]
 file = "tests/DurationTest.php"
 code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\DurationTest::testTotalMonthWithoutRelativeToThrowsMissingFieldException`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\DurationTest::testTotalMonthsExactlyOneYear`.'
 count = 1
 
@@ -2650,6 +2818,12 @@ count = 1
 file = "tests/DurationTest.php"
 code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\DurationTest::testTotalMonthsWith40DaysFromJan2020`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\DurationTest::testTotalMonthsWithoutRelativeToThrowsMissingFieldException`.'
 count = 1
 
 [[issues]]
@@ -2697,6 +2871,78 @@ count = 1
 [[issues]]
 file = "tests/DurationTest.php"
 code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\DurationTest::testTotalSingularDayWithRelativeTo`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\DurationTest::testTotalSingularDay`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\DurationTest::testTotalSingularHour`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\DurationTest::testTotalSingularMicrosecond`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\DurationTest::testTotalSingularMillisecond`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\DurationTest::testTotalSingularMinute`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\DurationTest::testTotalSingularMonthWithRelativeTo`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\DurationTest::testTotalSingularNanosecond`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\DurationTest::testTotalSingularSecond`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\DurationTest::testTotalSingularWeekWithRelativeTo`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\DurationTest::testTotalSingularWeek`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\DurationTest::testTotalSingularYearWithRelativeTo`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\DurationTest::testTotalStringUnitStillWorks`.'
 count = 1
 
@@ -2709,7 +2955,19 @@ count = 1
 [[issues]]
 file = "tests/DurationTest.php"
 code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\DurationTest::testTotalYearWithoutRelativeToThrowsMissingFieldException`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\DurationTest::testTotalYearsWith400DaysFromJan2020`.'
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\DurationTest::testTotalYearsWithoutRelativeToThrowsMissingFieldException`.'
 count = 1
 
 [[issues]]
@@ -2757,7 +3015,31 @@ count = 1
 [[issues]]
 file = "tests/InstantTest.php"
 code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_add_hours_and_minutes`.'
+count = 1
+
+[[issues]]
+file = "tests/InstantTest.php"
+code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_add_is_immutable`.'
+count = 1
+
+[[issues]]
+file = "tests/InstantTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_add_microseconds`.'
+count = 1
+
+[[issues]]
+file = "tests/InstantTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_add_milliseconds_and_microseconds_additive`.'
+count = 1
+
+[[issues]]
+file = "tests/InstantTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_add_milliseconds`.'
 count = 1
 
 [[issues]]
@@ -2818,6 +3100,18 @@ count = 1
 file = "tests/InstantTest.php"
 code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_epoch_microseconds_truncates_toward_zero_for_small_negative`.'
+count = 1
+
+[[issues]]
+file = "tests/InstantTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_epoch_milliseconds_exact_boundary`.'
+count = 1
+
+[[issues]]
+file = "tests/InstantTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_epoch_milliseconds_just_under_two`.'
 count = 1
 
 [[issues]]
@@ -3003,7 +3297,37 @@ count = 1
 [[issues]]
 file = "tests/InstantTest.php"
 code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_parse_with_negative_offset_hours_and_minutes`.'
+count = 1
+
+[[issues]]
+file = "tests/InstantTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_parse_with_plus_one_hour_offset`.'
+count = 1
+
+[[issues]]
+file = "tests/InstantTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_parse_with_plus_one_minute_offset`.'
+count = 1
+
+[[issues]]
+file = "tests/InstantTest.php"
+code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_round_nanosecond_is_identity`.'
+count = 1
+
+[[issues]]
+file = "tests/InstantTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_round_nanosecond_returns_same_object`.'
+count = 1
+
+[[issues]]
+file = "tests/InstantTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_round_nanoseconds_plural_returns_same_object`.'
 count = 1
 
 [[issues]]
@@ -3027,7 +3351,19 @@ count = 1
 [[issues]]
 file = "tests/InstantTest.php"
 code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_round_to_days_plural`.'
+count = 1
+
+[[issues]]
+file = "tests/InstantTest.php"
+code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_round_to_hour`.'
+count = 1
+
+[[issues]]
+file = "tests/InstantTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_round_to_hours_plural`.'
 count = 1
 
 [[issues]]
@@ -3045,13 +3381,37 @@ count = 1
 [[issues]]
 file = "tests/InstantTest.php"
 code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_round_to_microseconds_plural`.'
+count = 1
+
+[[issues]]
+file = "tests/InstantTest.php"
+code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_round_to_millisecond`.'
 count = 1
 
 [[issues]]
 file = "tests/InstantTest.php"
 code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_round_to_milliseconds_plural`.'
+count = 1
+
+[[issues]]
+file = "tests/InstantTest.php"
+code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_round_to_minute`.'
+count = 1
+
+[[issues]]
+file = "tests/InstantTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_round_to_minutes_plural`.'
+count = 1
+
+[[issues]]
+file = "tests/InstantTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_round_to_nanoseconds_plural`.'
 count = 1
 
 [[issues]]
@@ -3064,6 +3424,12 @@ count = 1
 file = "tests/InstantTest.php"
 code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_round_to_second_half_expands_up`.'
+count = 1
+
+[[issues]]
+file = "tests/InstantTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\InstantTest::test_round_to_seconds_plural`.'
 count = 1
 
 [[issues]]
@@ -3268,7 +3634,7 @@ count = 4
 file = "tests/InstantTest.php"
 code = "unused-method-call"
 message = "The return value of 'round' must be used."
-count = 2
+count = 3
 
 [[issues]]
 file = "tests/InstantTest.php"
@@ -5877,6 +6243,18 @@ count = 1
 [[issues]]
 file = "tests/PlainMonthDayTest.php"
 code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainMonthDayTest::testApril30IsValid`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainMonthDayTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainMonthDayTest::testAugust31IsValid`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainMonthDayTest.php"
+code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainMonthDayTest::testConstructorBasic`.'
 count = 1
 
@@ -5961,6 +6339,48 @@ count = 1
 [[issues]]
 file = "tests/PlainMonthDayTest.php"
 code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainMonthDayTest::testJanuary31IsValid`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainMonthDayTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainMonthDayTest::testJuly31IsValid`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainMonthDayTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainMonthDayTest::testJune30IsValid`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainMonthDayTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainMonthDayTest::testMarch31IsValid`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainMonthDayTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainMonthDayTest::testMay31IsValid`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainMonthDayTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainMonthDayTest::testNovember30IsValid`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainMonthDayTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainMonthDayTest::testOctober31IsValid`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainMonthDayTest.php"
+code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainMonthDayTest::testRoundTripFromCanonicalString`.'
 count = 1
 
@@ -5968,6 +6388,12 @@ count = 1
 file = "tests/PlainMonthDayTest.php"
 code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainMonthDayTest::testRoundTripFromLegacyString`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainMonthDayTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainMonthDayTest::testSeptember30IsValid`.'
 count = 1
 
 [[issues]]
@@ -6087,6 +6513,18 @@ count = 1
 [[issues]]
 file = "tests/PlainTimeTest.php"
 code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainTimeTest::testUntilLargestUnitMicrosecondRollsUpMilliseconds`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainTimeTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainTimeTest::testUntilLargestUnitMillisecondRollsUpSeconds`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainTimeTest.php"
+code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainTimeTest::testUntilLargestUnitMinute`.'
 count = 1
 
@@ -6094,6 +6532,12 @@ count = 1
 file = "tests/PlainTimeTest.php"
 code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainTimeTest::testUntilLargestUnitNanosecond`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainTimeTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainTimeTest::testUntilLargestUnitSecondRollsUpHours`.'
 count = 1
 
 [[issues]]
@@ -6129,6 +6573,12 @@ count = 1
 [[issues]]
 file = "tests/PlainTimeTest.php"
 code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainTimeTest::testAddEmptyDurationIsNoop`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainTimeTest.php"
+code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainTimeTest::testAddHours`.'
 count = 1
 
@@ -6154,6 +6604,30 @@ count = 1
 file = "tests/PlainTimeTest.php"
 code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainTimeTest::testAddNanoseconds`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainTimeTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainTimeTest::testAddOneMicrosecondExactNanoseconds`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainTimeTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainTimeTest::testAddOneMillisecondExactNanoseconds`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainTimeTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainTimeTest::testAddOneMinuteExactNanoseconds`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainTimeTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainTimeTest::testAddOneSecondExactNanoseconds`.'
 count = 1
 
 [[issues]]
@@ -6207,6 +6681,12 @@ count = 1
 [[issues]]
 file = "tests/PlainTimeTest.php"
 code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainTimeTest::testConstructorNoArgsDefaultsToMidnight`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainTimeTest.php"
+code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainTimeTest::testDefaultConstruction`.'
 count = 1
 
@@ -6225,6 +6705,36 @@ count = 1
 [[issues]]
 file = "tests/PlainTimeTest.php"
 code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainTimeTest::testFromArrayMicrosecondDefaultsToZero`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainTimeTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainTimeTest::testFromArrayMillisecondDefaultsToZero`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainTimeTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainTimeTest::testFromArrayNanosecondDefaultsToZero`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainTimeTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainTimeTest::testFromArrayOptionalFieldsDefaultToZero`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainTimeTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainTimeTest::testFromArraySecondDefaultsToZero`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainTimeTest.php"
+code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainTimeTest::testFromArrayWithAllFields`.'
 count = 1
 
@@ -6237,7 +6747,19 @@ count = 1
 [[issues]]
 file = "tests/PlainTimeTest.php"
 code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainTimeTest::testFromNanosecondsSinceMidnightDecomposesAllComponents`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainTimeTest.php"
+code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainTimeTest::testFromNanosecondsSinceMidnightRoundtrip`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainTimeTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainTimeTest::testFromNanosecondsSinceMidnightSubSecond`.'
 count = 1
 
 [[issues]]
@@ -6417,7 +6939,19 @@ count = 1
 [[issues]]
 file = "tests/PlainTimeTest.php"
 code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainTimeTest::testSubtractEmptyDurationIsNoop`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainTimeTest.php"
+code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainTimeTest::testSubtractHours`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainTimeTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainTimeTest::testSubtractWithOnlyHoursDoesNotChangeOtherFields`.'
 count = 1
 
 [[issues]]
@@ -6519,6 +7053,18 @@ count = 1
 [[issues]]
 file = "tests/PlainTimeTest.php"
 code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainTimeTest::testUntilLargestUnitMicrosecondRollsUpMilliseconds`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainTimeTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainTimeTest::testUntilLargestUnitMillisecondRollsUpSeconds`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainTimeTest.php"
+code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainTimeTest::testUntilLargestUnitMinute`.'
 count = 1
 
@@ -6526,6 +7072,12 @@ count = 1
 file = "tests/PlainTimeTest.php"
 code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainTimeTest::testUntilLargestUnitNanosecond`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainTimeTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainTimeTest::testUntilLargestUnitSecondRollsUpHours`.'
 count = 1
 
 [[issues]]
@@ -6573,6 +7125,12 @@ count = 1
 [[issues]]
 file = "tests/PlainTimeTest.php"
 code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainTimeTest::testWithMicrosecond`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainTimeTest.php"
+code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainTimeTest::testWithMillisecond`.'
 count = 1
 
@@ -6580,6 +7138,12 @@ count = 1
 file = "tests/PlainTimeTest.php"
 code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainTimeTest::testWithMinute`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainTimeTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\PlainTimeTest::testWithNanosecond`.'
 count = 1
 
 [[issues]]

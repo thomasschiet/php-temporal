@@ -322,4 +322,114 @@ final class PlainMonthDayTest extends TestCase
         $md = PlainMonthDay::from($original);
         $this->assertSame($original, (string) $md);
     }
+
+    // -------------------------------------------------------------------------
+    // All 31-day months valid at day 31 (kill MatchArmRemoval on daysInMonthFor)
+    // -------------------------------------------------------------------------
+
+    public function testJanuary31IsValid(): void
+    {
+        $md = new PlainMonthDay(1, 31);
+        $this->assertSame(1, $md->month);
+        $this->assertSame(31, $md->day);
+    }
+
+    public function testMarch31IsValid(): void
+    {
+        $md = new PlainMonthDay(3, 31);
+        $this->assertSame(3, $md->month);
+        $this->assertSame(31, $md->day);
+    }
+
+    public function testMay31IsValid(): void
+    {
+        $md = new PlainMonthDay(5, 31);
+        $this->assertSame(5, $md->month);
+        $this->assertSame(31, $md->day);
+    }
+
+    public function testJuly31IsValid(): void
+    {
+        $md = new PlainMonthDay(7, 31);
+        $this->assertSame(7, $md->month);
+        $this->assertSame(31, $md->day);
+    }
+
+    public function testAugust31IsValid(): void
+    {
+        $md = new PlainMonthDay(8, 31);
+        $this->assertSame(8, $md->month);
+        $this->assertSame(31, $md->day);
+    }
+
+    public function testOctober31IsValid(): void
+    {
+        $md = new PlainMonthDay(10, 31);
+        $this->assertSame(10, $md->month);
+        $this->assertSame(31, $md->day);
+    }
+
+    // -------------------------------------------------------------------------
+    // All 30-day months valid at day 30 and invalid at day 31
+    // -------------------------------------------------------------------------
+
+    public function testApril30IsValid(): void
+    {
+        $md = new PlainMonthDay(4, 30);
+        $this->assertSame(4, $md->month);
+        $this->assertSame(30, $md->day);
+    }
+
+    public function testJune30IsValid(): void
+    {
+        $md = new PlainMonthDay(6, 30);
+        $this->assertSame(6, $md->month);
+        $this->assertSame(30, $md->day);
+    }
+
+    public function testSeptember30IsValid(): void
+    {
+        $md = new PlainMonthDay(9, 30);
+        $this->assertSame(9, $md->month);
+        $this->assertSame(30, $md->day);
+    }
+
+    public function testNovember30IsValid(): void
+    {
+        $md = new PlainMonthDay(11, 30);
+        $this->assertSame(11, $md->month);
+        $this->assertSame(30, $md->day);
+    }
+
+    // -------------------------------------------------------------------------
+    // Regex anchor tests (kill PregMatchRemoveCaret/Dollar)
+    // -------------------------------------------------------------------------
+
+    public function testFromStringWithPrefixThrows(): void
+    {
+        // Prefix before "--MM-DD" should not be accepted (caret anchor required)
+        $this->expectException(InvalidArgumentException::class);
+        PlainMonthDay::from('abc--03-15');
+    }
+
+    public function testFromStringLegacyWithTrailingNonSuffixThrows(): void
+    {
+        // Trailing non-offset text should not be accepted (dollar anchor required)
+        $this->expectException(InvalidArgumentException::class);
+        PlainMonthDay::from('--03-15trailing');
+    }
+
+    public function testFromStringCanonicalWithTrailingTextThrows(): void
+    {
+        // Trailing text in "MM-DD" form should not be accepted (dollar anchor required)
+        $this->expectException(InvalidArgumentException::class);
+        PlainMonthDay::from('03-15trailing');
+    }
+
+    public function testFromStringCanonicalWithPrefixThrows(): void
+    {
+        // Prefix before "MM-DD" canonical form should not be accepted
+        $this->expectException(InvalidArgumentException::class);
+        PlainMonthDay::from('abc03-15');
+    }
 }
