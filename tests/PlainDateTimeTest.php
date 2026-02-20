@@ -809,4 +809,224 @@ class PlainDateTimeTest extends TestCase
         $dt2 = $zdt->toPlainDateTime();
         $this->assertTrue($dt->equals($dt2));
     }
+
+    // -------------------------------------------------------------------------
+    // round()
+    // -------------------------------------------------------------------------
+
+    public function testRoundStringShorthand(): void
+    {
+        // Passing a string is shorthand for smallestUnit with halfExpand mode.
+        $dt = new PlainDateTime(2024, 3, 15, 10, 30, 45);
+        $result = $dt->round('hour');
+        $this->assertSame('2024-03-15T11:00:00', (string) $result);
+    }
+
+    public function testRoundToDayHalfExpandNoonRoundsUp(): void
+    {
+        // Exactly noon (12:00:00) → halfExpand rounds up to next day.
+        $dt = new PlainDateTime(2024, 3, 15, 12, 0, 0);
+        $result = $dt->round(['smallestUnit' => 'day']);
+        $this->assertSame('2024-03-16T00:00:00', (string) $result);
+    }
+
+    public function testRoundToDayHalfExpandJustBeforeNoonStays(): void
+    {
+        // 11:59:59.999999999 → halfExpand stays at midnight of same day.
+        $dt = new PlainDateTime(2024, 3, 15, 11, 59, 59, 999, 999, 999);
+        $result = $dt->round(['smallestUnit' => 'day', 'roundingMode' => 'halfExpand']);
+        $this->assertSame('2024-03-15T00:00:00', (string) $result);
+    }
+
+    public function testRoundToDayHalfExpandAfternoonRoundsUp(): void
+    {
+        $dt = new PlainDateTime(2024, 3, 15, 12, 30, 0);
+        $result = $dt->round(['smallestUnit' => 'day', 'roundingMode' => 'halfExpand']);
+        $this->assertSame('2024-03-16T00:00:00', (string) $result);
+    }
+
+    public function testRoundToDayCeilNonMidnightRoundsUp(): void
+    {
+        // Any time > midnight rounds up.
+        $dt = new PlainDateTime(2024, 3, 15, 0, 0, 1);
+        $result = $dt->round(['smallestUnit' => 'day', 'roundingMode' => 'ceil']);
+        $this->assertSame('2024-03-16T00:00:00', (string) $result);
+    }
+
+    public function testRoundToDayCeilMidnightStays(): void
+    {
+        // Exactly midnight stays at midnight.
+        $dt = new PlainDateTime(2024, 3, 15, 0, 0, 0);
+        $result = $dt->round(['smallestUnit' => 'day', 'roundingMode' => 'ceil']);
+        $this->assertSame('2024-03-15T00:00:00', (string) $result);
+    }
+
+    public function testRoundToDayFloorAlwaysMidnight(): void
+    {
+        $dt = new PlainDateTime(2024, 3, 15, 23, 59, 59);
+        $result = $dt->round(['smallestUnit' => 'day', 'roundingMode' => 'floor']);
+        $this->assertSame('2024-03-15T00:00:00', (string) $result);
+    }
+
+    public function testRoundToDayTruncAlwaysMidnight(): void
+    {
+        $dt = new PlainDateTime(2024, 3, 15, 18, 0, 0);
+        $result = $dt->round(['smallestUnit' => 'day', 'roundingMode' => 'trunc']);
+        $this->assertSame('2024-03-15T00:00:00', (string) $result);
+    }
+
+    public function testRoundToHourHalfExpandRoundsUp(): void
+    {
+        // 10:30:00 → rounds up to 11:00:00
+        $dt = new PlainDateTime(2024, 3, 15, 10, 30, 0);
+        $result = $dt->round(['smallestUnit' => 'hour', 'roundingMode' => 'halfExpand']);
+        $this->assertSame('2024-03-15T11:00:00', (string) $result);
+    }
+
+    public function testRoundToHourHalfExpandRoundsDown(): void
+    {
+        // 10:29:59 → rounds down to 10:00:00
+        $dt = new PlainDateTime(2024, 3, 15, 10, 29, 59);
+        $result = $dt->round(['smallestUnit' => 'hour', 'roundingMode' => 'halfExpand']);
+        $this->assertSame('2024-03-15T10:00:00', (string) $result);
+    }
+
+    public function testRoundToHourOverflowCarriesToNextDay(): void
+    {
+        // 23:30:00 rounds up to 24:00:00 → 2024-03-16T00:00:00
+        $dt = new PlainDateTime(2024, 3, 15, 23, 30, 0);
+        $result = $dt->round(['smallestUnit' => 'hour', 'roundingMode' => 'halfExpand']);
+        $this->assertSame('2024-03-16T00:00:00', (string) $result);
+    }
+
+    public function testRoundToHourCeil(): void
+    {
+        $dt = new PlainDateTime(2024, 3, 15, 10, 1, 0);
+        $result = $dt->round(['smallestUnit' => 'hour', 'roundingMode' => 'ceil']);
+        $this->assertSame('2024-03-15T11:00:00', (string) $result);
+    }
+
+    public function testRoundToHourFloor(): void
+    {
+        $dt = new PlainDateTime(2024, 3, 15, 10, 59, 59);
+        $result = $dt->round(['smallestUnit' => 'hour', 'roundingMode' => 'floor']);
+        $this->assertSame('2024-03-15T10:00:00', (string) $result);
+    }
+
+    public function testRoundToMinuteHalfExpand(): void
+    {
+        // 10:15:30 → round to nearest minute → 10:16:00
+        $dt = new PlainDateTime(2024, 3, 15, 10, 15, 30);
+        $result = $dt->round('minute');
+        $this->assertSame('2024-03-15T10:16:00', (string) $result);
+    }
+
+    public function testRoundToMinuteHalfExpandDown(): void
+    {
+        // 10:15:29 → stays at 10:15:00
+        $dt = new PlainDateTime(2024, 3, 15, 10, 15, 29);
+        $result = $dt->round('minute');
+        $this->assertSame('2024-03-15T10:15:00', (string) $result);
+    }
+
+    public function testRoundToSecondHalfExpand(): void
+    {
+        // 10:15:00.500 → rounds up to 10:15:01
+        $dt = new PlainDateTime(2024, 3, 15, 10, 15, 0, 500);
+        $result = $dt->round('second');
+        $this->assertSame('2024-03-15T10:15:01', (string) $result);
+    }
+
+    public function testRoundToSecondHalfExpandDown(): void
+    {
+        // 10:15:00.499 → stays at 10:15:00
+        $dt = new PlainDateTime(2024, 3, 15, 10, 15, 0, 499);
+        $result = $dt->round('second');
+        $this->assertSame('2024-03-15T10:15:00', (string) $result);
+    }
+
+    public function testRoundToMillisecond(): void
+    {
+        // 500µs rounds up the millisecond
+        $dt = new PlainDateTime(2024, 3, 15, 10, 0, 0, 0, 500, 0);
+        $result = $dt->round('millisecond');
+        $this->assertSame('2024-03-15T10:00:00.001', (string) $result);
+    }
+
+    public function testRoundToNanosecondIsNoop(): void
+    {
+        $dt = new PlainDateTime(2024, 3, 15, 10, 15, 30, 123, 456, 789);
+        $result = $dt->round('nanosecond');
+        $this->assertSame($dt, $result);
+    }
+
+    public function testRoundWithIncrementMinute(): void
+    {
+        // 10:17:00 rounded to nearest 5 minutes → 10:15:00
+        $dt = new PlainDateTime(2024, 3, 15, 10, 17, 0);
+        $result = $dt->round(['smallestUnit' => 'minute', 'roundingIncrement' => 5]);
+        $this->assertSame('2024-03-15T10:15:00', (string) $result);
+    }
+
+    public function testRoundWithIncrementMinuteRoundsUp(): void
+    {
+        // 10:18:00 rounded to nearest 5 minutes → 10:20:00
+        $dt = new PlainDateTime(2024, 3, 15, 10, 18, 0);
+        $result = $dt->round(['smallestUnit' => 'minute', 'roundingIncrement' => 5]);
+        $this->assertSame('2024-03-15T10:20:00', (string) $result);
+    }
+
+    public function testRoundWithIncrementHour(): void
+    {
+        // 10:00:00 is exactly at midpoint between 8:00 and 12:00 (2h from each).
+        // halfExpand rounds up when remainder * 2 >= step, so result is 12:00:00.
+        $dt = new PlainDateTime(2024, 3, 15, 10, 0, 0);
+        $result = $dt->round(['smallestUnit' => 'hour', 'roundingIncrement' => 4]);
+        $this->assertSame('2024-03-15T12:00:00', (string) $result);
+    }
+
+    public function testRoundInvalidUnitThrows(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $dt = new PlainDateTime(2024, 3, 15, 10, 0, 0);
+        $dt->round('week');
+    }
+
+    public function testRoundMissingSmallestUnitThrows(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $dt = new PlainDateTime(2024, 3, 15, 10, 0, 0);
+        $dt->round(['roundingMode' => 'floor']);
+    }
+
+    public function testRoundInvalidModeThrows(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $dt = new PlainDateTime(2024, 3, 15, 10, 0, 0);
+        $dt->round(['smallestUnit' => 'hour', 'roundingMode' => 'half']);
+    }
+
+    public function testRoundBadIncrementThrows(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $dt = new PlainDateTime(2024, 3, 15, 10, 0, 0);
+        // 7 does not evenly divide 60 (minutes in hour)
+        $dt->round(['smallestUnit' => 'minute', 'roundingIncrement' => 7]);
+    }
+
+    public function testRoundDoesNotMutate(): void
+    {
+        $dt = new PlainDateTime(2024, 3, 15, 10, 30, 0);
+        $dt->round('hour');
+        $this->assertSame(30, $dt->minute);
+        $this->assertSame(10, $dt->hour);
+    }
+
+    public function testRoundDayOverflowAcrossMonth(): void
+    {
+        // Last day of month at noon → rounds up to first of next month
+        $dt = new PlainDateTime(2024, 3, 31, 12, 0, 0);
+        $result = $dt->round(['smallestUnit' => 'day', 'roundingMode' => 'halfExpand']);
+        $this->assertSame('2024-04-01T00:00:00', (string) $result);
+    }
 }

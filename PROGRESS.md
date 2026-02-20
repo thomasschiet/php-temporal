@@ -290,6 +290,26 @@ Implemented the `Temporal\Now` utility class and cross-type conversion methods:
 
 **Total: 796 tests passing (+37 new)**
 
+### 14. PlainDateTime::round() (2026-02-20)
+
+#### `PlainDateTime::round()` — new method
+- Accepts `string|array{smallestUnit, roundingMode?, roundingIncrement?}`
+  (same interface as `PlainTime::round()` / `ZonedDateTime::round()`)
+- Supported units: `nanosecond` … `day`
+- Rounding modes: `halfExpand` (default), `ceil`, `floor`, `trunc`
+- For time units (`nanosecond` … `hour`): rounds the nanoseconds-since-midnight
+  value for the time part; any overflow (rounded value >= 86 400 000 000 000 ns)
+  carries one day into the date part via `PlainDate::add()`
+- For `day`: rounds to the nearest midnight — `halfExpand` treats noon as the
+  midpoint (>= noon rounds up to next day), `ceil` rounds any non-midnight time
+  up, `floor`/`trunc` always return the current midnight
+- `roundingIncrement` validated: must evenly divide the parent unit's size
+- Private helpers `roundHalfExpand()` and `ceilDiv()` added to `PlainDateTime`
+- Added 28 tests to `tests/PlainDateTimeTest.php` covering all units, all modes,
+  increment validation, day-boundary overflow across month end, and error cases
+
+**Total: 824 tests passing (+28 new)**
+
 ## Current Task
 
 - All planned tasks complete.
@@ -297,4 +317,3 @@ Implemented the `Temporal\Now` utility class and cross-type conversion methods:
 ## Next Tasks
 
 - Additional DST-transition edge cases in `ZonedDateTime` (add/subtract across spring/fall transitions)
-- `PlainDateTime::round()` — round to nearest unit (mirrors `ZonedDateTime::round()`)

@@ -339,6 +339,94 @@ final class PlainDateTime
     }
 
     /**
+     * Round this datetime to the given smallest unit.
+     *
+     * For time units (nanosecond … hour) the time-of-day nanosecond value is
+     * rounded and any overflow carries into the date. For 'day' the datetime
+     * is rounded to the nearest midnight (halfExpand: noon rounds up).
+     *
+     * @param string|array{smallestUnit:string,roundingMode?:string,roundingIncrement?:int} $options
+     *   When a string is passed it is treated as the smallestUnit with
+     *   roundingMode='halfExpand' and roundingIncrement=1.
+     */
+    public function round(string|array $options): self
+    {
+        $unit = is_string($options)
+            ? $options
+            : $options['smallestUnit'] ?? throw new InvalidArgumentException('Missing required option: smallestUnit.');
+        $mode = is_string($options) ? 'halfExpand' : $options['roundingMode'] ?? 'halfExpand';
+        $increment = is_array($options) ? (int) ( $options['roundingIncrement'] ?? 1 ) : 1;
+
+        $dayNs = 86_400_000_000_000;
+
+        if ($unit === 'day' || $unit === 'days') {
+            $ns = $this->toPlainTime()->toNanosecondsSinceMidnight();
+            $roundUp = match ($mode) {
+                'halfExpand' => ( $ns * 2 ) >= $dayNs,
+                'ceil' => $ns > 0,
+                'floor', 'trunc' => false,
+                default => throw new InvalidArgumentException("Unknown roundingMode: '{$mode}'.")
+            };
+            $date = $this->toPlainDate();
+            if ($roundUp) {
+                $date = $date->add(['days' => 1]);
+            }
+
+            return new self($date->year, $date->month, $date->day);
+        }
+
+        [$divisor, $maxPerParent] = match ($unit) {
+            'nanosecond', 'nanoseconds' => [1, 1_000],
+            'microsecond', 'microseconds' => [1_000, 1_000],
+            'millisecond', 'milliseconds' => [1_000_000, 1_000],
+            'second', 'seconds' => [1_000_000_000, 60],
+            'minute', 'minutes' => [60_000_000_000, 60],
+            'hour', 'hours' => [3_600_000_000_000, 24],
+            default => throw new InvalidArgumentException("Unknown or unsupported unit for round(): '{$unit}'.")
+        };
+
+        if ($increment !== 1 && ( $maxPerParent % $increment ) !== 0) {
+            throw new InvalidArgumentException(
+                "roundingIncrement {$increment} does not evenly divide {$maxPerParent}."
+            );
+        }
+
+        if ($divisor === 1 && $increment === 1) {
+            return $this;
+        }
+
+        $step = $divisor * $increment;
+        $ns = $this->toPlainTime()->toNanosecondsSinceMidnight();
+
+        $rounded = match ($mode) {
+            'halfExpand' => self::roundHalfExpand($ns, $step),
+            'ceil' => self::ceilDiv($ns, $step) * $step,
+            'floor', 'trunc' => intdiv($ns, $step) * $step,
+            default => throw new InvalidArgumentException("Unknown roundingMode: '{$mode}'.")
+        };
+
+        $date = $this->toPlainDate();
+        if ($rounded >= $dayNs) {
+            $rounded -= $dayNs;
+            $date = $date->add(['days' => 1]);
+        }
+
+        $time = PlainTime::fromNanosecondsSinceMidnight($rounded);
+
+        return new self(
+            $date->year,
+            $date->month,
+            $date->day,
+            $time->hour,
+            $time->minute,
+            $time->second,
+            $time->millisecond,
+            $time->microsecond,
+            $time->nanosecond
+        );
+    }
+
+    /**
      * Compute the Duration from this datetime until the given datetime.
      *
      * The result is expressed in days plus sub-day time components, balanced
@@ -469,6 +557,23 @@ final class PlainDateTime
     private static function isLeapYear(int $year): bool
     {
         return ( $year % 4 ) === 0 && ( $year % 100 ) !== 0 || ( $year % 400 ) === 0;
+    }
+
+    /** Round ns to nearest multiple of step using half-expand (round half away from zero toward +∞). */
+    private static function roundHalfExpand(int $ns, int $step): int
+    {
+        $remainder = $ns % $step;
+        $q = intdiv($ns, $step);
+
+        return ( $remainder * 2 ) >= $step ? ( $q + 1 ) * $step : $q * $step;
+    }
+
+    /** Ceiling division: smallest integer k such that k * step >= ns (for ns >= 0). */
+    private static function ceilDiv(int $ns, int $step): int
+    {
+        $q = intdiv($ns, $step);
+
+        return ( $ns % $step ) !== 0 ? $q + 1 : $q;
     }
 
     /**
