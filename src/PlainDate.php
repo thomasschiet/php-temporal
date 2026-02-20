@@ -1,0 +1,387 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Temporal;
+
+use InvalidArgumentException;
+
+/**
+ * Represents a calendar date (year, month, day) with no time or time zone.
+ *
+ * Immutable. Corresponds to the Temporal.PlainDate type in the TC39 proposal.
+ */
+final class PlainDate
+{
+    public readonly int $year;
+    public readonly int $month;
+    public readonly int $day;
+
+    public function __construct(int $year, int $month, int $day)
+    {
+        self::validateMonth($month);
+        self::validateDay($year, $month, $day);
+
+        $this->year  = $year;
+        $this->month = $month;
+        $this->day   = $day;
+    }
+
+    // -------------------------------------------------------------------------
+    // Static constructors
+    // -------------------------------------------------------------------------
+
+    /**
+     * Create a PlainDate from a string, array, or another PlainDate.
+     *
+     * @param string|array{year:int,month:int,day:int}|PlainDate $item
+     */
+    public static function from(string|array|self $item): self
+    {
+        if ($item instanceof self) {
+            return new self($item->year, $item->month, $item->day);
+        }
+
+        if (is_array($item)) {
+            return new self(
+                (int) ($item['year'] ?? throw new InvalidArgumentException('Missing key: year')),
+                (int) ($item['month'] ?? throw new InvalidArgumentException('Missing key: month')),
+                (int) ($item['day'] ?? throw new InvalidArgumentException('Missing key: day')),
+            );
+        }
+
+        return self::fromString($item);
+    }
+
+    /**
+     * Create a PlainDate from an ISO 8601 date string (e.g. "2024-03-15").
+     */
+    private static function fromString(string $str): self
+    {
+        // Handles optional leading sign and extended year
+        // Format: [-+]YYYYY-MM-DD or YYYY-MM-DD
+        $pattern = '/^([+-]?\d{4,6})-(\d{2})-(\d{2})$/';
+
+        if (!preg_match($pattern, $str, $m)) {
+            throw new InvalidArgumentException("Invalid PlainDate string: {$str}");
+        }
+
+        return new self((int) $m[1], (int) $m[2], (int) $m[3]);
+    }
+
+    /**
+     * Create a PlainDate from a count of days since the Unix epoch (1970-01-01).
+     */
+    public static function fromEpochDays(int $epochDays): self
+    {
+        // Algorithm from https://howardhinnant.github.io/date_algorithms.html
+        $z = $epochDays + 719468;
+        $era = intdiv($z >= 0 ? $z : $z - 146096, 146097);
+        $doe = $z - $era * 146097;
+        $yoe = intdiv($doe - intdiv($doe, 1460) + intdiv($doe, 36524) - intdiv($doe, 146096), 365);
+        $y   = $yoe + $era * 400;
+        $doy = $doe - (365 * $yoe + intdiv($yoe, 4) - intdiv($yoe, 100));
+        $mp  = intdiv(5 * $doy + 2, 153);
+        $d   = $doy - intdiv(153 * $mp + 2, 5) + 1;
+        $m   = $mp < 10 ? $mp + 3 : $mp - 9;
+
+        if ($m <= 2) {
+            $y++;
+        }
+
+        return new self($y, $m, $d);
+    }
+
+    // -------------------------------------------------------------------------
+    // Computed properties (via __get for a clean public API)
+    // -------------------------------------------------------------------------
+
+    public function __get(string $name): mixed
+    {
+        return match ($name) {
+            'dayOfWeek'  => $this->computeDayOfWeek(),
+            'dayOfYear'  => $this->computeDayOfYear(),
+            'weekOfYear' => $this->computeWeekOfYear(),
+            'daysInMonth' => self::daysInMonthFor($this->year, $this->month),
+            'daysInYear' => self::isLeapYear($this->year) ? 366 : 365,
+            'inLeapYear' => self::isLeapYear($this->year),
+            default      => throw new \Error("Undefined property: {$name}"),
+        };
+    }
+
+    public function __isset(string $name): bool
+    {
+        return in_array($name, [
+            'dayOfWeek', 'dayOfYear', 'weekOfYear',
+            'daysInMonth', 'daysInYear', 'inLeapYear',
+        ], true);
+    }
+
+    // -------------------------------------------------------------------------
+    // Conversion
+    // -------------------------------------------------------------------------
+
+    /**
+     * Returns the number of days since the Unix epoch (1970-01-01).
+     */
+    public function toEpochDays(): int
+    {
+        // Algorithm from https://howardhinnant.github.io/date_algorithms.html
+        $y = $this->year;
+        $m = $this->month;
+        $d = $this->day;
+
+        if ($m <= 2) {
+            $y--;
+        }
+
+        $era = intdiv($y >= 0 ? $y : $y - 399, 400);
+        $yoe = $y - $era * 400;
+        $doy = intdiv(153 * ($m > 2 ? $m - 3 : $m + 9) + 2, 5) + $d - 1;
+        $doe = $yoe * 365 + intdiv($yoe, 4) - intdiv($yoe, 100) + $doy;
+
+        return $era * 146097 + $doe - 719468;
+    }
+
+    // -------------------------------------------------------------------------
+    // Mutation (returns new instances)
+    // -------------------------------------------------------------------------
+
+    /**
+     * Return a new PlainDate with specified fields overridden.
+     *
+     * @param array{year?:int,month?:int,day?:int} $fields
+     */
+    public function with(array $fields): self
+    {
+        return new self(
+            $fields['year']  ?? $this->year,
+            $fields['month'] ?? $this->month,
+            $fields['day']   ?? $this->day,
+        );
+    }
+
+    /**
+     * Add a duration to this date.
+     *
+     * @param array{years?:int,months?:int,weeks?:int,days?:int} $duration
+     */
+    public function add(array $duration): self
+    {
+        $years  = $duration['years']  ?? 0;
+        $months = $duration['months'] ?? 0;
+        $weeks  = $duration['weeks']  ?? 0;
+        $days   = $duration['days']   ?? 0;
+
+        // Add years and months first (calendar arithmetic)
+        $y = $this->year + $years;
+        $m = $this->month + $months;
+        $d = $this->day;
+
+        // Normalise month overflow/underflow
+        while ($m > 12) {
+            $m -= 12;
+            $y++;
+        }
+        while ($m < 1) {
+            $m += 12;
+            $y--;
+        }
+
+        // Constrain day to valid range for the resulting month
+        $maxDay = self::daysInMonthFor($y, $m);
+        if ($d > $maxDay) {
+            $d = $maxDay;
+        }
+
+        // Convert to epoch days and add weeks/days
+        $epochDays = self::civilToEpochDays($y, $m, $d);
+        $epochDays += $weeks * 7 + $days;
+
+        return self::fromEpochDays($epochDays);
+    }
+
+    /**
+     * Subtract a duration from this date.
+     *
+     * @param array{years?:int,months?:int,weeks?:int,days?:int} $duration
+     */
+    public function subtract(array $duration): self
+    {
+        return $this->add([
+            'years'  => -($duration['years']  ?? 0),
+            'months' => -($duration['months'] ?? 0),
+            'weeks'  => -($duration['weeks']  ?? 0),
+            'days'   => -($duration['days']   ?? 0),
+        ]);
+    }
+
+    /**
+     * Compute the Duration from this date until the given date.
+     */
+    public function until(self $other): Duration
+    {
+        $days = $other->toEpochDays() - $this->toEpochDays();
+        return new Duration(days: $days);
+    }
+
+    /**
+     * Compute the Duration since the given date (i.e. other until this).
+     */
+    public function since(self $other): Duration
+    {
+        return $other->until($this);
+    }
+
+    // -------------------------------------------------------------------------
+    // Comparison
+    // -------------------------------------------------------------------------
+
+    /**
+     * Compare two PlainDate values.
+     *
+     * Returns -1, 0, or 1.
+     */
+    public static function compare(self $a, self $b): int
+    {
+        $da = $a->toEpochDays();
+        $db = $b->toEpochDays();
+
+        return $da <=> $db;
+    }
+
+    /**
+     * Returns true if this date is equal to the other.
+     */
+    public function equals(self $other): bool
+    {
+        return $this->year  === $other->year
+            && $this->month === $other->month
+            && $this->day   === $other->day;
+    }
+
+    // -------------------------------------------------------------------------
+    // String representation
+    // -------------------------------------------------------------------------
+
+    public function __toString(): string
+    {
+        $y = $this->year;
+
+        if ($y < 0) {
+            $yearStr = '-' . str_pad((string) abs($y), 6, '0', STR_PAD_LEFT);
+        } elseif ($y >= 10000) {
+            $yearStr = '+' . str_pad((string) $y, 6, '0', STR_PAD_LEFT);
+        } else {
+            $yearStr = str_pad((string) $y, 4, '0', STR_PAD_LEFT);
+        }
+
+        return sprintf('%s-%02d-%02d', $yearStr, $this->month, $this->day);
+    }
+
+    // -------------------------------------------------------------------------
+    // Private helpers
+    // -------------------------------------------------------------------------
+
+    private static function validateMonth(int $month): void
+    {
+        if ($month < 1 || $month > 12) {
+            throw new InvalidArgumentException(
+                "Month must be between 1 and 12, got {$month}"
+            );
+        }
+    }
+
+    private static function validateDay(int $year, int $month, int $day): void
+    {
+        $max = self::daysInMonthFor($year, $month);
+        if ($day < 1 || $day > $max) {
+            throw new InvalidArgumentException(
+                "Day {$day} is out of range for {$year}-{$month} (1–{$max})"
+            );
+        }
+    }
+
+    private static function daysInMonthFor(int $year, int $month): int
+    {
+        return match ($month) {
+            1, 3, 5, 7, 8, 10, 12 => 31,
+            4, 6, 9, 11            => 30,
+            2                      => self::isLeapYear($year) ? 29 : 28,
+            default                => throw new InvalidArgumentException("Invalid month: {$month}"),
+        };
+    }
+
+    private static function isLeapYear(int $year): bool
+    {
+        return ($year % 4 === 0 && $year % 100 !== 0) || ($year % 400 === 0);
+    }
+
+    /** Compute days since epoch for a given y/m/d (no validation). */
+    private static function civilToEpochDays(int $y, int $m, int $d): int
+    {
+        if ($m <= 2) {
+            $y--;
+        }
+
+        $era = intdiv($y >= 0 ? $y : $y - 399, 400);
+        $yoe = $y - $era * 400;
+        $doy = intdiv(153 * ($m > 2 ? $m - 3 : $m + 9) + 2, 5) + $d - 1;
+        $doe = $yoe * 365 + intdiv($yoe, 4) - intdiv($yoe, 100) + $doy;
+
+        return $era * 146097 + $doe - 719468;
+    }
+
+    /**
+     * ISO day of week: Monday = 1, …, Sunday = 7.
+     */
+    private function computeDayOfWeek(): int
+    {
+        // 1970-01-01 was a Thursday (4)
+        $epochDays = $this->toEpochDays();
+        $dow = (($epochDays % 7) + 7 + 3) % 7; // 0 = Monday
+        return $dow + 1;
+    }
+
+    private function computeDayOfYear(): int
+    {
+        $cumulative = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+        $doy = $cumulative[$this->month - 1] + $this->day;
+
+        if ($this->month > 2 && self::isLeapYear($this->year)) {
+            $doy++;
+        }
+
+        return $doy;
+    }
+
+    /**
+     * ISO week number (1–53).
+     */
+    private function computeWeekOfYear(): int
+    {
+        // ISO week: week containing the first Thursday of the year is week 1.
+        $doy   = $this->computeDayOfYear();
+        $dow   = $this->computeDayOfWeek(); // Mon=1 … Sun=7
+        $w     = intdiv($doy - $dow + 10, 7);
+
+        if ($w < 1) {
+            // Belongs to the last week of the previous year
+            $w = $this->computeWeeksInYear($this->year - 1);
+        } elseif ($w > $this->computeWeeksInYear($this->year)) {
+            $w = 1;
+        }
+
+        return $w;
+    }
+
+    private function computeWeeksInYear(int $year): int
+    {
+        // A year has 53 weeks if Jan 1 is Thursday, or if it's a leap year
+        // and Jan 1 is Wednesday or Thursday.
+        $jan1Dow = (new self($year, 1, 1))->computeDayOfWeek();
+        $dec31Dow = (new self($year, 12, 31))->computeDayOfWeek();
+
+        return ($jan1Dow === 4 || $dec31Dow === 4) ? 53 : 52;
+    }
+}
