@@ -10,6 +10,12 @@ use InvalidArgumentException;
  * Represents a calendar year-month combination with no day, time, or time zone.
  *
  * Immutable. Corresponds to the Temporal.PlainYearMonth type in the TC39 proposal.
+ *
+ * @property-read string $calendarId   Always 'iso8601'.
+ * @property-read int    $daysInMonth  Number of days in the month.
+ * @property-read int    $daysInYear   Number of days in the year (365 or 366).
+ * @property-read bool   $inLeapYear   Whether the year is a leap year.
+ * @property-read int    $monthsInYear Number of months in the year (always 12).
  */
 final class PlainYearMonth
 {
@@ -73,6 +79,7 @@ final class PlainYearMonth
     public function __get(string $name): mixed
     {
         return match ($name) {
+            'calendarId' => 'iso8601',
             'daysInMonth' => self::daysInMonthFor($this->year, $this->month),
             'daysInYear' => self::isLeapYear($this->year) ? 366 : 365,
             'inLeapYear' => self::isLeapYear($this->year),
@@ -86,6 +93,7 @@ final class PlainYearMonth
         return in_array(
             $name,
             [
+                'calendarId',
                 'daysInMonth',
                 'daysInYear',
                 'inLeapYear',

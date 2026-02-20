@@ -10,6 +10,14 @@ use InvalidArgumentException;
  * Represents a calendar date (year, month, day) with no time or time zone.
  *
  * Immutable. Corresponds to the Temporal.PlainDate type in the TC39 proposal.
+ *
+ * @property-read string $calendarId  Always 'iso8601'.
+ * @property-read int    $dayOfWeek   ISO day of week: Monday = 1, …, Sunday = 7.
+ * @property-read int    $dayOfYear   Day of year (1-based).
+ * @property-read int    $weekOfYear  ISO week number (1–53).
+ * @property-read int    $daysInMonth Number of days in the month.
+ * @property-read int    $daysInYear  Number of days in the year (365 or 366).
+ * @property-read bool   $inLeapYear  Whether the year is a leap year.
  */
 final class PlainDate
 {
@@ -109,6 +117,7 @@ final class PlainDate
     public function __get(string $name): mixed
     {
         return match ($name) {
+            'calendarId' => 'iso8601',
             'dayOfWeek' => $this->computeDayOfWeek(),
             'dayOfYear' => $this->computeDayOfYear(),
             'weekOfYear' => $this->computeWeekOfYear(),
@@ -124,6 +133,7 @@ final class PlainDate
         return in_array(
             $name,
             [
+                'calendarId',
                 'dayOfWeek',
                 'dayOfYear',
                 'weekOfYear',

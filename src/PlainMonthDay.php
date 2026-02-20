@@ -12,6 +12,8 @@ use InvalidArgumentException;
  * Immutable. Corresponds to the Temporal.PlainMonthDay type in the TC39 proposal.
  *
  * The reference year used for validation is 1972 (a leap year), so Feb 29 is valid.
+ *
+ * @property-read string $calendarId Always 'iso8601'.
  */
 final class PlainMonthDay
 {
@@ -74,6 +76,23 @@ final class PlainMonthDay
         }
 
         return new self((int) $m[1], (int) $m[2]);
+    }
+
+    // -------------------------------------------------------------------------
+    // Computed properties (via __get for a clean public API)
+    // -------------------------------------------------------------------------
+
+    public function __get(string $name): mixed
+    {
+        return match ($name) {
+            'calendarId' => 'iso8601',
+            default => throw new \Error("Undefined property: {$name}")
+        };
+    }
+
+    public function __isset(string $name): bool
+    {
+        return $name === 'calendarId';
     }
 
     // -------------------------------------------------------------------------

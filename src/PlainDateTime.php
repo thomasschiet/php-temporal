@@ -10,6 +10,14 @@ use InvalidArgumentException;
  * Represents a calendar date combined with a wall-clock time (no time zone).
  *
  * Immutable. Corresponds to the Temporal.PlainDateTime type in the TC39 proposal.
+ *
+ * @property-read string $calendarId  Always 'iso8601'.
+ * @property-read int    $dayOfWeek   ISO day of week: Monday = 1, …, Sunday = 7.
+ * @property-read int    $dayOfYear   Day of year (1-based).
+ * @property-read int    $weekOfYear  ISO week number (1–53).
+ * @property-read int    $daysInMonth Number of days in the month.
+ * @property-read int    $daysInYear  Number of days in the year (365 or 366).
+ * @property-read bool   $inLeapYear  Whether the year is a leap year.
  */
 final class PlainDateTime
 {
@@ -94,6 +102,47 @@ final class PlainDateTime
         }
 
         return self::fromString($item);
+    }
+
+    // -------------------------------------------------------------------------
+    // Computed properties (via __get for a clean public API)
+    // -------------------------------------------------------------------------
+
+    /**
+     * Expose computed date properties and calendarId via magic getter.
+     *
+     * Delegates date-related computed properties (dayOfWeek, etc.) to PlainDate.
+     */
+    public function __get(string $name): mixed
+    {
+        return match ($name) {
+            'calendarId' => 'iso8601',
+            'dayOfWeek',
+            'dayOfYear',
+            'weekOfYear',
+            'daysInMonth',
+            'daysInYear',
+            'inLeapYear'
+                => $this->toPlainDate()->{$name},
+            default => throw new \Error("Undefined property: {$name}")
+        };
+    }
+
+    public function __isset(string $name): bool
+    {
+        return in_array(
+            $name,
+            [
+                'calendarId',
+                'dayOfWeek',
+                'dayOfYear',
+                'weekOfYear',
+                'daysInMonth',
+                'daysInYear',
+                'inLeapYear'
+            ],
+            true
+        );
     }
 
     // -------------------------------------------------------------------------

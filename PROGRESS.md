@@ -152,11 +152,26 @@
 - Created `tests/ParsingTest.php` — 35 tests, all passing
 - Total: 588 tests, all passing
 
+### 9. Calendar (2026-02-20)
+
+- Created `src/Calendar.php` — full implementation:
+  - Private constructor; `id` property (always 'iso8601')
+  - `from(string|Calendar)` static constructor — validates identifier (case-insensitive), throws for unknown calendars
+  - `equals()` / `__toString()` — comparison and string representation
+  - **Factory methods**: `dateFromFields()`, `yearMonthFromFields()`, `monthDayFromFields()` — create temporal objects from field arrays with `$overflow` parameter validation
+  - **Arithmetic**: `dateAdd(PlainDate, Duration)` — delegates to PlainDate::add(); `dateUntil(PlainDate, PlainDate)` — delegates to PlainDate::until() with `$largestUnit` validation
+  - **Field helpers**: `fields(array)` — validates field names; `mergeFields(array, array)` — merges with override semantics
+  - **Computed property accessors**: `year()`, `month()`, `monthCode()`, `day()`, `dayOfWeek()`, `dayOfYear()`, `weekOfYear()`, `daysInWeek()`, `daysInMonth()`, `daysInYear()`, `monthsInYear()`, `inLeapYear()`, `era()`, `eraYear()` — accept PlainDate/PlainDateTime/PlainYearMonth/PlainMonthDay as appropriate
+- Added `calendarId` (always 'iso8601') to `__get()` on: `PlainDate`, `PlainDateTime`, `PlainYearMonth`, `PlainMonthDay`, `ZonedDateTime`
+- Added `__get`/`__isset` to `PlainDateTime` for computed date properties (`dayOfWeek`, `dayOfYear`, `weekOfYear`, `daysInMonth`, `daysInYear`, `inLeapYear`, `calendarId`)
+- Added `@property-read` PHPDoc annotations to `PlainDate`, `PlainDateTime`, `PlainYearMonth`, `PlainMonthDay` for static analysis
+- Created `tests/CalendarTest.php` — 64 tests, all passing
+- Total: 652 tests, all passing
+
 ## Current Task
 
 - All planned tasks complete.
 
 ## Next Tasks
 
-9. `Calendar` — ISO 8601 calendar (if needed for completeness)
 10. Additional edge case coverage from test262 suite
