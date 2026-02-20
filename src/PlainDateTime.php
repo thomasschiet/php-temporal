@@ -14,14 +14,19 @@ use Temporal\Exception\MissingFieldException;
  *
  * Immutable. Corresponds to the Temporal.PlainDateTime type in the TC39 proposal.
  *
- * @property-read string $calendarId  Always 'iso8601'.
- * @property-read int    $dayOfWeek   ISO day of week: Monday = 1, …, Sunday = 7.
- * @property-read int    $dayOfYear   Day of year (1-based).
- * @property-read int    $weekOfYear  ISO week number (1–53).
- * @property-read int    $yearOfWeek  ISO week-numbering year (may differ from $year near year boundaries).
- * @property-read int    $daysInMonth Number of days in the month.
- * @property-read int    $daysInYear  Number of days in the year (365 or 366).
- * @property-read bool   $inLeapYear  Whether the year is a leap year.
+ * @property-read string      $calendarId    Always 'iso8601'.
+ * @property-read string      $monthCode     Calendar month code (e.g. 'M01').
+ * @property-read string|null $era           Era name, or null for ISO 8601.
+ * @property-read int|null    $eraYear       Year within the era, or null for ISO 8601.
+ * @property-read int         $dayOfWeek     ISO day of week: Monday = 1, …, Sunday = 7.
+ * @property-read int         $dayOfYear     Day of year (1-based).
+ * @property-read int         $weekOfYear    ISO week number (1–53).
+ * @property-read int         $yearOfWeek    ISO week-numbering year (may differ from $year near year boundaries).
+ * @property-read int         $daysInWeek    Number of days in a week (always 7).
+ * @property-read int         $daysInMonth   Number of days in the month.
+ * @property-read int         $daysInYear    Number of days in the year (365 or 366).
+ * @property-read int         $monthsInYear  Number of months in the year (always 12).
+ * @property-read bool        $inLeapYear    Whether the year is a leap year.
  */
 final class PlainDateTime implements \JsonSerializable
 {
@@ -119,8 +124,15 @@ final class PlainDateTime implements \JsonSerializable
      */
     public function __get(string $name): mixed
     {
+        $cal = IsoCalendar::instance();
+
         return match ($name) {
             'calendarId' => 'iso8601',
+            'monthCode' => $cal->monthCode($this->year, $this->month, $this->day),
+            'era' => $cal->era($this->year, $this->month, $this->day),
+            'eraYear' => $cal->eraYear($this->year, $this->month, $this->day),
+            'daysInWeek' => $cal->daysInWeek(),
+            'monthsInYear' => $cal->monthsInYear(),
             'dayOfWeek',
             'dayOfYear',
             'weekOfYear',
@@ -139,12 +151,17 @@ final class PlainDateTime implements \JsonSerializable
             $name,
             [
                 'calendarId',
+                'monthCode',
+                'era',
+                'eraYear',
                 'dayOfWeek',
                 'dayOfYear',
                 'weekOfYear',
                 'yearOfWeek',
+                'daysInWeek',
                 'daysInMonth',
                 'daysInYear',
+                'monthsInYear',
                 'inLeapYear'
             ],
             true

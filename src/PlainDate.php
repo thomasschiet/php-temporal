@@ -17,14 +17,19 @@ use Temporal\Exception\MissingFieldException;
  * Stores ISO 8601 fields internally. The attached CalendarProtocol translates
  * those fields to calendar-relative values (always identity for ISO 8601).
  *
- * @property-read string $calendarId  Calendar identifier (e.g. 'iso8601').
- * @property-read int    $dayOfWeek   ISO day of week: Monday = 1, …, Sunday = 7.
- * @property-read int    $dayOfYear   Day of year (1-based).
- * @property-read int    $weekOfYear  ISO week number (1–53).
- * @property-read int    $yearOfWeek  ISO week-numbering year (may differ from $year near year boundaries).
- * @property-read int    $daysInMonth Number of days in the month.
- * @property-read int    $daysInYear  Number of days in the year (365 or 366).
- * @property-read bool   $inLeapYear  Whether the year is a leap year.
+ * @property-read string      $calendarId    Calendar identifier (e.g. 'iso8601').
+ * @property-read string      $monthCode     Calendar month code (e.g. 'M01').
+ * @property-read string|null $era           Era name, or null for ISO 8601.
+ * @property-read int|null    $eraYear       Year within the era, or null for ISO 8601.
+ * @property-read int         $dayOfWeek     ISO day of week: Monday = 1, …, Sunday = 7.
+ * @property-read int         $dayOfYear     Day of year (1-based).
+ * @property-read int         $weekOfYear    ISO week number (1–53).
+ * @property-read int         $yearOfWeek    ISO week-numbering year (may differ from $year near year boundaries).
+ * @property-read int         $daysInWeek    Number of days in a week (always 7 for ISO 8601).
+ * @property-read int         $daysInMonth   Number of days in the month.
+ * @property-read int         $daysInYear    Number of days in the year (365 or 366).
+ * @property-read int         $monthsInYear  Number of months in the year (always 12 for ISO 8601).
+ * @property-read bool        $inLeapYear    Whether the year is a leap year.
  */
 final class PlainDate implements \JsonSerializable
 {
@@ -152,12 +157,17 @@ final class PlainDate implements \JsonSerializable
     {
         return match ($name) {
             'calendarId' => $this->calendar->getId(),
+            'monthCode' => $this->calendar->monthCode($this->year, $this->month, $this->day),
+            'era' => $this->calendar->era($this->year, $this->month, $this->day),
+            'eraYear' => $this->calendar->eraYear($this->year, $this->month, $this->day),
             'dayOfWeek' => $this->calendar->dayOfWeek($this->year, $this->month, $this->day),
             'dayOfYear' => $this->calendar->dayOfYear($this->year, $this->month, $this->day),
             'weekOfYear' => $this->calendar->weekOfYear($this->year, $this->month, $this->day),
             'yearOfWeek' => $this->calendar->yearOfWeek($this->year, $this->month, $this->day),
+            'daysInWeek' => $this->calendar->daysInWeek(),
             'daysInMonth' => $this->calendar->daysInMonth($this->year, $this->month, $this->day),
             'daysInYear' => $this->calendar->daysInYear($this->year, $this->month, $this->day),
+            'monthsInYear' => $this->calendar->monthsInYear(),
             'inLeapYear' => $this->calendar->inLeapYear($this->year, $this->month, $this->day),
             default => throw new \Error("Undefined property: {$name}")
         };
@@ -169,12 +179,17 @@ final class PlainDate implements \JsonSerializable
             $name,
             [
                 'calendarId',
+                'monthCode',
+                'era',
+                'eraYear',
                 'dayOfWeek',
                 'dayOfYear',
                 'weekOfYear',
                 'yearOfWeek',
+                'daysInWeek',
                 'daysInMonth',
                 'daysInYear',
+                'monthsInYear',
                 'inLeapYear'
             ],
             true
@@ -306,6 +321,28 @@ final class PlainDate implements \JsonSerializable
     // -------------------------------------------------------------------------
     // Mutation (returns new instances)
     // -------------------------------------------------------------------------
+
+    /**
+     * Return a new PlainDate with the same date fields but using the given calendar.
+     *
+     * Corresponds to Temporal.PlainDate.prototype.withCalendar() in the TC39 proposal.
+     *
+     * @throws \InvalidArgumentException if the calendar identifier is unknown.
+     * @throws \RangeException if the resulting date is outside the supported range.
+     */
+    #[\NoDiscard]
+    public function withCalendar(CalendarProtocol|Calendar|string $calendar): self
+    {
+        if ($calendar instanceof Calendar) {
+            $protocol = $calendar->getProtocol();
+        } elseif ($calendar instanceof CalendarProtocol) {
+            $protocol = $calendar;
+        } else {
+            $protocol = Calendar::from($calendar)->getProtocol();
+        }
+
+        return new self($this->year, $this->month, $this->day, $protocol);
+    }
 
     /**
      * Return a new PlainDate with specified fields overridden.

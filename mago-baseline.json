@@ -1633,6 +1633,702 @@ message = 'Potentially unhandled exception `temporal\exception\missingfieldexcep
 count = 1
 
 [[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ApiGapsTest::testPlainDateDaysInWeekIsSet`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ApiGapsTest::testPlainDateDaysInWeek`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ApiGapsTest::testPlainDateEraIsNullForIso`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ApiGapsTest::testPlainDateEraIsSet`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ApiGapsTest::testPlainDateEraYearIsNullForIso`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ApiGapsTest::testPlainDateEraYearIsSet`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ApiGapsTest::testPlainDateMonthCodeIsSet`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ApiGapsTest::testPlainDateMonthCode`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ApiGapsTest::testPlainDateMonthsInYearIsSet`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ApiGapsTest::testPlainDateMonthsInYear`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ApiGapsTest::testPlainDateWithCalendarObject`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ApiGapsTest::testPlainDateWithCalendarProtocol`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ApiGapsTest::testPlainDateWithCalendarReturnsSameYearMonthDay`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ApiGapsTest::testPlainDateWithCalendarStringGregory`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ApiGapsTest::testPlainDateWithCalendarStringIso`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ApiGapsTest::testPlainDateWithCalendarThrowsForUnknown`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ApiGapsTest::testPlainDateWithGregoryCalendarBceEraYear`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ApiGapsTest::testPlainDateWithGregoryCalendarBceEra`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ApiGapsTest::testPlainDateWithGregoryCalendarEraYear`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ApiGapsTest::testPlainDateWithGregoryCalendarEra`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ApiGapsTest::testPlainDateWithGregoryCalendarMonthCode`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ApiGapsTest::testPlainMonthDayWithCalendarObject`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ApiGapsTest::testPlainYearMonthWithCalendarObject`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ApiGapsTest::testZonedDateTimeMonthCodeMarch`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\Exception` in `Temporal\Tests\ApiGapsTest::testNowPlainMonthDayISOReturnsInstance`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\Exception` in `Temporal\Tests\ApiGapsTest::testNowPlainMonthDayISOWithTimezoneObject`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\Exception` in `Temporal\Tests\ApiGapsTest::testNowPlainYearMonthISOReturnsInstance`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\Exception` in `Temporal\Tests\ApiGapsTest::testNowPlainYearMonthISOWithTimezoneObject`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testNowPlainMonthDayISOMatchesZonedDateTime`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testNowPlainMonthDayISOReturnsInstance`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testNowPlainMonthDayISOWithTimezoneObject`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testNowPlainMonthDayISOWithUtc`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testNowPlainYearMonthISOMatchesZonedDateTime`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testNowPlainYearMonthISOReturnsInstance`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testNowPlainYearMonthISOWithTimezoneObject`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testNowPlainYearMonthISOWithUtc`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainDateDaysInWeekIsSet`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainDateDaysInWeek`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainDateEraIsNullForIso`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainDateEraIsSet`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainDateEraYearIsNullForIso`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainDateEraYearIsSet`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainDateMonthCodeIsSet`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainDateMonthCode`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainDateMonthsInYearIsSet`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainDateMonthsInYear`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainDateTimeDaysInWeek`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainDateTimeEraIsNull`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainDateTimeEraYearIsNull`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainDateTimeIssetNewProperties`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainDateTimeMonthCode`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainDateTimeMonthsInYear`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainDateWithCalendarObject`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainDateWithCalendarProtocol`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainDateWithCalendarReturnsSameYearMonthDay`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainDateWithCalendarStringGregory`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainDateWithCalendarStringIso`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainDateWithGregoryCalendarBceEraYear`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainDateWithGregoryCalendarBceEra`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainDateWithGregoryCalendarEraYear`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainDateWithGregoryCalendarEra`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainDateWithGregoryCalendarMonthCode`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainMonthDayMonthCodeIsSet`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainMonthDayMonthCode`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainMonthDayWithCalendarIso`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainMonthDayWithCalendarObject`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainMonthDayWithCalendarProtocol`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainYearMonthEraIsNull`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainYearMonthEraYearIsNull`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainYearMonthIssetNewProperties`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainYearMonthMonthCode`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainYearMonthWithCalendarIso`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainYearMonthWithCalendarObject`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testPlainYearMonthWithCalendarProtocol`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testZonedDateTimeDaysInWeek`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testZonedDateTimeEraIsNull`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testZonedDateTimeEraYearIsNull`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testZonedDateTimeIssetNewProperties`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testZonedDateTimeMonthCodeMarch`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testZonedDateTimeMonthCode`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\ApiGapsTest::testZonedDateTimeMonthsInYear`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\UnknownClassOrInterfaceException` in `Temporal\Tests\ApiGapsTest::testNowPlainMonthDayISOReturnsInstance`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\UnknownClassOrInterfaceException` in `Temporal\Tests\ApiGapsTest::testNowPlainMonthDayISOWithTimezoneObject`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\UnknownClassOrInterfaceException` in `Temporal\Tests\ApiGapsTest::testNowPlainYearMonthISOReturnsInstance`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\UnknownClassOrInterfaceException` in `Temporal\Tests\ApiGapsTest::testNowPlainYearMonthISOWithTimezoneObject`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\ApiGapsTest::testPlainDateDaysInWeekIsSet`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\ApiGapsTest::testPlainDateDaysInWeek`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\ApiGapsTest::testPlainDateEraIsNullForIso`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\ApiGapsTest::testPlainDateEraIsSet`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\ApiGapsTest::testPlainDateEraYearIsNullForIso`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\ApiGapsTest::testPlainDateEraYearIsSet`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\ApiGapsTest::testPlainDateMonthCodeIsSet`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\ApiGapsTest::testPlainDateMonthCode`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\ApiGapsTest::testPlainDateMonthsInYearIsSet`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\ApiGapsTest::testPlainDateMonthsInYear`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\ApiGapsTest::testPlainDateWithCalendarObject`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\ApiGapsTest::testPlainDateWithCalendarProtocol`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\ApiGapsTest::testPlainDateWithCalendarReturnsSameYearMonthDay`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\ApiGapsTest::testPlainDateWithCalendarStringGregory`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\ApiGapsTest::testPlainDateWithCalendarStringIso`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\ApiGapsTest::testPlainDateWithCalendarThrowsForUnknown`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\ApiGapsTest::testPlainDateWithGregoryCalendarBceEraYear`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\ApiGapsTest::testPlainDateWithGregoryCalendarBceEra`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\ApiGapsTest::testPlainDateWithGregoryCalendarEraYear`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\ApiGapsTest::testPlainDateWithGregoryCalendarEra`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\ApiGapsTest::testPlainDateWithGregoryCalendarMonthCode`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\ApiGapsTest::testZonedDateTimeMonthCodeMarch`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `Temporal\Exception\UnsupportedCalendarException` in `Temporal\Tests\ApiGapsTest::testPlainMonthDayWithCalendarIso`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `Temporal\Exception\UnsupportedCalendarException` in `Temporal\Tests\ApiGapsTest::testPlainMonthDayWithCalendarObject`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `Temporal\Exception\UnsupportedCalendarException` in `Temporal\Tests\ApiGapsTest::testPlainMonthDayWithCalendarProtocol`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `Temporal\Exception\UnsupportedCalendarException` in `Temporal\Tests\ApiGapsTest::testPlainMonthDayWithCalendarThrowsForNonIso`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `Temporal\Exception\UnsupportedCalendarException` in `Temporal\Tests\ApiGapsTest::testPlainYearMonthWithCalendarIso`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `Temporal\Exception\UnsupportedCalendarException` in `Temporal\Tests\ApiGapsTest::testPlainYearMonthWithCalendarObject`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `Temporal\Exception\UnsupportedCalendarException` in `Temporal\Tests\ApiGapsTest::testPlainYearMonthWithCalendarProtocol`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `Temporal\Exception\UnsupportedCalendarException` in `Temporal\Tests\ApiGapsTest::testPlainYearMonthWithCalendarThrowsForNonIso`.'
+count = 1
+
+[[issues]]
+file = "tests/ApiGapsTest.php"
+code = "unused-method-call"
+message = "The return value of 'withCalendar' must be used."
+count = 3
+
+[[issues]]
 file = "tests/CalendarTest.php"
 code = "possibly-undefined-array-index"
 message = "Possibly undefined array key `string('day')` accessed on `array<string, int>`."

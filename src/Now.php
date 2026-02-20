@@ -108,4 +108,28 @@ final class Now
     {
         return self::zonedDateTimeISO($timeZone)->toPlainTime();
     }
+
+    /**
+     * Return the current year-month as a PlainYearMonth in the given timezone.
+     *
+     * Corresponds to Temporal.Now.plainYearMonthISO() in the TC39 proposal.
+     *
+     * @param TimeZone|string|null $timeZone Timezone; defaults to system timezone.
+     */
+    public static function plainYearMonthISO(TimeZone|string|null $timeZone = null): PlainYearMonth
+    {
+        return self::zonedDateTimeISO($timeZone)->toPlainYearMonth();
+    }
+
+    /**
+     * Return the current month-day as a PlainMonthDay in the given timezone.
+     *
+     * Corresponds to Temporal.Now.plainMonthDayISO() in the TC39 proposal.
+     *
+     * @param TimeZone|string|null $timeZone Timezone; defaults to system timezone.
+     */
+    public static function plainMonthDayISO(TimeZone|string|null $timeZone = null): PlainMonthDay
+    {
+        return self::zonedDateTimeISO($timeZone)->toPlainMonthDay();
+    }
 }

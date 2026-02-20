@@ -7,17 +7,21 @@ namespace Temporal;
 use Temporal\Exception\DateRangeException;
 use Temporal\Exception\InvalidTemporalStringException;
 use Temporal\Exception\MissingFieldException;
+use Temporal\Exception\UnsupportedCalendarException;
 
 /**
  * Represents a calendar year-month combination with no day, time, or time zone.
  *
  * Immutable. Corresponds to the Temporal.PlainYearMonth type in the TC39 proposal.
  *
- * @property-read string $calendarId   Always 'iso8601'.
- * @property-read int    $daysInMonth  Number of days in the month.
- * @property-read int    $daysInYear   Number of days in the year (365 or 366).
- * @property-read bool   $inLeapYear   Whether the year is a leap year.
- * @property-read int    $monthsInYear Number of months in the year (always 12).
+ * @property-read string      $calendarId    Always 'iso8601'.
+ * @property-read string      $monthCode     Calendar month code (e.g. 'M01').
+ * @property-read string|null $era           Era name, or null for ISO 8601.
+ * @property-read int|null    $eraYear       Year within the era, or null for ISO 8601.
+ * @property-read int         $daysInMonth   Number of days in the month.
+ * @property-read int         $daysInYear    Number of days in the year (365 or 366).
+ * @property-read bool        $inLeapYear    Whether the year is a leap year.
+ * @property-read int         $monthsInYear  Number of months in the year (always 12).
  */
 final class PlainYearMonth implements \JsonSerializable
 {
@@ -80,8 +84,13 @@ final class PlainYearMonth implements \JsonSerializable
 
     public function __get(string $name): mixed
     {
+        $cal = IsoCalendar::instance();
+
         return match ($name) {
             'calendarId' => 'iso8601',
+            'monthCode' => $cal->monthCode($this->year, $this->month, 1),
+            'era' => $cal->era($this->year, $this->month, 1),
+            'eraYear' => $cal->eraYear($this->year, $this->month, 1),
             'daysInMonth' => IsoCalendar::daysInMonthFor($this->year, $this->month),
             'daysInYear' => IsoCalendar::isLeapYear($this->year) ? 366 : 365,
             'inLeapYear' => IsoCalendar::isLeapYear($this->year),
@@ -96,6 +105,9 @@ final class PlainYearMonth implements \JsonSerializable
             $name,
             [
                 'calendarId',
+                'monthCode',
+                'era',
+                'eraYear',
                 'daysInMonth',
                 'daysInYear',
                 'inLeapYear',
@@ -108,6 +120,31 @@ final class PlainYearMonth implements \JsonSerializable
     // -------------------------------------------------------------------------
     // Mutation (returns new instances)
     // -------------------------------------------------------------------------
+
+    /**
+     * Return a new PlainYearMonth referencing the same year-month in the given calendar.
+     *
+     * Only the ISO 8601 calendar ('iso8601') is currently supported.
+     *
+     * Corresponds to Temporal.PlainYearMonth.prototype.withCalendar() in the TC39 proposal.
+     *
+     * @throws UnsupportedCalendarException if a non-ISO calendar is requested.
+     */
+    #[\NoDiscard]
+    public function withCalendar(CalendarProtocol|Calendar|string $calendar): self
+    {
+        $id = match (true) {
+            $calendar instanceof CalendarProtocol => $calendar->getId(),
+            $calendar instanceof Calendar => $calendar->id,
+            default => $calendar
+        };
+
+        if (strtolower($id) !== 'iso8601') {
+            throw UnsupportedCalendarException::unsupported($id);
+        }
+
+        return new self($this->year, $this->month);
+    }
 
     /**
      * Return a new PlainYearMonth with specified fields overridden.

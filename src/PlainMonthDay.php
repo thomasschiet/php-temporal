@@ -7,6 +7,7 @@ namespace Temporal;
 use Temporal\Exception\DateRangeException;
 use Temporal\Exception\InvalidTemporalStringException;
 use Temporal\Exception\MissingFieldException;
+use Temporal\Exception\UnsupportedCalendarException;
 
 /**
  * Represents a calendar month-day combination with no year, time, or time zone.
@@ -16,6 +17,7 @@ use Temporal\Exception\MissingFieldException;
  * The reference year used for validation is 1972 (a leap year), so Feb 29 is valid.
  *
  * @property-read string $calendarId Always 'iso8601'.
+ * @property-read string $monthCode  Calendar month code (e.g. 'M01').
  */
 final class PlainMonthDay implements \JsonSerializable
 {
@@ -98,18 +100,44 @@ final class PlainMonthDay implements \JsonSerializable
     {
         return match ($name) {
             'calendarId' => 'iso8601',
+            'monthCode' => IsoCalendar::instance()->monthCode(self::REFERENCE_YEAR, $this->month, $this->day),
             default => throw new \Error("Undefined property: {$name}")
         };
     }
 
     public function __isset(string $name): bool
     {
-        return $name === 'calendarId';
+        return $name === 'calendarId' || $name === 'monthCode';
     }
 
     // -------------------------------------------------------------------------
     // Mutation (returns new instances)
     // -------------------------------------------------------------------------
+
+    /**
+     * Return a new PlainMonthDay referencing the same month-day in the given calendar.
+     *
+     * Only the ISO 8601 calendar ('iso8601') is currently supported.
+     *
+     * Corresponds to Temporal.PlainMonthDay.prototype.withCalendar() in the TC39 proposal.
+     *
+     * @throws UnsupportedCalendarException if a non-ISO calendar is requested.
+     */
+    #[\NoDiscard]
+    public function withCalendar(CalendarProtocol|Calendar|string $calendar): self
+    {
+        $id = match (true) {
+            $calendar instanceof CalendarProtocol => $calendar->getId(),
+            $calendar instanceof Calendar => $calendar->id,
+            default => $calendar
+        };
+
+        if (strtolower($id) !== 'iso8601') {
+            throw UnsupportedCalendarException::unsupported($id);
+        }
+
+        return new self($this->month, $this->day);
+    }
 
     /**
      * Return a new PlainMonthDay with specified fields overridden.

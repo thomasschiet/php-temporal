@@ -16,30 +16,35 @@ use Temporal\Exception\MissingFieldException;
  *
  * Corresponds to the Temporal.ZonedDateTime type in the TC39 proposal.
  *
- * @property-read string $calendarId
- * @property-read int $epochNanoseconds
- * @property-read int $epochMicroseconds
- * @property-read int $epochMilliseconds
- * @property-read int $epochSeconds
- * @property-read int $offsetNanoseconds
- * @property-read string $offset
- * @property-read int|float $hoursInDay
- * @property-read int $year
- * @property-read int $month
- * @property-read int $day
- * @property-read int $hour
- * @property-read int $minute
- * @property-read int $second
- * @property-read int $millisecond
- * @property-read int $microsecond
- * @property-read int $nanosecond
- * @property-read int $dayOfWeek
- * @property-read int $dayOfYear
- * @property-read int $weekOfYear
- * @property-read int $yearOfWeek
- * @property-read int $daysInMonth
- * @property-read int $daysInYear
- * @property-read bool $inLeapYear
+ * @property-read string      $calendarId
+ * @property-read int         $epochNanoseconds
+ * @property-read int         $epochMicroseconds
+ * @property-read int         $epochMilliseconds
+ * @property-read int         $epochSeconds
+ * @property-read int         $offsetNanoseconds
+ * @property-read string      $offset
+ * @property-read int|float   $hoursInDay
+ * @property-read int         $year
+ * @property-read int         $month
+ * @property-read int         $day
+ * @property-read int         $hour
+ * @property-read int         $minute
+ * @property-read int         $second
+ * @property-read int         $millisecond
+ * @property-read int         $microsecond
+ * @property-read int         $nanosecond
+ * @property-read string      $monthCode
+ * @property-read string|null $era
+ * @property-read int|null    $eraYear
+ * @property-read int         $dayOfWeek
+ * @property-read int         $dayOfYear
+ * @property-read int         $weekOfYear
+ * @property-read int         $yearOfWeek
+ * @property-read int         $daysInWeek
+ * @property-read int         $daysInMonth
+ * @property-read int         $daysInYear
+ * @property-read int         $monthsInYear
+ * @property-read bool        $inLeapYear
  */
 final class ZonedDateTime implements \JsonSerializable
 {
@@ -141,12 +146,17 @@ final class ZonedDateTime implements \JsonSerializable
                 'millisecond',
                 'microsecond',
                 'nanosecond',
+                'monthCode',
+                'era',
+                'eraYear',
                 'dayOfWeek',
                 'dayOfYear',
                 'weekOfYear',
                 'yearOfWeek',
+                'daysInWeek',
                 'daysInMonth',
                 'daysInYear',
+                'monthsInYear',
                 'inLeapYear'
             ],
             true
@@ -546,7 +556,8 @@ final class ZonedDateTime implements \JsonSerializable
             'millisecond' => $pdt->millisecond,
             'microsecond' => $pdt->microsecond,
             'nanosecond' => $pdt->nanosecond,
-            // Delegate computed date fields to PlainDate
+            // Delegate computed date fields to PlainDate or PlainDateTime
+            'monthCode', 'era', 'eraYear', 'daysInWeek', 'monthsInYear' => $pdt->{$name},
             'dayOfWeek',
             'dayOfYear',
             'weekOfYear',
