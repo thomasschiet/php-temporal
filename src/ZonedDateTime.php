@@ -105,7 +105,7 @@ final class ZonedDateTime implements \JsonSerializable
     public function __get(string $name): mixed
     {
         return match ($name) {
-            'calendarId' => 'iso8601',
+            'calendarId' => IsoCalendar::instance()->getId(),
             'epochNanoseconds' => $this->ns,
             'epochMicroseconds' => intdiv($this->ns, 1_000),
             'epochMilliseconds' => intdiv($this->ns, 1_000_000),

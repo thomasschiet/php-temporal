@@ -2,24 +2,6 @@ variant = "loose"
 
 [[issues]]
 file = "src/Calendar.php"
-code = "redundant-cast"
-message = "Redundant cast to `(bool)`: the expression already has this type."
-count = 1
-
-[[issues]]
-file = "src/Calendar.php"
-code = "unhandled-thrown-type"
-message = 'Potentially unhandled exception `RangeException` in `Temporal\Calendar::dateAdd`.'
-count = 1
-
-[[issues]]
-file = "src/Calendar.php"
-code = "unhandled-thrown-type"
-message = 'Potentially unhandled exception `RangeException` in `Temporal\Calendar::dateFromFields`.'
-count = 1
-
-[[issues]]
-file = "src/Calendar.php"
 code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `temporal\exception\invalidoptionexception` in `Temporal\Calendar::dateUntil`.'
 count = 1
@@ -27,26 +9,8 @@ count = 1
 [[issues]]
 file = "src/Calendar.php"
 code = "unhandled-thrown-type"
-message = 'Potentially unhandled exception `temporal\exception\invalidoptionexception` in `Temporal\Calendar::fields`.'
-count = 1
-
-[[issues]]
-file = "src/Calendar.php"
-code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `temporal\exception\invalidoptionexception` in `Temporal\Calendar::validateOverflow`.'
 count = 1
-
-[[issues]]
-file = "src/Calendar.php"
-code = "unhandled-thrown-type"
-message = 'Potentially unhandled exception `temporal\exception\unsupportedcalendarexception` in `Temporal\Calendar::from`.'
-count = 1
-
-[[issues]]
-file = "src/Calendar.php"
-code = "unused-parameter"
-message = "Parameter `$date` is never used."
-count = 2
 
 [[issues]]
 file = "src/Duration.php"
@@ -112,6 +76,42 @@ count = 1
 file = "src/Duration.php"
 code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `DivisionByZeroError` in `Temporal\Duration::roundWithBalance`.'
+count = 1
+
+[[issues]]
+file = "src/Duration.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Duration::daysToFractionalMonths`.'
+count = 1
+
+[[issues]]
+file = "src/Duration.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Duration::daysToFractionalYears`.'
+count = 1
+
+[[issues]]
+file = "src/Duration.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Duration::roundWithRelativeTo`.'
+count = 1
+
+[[issues]]
+file = "src/Duration.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Duration::round`.'
+count = 1
+
+[[issues]]
+file = "src/Duration.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Duration::totalRelativeTo`.'
+count = 1
+
+[[issues]]
+file = "src/Duration.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Duration::total`.'
 count = 1
 
 [[issues]]
@@ -321,6 +321,12 @@ count = 1
 [[issues]]
 file = "src/Instant.php"
 code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Instant::parse`.'
+count = 1
+
+[[issues]]
+file = "src/Instant.php"
+code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `RangeException` in `Temporal\Instant::__toString`.'
 count = 1
 
@@ -358,6 +364,228 @@ count = 1
 file = "src/Instant.php"
 code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `temporal\exception\missingfieldexception` in `Temporal\Instant::toZonedDateTime`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "missing-override-attribute"
+message = 'Missing `#[Override]` attribute on overriding method `Temporal\IsoCalendar::dateAdd`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "missing-override-attribute"
+message = 'Missing `#[Override]` attribute on overriding method `Temporal\IsoCalendar::dateFromFields`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "missing-override-attribute"
+message = 'Missing `#[Override]` attribute on overriding method `Temporal\IsoCalendar::dateUntil`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "missing-override-attribute"
+message = 'Missing `#[Override]` attribute on overriding method `Temporal\IsoCalendar::dayOfWeek`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "missing-override-attribute"
+message = 'Missing `#[Override]` attribute on overriding method `Temporal\IsoCalendar::dayOfYear`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "missing-override-attribute"
+message = 'Missing `#[Override]` attribute on overriding method `Temporal\IsoCalendar::day`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "missing-override-attribute"
+message = 'Missing `#[Override]` attribute on overriding method `Temporal\IsoCalendar::daysInMonth`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "missing-override-attribute"
+message = 'Missing `#[Override]` attribute on overriding method `Temporal\IsoCalendar::daysInWeek`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "missing-override-attribute"
+message = 'Missing `#[Override]` attribute on overriding method `Temporal\IsoCalendar::daysInYear`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "missing-override-attribute"
+message = 'Missing `#[Override]` attribute on overriding method `Temporal\IsoCalendar::eraYear`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "missing-override-attribute"
+message = 'Missing `#[Override]` attribute on overriding method `Temporal\IsoCalendar::era`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "missing-override-attribute"
+message = 'Missing `#[Override]` attribute on overriding method `Temporal\IsoCalendar::fields`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "missing-override-attribute"
+message = 'Missing `#[Override]` attribute on overriding method `Temporal\IsoCalendar::getId`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "missing-override-attribute"
+message = 'Missing `#[Override]` attribute on overriding method `Temporal\IsoCalendar::inLeapYear`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "missing-override-attribute"
+message = 'Missing `#[Override]` attribute on overriding method `Temporal\IsoCalendar::mergeFields`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "missing-override-attribute"
+message = 'Missing `#[Override]` attribute on overriding method `Temporal\IsoCalendar::monthCode`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "missing-override-attribute"
+message = 'Missing `#[Override]` attribute on overriding method `Temporal\IsoCalendar::monthDayFromFields`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "missing-override-attribute"
+message = 'Missing `#[Override]` attribute on overriding method `Temporal\IsoCalendar::month`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "missing-override-attribute"
+message = 'Missing `#[Override]` attribute on overriding method `Temporal\IsoCalendar::monthsInYear`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "missing-override-attribute"
+message = 'Missing `#[Override]` attribute on overriding method `Temporal\IsoCalendar::weekOfYear`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "missing-override-attribute"
+message = 'Missing `#[Override]` attribute on overriding method `Temporal\IsoCalendar::yearMonthFromFields`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "missing-override-attribute"
+message = 'Missing `#[Override]` attribute on overriding method `Temporal\IsoCalendar::yearOfWeek`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "missing-override-attribute"
+message = 'Missing `#[Override]` attribute on overriding method `Temporal\IsoCalendar::year`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "possibly-null-operand"
+message = "Left operand in `>=` comparison might be `null` (type `int|null`)."
+count = 2
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `ArithmeticError` in `Temporal\IsoCalendar::civilToEpochDays`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `ArithmeticError` in `Temporal\IsoCalendar::weekOfYear`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `DivisionByZeroError` in `Temporal\IsoCalendar::civilToEpochDays`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `DivisionByZeroError` in `Temporal\IsoCalendar::weekOfYear`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\IsoCalendar::dateFromFields`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\IsoCalendar::dateUntil`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\IsoCalendar::dateAdd`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\IsoCalendar::dateFromFields`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `Temporal\Exception\DateRangeException` in `Temporal\IsoCalendar::dateAdd`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `Temporal\Exception\DateRangeException` in `Temporal\IsoCalendar::daysInMonth`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `temporal\exception\daterangeexception` in `Temporal\IsoCalendar::dateAdd`.'
+count = 1
+
+[[issues]]
+file = "src/IsoCalendar.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `temporal\exception\invalidoptionexception` in `Temporal\IsoCalendar::fields`.'
+count = 1
+
+[[issues]]
+file = "src/PlainDate.php"
+code = "less-specific-nested-argument-type"
+message = 'Argument type mismatch for argument #2 of `Temporal\CalendarProtocol::dateadd`: expected `array<string, int>`, but provided type `array<string, mixed>` is less specific.'
 count = 1
 
 [[issues]]
@@ -411,18 +639,6 @@ count = 1
 [[issues]]
 file = "src/PlainDate.php"
 code = "unhandled-thrown-type"
-message = 'Potentially unhandled exception `ArithmeticError` in `Temporal\PlainDate::civilToEpochDays`.'
-count = 1
-
-[[issues]]
-file = "src/PlainDate.php"
-code = "unhandled-thrown-type"
-message = 'Potentially unhandled exception `ArithmeticError` in `Temporal\PlainDate::computeWeekOfYear`.'
-count = 1
-
-[[issues]]
-file = "src/PlainDate.php"
-code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `ArithmeticError` in `Temporal\PlainDate::diffWithLargestUnit`.'
 count = 1
 
@@ -430,24 +646,6 @@ count = 1
 file = "src/PlainDate.php"
 code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `ArithmeticError` in `Temporal\PlainDate::fromEpochDays`.'
-count = 1
-
-[[issues]]
-file = "src/PlainDate.php"
-code = "unhandled-thrown-type"
-message = 'Potentially unhandled exception `ArithmeticError` in `Temporal\PlainDate::toEpochDays`.'
-count = 1
-
-[[issues]]
-file = "src/PlainDate.php"
-code = "unhandled-thrown-type"
-message = 'Potentially unhandled exception `DivisionByZeroError` in `Temporal\PlainDate::civilToEpochDays`.'
-count = 1
-
-[[issues]]
-file = "src/PlainDate.php"
-code = "unhandled-thrown-type"
-message = 'Potentially unhandled exception `DivisionByZeroError` in `Temporal\PlainDate::computeWeekOfYear`.'
 count = 1
 
 [[issues]]
@@ -465,7 +663,7 @@ count = 1
 [[issues]]
 file = "src/PlainDate.php"
 code = "unhandled-thrown-type"
-message = 'Potentially unhandled exception `DivisionByZeroError` in `Temporal\PlainDate::toEpochDays`.'
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\PlainDate::fromEpochDays`.'
 count = 1
 
 [[issues]]
@@ -483,6 +681,12 @@ count = 1
 [[issues]]
 file = "src/PlainDate.php"
 code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `Temporal\Exception\DateRangeException` in `Temporal\PlainDate::validateDay`.'
+count = 1
+
+[[issues]]
+file = "src/PlainDate.php"
+code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `temporal\exception\daterangeexception` in `Temporal\PlainDate::validateDay`.'
 count = 1
 
@@ -490,30 +694,6 @@ count = 1
 file = "src/PlainDate.php"
 code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `temporal\exception\daterangeexception` in `Temporal\PlainDate::validateMonth`.'
-count = 1
-
-[[issues]]
-file = "src/PlainDate.php"
-code = "unhandled-thrown-type"
-message = 'Potentially unhandled exception `temporal\exception\invalidoptionexception` in `Temporal\PlainDate::add`.'
-count = 1
-
-[[issues]]
-file = "src/PlainDate.php"
-code = "unhandled-thrown-type"
-message = 'Potentially unhandled exception `temporal\exception\invalidoptionexception` in `Temporal\PlainDate::parseLargestUnit`.'
-count = 1
-
-[[issues]]
-file = "src/PlainDate.php"
-code = "unhandled-thrown-type"
-message = 'Potentially unhandled exception `temporal\exception\invalidtemporalstringexception` in `Temporal\PlainDate::fromString`.'
-count = 1
-
-[[issues]]
-file = "src/PlainDate.php"
-code = "unhandled-thrown-type"
-message = 'Potentially unhandled exception `temporal\exception\missingfieldexception` in `Temporal\PlainDate::from`.'
 count = 1
 
 [[issues]]
@@ -639,6 +819,24 @@ count = 1
 [[issues]]
 file = "src/PlainDateTime.php"
 code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\PlainDateTime::add`.'
+count = 1
+
+[[issues]]
+file = "src/PlainDateTime.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\PlainDateTime::round`.'
+count = 1
+
+[[issues]]
+file = "src/PlainDateTime.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\PlainDateTime::toPlainDate`.'
+count = 1
+
+[[issues]]
+file = "src/PlainDateTime.php"
+code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `RangeException` in `Temporal\PlainDateTime::add`.'
 count = 1
 
@@ -664,6 +862,12 @@ count = 1
 file = "src/PlainDateTime.php"
 code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `RangeException` in `Temporal\PlainDateTime::until`.'
+count = 1
+
+[[issues]]
+file = "src/PlainDateTime.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `Temporal\Exception\DateRangeException` in `Temporal\PlainDateTime::validateDay`.'
 count = 1
 
 [[issues]]
@@ -735,7 +939,19 @@ count = 1
 [[issues]]
 file = "src/PlainMonthDay.php"
 code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\PlainMonthDay::toPlainDate`.'
+count = 1
+
+[[issues]]
+file = "src/PlainMonthDay.php"
+code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `RangeException` in `Temporal\PlainMonthDay::toPlainDate`.'
+count = 1
+
+[[issues]]
+file = "src/PlainMonthDay.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `Temporal\Exception\DateRangeException` in `Temporal\PlainMonthDay::__construct`.'
 count = 1
 
 [[issues]]
@@ -909,7 +1125,19 @@ count = 1
 [[issues]]
 file = "src/PlainYearMonth.php"
 code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\PlainYearMonth::toPlainDate`.'
+count = 1
+
+[[issues]]
+file = "src/PlainYearMonth.php"
+code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `RangeException` in `Temporal\PlainYearMonth::toPlainDate`.'
+count = 1
+
+[[issues]]
+file = "src/PlainYearMonth.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `Temporal\Exception\DateRangeException` in `Temporal\PlainYearMonth::__get`.'
 count = 1
 
 [[issues]]
@@ -1024,6 +1252,12 @@ count = 1
 file = "src/TimeZone.php"
 code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `DivisionByZeroError` in `Temporal\TimeZone::instantToEpochSeconds`.'
+count = 1
+
+[[issues]]
+file = "src/TimeZone.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\TimeZone::plainDateTimeToNaiveEpochNs`.'
 count = 1
 
 [[issues]]
@@ -1227,6 +1461,24 @@ count = 1
 [[issues]]
 file = "src/ZonedDateTime.php"
 code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\ZonedDateTime::computeHoursInDay`.'
+count = 1
+
+[[issues]]
+file = "src/ZonedDateTime.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\ZonedDateTime::parse`.'
+count = 1
+
+[[issues]]
+file = "src/ZonedDateTime.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\ZonedDateTime::roundToDay`.'
+count = 1
+
+[[issues]]
+file = "src/ZonedDateTime.php"
+code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `RangeException` in `Temporal\ZonedDateTime::computeHoursInDay`.'
 count = 1
 
@@ -1276,6 +1528,402 @@ count = 1
 file = "tests/CalendarTest.php"
 code = "possibly-undefined-array-index"
 message = "Possibly undefined array key `string('year')` accessed on `array<string, int>`."
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testDateAddInvalidOverflowThrows`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testDateAddMonths`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testDateAddNegative`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testDateAddWeeks`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testDateAddYears`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testDateAdd`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testDateFromFieldsInvalidOverflowThrows`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testDateFromFieldsLeapDay`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testDateFromFieldsMissingDayThrows`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testDateFromFieldsMissingMonthThrows`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testDateFromFieldsMissingYearThrows`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testDateFromFields`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testDateUntilNegative`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testDateUntilSameDate`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testDateUntil`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testDayFromPlainMonthDay`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testDayOfWeekFromPlainDateTime`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testDayOfWeek`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testDayOfYear`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testDay`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testDaysInMonthFromPlainYearMonth`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testDaysInMonthLeapFebruary`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testDaysInMonthNonLeapFebruary`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testDaysInMonthRegular`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testDaysInWeek`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testDaysInYearLeap`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testDaysInYearNonLeap`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testEquals`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testEraReturnsNull`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testEraYearReturnsNull`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testFieldsInvalidThrows`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testFieldsReturnsIndexedArray`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testFieldsSubset`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testFields`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testFromCalendarCopies`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testFromGregorianThrows`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testFromIso8601CaseInsensitive`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testFromIso8601`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testFromUnknownCalendarThrows`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testIdProperty`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testInLeapYearFalse`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testInLeapYearFromPlainYearMonth`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testInLeapYearTrue`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testMergeFieldsAdditionalTakesPrecedence`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testMergeFields`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testMonthCodeDoubleDigit`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testMonthCodeFromPlainDateTime`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testMonthCodeFromPlainMonthDay`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testMonthCodeSingleDigit`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testMonthDayFromFieldsInvalidOverflowThrows`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testMonthDayFromFieldsMissingDayThrows`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testMonthDayFromFieldsMissingMonthThrows`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testMonthDayFromFields`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testMonthFromPlainMonthDay`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testMonth`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testMonthsInYear`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testPlainDateCalendarId`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testToString`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testWeekOfYear`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testYearFromPlainDateTime`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testYearFromPlainYearMonth`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testYearMonthFromFieldsInvalidOverflowThrows`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testYearMonthFromFieldsMissingMonthThrows`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testYearMonthFromFieldsMissingYearThrows`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testYearMonthFromFields`.'
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\CalendarTest::testYear`.'
 count = 1
 
 [[issues]]
@@ -3715,6 +4363,480 @@ message = "The return value of 'toZonedDateTime' must be used."
 count = 2
 
 [[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\IsoCalendarTest::testCalendarFromIso8601HasCorrectId`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\IsoCalendarTest::testCalendarGetProtocolIsIsoCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\IsoCalendarTest::testCalendarGetProtocol`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\IsoCalendarTest::testDateAddDays`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\IsoCalendarTest::testDateAddMonthsConstrain`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\IsoCalendarTest::testDateAddWeeks`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\IsoCalendarTest::testDateAddYears`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\IsoCalendarTest::testDateUntilDays`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\IsoCalendarTest::testDateUntilYears`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\IsoCalendarTest::testPlainDateCalendarIdIsIso8601`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\Exception` in `Temporal\Tests\IsoCalendarTest::testCalendarGetProtocolIsIsoCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\Exception` in `Temporal\Tests\IsoCalendarTest::testCalendarGetProtocol`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\Exception` in `Temporal\Tests\IsoCalendarTest::testImplementsCalendarProtocol`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testCalendarFromIso8601HasCorrectId`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testCalendarGetProtocolIsIsoCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testCalendarGetProtocol`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testDateAddDays`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testDateAddMonthsConstrain`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testDateAddWeeks`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testDateAddYears`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testDateFromFields`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testDateUntilDays`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testDateUntilYears`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testDayOfWeekFriday`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testDayOfWeekMonday`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testDayOfWeekSunday`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testDayOfYearLeapFeb29`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testDayOfYear`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testDayReturnsIsoDay`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testDaysInMonthFor30DayMonths`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testDaysInMonthFor31DayMonths`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testDaysInMonthForFebruaryLeap`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testDaysInMonthForFebruaryNonLeap`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testDaysInMonthLeapFebruary`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testDaysInMonthMarch`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testDaysInMonthNonLeapFebruary`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testDaysInWeek`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testDaysInYearLeap`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testDaysInYearNonLeap`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testEraReturnsNull`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testEraYearReturnsNull`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testFieldsSubset`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testFieldsValidReturnsIndexed`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testGetId`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testImplementsCalendarProtocol`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testInLeapYearFalse`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testInLeapYearTrue`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testIsLeapYear400Divisible`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testIsLeapYearCenturyNotLeap`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testIsLeapYearDivisibleBy4`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testIsLeapYearNonLeap`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testMergeFields`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testMonthCodeDoubleDigit`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testMonthCodeJanuary`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testMonthCodeSingleDigit`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testMonthDayFromFields`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testMonthReturnsIsoMonth`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testMonthsInYear`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testPlainDateCalendarIdIsIso8601`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testSingletonReturnsSameInstance`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testWeekOfYear`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testYearMonthFromFields`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testYearOfWeekBoundary`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testYearOfWeek`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\ExpectationFailedException` in `Temporal\Tests\IsoCalendarTest::testYearReturnsIsoYear`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\UnknownClassOrInterfaceException` in `Temporal\Tests\IsoCalendarTest::testCalendarGetProtocolIsIsoCalendar`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\UnknownClassOrInterfaceException` in `Temporal\Tests\IsoCalendarTest::testCalendarGetProtocol`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `PHPUnit\Framework\UnknownClassOrInterfaceException` in `Temporal\Tests\IsoCalendarTest::testImplementsCalendarProtocol`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\IsoCalendarTest::testDateAddDays`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\IsoCalendarTest::testDateAddMonthsConstrain`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\IsoCalendarTest::testDateAddWeeks`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\IsoCalendarTest::testDateAddYears`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\IsoCalendarTest::testDateUntilDays`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\IsoCalendarTest::testDateUntilYears`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RangeException` in `Temporal\Tests\IsoCalendarTest::testPlainDateCalendarIdIsIso8601`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `Temporal\Exception\DateRangeException` in `Temporal\Tests\IsoCalendarTest::testDaysInMonthFor30DayMonths`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `Temporal\Exception\DateRangeException` in `Temporal\Tests\IsoCalendarTest::testDaysInMonthFor31DayMonths`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `Temporal\Exception\DateRangeException` in `Temporal\Tests\IsoCalendarTest::testDaysInMonthForFebruaryLeap`.'
+count = 1
+
+[[issues]]
+file = "tests/IsoCalendarTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `Temporal\Exception\DateRangeException` in `Temporal\Tests\IsoCalendarTest::testDaysInMonthForFebruaryNonLeap`.'
+count = 1
+
+[[issues]]
 file = "tests/NowTest.php"
 code = "redundant-type-comparison"
 message = "Redundant type assertion: `$id` of type `string` is always not `string`."
@@ -3928,6 +5050,60 @@ count = 1
 file = "tests/NowTest.php"
 code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\UnknownClassOrInterfaceException` in `Temporal\Tests\NowTest::testZonedDateTimeISOReturnsZonedDateTime`.'
+count = 1
+
+[[issues]]
+file = "tests/ParsingTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ParsingTest::test_plain_date_from_datetime_string`.'
+count = 1
+
+[[issues]]
+file = "tests/ParsingTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ParsingTest::test_plain_date_from_datetime_with_calendar_annotation`.'
+count = 1
+
+[[issues]]
+file = "tests/ParsingTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ParsingTest::test_plain_date_from_datetime_with_fraction`.'
+count = 1
+
+[[issues]]
+file = "tests/ParsingTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ParsingTest::test_plain_date_from_datetime_with_multiple_annotations`.'
+count = 1
+
+[[issues]]
+file = "tests/ParsingTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ParsingTest::test_plain_date_from_datetime_with_numeric_offset`.'
+count = 1
+
+[[issues]]
+file = "tests/ParsingTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ParsingTest::test_plain_date_from_datetime_with_timezone_annotation`.'
+count = 1
+
+[[issues]]
+file = "tests/ParsingTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ParsingTest::test_plain_date_from_datetime_with_z_offset`.'
+count = 1
+
+[[issues]]
+file = "tests/ParsingTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ParsingTest::test_plain_date_from_string_with_iso_calendar_annotation`.'
+count = 1
+
+[[issues]]
+file = "tests/ParsingTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ParsingTest::test_plain_date_rejects_invalid_string`.'
 count = 1
 
 [[issues]]
@@ -4167,6 +5343,480 @@ count = 1
 [[issues]]
 file = "tests/PlainDateTest.php"
 code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testAddConstrainsEndOfMonth`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testAddDaysRollsOverMonth`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testAddDays`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testAddExceedsMaxBoundsThrows`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testAddExceedsMinBoundsThrows`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testAddInvalidOverflowThrows`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testAddIsImmutable`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testAddMatrix`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testAddMonthLeapYearConstrainsFebTo29`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testAddMonthLeapYearOverflowRejectAllowed`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testAddMonthLeapYearOverflowRejectThrows`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testAddMonthOverflowConstrainDefault`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testAddMonthOverflowConstrainExplicit`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testAddMonthOverflowRejectThrows`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testAddMonthsRollsOverYear`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testAddMonths`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testAddThreeMonthsConstrainNoOverflow`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testAddThreeMonthsRejectThrows`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testAddWeeks`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testAddYears`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testCompareEqual`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testCompareGreaterThan`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testCompareLessThan`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testConstructBeyondMaxThrows`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testConstructBeyondMinThrows`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testConstructMaxBoundary`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testConstructMinBoundary`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testConstructorBasic`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testConstructorEpoch`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testConstructorInvalidDayForMonth`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testConstructorInvalidDayTooLarge`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testConstructorInvalidDayZero`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testConstructorInvalidLeapDay`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testConstructorInvalidMonthThirteen`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testConstructorInvalidMonthZero`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testConstructorLeapDay`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testConstructorNegativeYear`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testDayOfWeekMonday`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testDayOfWeekSunday`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testDayOfYearDec31LeapYear`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testDayOfYearDec31NonLeapYear`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testDayOfYearFebInLeapYear`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testDayOfYearJan1`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testDaysInMonthFebruaryLeapYear`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testDaysInMonthFebruaryNonLeapYear`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testDaysInMonthJanuary`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testDaysInYear`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testEpochDaysEpoch`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testEpochDaysNegative`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testEpochDaysPositive`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testEqualsYearDiffers`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testEquals`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testFromArray`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testFromEpochDaysRoundTrip`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testFromPlainDate`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testFromStringNegativeYear`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testFromString`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testInLeapYear`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testSinceLargestUnitMonth`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testSincePastDate`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testSubtractDaysRollsBackMonth`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testSubtractDays`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testSubtractMonthOverflowConstrainDefault`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testSubtractMonthOverflowRejectThrows`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testSubtractMonths`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testSubtractYears`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testToPlainDateTimePreservesSubSeconds`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testToPlainDateTimeWithNullDefaultsMidnight`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testToPlainDateTimeWithTime`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testToPlainDateTimeWithoutTimeDefaultsMidnight`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testToPlainMonthDayIgnoresYear`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testToPlainMonthDay`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testToPlainYearMonthIgnoresDay`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testToPlainYearMonth`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testToStringLargeYear`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testToStringNegativeYear`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testToStringPadsMonthAndDay`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testToStringYearZero`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testToString`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testToZonedDateTimeDefaultsMidnight`.'
 count = 1
 
@@ -4210,6 +5860,138 @@ count = 1
 file = "tests/PlainDateTest.php"
 code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testToZonedDateTimeWithTimezoneObject`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testUntilDefaultLargestUnit`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testUntilFutureDate`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testUntilInvalidLargestUnit`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testUntilLargestUnitMonthWithRemainder`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testUntilLargestUnitMonth`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testUntilLargestUnitNegative`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testUntilLargestUnitStringArg`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testUntilLargestUnitWeekWithRemainder`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testUntilLargestUnitWeek`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testUntilLargestUnitYear`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testUntilSameDate`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testWeekOfYearLastWeek`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testWeekOfYear`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testWithDay`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testWithMonth`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testWithYear`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testYearOfWeekEarlyJanuary`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testYearOfWeekFirstWeekOfYear`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testYearOfWeekJanInWeek52`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testYearOfWeekLateDec_SameYear`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testYearOfWeekLateDecember`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainDateTest::testYearOfWeekNormalDate`.'
 count = 1
 
 [[issues]]
@@ -5577,6 +7359,12 @@ count = 1
 [[issues]]
 file = "tests/PlainDateTimeTest.php"
 code = "unhandled-thrown-type"
+message = "Potentially unhandled exception `InvalidArgumentException` in `PlainDateTimeTest::testWithPlainDate`."
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTimeTest.php"
+code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\Exception` in `PlainDateTimeTest::testToPlainDate`.'
 count = 1
 
@@ -6568,6 +8356,24 @@ count = 1
 file = "tests/PlainTimeTest.php"
 code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainTimeTest::testSince`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainTimeTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainTimeTest::testToPlainDateTimeCombineTimeAndDate`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainTimeTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainTimeTest::testToPlainDateTimeMidnight`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainTimeTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\PlainTimeTest::testToPlainDateTimePreservesSubSeconds`.'
 count = 1
 
 [[issues]]
@@ -8272,6 +10078,18 @@ count = 1
 file = "tests/TimeZoneTest.php"
 code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `PHPUnit\Framework\GeneratorNotSupportedException` in `Temporal\Tests\TimeZoneTest::testGetPossibleInstantsForUtcAlwaysReturnsOne`.'
+count = 1
+
+[[issues]]
+file = "tests/ZonedDateTimeTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ZonedDateTimeTest::testWithPlainDatePreservesSubSeconds`.'
+count = 1
+
+[[issues]]
+file = "tests/ZonedDateTimeTest.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `InvalidArgumentException` in `Temporal\Tests\ZonedDateTimeTest::testWithPlainDateReplacesDate`.'
 count = 1
 
 [[issues]]

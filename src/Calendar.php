@@ -8,24 +8,27 @@ use Temporal\Exception\InvalidOptionException;
 use Temporal\Exception\UnsupportedCalendarException;
 
 /**
- * Represents the ISO 8601 calendar system.
+ * Facade over a CalendarProtocol implementation.
  *
  * Immutable. Corresponds to the Temporal.Calendar type in the TC39 proposal.
- * Only the ISO 8601 calendar is supported; other calendar systems may be
- * added in future versions.
+ * Currently only the ISO 8601 calendar is supported; other calendar systems
+ * may be added via CalendarProtocol implementations in future versions.
  */
 final class Calendar
 {
     /** The calendar identifier, e.g. "iso8601". */
     public readonly string $id;
 
-    private function __construct(string $id)
+    private readonly CalendarProtocol $protocol;
+
+    private function __construct(CalendarProtocol $protocol)
     {
-        $this->id = $id;
+        $this->protocol = $protocol;
+        $this->id = $protocol->getId();
     }
 
     // -------------------------------------------------------------------------
-    // Static constructor
+    // Static constructor / factory
     // -------------------------------------------------------------------------
 
     /**
@@ -33,21 +36,36 @@ final class Calendar
      *
      * Accepted identifiers (case-insensitive): "iso8601".
      *
-     * @throws InvalidArgumentException for unsupported calendar systems.
+     * @throws \InvalidArgumentException for unsupported calendar systems.
      */
     public static function from(string|self $item): self
     {
         if ($item instanceof self) {
-            return new self($item->id);
+            return new self($item->protocol);
         }
 
         $normalized = strtolower($item);
 
         if ($normalized === 'iso8601') {
-            return new self('iso8601');
+            return new self(IsoCalendar::instance());
         }
 
         throw UnsupportedCalendarException::unsupported($item);
+    }
+
+    // -------------------------------------------------------------------------
+    // Protocol access
+    // -------------------------------------------------------------------------
+
+    /**
+     * Return the underlying CalendarProtocol implementation.
+     *
+     * Provides access to protocol methods that accept raw ISO fields rather
+     * than temporal objects.
+     */
+    public function getProtocol(): CalendarProtocol
+    {
+        return $this->protocol;
     }
 
     // -------------------------------------------------------------------------
@@ -55,7 +73,7 @@ final class Calendar
     // -------------------------------------------------------------------------
 
     /**
-     * Returns true if this calendar is the same as the other.
+     * Returns true if this calendar has the same identifier as the other.
      */
     public function equals(self $other): bool
     {
@@ -85,7 +103,7 @@ final class Calendar
     {
         self::validateOverflow($overflow);
 
-        return PlainDate::from($fields);
+        return $this->protocol->dateFromFields($fields, $overflow);
     }
 
     /**
@@ -98,7 +116,7 @@ final class Calendar
     {
         self::validateOverflow($overflow);
 
-        return PlainYearMonth::from($fields);
+        return $this->protocol->yearMonthFromFields($fields, $overflow);
     }
 
     /**
@@ -111,7 +129,7 @@ final class Calendar
     {
         self::validateOverflow($overflow);
 
-        return PlainMonthDay::from($fields);
+        return $this->protocol->monthDayFromFields($fields, $overflow);
     }
 
     // -------------------------------------------------------------------------
@@ -127,12 +145,16 @@ final class Calendar
     {
         self::validateOverflow($overflow);
 
-        return $date->add([
-            'years' => $duration->years,
-            'months' => $duration->months,
-            'weeks' => $duration->weeks,
-            'days' => $duration->days
-        ]);
+        return $this->protocol->dateAdd(
+            $date,
+            [
+                'years' => $duration->years,
+                'months' => $duration->months,
+                'weeks' => $duration->weeks,
+                'days' => $duration->days
+            ],
+            $overflow
+        );
     }
 
     /**
@@ -148,7 +170,7 @@ final class Calendar
             throw InvalidOptionException::invalidLargestUnit($largestUnit, 'dateUntil()', $validUnits);
         }
 
-        return $one->until($two);
+        return $this->protocol->dateUntil($one, $two, $largestUnit);
     }
 
     // -------------------------------------------------------------------------
@@ -162,31 +184,23 @@ final class Calendar
      *
      * @param  list<string> $fields
      * @return list<string>
-     * @throws InvalidArgumentException for unknown field names.
+     * @throws \InvalidArgumentException for unknown field names.
      */
     public function fields(array $fields): array
     {
-        $valid = ['year', 'month', 'day'];
-
-        foreach ($fields as $field) {
-            if (!in_array($field, $valid, true)) {
-                throw InvalidOptionException::unknownCalendarField($field, $valid);
-            }
-        }
-
-        return array_values($fields);
+        return $this->protocol->fields($fields);
     }
 
     /**
      * Merge two field arrays, with additional fields taking precedence.
      *
-     * @param  array<string,int> $fields
-     * @param  array<string,int> $additionalFields
-     * @return array<string,int>
+     * @param  array<string, int> $fields
+     * @param  array<string, int> $additionalFields
+     * @return array<string, int>
      */
     public function mergeFields(array $fields, array $additionalFields): array
     {
-        return array_merge($fields, $additionalFields);
+        return $this->protocol->mergeFields($fields, $additionalFields);
     }
 
     // -------------------------------------------------------------------------
@@ -194,19 +208,23 @@ final class Calendar
     // -------------------------------------------------------------------------
 
     /**
-     * Return the year from a date-like object.
+     * Return the calendar-relative year from a date-like object.
      */
     public function year(PlainDate|PlainDateTime|PlainYearMonth $date): int
     {
-        return $date->year;
+        $iso = $date->getISOFields();
+
+        return $this->protocol->year($iso['isoYear'], $iso['isoMonth'], $iso['isoDay']);
     }
 
     /**
-     * Return the month from a date-like or month-day object.
+     * Return the calendar-relative month from a date-like or month-day object.
      */
     public function month(PlainDate|PlainDateTime|PlainYearMonth|PlainMonthDay $date): int
     {
-        return $date->month;
+        $iso = $date->getISOFields();
+
+        return $this->protocol->month($iso['isoYear'], $iso['isoMonth'], $iso['isoDay']);
     }
 
     /**
@@ -214,15 +232,19 @@ final class Calendar
      */
     public function monthCode(PlainDate|PlainDateTime|PlainYearMonth|PlainMonthDay $date): string
     {
-        return 'M' . str_pad((string) $date->month, 2, '0', STR_PAD_LEFT);
+        $iso = $date->getISOFields();
+
+        return $this->protocol->monthCode($iso['isoYear'], $iso['isoMonth'], $iso['isoDay']);
     }
 
     /**
-     * Return the day-of-month from a date-like or month-day object.
+     * Return the calendar-relative day-of-month from a date-like or month-day object.
      */
     public function day(PlainDate|PlainDateTime|PlainMonthDay $date): int
     {
-        return $date->day;
+        $iso = $date->getISOFields();
+
+        return $this->protocol->day($iso['isoYear'], $iso['isoMonth'], $iso['isoDay']);
     }
 
     /**
@@ -230,7 +252,9 @@ final class Calendar
      */
     public function dayOfWeek(PlainDate|PlainDateTime $date): int
     {
-        return (int) $date->dayOfWeek;
+        $iso = $date->getISOFields();
+
+        return $this->protocol->dayOfWeek($iso['isoYear'], $iso['isoMonth'], $iso['isoDay']);
     }
 
     /**
@@ -238,7 +262,9 @@ final class Calendar
      */
     public function dayOfYear(PlainDate|PlainDateTime $date): int
     {
-        return (int) $date->dayOfYear;
+        $iso = $date->getISOFields();
+
+        return $this->protocol->dayOfYear($iso['isoYear'], $iso['isoMonth'], $iso['isoDay']);
     }
 
     /**
@@ -246,7 +272,9 @@ final class Calendar
      */
     public function weekOfYear(PlainDate|PlainDateTime $date): int
     {
-        return (int) $date->weekOfYear;
+        $iso = $date->getISOFields();
+
+        return (int) $this->protocol->weekOfYear($iso['isoYear'], $iso['isoMonth'], $iso['isoDay']);
     }
 
     /**
@@ -254,7 +282,7 @@ final class Calendar
      */
     public function daysInWeek(): int
     {
-        return 7;
+        return $this->protocol->daysInWeek();
     }
 
     /**
@@ -262,7 +290,9 @@ final class Calendar
      */
     public function daysInMonth(PlainDate|PlainDateTime|PlainYearMonth $date): int
     {
-        return (int) $date->daysInMonth;
+        $iso = $date->getISOFields();
+
+        return $this->protocol->daysInMonth($iso['isoYear'], $iso['isoMonth'], $iso['isoDay']);
     }
 
     /**
@@ -270,7 +300,9 @@ final class Calendar
      */
     public function daysInYear(PlainDate|PlainDateTime|PlainYearMonth $date): int
     {
-        return (int) $date->daysInYear;
+        $iso = $date->getISOFields();
+
+        return $this->protocol->daysInYear($iso['isoYear'], $iso['isoMonth'], $iso['isoDay']);
     }
 
     /**
@@ -278,7 +310,7 @@ final class Calendar
      */
     public function monthsInYear(): int
     {
-        return 12;
+        return $this->protocol->monthsInYear();
     }
 
     /**
@@ -286,7 +318,9 @@ final class Calendar
      */
     public function inLeapYear(PlainDate|PlainDateTime|PlainYearMonth $date): bool
     {
-        return (bool) $date->inLeapYear;
+        $iso = $date->getISOFields();
+
+        return $this->protocol->inLeapYear($iso['isoYear'], $iso['isoMonth'], $iso['isoDay']);
     }
 
     /**
@@ -296,7 +330,9 @@ final class Calendar
      */
     public function era(PlainDate|PlainDateTime|PlainYearMonth $date): ?string
     {
-        return null;
+        $iso = $date->getISOFields();
+
+        return $this->protocol->era($iso['isoYear'], $iso['isoMonth'], $iso['isoDay']);
     }
 
     /**
@@ -306,7 +342,9 @@ final class Calendar
      */
     public function eraYear(PlainDate|PlainDateTime|PlainYearMonth $date): ?int
     {
-        return null;
+        $iso = $date->getISOFields();
+
+        return $this->protocol->eraYear($iso['isoYear'], $iso['isoMonth'], $iso['isoDay']);
     }
 
     // -------------------------------------------------------------------------

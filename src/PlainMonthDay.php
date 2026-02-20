@@ -31,7 +31,7 @@ final class PlainMonthDay implements \JsonSerializable
             throw DateRangeException::monthOutOfRange($month);
         }
 
-        $max = self::daysInMonthFor(self::REFERENCE_YEAR, $month);
+        $max = IsoCalendar::daysInMonthFor(self::REFERENCE_YEAR, $month);
 
         if ($day < 1 || $day > $max) {
             throw DateRangeException::dayOutOfRangeForMonth($day, $month, $max);
@@ -186,24 +186,5 @@ final class PlainMonthDay implements \JsonSerializable
     public function __toString(): string
     {
         return sprintf('%02d-%02d', $this->month, $this->day);
-    }
-
-    // -------------------------------------------------------------------------
-    // Private helpers
-    // -------------------------------------------------------------------------
-
-    private static function daysInMonthFor(int $year, int $month): int
-    {
-        return match ($month) {
-            1, 3, 5, 7, 8, 10, 12 => 31,
-            4, 6, 9, 11 => 30,
-            2 => self::isLeapYear($year) ? 29 : 28,
-            default => throw DateRangeException::invalidMonth($month)
-        };
-    }
-
-    private static function isLeapYear(int $year): bool
-    {
-        return ( $year % 4 ) === 0 && ( $year % 100 ) !== 0 || ( $year % 400 ) === 0;
     }
 }

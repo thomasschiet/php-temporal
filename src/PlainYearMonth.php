@@ -82,9 +82,9 @@ final class PlainYearMonth implements \JsonSerializable
     {
         return match ($name) {
             'calendarId' => 'iso8601',
-            'daysInMonth' => self::daysInMonthFor($this->year, $this->month),
-            'daysInYear' => self::isLeapYear($this->year) ? 366 : 365,
-            'inLeapYear' => self::isLeapYear($this->year),
+            'daysInMonth' => IsoCalendar::daysInMonthFor($this->year, $this->month),
+            'daysInYear' => IsoCalendar::isLeapYear($this->year) ? 366 : 365,
+            'inLeapYear' => IsoCalendar::isLeapYear($this->year),
             'monthsInYear' => 12,
             default => throw new \Error("Undefined property: {$name}")
         };
@@ -280,24 +280,5 @@ final class PlainYearMonth implements \JsonSerializable
         }
 
         return sprintf('%s-%02d', $yearStr, $this->month);
-    }
-
-    // -------------------------------------------------------------------------
-    // Private helpers
-    // -------------------------------------------------------------------------
-
-    private static function daysInMonthFor(int $year, int $month): int
-    {
-        return match ($month) {
-            1, 3, 5, 7, 8, 10, 12 => 31,
-            4, 6, 9, 11 => 30,
-            2 => self::isLeapYear($year) ? 29 : 28,
-            default => throw DateRangeException::invalidMonth($month)
-        };
-    }
-
-    private static function isLeapYear(int $year): bool
-    {
-        return ( $year % 4 ) === 0 && ( $year % 100 ) !== 0 || ( $year % 400 ) === 0;
     }
 }

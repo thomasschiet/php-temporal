@@ -582,7 +582,8 @@ final class PlainDateTime implements \JsonSerializable
 
     private static function validateDay(int $year, int $month, int $day): void
     {
-        $max = self::daysInMonthFor($year, $month);
+        $max = IsoCalendar::daysInMonthFor($year, $month);
+
         if ($day < 1 || $day > $max) {
             throw DateRangeException::dayOutOfRange($day, $year, $month, $max);
         }
@@ -593,21 +594,6 @@ final class PlainDateTime implements \JsonSerializable
         if ($value < $min || $value > $max) {
             throw DateRangeException::fieldOutOfRange($field, $value, $min, $max);
         }
-    }
-
-    private static function daysInMonthFor(int $year, int $month): int
-    {
-        return match ($month) {
-            1, 3, 5, 7, 8, 10, 12 => 31,
-            4, 6, 9, 11 => 30,
-            2 => self::isLeapYear($year) ? 29 : 28,
-            default => throw DateRangeException::invalidMonth($month)
-        };
-    }
-
-    private static function isLeapYear(int $year): bool
-    {
-        return ( $year % 4 ) === 0 && ( $year % 100 ) !== 0 || ( $year % 400 ) === 0;
     }
 
     /** Round ns to nearest multiple of step using half-expand (round half away from zero toward +∞). */

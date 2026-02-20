@@ -4,6 +4,17 @@
 
 ## Completed Tasks
 
+- **Multi-calendar support infrastructure** (CalendarProtocol refactoring):
+  - Created `CalendarProtocol` interface (`src/CalendarProtocol.php`) — defines the contract for all calendar implementations
+  - Created `IsoCalendar` class (`src/IsoCalendar.php`) — singleton implementing CalendarProtocol; centralises all ISO field logic previously duplicated across PlainDate, PlainYearMonth, PlainMonthDay, and PlainDateTime
+  - Refactored `Calendar` (`src/Calendar.php`) — now a thin facade wrapping a `CalendarProtocol`; exposes `getProtocol()` for direct protocol access; breaks the old circular dependency where `Calendar::dateAdd()` called `PlainDate::add()`
+  - Refactored `PlainDate` — stores a `CalendarProtocol $calendar` (default `IsoCalendar`), delegates all computed property calculations (`daysInMonth`, `dayOfWeek`, etc.) and date arithmetic (`add()`) through the protocol; `__toString()` appends `[u-ca=calId]` for non-ISO calendars
+  - Removed duplicated private `isLeapYear()` / `daysInMonthFor()` from PlainDate, PlainYearMonth, PlainMonthDay, and PlainDateTime — all now call `IsoCalendar::*` static helpers
+  - `ZonedDateTime::calendarId` now returns `IsoCalendar::instance()->getId()` instead of a hardcoded string
+  - Added `IsoCalendarTest` (53 tests) covering singleton, CalendarProtocol contract, all field queries, arithmetic, factory methods, and field helpers
+- **5391 tests passing** (1185 core + 4204 test262 data-driven, 2 skipped), 0 mago errors
+- **mago-baseline.json** updated to cover 1860 pre-existing test-file suppressions
+
 - **5220 tests passing** (1016 core + 4202 test262 data-driven, 2 skipped), 0 new mago errors
 - **mago baseline** covers 169 pre-existing test-file warnings (NoDiscard in exception tests)
 - **All TC39 Temporal API surface covered**:
@@ -57,5 +68,6 @@
 ## Next Tasks
 
 - **All planned tasks are complete.** The full TC39 Temporal API surface is implemented,
-  tested with 5338 tests (including 4204 test262 data-driven), documented, and mutation-tested.
+  tested with 5391 tests (including 4204 test262 data-driven), documented, mutation-tested,
+  and refactored to support the multi-calendar CalendarProtocol infrastructure.
   See Stopping Condition in agent prompt.

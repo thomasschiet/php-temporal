@@ -14,7 +14,10 @@ use Temporal\Exception\MissingFieldException;
  *
  * Immutable. Corresponds to the Temporal.PlainDate type in the TC39 proposal.
  *
- * @property-read string $calendarId  Always 'iso8601'.
+ * Stores ISO 8601 fields internally. The attached CalendarProtocol translates
+ * those fields to calendar-relative values (always identity for ISO 8601).
+ *
+ * @property-read string $calendarId  Calendar identifier (e.g. 'iso8601').
  * @property-read int    $dayOfWeek   ISO day of week: Monday = 1, …, Sunday = 7.
  * @property-read int    $dayOfYear   Day of year (1-based).
  * @property-read int    $weekOfYear  ISO week number (1–53).
@@ -35,19 +38,22 @@ final class PlainDate implements \JsonSerializable
     public readonly int $month;
     public readonly int $day;
 
+    private readonly CalendarProtocol $calendar;
+
     /**
-     * @throws InvalidArgumentException if month or day are invalid.
+     * @throws \InvalidArgumentException if month or day are invalid.
      * @throws \RangeException if the date is outside the supported range.
      */
-    public function __construct(int $year, int $month, int $day)
+    public function __construct(int $year, int $month, int $day, ?CalendarProtocol $calendar = null)
     {
         self::validateMonth($month);
         self::validateDay($year, $month, $day);
-        self::validateEpochDays(self::civilToEpochDays($year, $month, $day));
+        self::validateEpochDays(IsoCalendar::civilToEpochDays($year, $month, $day));
 
         $this->year = $year;
         $this->month = $month;
         $this->day = $day;
+        $this->calendar = $calendar ?? IsoCalendar::instance();
     }
 
     // -------------------------------------------------------------------------
@@ -58,13 +64,13 @@ final class PlainDate implements \JsonSerializable
      * Create a PlainDate from a string, array, or another PlainDate.
      *
      * @param string|array<string, mixed>|PlainDate $item
-     * @throws InvalidArgumentException if the value is invalid.
+     * @throws \InvalidArgumentException if the value is invalid.
      * @throws \RangeException if the date is outside the supported range.
      */
     public static function from(string|array|self $item): self
     {
         if ($item instanceof self) {
-            return new self($item->year, $item->month, $item->day);
+            return new self($item->year, $item->month, $item->day, $item->calendar);
         }
 
         if (is_array($item)) {
@@ -89,7 +95,7 @@ final class PlainDate implements \JsonSerializable
      * Annotations (e.g. [u-ca=iso8601]) and time/offset/timezone parts are
      * silently ignored — only the date part is extracted.
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      * @throws \RangeException
      */
     private static function fromString(string $str): self
@@ -139,20 +145,20 @@ final class PlainDate implements \JsonSerializable
     // -------------------------------------------------------------------------
 
     /**
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      * @throws \RangeException
      */
     public function __get(string $name): mixed
     {
         return match ($name) {
-            'calendarId' => 'iso8601',
-            'dayOfWeek' => $this->computeDayOfWeek(),
-            'dayOfYear' => $this->computeDayOfYear(),
-            'weekOfYear' => $this->computeWeekOfYear(),
-            'yearOfWeek' => $this->computeYearOfWeek(),
-            'daysInMonth' => self::daysInMonthFor($this->year, $this->month),
-            'daysInYear' => self::isLeapYear($this->year) ? 366 : 365,
-            'inLeapYear' => self::isLeapYear($this->year),
+            'calendarId' => $this->calendar->getId(),
+            'dayOfWeek' => $this->calendar->dayOfWeek($this->year, $this->month, $this->day),
+            'dayOfYear' => $this->calendar->dayOfYear($this->year, $this->month, $this->day),
+            'weekOfYear' => $this->calendar->weekOfYear($this->year, $this->month, $this->day),
+            'yearOfWeek' => $this->calendar->yearOfWeek($this->year, $this->month, $this->day),
+            'daysInMonth' => $this->calendar->daysInMonth($this->year, $this->month, $this->day),
+            'daysInYear' => $this->calendar->daysInYear($this->year, $this->month, $this->day),
+            'inLeapYear' => $this->calendar->inLeapYear($this->year, $this->month, $this->day),
             default => throw new \Error("Undefined property: {$name}")
         };
     }
@@ -285,7 +291,7 @@ final class PlainDate implements \JsonSerializable
             'isoYear' => $this->year,
             'isoMonth' => $this->month,
             'isoDay' => $this->day,
-            'calendar' => 'iso8601'
+            'calendar' => $this->calendar->getId()
         ];
     }
 
@@ -294,21 +300,7 @@ final class PlainDate implements \JsonSerializable
      */
     public function toEpochDays(): int
     {
-        // Algorithm from https://howardhinnant.github.io/date_algorithms.html
-        $y = $this->year;
-        $m = $this->month;
-        $d = $this->day;
-
-        if ($m <= 2) {
-            $y--;
-        }
-
-        $era = intdiv($y >= 0 ? $y : $y - 399, 400);
-        $yoe = $y - ( $era * 400 );
-        $doy = intdiv(( 153 * ( $m > 2 ? $m - 3 : $m + 9 ) ) + 2, 5) + $d - 1;
-        $doe = ( $yoe * 365 ) + intdiv($yoe, 4) - intdiv($yoe, 100) + $doy;
-
-        return ( $era * 146097 ) + $doe - 719468;
+        return IsoCalendar::civilToEpochDays($this->year, $this->month, $this->day);
     }
 
     // -------------------------------------------------------------------------
@@ -319,13 +311,18 @@ final class PlainDate implements \JsonSerializable
      * Return a new PlainDate with specified fields overridden.
      *
      * @param array{year?:int,month?:int,day?:int} $fields
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      * @throws \RangeException
      */
     #[\NoDiscard]
     public function with(array $fields): self
     {
-        return new self($fields['year'] ?? $this->year, $fields['month'] ?? $this->month, $fields['day'] ?? $this->day);
+        return new self(
+            $fields['year'] ?? $this->year,
+            $fields['month'] ?? $this->month,
+            $fields['day'] ?? $this->day,
+            $this->calendar
+        );
     }
 
     /**
@@ -333,7 +330,7 @@ final class PlainDate implements \JsonSerializable
      *
      * @param array<string, mixed> $duration
      * @param string $overflow 'constrain' (default) or 'reject'
-     * @throws InvalidArgumentException if overflow is invalid or day overflows with 'reject'.
+     * @throws \InvalidArgumentException if overflow is invalid or day overflows with 'reject'.
      * @throws \RangeException if the resulting date is outside the supported range.
      */
     #[\NoDiscard]
@@ -343,41 +340,7 @@ final class PlainDate implements \JsonSerializable
             throw InvalidOptionException::invalidOverflow($overflow);
         }
 
-        $years = (int) ( $duration['years'] ?? 0 );
-        $months = (int) ( $duration['months'] ?? 0 );
-        $weeks = (int) ( $duration['weeks'] ?? 0 );
-        $days = (int) ( $duration['days'] ?? 0 );
-
-        // Add years and months first (calendar arithmetic)
-        $y = $this->year + $years;
-        $m = $this->month + $months;
-        $d = $this->day;
-
-        // Normalise month overflow/underflow
-        while ($m > 12) {
-            $m -= 12;
-            $y++;
-        }
-        while ($m < 1) {
-            $m += 12;
-            $y--;
-        }
-
-        // Handle day overflow for the resulting month
-        $maxDay = self::daysInMonthFor($y, $m);
-        if ($d > $maxDay) {
-            if ($overflow === 'reject') {
-                throw DateRangeException::dayRejected($d, $y, $m, $maxDay);
-            }
-
-            $d = $maxDay;
-        }
-
-        // Convert to epoch days and add weeks/days
-        $epochDays = self::civilToEpochDays($y, $m, $d);
-        $epochDays += ( $weeks * 7 ) + $days;
-
-        return self::fromEpochDays($epochDays);
+        return $this->calendar->dateAdd($this, $duration, $overflow);
     }
 
     /**
@@ -385,7 +348,7 @@ final class PlainDate implements \JsonSerializable
      *
      * @param array{years?:int,months?:int,weeks?:int,days?:int} $duration
      * @param string $overflow 'constrain' (default) or 'reject'
-     * @throws InvalidArgumentException if overflow is invalid or day overflows with 'reject'.
+     * @throws \InvalidArgumentException if overflow is invalid or day overflows with 'reject'.
      * @throws \RangeException if the resulting date is outside the supported range.
      */
     #[\NoDiscard]
@@ -400,9 +363,6 @@ final class PlainDate implements \JsonSerializable
     }
 
     /**
-     * Compute the Duration from this date until the given date.
-     */
-    /**
      * Compute the Duration from this date to $other.
      *
      * Accepts an optional options array or largestUnit string:
@@ -412,7 +372,7 @@ final class PlainDate implements \JsonSerializable
      *   - 'year'            — returns years + months + days
      *
      * @param string|array{largestUnit?:string} $options
-     * @throws InvalidArgumentException if largestUnit is invalid.
+     * @throws \InvalidArgumentException if largestUnit is invalid.
      */
     public function until(self $other, string|array $options = []): Duration
     {
@@ -424,7 +384,7 @@ final class PlainDate implements \JsonSerializable
      * Compute the Duration since the given date (i.e. other until this).
      *
      * @param string|array{largestUnit?:string} $options
-     * @throws InvalidArgumentException if largestUnit is invalid.
+     * @throws \InvalidArgumentException if largestUnit is invalid.
      */
     public function since(self $other, string|array $options = []): Duration
     {
@@ -473,7 +433,10 @@ final class PlainDate implements \JsonSerializable
             $yearStr = str_pad((string) $y, 4, '0', STR_PAD_LEFT);
         }
 
-        return sprintf('%s-%02d-%02d', $yearStr, $this->month, $this->day);
+        $calId = $this->calendar->getId();
+        $annotation = $calId !== 'iso8601' ? "[u-ca={$calId}]" : '';
+
+        return sprintf('%s-%02d-%02d', $yearStr, $this->month, $this->day) . $annotation;
     }
 
     /**
@@ -509,133 +472,18 @@ final class PlainDate implements \JsonSerializable
 
     private static function validateDay(int $year, int $month, int $day): void
     {
-        $max = self::daysInMonthFor($year, $month);
+        $max = IsoCalendar::daysInMonthFor($year, $month);
+
         if ($day < 1 || $day > $max) {
             throw DateRangeException::dayOutOfRange($day, $year, $month, $max);
         }
-    }
-
-    private static function daysInMonthFor(int $year, int $month): int
-    {
-        return match ($month) {
-            1, 3, 5, 7, 8, 10, 12 => 31,
-            4, 6, 9, 11 => 30,
-            2 => self::isLeapYear($year) ? 29 : 28,
-            default => throw DateRangeException::invalidMonth($month)
-        };
-    }
-
-    private static function isLeapYear(int $year): bool
-    {
-        return ( $year % 4 ) === 0 && ( $year % 100 ) !== 0 || ( $year % 400 ) === 0;
-    }
-
-    /** Compute days since epoch for a given y/m/d (no validation). */
-    private static function civilToEpochDays(int $y, int $m, int $d): int
-    {
-        if ($m <= 2) {
-            $y--;
-        }
-
-        $era = intdiv($y >= 0 ? $y : $y - 399, 400);
-        $yoe = $y - ( $era * 400 );
-        $doy = intdiv(( 153 * ( $m > 2 ? $m - 3 : $m + 9 ) ) + 2, 5) + $d - 1;
-        $doe = ( $yoe * 365 ) + intdiv($yoe, 4) - intdiv($yoe, 100) + $doy;
-
-        return ( $era * 146097 ) + $doe - 719468;
-    }
-
-    /**
-     * ISO day of week: Monday = 1, …, Sunday = 7.
-     */
-    private function computeDayOfWeek(): int
-    {
-        // 1970-01-01 was a Thursday (4)
-        $epochDays = $this->toEpochDays();
-        $dow = ( ( $epochDays % 7 ) + 7 + 3 ) % 7; // 0 = Monday
-        return $dow + 1;
-    }
-
-    private function computeDayOfYear(): int
-    {
-        /** @var array<int, int> $cumulative */
-        $cumulative = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
-        $doy = $cumulative[$this->month - 1] + $this->day;
-
-        if ($this->month > 2 && self::isLeapYear($this->year)) {
-            $doy++;
-        }
-
-        return $doy;
-    }
-
-    /**
-     * ISO week number (1–53).
-     *
-     * @throws InvalidArgumentException
-     * @throws \RangeException
-     */
-    private function computeWeekOfYear(): int
-    {
-        // ISO week: week containing the first Thursday of the year is week 1.
-        $doy = $this->computeDayOfYear();
-        $dow = $this->computeDayOfWeek(); // Mon=1 … Sun=7
-        $w = intdiv($doy - $dow + 10, 7);
-
-        if ($w < 1) {
-            // Belongs to the last week of the previous year
-            $w = $this->computeWeeksInYear($this->year - 1);
-        } elseif ($w > $this->computeWeeksInYear($this->year)) {
-            $w = 1;
-        }
-
-        return $w;
-    }
-
-    /**
-     * The ISO week-numbering year (yearOfWeek). For dates near year boundaries the
-     * ISO week may belong to the previous or next calendar year:
-     *   - If weekOfYear is 52/53 and the month is January → yearOfWeek = year - 1
-     *   - If weekOfYear is 1 and the month is December   → yearOfWeek = year + 1
-     *   - Otherwise                                       → yearOfWeek = year
-     *
-     * @throws InvalidArgumentException
-     * @throws \RangeException
-     */
-    private function computeYearOfWeek(): int
-    {
-        $w = $this->computeWeekOfYear();
-
-        if ($w >= 52 && $this->month === 1) {
-            return $this->year - 1;
-        }
-
-        if ($w === 1 && $this->month === 12) {
-            return $this->year + 1;
-        }
-
-        return $this->year;
-    }
-
-    /**
-     * @throws InvalidArgumentException
-     * @throws \RangeException
-     */
-    private function computeWeeksInYear(int $year): int
-    {
-        // A year has 53 weeks if Jan 1 is Thursday, or if it's a leap year
-        // and Jan 1 is Wednesday or Thursday.
-        $jan1Dow = new self($year, 1, 1)->computeDayOfWeek();
-        $dec31Dow = new self($year, 12, 31)->computeDayOfWeek();
-
-        return $jan1Dow === 4 || $dec31Dow === 4 ? 53 : 52;
     }
 
     /**
      * Parse a largestUnit value from a string|array options argument.
      *
      * @param string|array{largestUnit?:string} $options
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     private function parseLargestUnit(string|array $options, string $default): string
     {
@@ -661,7 +509,7 @@ final class PlainDate implements \JsonSerializable
      * Computes the Duration from $this to $other, expressed with the given
      * largestUnit ('year', 'month', 'week', or 'day').
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      * @throws \RangeException
      */
     private function diffWithLargestUnit(self $other, string $largestUnit): Duration
