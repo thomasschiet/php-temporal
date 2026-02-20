@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Temporal;
 
@@ -32,7 +32,7 @@ final class PlainDateTime
         int $second = 0,
         int $millisecond = 0,
         int $microsecond = 0,
-        int $nanosecond = 0,
+        int $nanosecond = 0
     ) {
         self::validateMonth($month);
         self::validateDay($year, $month, $day);
@@ -43,15 +43,15 @@ final class PlainDateTime
         self::validateField('microsecond', $microsecond, 0, 999);
         self::validateField('nanosecond', $nanosecond, 0, 999);
 
-        $this->year        = $year;
-        $this->month       = $month;
-        $this->day         = $day;
-        $this->hour        = $hour;
-        $this->minute      = $minute;
-        $this->second      = $second;
+        $this->year = $year;
+        $this->month = $month;
+        $this->day = $day;
+        $this->hour = $hour;
+        $this->minute = $minute;
+        $this->second = $second;
         $this->millisecond = $millisecond;
         $this->microsecond = $microsecond;
-        $this->nanosecond  = $nanosecond;
+        $this->nanosecond = $nanosecond;
     }
 
     // -------------------------------------------------------------------------
@@ -67,23 +67,29 @@ final class PlainDateTime
     {
         if ($item instanceof self) {
             return new self(
-                $item->year, $item->month, $item->day,
-                $item->hour, $item->minute, $item->second,
-                $item->millisecond, $item->microsecond, $item->nanosecond,
+                $item->year,
+                $item->month,
+                $item->day,
+                $item->hour,
+                $item->minute,
+                $item->second,
+                $item->millisecond,
+                $item->microsecond,
+                $item->nanosecond
             );
         }
 
         if (is_array($item)) {
             return new self(
-                (int) ($item['year']  ?? throw new InvalidArgumentException('Missing key: year')),
-                (int) ($item['month'] ?? throw new InvalidArgumentException('Missing key: month')),
-                (int) ($item['day']   ?? throw new InvalidArgumentException('Missing key: day')),
-                (int) ($item['hour']        ?? 0),
-                (int) ($item['minute']      ?? 0),
-                (int) ($item['second']      ?? 0),
-                (int) ($item['millisecond'] ?? 0),
-                (int) ($item['microsecond'] ?? 0),
-                (int) ($item['nanosecond']  ?? 0),
+                (int) ( $item['year'] ?? throw new InvalidArgumentException('Missing key: year') ),
+                (int) ( $item['month'] ?? throw new InvalidArgumentException('Missing key: month') ),
+                (int) ( $item['day'] ?? throw new InvalidArgumentException('Missing key: day') ),
+                (int) ( $item['hour'] ?? 0 ),
+                (int) ( $item['minute'] ?? 0 ),
+                (int) ( $item['second'] ?? 0 ),
+                (int) ( $item['millisecond'] ?? 0 ),
+                (int) ( $item['microsecond'] ?? 0 ),
+                (int) ( $item['nanosecond'] ?? 0 )
             );
         }
 
@@ -102,8 +108,12 @@ final class PlainDateTime
     public function toPlainTime(): PlainTime
     {
         return new PlainTime(
-            $this->hour, $this->minute, $this->second,
-            $this->millisecond, $this->microsecond, $this->nanosecond,
+            $this->hour,
+            $this->minute,
+            $this->second,
+            $this->millisecond,
+            $this->microsecond,
+            $this->nanosecond
         );
     }
 
@@ -117,9 +127,15 @@ final class PlainDateTime
     public function withPlainDate(PlainDate $date): self
     {
         return new self(
-            $date->year, $date->month, $date->day,
-            $this->hour, $this->minute, $this->second,
-            $this->millisecond, $this->microsecond, $this->nanosecond,
+            $date->year,
+            $date->month,
+            $date->day,
+            $this->hour,
+            $this->minute,
+            $this->second,
+            $this->millisecond,
+            $this->microsecond,
+            $this->nanosecond
         );
     }
 
@@ -129,9 +145,15 @@ final class PlainDateTime
     public function withPlainTime(PlainTime $time): self
     {
         return new self(
-            $this->year, $this->month, $this->day,
-            $time->hour, $time->minute, $time->second,
-            $time->millisecond, $time->microsecond, $time->nanosecond,
+            $this->year,
+            $this->month,
+            $this->day,
+            $time->hour,
+            $time->minute,
+            $time->second,
+            $time->millisecond,
+            $time->microsecond,
+            $time->nanosecond
         );
     }
 
@@ -143,15 +165,15 @@ final class PlainDateTime
     public function with(array $fields): self
     {
         return new self(
-            $fields['year']        ?? $this->year,
-            $fields['month']       ?? $this->month,
-            $fields['day']         ?? $this->day,
-            $fields['hour']        ?? $this->hour,
-            $fields['minute']      ?? $this->minute,
-            $fields['second']      ?? $this->second,
+            $fields['year'] ?? $this->year,
+            $fields['month'] ?? $this->month,
+            $fields['day'] ?? $this->day,
+            $fields['hour'] ?? $this->hour,
+            $fields['minute'] ?? $this->minute,
+            $fields['second'] ?? $this->second,
             $fields['millisecond'] ?? $this->millisecond,
             $fields['microsecond'] ?? $this->microsecond,
-            $fields['nanosecond']  ?? $this->nanosecond,
+            $fields['nanosecond'] ?? $this->nanosecond
         );
     }
 
@@ -167,25 +189,25 @@ final class PlainDateTime
     {
         // Apply date components via PlainDate (handles year/month/day arithmetic).
         $date = $this->toPlainDate()->add([
-            'years'  => $duration['years']  ?? 0,
+            'years' => $duration['years'] ?? 0,
             'months' => $duration['months'] ?? 0,
-            'weeks'  => $duration['weeks']  ?? 0,
-            'days'   => $duration['days']   ?? 0,
+            'weeks' => $duration['weeks'] ?? 0,
+            'days' => $duration['days'] ?? 0
         ]);
 
         // Apply time components in nanoseconds.
         $dayNs = 86_400_000_000_000;
-        $ns    = $this->toPlainTime()->toNanosecondsSinceMidnight();
-        $ns   += ($duration['hours']        ?? 0) * 3_600_000_000_000;
-        $ns   += ($duration['minutes']      ?? 0) * 60_000_000_000;
-        $ns   += ($duration['seconds']      ?? 0) * 1_000_000_000;
-        $ns   += ($duration['milliseconds'] ?? 0) * 1_000_000;
-        $ns   += ($duration['microseconds'] ?? 0) * 1_000;
-        $ns   += ($duration['nanoseconds']  ?? 0);
+        $ns = $this->toPlainTime()->toNanosecondsSinceMidnight();
+        $ns += ( $duration['hours'] ?? 0 ) * 3_600_000_000_000;
+        $ns += ( $duration['minutes'] ?? 0 ) * 60_000_000_000;
+        $ns += ( $duration['seconds'] ?? 0 ) * 1_000_000_000;
+        $ns += ( $duration['milliseconds'] ?? 0 ) * 1_000_000;
+        $ns += ( $duration['microseconds'] ?? 0 ) * 1_000;
+        $ns += $duration['nanoseconds'] ?? 0;
 
         // Carry days from time overflow (floor division to handle negatives).
-        $nsRemainder = (($ns % $dayNs) + $dayNs) % $dayNs;
-        $carryDays   = intdiv($ns - $nsRemainder, $dayNs);
+        $nsRemainder = ( ( $ns % $dayNs ) + $dayNs ) % $dayNs;
+        $carryDays = intdiv($ns - $nsRemainder, $dayNs);
 
         if ($carryDays !== 0) {
             $date = $date->add(['days' => $carryDays]);
@@ -194,9 +216,15 @@ final class PlainDateTime
         $time = PlainTime::fromNanosecondsSinceMidnight($nsRemainder);
 
         return new self(
-            $date->year, $date->month, $date->day,
-            $time->hour, $time->minute, $time->second,
-            $time->millisecond, $time->microsecond, $time->nanosecond,
+            $date->year,
+            $date->month,
+            $date->day,
+            $time->hour,
+            $time->minute,
+            $time->second,
+            $time->millisecond,
+            $time->microsecond,
+            $time->nanosecond
         );
     }
 
@@ -208,16 +236,16 @@ final class PlainDateTime
     public function subtract(array $duration): self
     {
         return $this->add([
-            'years'        => -($duration['years']        ?? 0),
-            'months'       => -($duration['months']       ?? 0),
-            'weeks'        => -($duration['weeks']        ?? 0),
-            'days'         => -($duration['days']         ?? 0),
-            'hours'        => -($duration['hours']        ?? 0),
-            'minutes'      => -($duration['minutes']      ?? 0),
-            'seconds'      => -($duration['seconds']      ?? 0),
-            'milliseconds' => -($duration['milliseconds'] ?? 0),
-            'microseconds' => -($duration['microseconds'] ?? 0),
-            'nanoseconds'  => -($duration['nanoseconds']  ?? 0),
+            'years' => -( $duration['years'] ?? 0 ),
+            'months' => -( $duration['months'] ?? 0 ),
+            'weeks' => -( $duration['weeks'] ?? 0 ),
+            'days' => -( $duration['days'] ?? 0 ),
+            'hours' => -( $duration['hours'] ?? 0 ),
+            'minutes' => -( $duration['minutes'] ?? 0 ),
+            'seconds' => -( $duration['seconds'] ?? 0 ),
+            'milliseconds' => -( $duration['milliseconds'] ?? 0 ),
+            'microseconds' => -( $duration['microseconds'] ?? 0 ),
+            'nanoseconds' => -( $duration['nanoseconds'] ?? 0 )
         ]);
     }
 
@@ -230,8 +258,8 @@ final class PlainDateTime
     public function until(self $other): Duration
     {
         $daysDiff = $other->toPlainDate()->toEpochDays() - $this->toPlainDate()->toEpochDays();
-        $nsDiff   = $other->toPlainTime()->toNanosecondsSinceMidnight()
-                  - $this->toPlainTime()->toNanosecondsSinceMidnight();
+        $nsDiff =
+            $other->toPlainTime()->toNanosecondsSinceMidnight() - $this->toPlainTime()->toNanosecondsSinceMidnight();
 
         // Balance: borrow a day when the time part's sign disagrees with the date part.
         if ($daysDiff > 0 && $nsDiff < 0) {
@@ -242,28 +270,28 @@ final class PlainDateTime
             $nsDiff -= 86_400_000_000_000;
         }
 
-        $sign  = $nsDiff < 0 ? -1 : 1;
+        $sign = $nsDiff < 0 ? -1 : 1;
         $absNs = abs($nsDiff);
 
-        $nanoseconds  = $absNs % 1_000;
-        $absNs        = intdiv($absNs, 1_000);
+        $nanoseconds = $absNs % 1_000;
+        $absNs = intdiv($absNs, 1_000);
         $microseconds = $absNs % 1_000;
-        $absNs        = intdiv($absNs, 1_000);
+        $absNs = intdiv($absNs, 1_000);
         $milliseconds = $absNs % 1_000;
-        $absNs        = intdiv($absNs, 1_000);
-        $seconds      = $absNs % 60;
-        $absNs        = intdiv($absNs, 60);
-        $minutes      = $absNs % 60;
-        $hours        = intdiv($absNs, 60);
+        $absNs = intdiv($absNs, 1_000);
+        $seconds = $absNs % 60;
+        $absNs = intdiv($absNs, 60);
+        $minutes = $absNs % 60;
+        $hours = intdiv($absNs, 60);
 
         return new Duration(
-            days:         $daysDiff,
-            hours:        $sign * $hours,
-            minutes:      $sign * $minutes,
-            seconds:      $sign * $seconds,
+            days: $daysDiff,
+            hours: $sign * $hours,
+            minutes: $sign * $minutes,
+            seconds: $sign * $seconds,
             milliseconds: $sign * $milliseconds,
             microseconds: $sign * $microseconds,
-            nanoseconds:  $sign * $nanoseconds,
+            nanoseconds: $sign * $nanoseconds
         );
     }
 
@@ -293,8 +321,7 @@ final class PlainDateTime
             return $da <=> $db;
         }
 
-        return $a->toPlainTime()->toNanosecondsSinceMidnight()
-           <=> $b->toPlainTime()->toNanosecondsSinceMidnight();
+        return $a->toPlainTime()->toNanosecondsSinceMidnight() <=> $b->toPlainTime()->toNanosecondsSinceMidnight();
     }
 
     /**
@@ -321,9 +348,7 @@ final class PlainDateTime
     private static function validateMonth(int $month): void
     {
         if ($month < 1 || $month > 12) {
-            throw new InvalidArgumentException(
-                "Month must be between 1 and 12, got {$month}"
-            );
+            throw new InvalidArgumentException("Month must be between 1 and 12, got {$month}");
         }
     }
 
@@ -331,18 +356,14 @@ final class PlainDateTime
     {
         $max = self::daysInMonthFor($year, $month);
         if ($day < 1 || $day > $max) {
-            throw new InvalidArgumentException(
-                "Day {$day} is out of range for {$year}-{$month} (1–{$max})"
-            );
+            throw new InvalidArgumentException("Day {$day} is out of range for {$year}-{$month} (1–{$max})");
         }
     }
 
     private static function validateField(string $field, int $value, int $min, int $max): void
     {
         if ($value < $min || $value > $max) {
-            throw new InvalidArgumentException(
-                "{$field} must be between {$min} and {$max}, got {$value}"
-            );
+            throw new InvalidArgumentException("{$field} must be between {$min} and {$max}, got {$value}");
         }
     }
 
@@ -350,26 +371,34 @@ final class PlainDateTime
     {
         return match ($month) {
             1, 3, 5, 7, 8, 10, 12 => 31,
-            4, 6, 9, 11            => 30,
-            2                      => self::isLeapYear($year) ? 29 : 28,
-            default                => throw new InvalidArgumentException("Invalid month: {$month}"),
+            4, 6, 9, 11 => 30,
+            2 => self::isLeapYear($year) ? 29 : 28,
+            default => throw new InvalidArgumentException("Invalid month: {$month}")
         };
     }
 
     private static function isLeapYear(int $year): bool
     {
-        return ($year % 4 === 0 && $year % 100 !== 0) || ($year % 400 === 0);
+        return ( $year % 4 ) === 0 && ( $year % 100 ) !== 0 || ( $year % 400 ) === 0;
     }
 
     /**
      * Parse an ISO 8601 datetime string.
      *
-     * Supports: YYYY-MM-DDTHH:MM:SS[.fraction]
+     * Accepted formats:
+     *   YYYY-MM-DDTHH:MM:SS[.fraction]
+     *   YYYY-MM-DDTHH:MM:SS[.fraction][offset][tzid][annotation...]
+     *
      * Extended years (±YYYYYY) and lowercase 't' separator are accepted.
+     * UTC offset, timezone ID, and annotations are silently ignored — only
+     * the local date-time is extracted.
      */
     private static function fromString(string $str): self
     {
-        $pattern = '/^([+-]?\d{4,6})-(\d{2})-(\d{2})[Tt](\d{2}):(\d{2}):(\d{2})(?:\.(\d{1,9}))?$/';
+        $pattern =
+            '/^([+-]?\d{4,6})-(\d{2})-(\d{2})[Tt](\d{2}):(\d{2}):(\d{2})(?:\.(\d{1,9}))?'
+            . '(?:[Zz]|[+-]\d{2}(?::\d{2}(?::\d{2})?)?)?'
+            . '(?:\[!?[^\]]*\])*$/';
 
         if (!preg_match($pattern, $str, $m)) {
             throw new InvalidArgumentException("Invalid PlainDateTime string: {$str}");
@@ -377,19 +406,25 @@ final class PlainDateTime
 
         $millisecond = 0;
         $microsecond = 0;
-        $nanosecond  = 0;
+        $nanosecond = 0;
 
         if (isset($m[7]) && $m[7] !== '') {
             $frac = str_pad(substr($m[7], 0, 9), 9, '0', STR_PAD_RIGHT);
             $millisecond = (int) substr($frac, 0, 3);
             $microsecond = (int) substr($frac, 3, 3);
-            $nanosecond  = (int) substr($frac, 6, 3);
+            $nanosecond = (int) substr($frac, 6, 3);
         }
 
         return new self(
-            (int) $m[1], (int) $m[2], (int) $m[3],
-            (int) $m[4], (int) $m[5], (int) $m[6],
-            $millisecond, $microsecond, $nanosecond,
+            (int) $m[1],
+            (int) $m[2],
+            (int) $m[3],
+            (int) $m[4],
+            (int) $m[5],
+            (int) $m[6],
+            $millisecond,
+            $microsecond,
+            $nanosecond
         );
     }
 }

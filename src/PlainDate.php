@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Temporal;
 
@@ -22,9 +22,9 @@ final class PlainDate
         self::validateMonth($month);
         self::validateDay($year, $month, $day);
 
-        $this->year  = $year;
+        $this->year = $year;
         $this->month = $month;
-        $this->day   = $day;
+        $this->day = $day;
     }
 
     // -------------------------------------------------------------------------
@@ -44,9 +44,9 @@ final class PlainDate
 
         if (is_array($item)) {
             return new self(
-                (int) ($item['year'] ?? throw new InvalidArgumentException('Missing key: year')),
-                (int) ($item['month'] ?? throw new InvalidArgumentException('Missing key: month')),
-                (int) ($item['day'] ?? throw new InvalidArgumentException('Missing key: day')),
+                (int) ( $item['year'] ?? throw new InvalidArgumentException('Missing key: year') ),
+                (int) ( $item['month'] ?? throw new InvalidArgumentException('Missing key: month') ),
+                (int) ( $item['day'] ?? throw new InvalidArgumentException('Missing key: day') )
             );
         }
 
@@ -54,13 +54,23 @@ final class PlainDate
     }
 
     /**
-     * Create a PlainDate from an ISO 8601 date string (e.g. "2024-03-15").
+     * Create a PlainDate from an ISO 8601 date string or a wider temporal string.
+     *
+     * Accepted formats:
+     *   YYYY-MM-DD
+     *   YYYY-MM-DD[annotation...]
+     *   YYYY-MM-DDTHH:MM:SS[.fraction][offset][tzid][annotation...]
+     * Extended years (±YYYYYY) are also accepted.
+     * Annotations (e.g. [u-ca=iso8601]) and time/offset/timezone parts are
+     * silently ignored — only the date part is extracted.
      */
     private static function fromString(string $str): self
     {
-        // Handles optional leading sign and extended year
-        // Format: [-+]YYYYY-MM-DD or YYYY-MM-DD
-        $pattern = '/^([+-]?\d{4,6})-(\d{2})-(\d{2})$/';
+        // Capture the date part; allow optional time+offset+annotations to follow.
+        $pattern =
+            '/^([+-]?\d{4,6})-(\d{2})-(\d{2})'
+            . '(?:[Tt]\d{2}:\d{2}:\d{2}(?:\.\d{1,9})?(?:[Zz]|[+-]\d{2}(?::\d{2}(?::\d{2})?)?)?)?'
+            . '(?:\[!?[^\]]*\])*$/';
 
         if (!preg_match($pattern, $str, $m)) {
             throw new InvalidArgumentException("Invalid PlainDate string: {$str}");
@@ -77,13 +87,13 @@ final class PlainDate
         // Algorithm from https://howardhinnant.github.io/date_algorithms.html
         $z = $epochDays + 719468;
         $era = intdiv($z >= 0 ? $z : $z - 146096, 146097);
-        $doe = $z - $era * 146097;
+        $doe = $z - ( $era * 146097 );
         $yoe = intdiv($doe - intdiv($doe, 1460) + intdiv($doe, 36524) - intdiv($doe, 146096), 365);
-        $y   = $yoe + $era * 400;
-        $doy = $doe - (365 * $yoe + intdiv($yoe, 4) - intdiv($yoe, 100));
-        $mp  = intdiv(5 * $doy + 2, 153);
-        $d   = $doy - intdiv(153 * $mp + 2, 5) + 1;
-        $m   = $mp < 10 ? $mp + 3 : $mp - 9;
+        $y = $yoe + ( $era * 400 );
+        $doy = $doe - ( ( 365 * $yoe ) + intdiv($yoe, 4) - intdiv($yoe, 100) );
+        $mp = intdiv(( 5 * $doy ) + 2, 153);
+        $d = $doy - intdiv(( 153 * $mp ) + 2, 5) + 1;
+        $m = $mp < 10 ? $mp + 3 : $mp - 9;
 
         if ($m <= 2) {
             $y++;
@@ -99,22 +109,30 @@ final class PlainDate
     public function __get(string $name): mixed
     {
         return match ($name) {
-            'dayOfWeek'  => $this->computeDayOfWeek(),
-            'dayOfYear'  => $this->computeDayOfYear(),
+            'dayOfWeek' => $this->computeDayOfWeek(),
+            'dayOfYear' => $this->computeDayOfYear(),
             'weekOfYear' => $this->computeWeekOfYear(),
             'daysInMonth' => self::daysInMonthFor($this->year, $this->month),
             'daysInYear' => self::isLeapYear($this->year) ? 366 : 365,
             'inLeapYear' => self::isLeapYear($this->year),
-            default      => throw new \Error("Undefined property: {$name}"),
+            default => throw new \Error("Undefined property: {$name}")
         };
     }
 
     public function __isset(string $name): bool
     {
-        return in_array($name, [
-            'dayOfWeek', 'dayOfYear', 'weekOfYear',
-            'daysInMonth', 'daysInYear', 'inLeapYear',
-        ], true);
+        return in_array(
+            $name,
+            [
+                'dayOfWeek',
+                'dayOfYear',
+                'weekOfYear',
+                'daysInMonth',
+                'daysInYear',
+                'inLeapYear'
+            ],
+            true
+        );
     }
 
     // -------------------------------------------------------------------------
@@ -136,11 +154,11 @@ final class PlainDate
         }
 
         $era = intdiv($y >= 0 ? $y : $y - 399, 400);
-        $yoe = $y - $era * 400;
-        $doy = intdiv(153 * ($m > 2 ? $m - 3 : $m + 9) + 2, 5) + $d - 1;
-        $doe = $yoe * 365 + intdiv($yoe, 4) - intdiv($yoe, 100) + $doy;
+        $yoe = $y - ( $era * 400 );
+        $doy = intdiv(( 153 * ( $m > 2 ? $m - 3 : $m + 9 ) ) + 2, 5) + $d - 1;
+        $doe = ( $yoe * 365 ) + intdiv($yoe, 4) - intdiv($yoe, 100) + $doy;
 
-        return $era * 146097 + $doe - 719468;
+        return ( $era * 146097 ) + $doe - 719468;
     }
 
     // -------------------------------------------------------------------------
@@ -154,11 +172,7 @@ final class PlainDate
      */
     public function with(array $fields): self
     {
-        return new self(
-            $fields['year']  ?? $this->year,
-            $fields['month'] ?? $this->month,
-            $fields['day']   ?? $this->day,
-        );
+        return new self($fields['year'] ?? $this->year, $fields['month'] ?? $this->month, $fields['day'] ?? $this->day);
     }
 
     /**
@@ -168,10 +182,10 @@ final class PlainDate
      */
     public function add(array $duration): self
     {
-        $years  = $duration['years']  ?? 0;
+        $years = $duration['years'] ?? 0;
         $months = $duration['months'] ?? 0;
-        $weeks  = $duration['weeks']  ?? 0;
-        $days   = $duration['days']   ?? 0;
+        $weeks = $duration['weeks'] ?? 0;
+        $days = $duration['days'] ?? 0;
 
         // Add years and months first (calendar arithmetic)
         $y = $this->year + $years;
@@ -196,7 +210,7 @@ final class PlainDate
 
         // Convert to epoch days and add weeks/days
         $epochDays = self::civilToEpochDays($y, $m, $d);
-        $epochDays += $weeks * 7 + $days;
+        $epochDays += ( $weeks * 7 ) + $days;
 
         return self::fromEpochDays($epochDays);
     }
@@ -209,10 +223,10 @@ final class PlainDate
     public function subtract(array $duration): self
     {
         return $this->add([
-            'years'  => -($duration['years']  ?? 0),
-            'months' => -($duration['months'] ?? 0),
-            'weeks'  => -($duration['weeks']  ?? 0),
-            'days'   => -($duration['days']   ?? 0),
+            'years' => -( $duration['years'] ?? 0 ),
+            'months' => -( $duration['months'] ?? 0 ),
+            'weeks' => -( $duration['weeks'] ?? 0 ),
+            'days' => -( $duration['days'] ?? 0 )
         ]);
     }
 
@@ -255,9 +269,7 @@ final class PlainDate
      */
     public function equals(self $other): bool
     {
-        return $this->year  === $other->year
-            && $this->month === $other->month
-            && $this->day   === $other->day;
+        return $this->year === $other->year && $this->month === $other->month && $this->day === $other->day;
     }
 
     // -------------------------------------------------------------------------
@@ -286,9 +298,7 @@ final class PlainDate
     private static function validateMonth(int $month): void
     {
         if ($month < 1 || $month > 12) {
-            throw new InvalidArgumentException(
-                "Month must be between 1 and 12, got {$month}"
-            );
+            throw new InvalidArgumentException("Month must be between 1 and 12, got {$month}");
         }
     }
 
@@ -296,9 +306,7 @@ final class PlainDate
     {
         $max = self::daysInMonthFor($year, $month);
         if ($day < 1 || $day > $max) {
-            throw new InvalidArgumentException(
-                "Day {$day} is out of range for {$year}-{$month} (1–{$max})"
-            );
+            throw new InvalidArgumentException("Day {$day} is out of range for {$year}-{$month} (1–{$max})");
         }
     }
 
@@ -306,15 +314,15 @@ final class PlainDate
     {
         return match ($month) {
             1, 3, 5, 7, 8, 10, 12 => 31,
-            4, 6, 9, 11            => 30,
-            2                      => self::isLeapYear($year) ? 29 : 28,
-            default                => throw new InvalidArgumentException("Invalid month: {$month}"),
+            4, 6, 9, 11 => 30,
+            2 => self::isLeapYear($year) ? 29 : 28,
+            default => throw new InvalidArgumentException("Invalid month: {$month}")
         };
     }
 
     private static function isLeapYear(int $year): bool
     {
-        return ($year % 4 === 0 && $year % 100 !== 0) || ($year % 400 === 0);
+        return ( $year % 4 ) === 0 && ( $year % 100 ) !== 0 || ( $year % 400 ) === 0;
     }
 
     /** Compute days since epoch for a given y/m/d (no validation). */
@@ -325,11 +333,11 @@ final class PlainDate
         }
 
         $era = intdiv($y >= 0 ? $y : $y - 399, 400);
-        $yoe = $y - $era * 400;
-        $doy = intdiv(153 * ($m > 2 ? $m - 3 : $m + 9) + 2, 5) + $d - 1;
-        $doe = $yoe * 365 + intdiv($yoe, 4) - intdiv($yoe, 100) + $doy;
+        $yoe = $y - ( $era * 400 );
+        $doy = intdiv(( 153 * ( $m > 2 ? $m - 3 : $m + 9 ) ) + 2, 5) + $d - 1;
+        $doe = ( $yoe * 365 ) + intdiv($yoe, 4) - intdiv($yoe, 100) + $doy;
 
-        return $era * 146097 + $doe - 719468;
+        return ( $era * 146097 ) + $doe - 719468;
     }
 
     /**
@@ -339,7 +347,7 @@ final class PlainDate
     {
         // 1970-01-01 was a Thursday (4)
         $epochDays = $this->toEpochDays();
-        $dow = (($epochDays % 7) + 7 + 3) % 7; // 0 = Monday
+        $dow = ( ( $epochDays % 7 ) + 7 + 3 ) % 7; // 0 = Monday
         return $dow + 1;
     }
 
@@ -361,9 +369,9 @@ final class PlainDate
     private function computeWeekOfYear(): int
     {
         // ISO week: week containing the first Thursday of the year is week 1.
-        $doy   = $this->computeDayOfYear();
-        $dow   = $this->computeDayOfWeek(); // Mon=1 … Sun=7
-        $w     = intdiv($doy - $dow + 10, 7);
+        $doy = $this->computeDayOfYear();
+        $dow = $this->computeDayOfWeek(); // Mon=1 … Sun=7
+        $w = intdiv($doy - $dow + 10, 7);
 
         if ($w < 1) {
             // Belongs to the last week of the previous year
@@ -379,9 +387,9 @@ final class PlainDate
     {
         // A year has 53 weeks if Jan 1 is Thursday, or if it's a leap year
         // and Jan 1 is Wednesday or Thursday.
-        $jan1Dow = (new self($year, 1, 1))->computeDayOfWeek();
-        $dec31Dow = (new self($year, 12, 31))->computeDayOfWeek();
+        $jan1Dow = new self($year, 1, 1)->computeDayOfWeek();
+        $dec31Dow = new self($year, 12, 31)->computeDayOfWeek();
 
-        return ($jan1Dow === 4 || $dec31Dow === 4) ? 53 : 52;
+        return $jan1Dow === 4 || $dec31Dow === 4 ? 53 : 52;
     }
 }

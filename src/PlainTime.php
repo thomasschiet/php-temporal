@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Temporal;
 
@@ -27,7 +27,7 @@ final class PlainTime
         int $second = 0,
         int $millisecond = 0,
         int $microsecond = 0,
-        int $nanosecond = 0,
+        int $nanosecond = 0
     ) {
         self::validate('hour', $hour, 0, 23);
         self::validate('minute', $minute, 0, 59);
@@ -36,12 +36,12 @@ final class PlainTime
         self::validate('microsecond', $microsecond, 0, 999);
         self::validate('nanosecond', $nanosecond, 0, 999);
 
-        $this->hour        = $hour;
-        $this->minute      = $minute;
-        $this->second      = $second;
+        $this->hour = $hour;
+        $this->minute = $minute;
+        $this->second = $second;
         $this->millisecond = $millisecond;
         $this->microsecond = $microsecond;
-        $this->nanosecond  = $nanosecond;
+        $this->nanosecond = $nanosecond;
     }
 
     // -------------------------------------------------------------------------
@@ -62,18 +62,18 @@ final class PlainTime
                 $item->second,
                 $item->millisecond,
                 $item->microsecond,
-                $item->nanosecond,
+                $item->nanosecond
             );
         }
 
         if (is_array($item)) {
             return new self(
-                (int) ($item['hour'] ?? throw new InvalidArgumentException('Missing key: hour')),
-                (int) ($item['minute'] ?? throw new InvalidArgumentException('Missing key: minute')),
-                (int) ($item['second'] ?? 0),
-                (int) ($item['millisecond'] ?? 0),
-                (int) ($item['microsecond'] ?? 0),
-                (int) ($item['nanosecond'] ?? 0),
+                (int) ( $item['hour'] ?? throw new InvalidArgumentException('Missing key: hour') ),
+                (int) ( $item['minute'] ?? throw new InvalidArgumentException('Missing key: minute') ),
+                (int) ( $item['second'] ?? 0 ),
+                (int) ( $item['millisecond'] ?? 0 ),
+                (int) ( $item['microsecond'] ?? 0 ),
+                (int) ( $item['nanosecond'] ?? 0 )
             );
         }
 
@@ -87,18 +87,18 @@ final class PlainTime
     public static function fromNanosecondsSinceMidnight(int $ns): self
     {
         $dayNs = 24 * 3_600_000_000_000;
-        $ns    = (($ns % $dayNs) + $dayNs) % $dayNs;
+        $ns = ( ( $ns % $dayNs ) + $dayNs ) % $dayNs;
 
-        $nanosecond  = $ns % 1_000;
-        $ns          = intdiv($ns, 1_000);
+        $nanosecond = $ns % 1_000;
+        $ns = intdiv($ns, 1_000);
         $microsecond = $ns % 1_000;
-        $ns          = intdiv($ns, 1_000);
+        $ns = intdiv($ns, 1_000);
         $millisecond = $ns % 1_000;
-        $ns          = intdiv($ns, 1_000);
-        $second      = $ns % 60;
-        $ns          = intdiv($ns, 60);
-        $minute      = $ns % 60;
-        $hour        = intdiv($ns, 60);
+        $ns = intdiv($ns, 1_000);
+        $second = $ns % 60;
+        $ns = intdiv($ns, 60);
+        $minute = $ns % 60;
+        $hour = intdiv($ns, 60);
 
         return new self($hour, $minute, $second, $millisecond, $microsecond, $nanosecond);
     }
@@ -112,12 +112,14 @@ final class PlainTime
      */
     public function toNanosecondsSinceMidnight(): int
     {
-        return $this->hour        * 3_600_000_000_000
-            + $this->minute      * 60_000_000_000
-            + $this->second      * 1_000_000_000
-            + $this->millisecond * 1_000_000
-            + $this->microsecond * 1_000
-            + $this->nanosecond;
+        return (
+            ( $this->hour * 3_600_000_000_000 )
+            + ( $this->minute * 60_000_000_000 )
+            + ( $this->second * 1_000_000_000 )
+            + ( $this->millisecond * 1_000_000 )
+            + ( $this->microsecond * 1_000 )
+            + $this->nanosecond
+        );
     }
 
     // -------------------------------------------------------------------------
@@ -132,12 +134,12 @@ final class PlainTime
     public function with(array $fields): self
     {
         return new self(
-            $fields['hour']        ?? $this->hour,
-            $fields['minute']      ?? $this->minute,
-            $fields['second']      ?? $this->second,
+            $fields['hour'] ?? $this->hour,
+            $fields['minute'] ?? $this->minute,
+            $fields['second'] ?? $this->second,
             $fields['millisecond'] ?? $this->millisecond,
             $fields['microsecond'] ?? $this->microsecond,
-            $fields['nanosecond']  ?? $this->nanosecond,
+            $fields['nanosecond'] ?? $this->nanosecond
         );
     }
 
@@ -149,12 +151,12 @@ final class PlainTime
     public function add(array $duration): self
     {
         $ns = $this->toNanosecondsSinceMidnight();
-        $ns += ($duration['hours']        ?? 0) * 3_600_000_000_000;
-        $ns += ($duration['minutes']      ?? 0) * 60_000_000_000;
-        $ns += ($duration['seconds']      ?? 0) * 1_000_000_000;
-        $ns += ($duration['milliseconds'] ?? 0) * 1_000_000;
-        $ns += ($duration['microseconds'] ?? 0) * 1_000;
-        $ns += ($duration['nanoseconds']  ?? 0);
+        $ns += ( $duration['hours'] ?? 0 ) * 3_600_000_000_000;
+        $ns += ( $duration['minutes'] ?? 0 ) * 60_000_000_000;
+        $ns += ( $duration['seconds'] ?? 0 ) * 1_000_000_000;
+        $ns += ( $duration['milliseconds'] ?? 0 ) * 1_000_000;
+        $ns += ( $duration['microseconds'] ?? 0 ) * 1_000;
+        $ns += $duration['nanoseconds'] ?? 0;
 
         return self::fromNanosecondsSinceMidnight($ns);
     }
@@ -167,12 +169,12 @@ final class PlainTime
     public function subtract(array $duration): self
     {
         return $this->add([
-            'hours'        => -($duration['hours']        ?? 0),
-            'minutes'      => -($duration['minutes']      ?? 0),
-            'seconds'      => -($duration['seconds']      ?? 0),
-            'milliseconds' => -($duration['milliseconds'] ?? 0),
-            'microseconds' => -($duration['microseconds'] ?? 0),
-            'nanoseconds'  => -($duration['nanoseconds']  ?? 0),
+            'hours' => -( $duration['hours'] ?? 0 ),
+            'minutes' => -( $duration['minutes'] ?? 0 ),
+            'seconds' => -( $duration['seconds'] ?? 0 ),
+            'milliseconds' => -( $duration['milliseconds'] ?? 0 ),
+            'microseconds' => -( $duration['microseconds'] ?? 0 ),
+            'nanoseconds' => -( $duration['nanoseconds'] ?? 0 )
         ]);
     }
 
@@ -247,41 +249,56 @@ final class PlainTime
     private static function validate(string $field, int $value, int $min, int $max): void
     {
         if ($value < $min || $value > $max) {
-            throw new InvalidArgumentException(
-                "{$field} must be between {$min} and {$max}, got {$value}"
-            );
+            throw new InvalidArgumentException("{$field} must be between {$min} and {$max}, got {$value}");
         }
     }
 
     /**
-     * Parse an ISO 8601 time string.
+     * Parse an ISO 8601 time string or wider temporal string.
      *
-     * Supports: HH:MM:SS[.fraction]
-     * The fractional part may be 1–9 digits, interpreted as nanoseconds.
+     * Accepted formats:
+     *   HH:MM:SS[.fraction]
+     *   THH:MM:SS[.fraction]           (T-prefixed)
+     *   YYYY-MM-DDTHH:MM:SS[.fraction][offset][tzid][annotation...]
+     *
+     * When a date or offset is present it is silently ignored — only the time
+     * part is extracted. Annotations (e.g. [u-ca=iso8601]) are also ignored.
+     * The fractional part may be 1–9 digits.
      */
     private static function fromString(string $str): self
     {
-        // Pattern: HH:MM:SS[.nnnnnnnnn]
-        $pattern = '/^(\d{2}):(\d{2}):(\d{2})(?:\.(\d{1,9}))?$/';
+        // Full datetime string: extract the time part
+        $dateTimePattern =
+            '/^[+-]?\d{4,6}-\d{2}-\d{2}[Tt]'
+            . '(\d{2}):(\d{2}):(\d{2})(?:\.(\d{1,9}))?'
+            . '(?:[Zz]|[+-]\d{2}(?::\d{2}(?::\d{2})?)?)?'
+            . '(?:\[!?[^\]]*\])*$/';
 
-        if (!preg_match($pattern, $str, $m)) {
+        // Time-only string (with optional T prefix and annotations)
+        $timeOnlyPattern = '/^[Tt]?(\d{2}):(\d{2}):(\d{2})(?:\.(\d{1,9}))?(?:\[!?[^\]]*\])*$/';
+
+        if (preg_match($dateTimePattern, $str, $m)) {
+            // matched full datetime
+        } elseif (preg_match($timeOnlyPattern, $str, $m)) {
+            // matched time-only
+        } else {
             throw new InvalidArgumentException("Invalid PlainTime string: {$str}");
         }
 
-        $hour   = (int) $m[1];
+        $hour = (int) $m[1];
         $minute = (int) $m[2];
         $second = (int) $m[3];
 
         $millisecond = 0;
         $microsecond = 0;
-        $nanosecond  = 0;
+        $nanosecond = 0;
 
         if (isset($m[4]) && $m[4] !== '') {
             // Pad/trim to 9 digits
             $frac = str_pad(substr($m[4], 0, 9), 9, '0', STR_PAD_RIGHT);
             $millisecond = (int) substr($frac, 0, 3);
             $microsecond = (int) substr($frac, 3, 3);
-            $nanosecond  = (int) substr($frac, 6, 3);
+            $nanosecond = (int) substr($frac, 6, 3);
         }
 
         return new self($hour, $minute, $second, $millisecond, $microsecond, $nanosecond);
@@ -293,26 +310,26 @@ final class PlainTime
     private static function nanosecondsToDuration(int $totalNs): Duration
     {
         $sign = $totalNs < 0 ? -1 : 1;
-        $abs  = abs($totalNs);
+        $abs = abs($totalNs);
 
-        $nanosecond  = $abs % 1_000;
-        $abs         = intdiv($abs, 1_000);
+        $nanosecond = $abs % 1_000;
+        $abs = intdiv($abs, 1_000);
         $microsecond = $abs % 1_000;
-        $abs         = intdiv($abs, 1_000);
+        $abs = intdiv($abs, 1_000);
         $millisecond = $abs % 1_000;
-        $abs         = intdiv($abs, 1_000);
-        $second      = $abs % 60;
-        $abs         = intdiv($abs, 60);
-        $minute      = $abs % 60;
-        $hour        = intdiv($abs, 60);
+        $abs = intdiv($abs, 1_000);
+        $second = $abs % 60;
+        $abs = intdiv($abs, 60);
+        $minute = $abs % 60;
+        $hour = intdiv($abs, 60);
 
         return new Duration(
-            hours:        $sign * $hour,
-            minutes:      $sign * $minute,
-            seconds:      $sign * $second,
+            hours: $sign * $hour,
+            minutes: $sign * $minute,
+            seconds: $sign * $second,
             milliseconds: $sign * $millisecond,
             microseconds: $sign * $microsecond,
-            nanoseconds:  $sign * $nanosecond,
+            nanoseconds: $sign * $nanosecond
         );
     }
 }

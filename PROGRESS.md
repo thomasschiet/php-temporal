@@ -128,11 +128,35 @@
 - Created `tests/PlainMonthDayTest.php` — 43 tests, all passing
 - Total: 553 tests, all passing
 
+### 8. Parsing Improvements (2026-02-20)
+
+- Updated `PlainDate::fromString()`:
+  - Now accepts full datetime strings (`2024-03-15T10:30:00Z`) — date part extracted
+  - Now accepts calendar annotations (`[u-ca=iso8601]`, `[x-custom=foo]`, etc.) — silently ignored
+- Updated `PlainTime::fromString()`:
+  - Now accepts `T`-prefixed time strings (`T10:30:00`) — per TC39 spec
+  - Now accepts full datetime strings (`2024-03-15T10:30:00`) — time part extracted
+  - Now accepts calendar annotations — silently ignored
+- Updated `PlainDateTime::fromString()`:
+  - Now accepts optional UTC offset suffix (`Z`, `+05:30`, `-08:00`) — silently ignored
+  - Now accepts optional timezone ID bracket (`[America/New_York]`) — silently ignored
+  - Now accepts calendar annotations — silently ignored
+- Updated `Instant::parse()`:
+  - Now supports offsets with seconds component (`+05:30:00`, `-08:00:00`)
+  - Now supports `-00:00` as equivalent to UTC
+  - Now accepts calendar annotations — silently ignored
+- Updated `ZonedDateTime::parse()`:
+  - Now supports offsets with seconds component (`+05:30:00`)
+  - Now supports multiple trailing annotations (`[u-ca=iso8601][x-foo=bar]`)
+  - Bracket groups are classified: TZID (no `=`) vs annotation (`key=value`)
+- Created `tests/ParsingTest.php` — 35 tests, all passing
+- Total: 588 tests, all passing
+
 ## Current Task
 
-- **Parsing improvements** — ISO 8601 string parsing edge cases
+- All planned tasks complete.
 
 ## Next Tasks
 
-8. Parsing improvements — ISO 8601 string parsing edge cases
 9. `Calendar` — ISO 8601 calendar (if needed for completeness)
+10. Additional edge case coverage from test262 suite
