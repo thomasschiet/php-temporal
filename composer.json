@@ -1,0 +1,27 @@
+{
+  "name": "php-temporal/php-temporal",
+  "description": "A port of the JavaScript Temporal API for PHP",
+  "type": "library",
+  "license": "MIT",
+  "require": {
+    "php": "^8.4"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^11.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Temporal\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Temporal\\Tests\\": "tests/"
+    }
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "sort-packages": true
+  },
+  "minimum-stability": "stable"
+}

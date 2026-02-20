@@ -1,0 +1,58 @@
+{
+  "name": "PHP Temporal",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "args": {
+      "TZ": "${localEnv:TZ:Europe/Amsterdam}",
+      "CLAUDE_CODE_VERSION": "latest",
+      "GIT_DELTA_VERSION": "0.18.2",
+      "ZSH_IN_DOCKER_VERSION": "1.2.0"
+    }
+  },
+  "runArgs": [
+    "--cap-add=NET_ADMIN",
+    "--cap-add=NET_RAW"
+  ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "anthropic.claude-code",
+        "bmewburn.vscode-intelephense-client",
+        "xdebug.php-debug",
+        "neilbrayfield.php-docblocker",
+        "recca0120.vscode-phpunit",
+        "eamodio.gitlens"
+      ],
+      "settings": {
+        "php.validate.executablePath": "/usr/local/bin/php",
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "bmewburn.vscode-intelephense-client",
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "terminal.integrated.profiles.linux": {
+          "bash": {
+            "path": "bash",
+            "icon": "terminal-bash"
+          },
+          "zsh": {
+            "path": "zsh"
+          }
+        }
+      }
+    }
+  },
+  "remoteUser": "node",
+  "mounts": [
+    "source=php-temporal-bashhistory-${devcontainerId},target=/commandhistory,type=volume",
+    "source=php-temporal-config-${devcontainerId},target=/home/node/.claude,type=volume"
+  ],
+  "containerEnv": {
+    "NODE_OPTIONS": "--max-old-space-size=4096",
+    "CLAUDE_CONFIG_DIR": "/home/node/.claude",
+    "POWERLEVEL9K_DISABLE_GITSTATUS": "true"
+  },
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=delegated",
+  "workspaceFolder": "/workspace",
+  "postStartCommand": "sudo /usr/local/bin/init-firewall.sh",
+  "postCreateCommand": "composer install 2>/dev/null || true",
+  "waitFor": "postStartCommand"
+}
