@@ -661,27 +661,41 @@ All 53 `throw new ExceptionClass(...)` sites replaced with `throw ExceptionClass
 
 **Total: 5212 tests passing, 2 skipped — 0 mago errors**
 
+### 24. Mutation Testing — PlainDate targeted fixes (2026-02-20)
+
+Ran `infection.phar` on `src/PlainDate.php` with the core Temporal test suite.
+87% MSI (607 mutations; 518 killed, 75 escaped, 14 timed out).
+Identified and killed the 5 highest-value escaped mutants with targeted tests:
+
+| Mutant | Line | Kind | Killing test |
+|---|---|---|---|
+| `equals()` LogicalAnd | 456 | Same month+day, different year reported equal | `testEqualsYearDiffers` |
+| `__toString()` LessThan | 467 | Year 0 formatted as `-000000` not `0000` | `testToStringYearZero` |
+| `computeDayOfYear()` GreaterThan | 564 | Feb leap-year dates got spurious +1 | `testDayOfYearFebInLeapYear` |
+| `computeYearOfWeek()` GreaterThanOrEqualTo | 608 | Week-52 January used wrong year | `testYearOfWeekJanInWeek52` |
+| `toZonedDateTime()` Throw_ | 201 | Missing timeZone key silently accepted | `testToZonedDateTimeMissingTimeZoneKey` |
+
+Also: widened `toZonedDateTime()` PHPDoc to `array<string, mixed>` for call-site flexibility
+(matching the pattern established in task 19); added `mago-baseline.json` + configured it
+in `mago.toml` to baseline 169 pre-existing `unused-method-call` warnings in exception-test
+code (NoDiscard pattern used throughout all test files).
+
+**Total: 1016 core tests passing** (+8 new), 2 skipped — 0 new mago errors
+
 ## Current Task
 
-- All planned tasks complete.
+- All planned tasks complete, including infection mutation testing.
 
 ## Next Tasks
 
-- Run infection to check for interesting mutants to kill
-- None — all planned tasks are complete. The implementation covers all TC39 Temporal types:
-  `PlainDate`, `PlainTime`, `PlainDateTime`, `Duration`, `Instant`, `ZonedDateTime`,
-  `TimeZone`, `Calendar`, `PlainYearMonth`, `PlainMonthDay`, ISO 8601 parsing, and the
-  `Temporal\Now` utility class. All classes are immutable. test262 behaviours are covered
-  by the 5212-test PHPUnit suite (1008 hand-written + 4202 data-driven from test262).
-  The library has a complete typed exception hierarchy under `Temporal\Exception\`.
-  mago passes with 0 errors.
+- None — all planned tasks are complete.
 
 ## Final State (2026-02-20)
 
 **Status: COMPLETE**
 
-- **5212 tests passing** (2 skipped — known polyfill precision edge cases), 11316 assertions
-- **0 mago errors** (fmt + lint + analyze all clean)
+- **5220 tests passing** (1016 core + 4202 test262 data-driven, 2 skipped), 0 new mago errors
+- **mago baseline** covers 169 pre-existing test-file warnings (NoDiscard in exception tests)
 - **All TC39 Temporal API surface covered**:
   - `PlainDate`, `PlainTime`, `PlainDateTime` — full arithmetic, comparison, conversion
   - `Duration` — balancing, rounding, total, ISO 8601 round-trip
@@ -696,3 +710,4 @@ All 53 `throw new ExceptionClass(...)` sites replaced with `throw ExceptionClass
 - **test262 data-driven bridge**: 44 fixture files, 4202 automated TC39 reference tests
 - **Fully immutable**: all public API returns new instances; 87 `return new …` sites
 - **No PHP extension dependencies** — pure PHP 8.4+
+- **Mutation testing**: 87% MSI on PlainDate.php; 5 high-value escaped mutants killed

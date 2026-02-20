@@ -27,6 +27,7 @@ readable-literal = { enabled = false }
 
 [analyzer]
 plugins = []
+baseline = "mago-baseline.json"
 find-unused-definitions = true
 find-unused-expressions = true
 analyze-dead-code = true

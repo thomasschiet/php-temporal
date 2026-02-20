@@ -191,7 +191,7 @@ final class PlainDate implements \JsonSerializable
      * Corresponds to Temporal.PlainDate.prototype.toZonedDateTime() in the TC39
      * proposal.
      *
-     * @param TimeZone|string|array{timeZone:TimeZone|string,plainTime?:PlainTime} $options
+     * @param TimeZone|string|array<string, mixed> $options
      * @throws \InvalidArgumentException if options are invalid.
      */
     #[\NoDiscard]
@@ -199,8 +199,9 @@ final class PlainDate implements \JsonSerializable
     {
         if (is_array($options)) {
             $tzValue = $options['timeZone'] ?? throw MissingFieldException::toZonedDateTimeMissingTimeZone();
-            $tz = $tzValue instanceof TimeZone ? $tzValue : TimeZone::from($tzValue);
-            $plainTime = $options['plainTime'] ?? new PlainTime(0, 0, 0);
+            $tz = $tzValue instanceof TimeZone ? $tzValue : TimeZone::from((string) $tzValue);
+            $rawTime = $options['plainTime'] ?? null;
+            $plainTime = $rawTime instanceof PlainTime ? $rawTime : new PlainTime(0, 0, 0);
         } else {
             $tz = $options instanceof TimeZone ? $options : TimeZone::from($options);
             $plainTime = new PlainTime(0, 0, 0);

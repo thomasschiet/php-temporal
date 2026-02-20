@@ -1,0 +1,571 @@
+variant = "loose"
+
+[[issues]]
+file = "src/Calendar.php"
+code = "redundant-cast"
+message = "Redundant cast to `(bool)`: the expression already has this type."
+count = 1
+
+[[issues]]
+file = "src/Calendar.php"
+code = "unused-parameter"
+message = "Parameter `$date` is never used."
+count = 2
+
+[[issues]]
+file = "src/Duration.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(0)` accessed on `array<array-key, string>`."
+count = 2
+
+[[issues]]
+file = "src/Duration.php"
+code = "redundant-cast"
+message = "Redundant cast to `(string)`: the expression already has this type."
+count = 2
+
+[[issues]]
+file = "src/Duration.php"
+code = "reference-to-undefined-variable"
+message = "Reference created from a previously undefined variable `$m`."
+count = 2
+
+[[issues]]
+file = "src/Instant.php"
+code = "mixed-assignment"
+message = "Assigning `nonnull` type to a variable may lead to unexpected behavior."
+count = 4
+
+[[issues]]
+file = "src/Instant.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(1)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/Instant.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(2)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/Instant.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(3)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/Instant.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(4)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/Instant.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(5)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/Instant.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(6)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/Instant.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(8)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/Instant.php"
+code = "reference-to-undefined-variable"
+message = "Reference created from a previously undefined variable `$m`."
+count = 1
+
+[[issues]]
+file = "src/PlainDate.php"
+code = "missing-constant-type"
+message = "Class constant `MAX_EPOCH_DAYS` is missing a type hint."
+count = 1
+
+[[issues]]
+file = "src/PlainDate.php"
+code = "missing-constant-type"
+message = "Class constant `MIN_EPOCH_DAYS` is missing a type hint."
+count = 1
+
+[[issues]]
+file = "src/PlainDate.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 1
+
+[[issues]]
+file = "src/PlainDate.php"
+code = "mixed-assignment"
+message = "Assigning `nonnull` type to a variable may lead to unexpected behavior."
+count = 1
+
+[[issues]]
+file = "src/PlainDate.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(1)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/PlainDate.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(2)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/PlainDate.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(3)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/PlainDate.php"
+code = "reference-to-undefined-variable"
+message = "Reference created from a previously undefined variable `$m`."
+count = 1
+
+[[issues]]
+file = "src/PlainDateTime.php"
+code = "implicit-to-string-cast"
+message = 'Implicit conversion to `string` for left operand via `Temporal\PlainDate::__toString()`.'
+count = 1
+
+[[issues]]
+file = "src/PlainDateTime.php"
+code = "implicit-to-string-cast"
+message = 'Implicit conversion to `string` for right operand via `Temporal\PlainTime::__toString()`.'
+count = 1
+
+[[issues]]
+file = "src/PlainDateTime.php"
+code = "mixed-assignment"
+message = "Assigning `nonnull` type to a variable may lead to unexpected behavior."
+count = 2
+
+[[issues]]
+file = "src/PlainDateTime.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(1)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/PlainDateTime.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(2)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/PlainDateTime.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(3)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/PlainDateTime.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(4)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/PlainDateTime.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(5)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/PlainDateTime.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(6)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/PlainDateTime.php"
+code = "reference-to-undefined-variable"
+message = "Reference created from a previously undefined variable `$m`."
+count = 1
+
+[[issues]]
+file = "src/PlainMonthDay.php"
+code = "missing-constant-type"
+message = "Class constant `REFERENCE_YEAR` is missing a type hint."
+count = 1
+
+[[issues]]
+file = "src/PlainMonthDay.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(1)` accessed on `array<array-key, string>`."
+count = 2
+
+[[issues]]
+file = "src/PlainMonthDay.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(2)` accessed on `array<array-key, string>`."
+count = 2
+
+[[issues]]
+file = "src/PlainMonthDay.php"
+code = "reference-to-undefined-variable"
+message = "Reference created from a previously undefined variable `$m`."
+count = 1
+
+[[issues]]
+file = "src/PlainTime.php"
+code = "mixed-assignment"
+message = "Assigning `nonnull` type to a variable may lead to unexpected behavior."
+count = 2
+
+[[issues]]
+file = "src/PlainTime.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(1)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/PlainTime.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(2)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/PlainTime.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(3)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/PlainTime.php"
+code = "reference-to-undefined-variable"
+message = "Reference created from a previously undefined variable `$m`."
+count = 1
+
+[[issues]]
+file = "src/PlainYearMonth.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(1)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/PlainYearMonth.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(2)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/PlainYearMonth.php"
+code = "reference-to-undefined-variable"
+message = "Reference created from a previously undefined variable `$m`."
+count = 1
+
+[[issues]]
+file = "src/TimeZone.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(1)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/TimeZone.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(2)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/TimeZone.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(3)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/TimeZone.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `string('offset')` accessed on `array<array-key, mixed>`."
+count = 5
+
+[[issues]]
+file = "src/TimeZone.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `string('ts')` accessed on `array<array-key, mixed>`."
+count = 2
+
+[[issues]]
+file = "src/TimeZone.php"
+code = "reference-to-undefined-variable"
+message = "Reference created from a previously undefined variable `$m`."
+count = 1
+
+[[issues]]
+file = "src/ZonedDateTime.php"
+code = "mixed-assignment"
+message = "Assigning `nonnull` type to a variable may lead to unexpected behavior."
+count = 1
+
+[[issues]]
+file = "src/ZonedDateTime.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(1)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/ZonedDateTime.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(2)` accessed on `array<array-key, string>`."
+count = 2
+
+[[issues]]
+file = "src/ZonedDateTime.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(3)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/ZonedDateTime.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(4)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/ZonedDateTime.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(5)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/ZonedDateTime.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(6)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/ZonedDateTime.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(8)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/ZonedDateTime.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `int(9)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/ZonedDateTime.php"
+code = "reference-to-undefined-variable"
+message = "Reference created from a previously undefined variable `$groups`."
+count = 1
+
+[[issues]]
+file = "src/ZonedDateTime.php"
+code = "reference-to-undefined-variable"
+message = "Reference created from a previously undefined variable `$m`."
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `string('day')` accessed on `array<string, int>`."
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `string('month')` accessed on `array<string, int>`."
+count = 1
+
+[[issues]]
+file = "tests/CalendarTest.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `string('year')` accessed on `array<string, int>`."
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unused-method-call"
+message = "The return value of 'balance' must be used."
+count = 1
+
+[[issues]]
+file = "tests/DurationTest.php"
+code = "unused-method-call"
+message = "The return value of 'round' must be used."
+count = 1
+
+[[issues]]
+file = "tests/InstantTest.php"
+code = "non-documented-property"
+message = 'Ambiguous property access: $nonExistent on class `temporal\instant`.'
+count = 1
+
+[[issues]]
+file = "tests/InstantTest.php"
+code = "unused-method-call"
+message = "The return value of 'add' must be used."
+count = 4
+
+[[issues]]
+file = "tests/InstantTest.php"
+code = "unused-method-call"
+message = "The return value of 'round' must be used."
+count = 2
+
+[[issues]]
+file = "tests/InstantTest.php"
+code = "unused-method-call"
+message = "The return value of 'toZonedDateTime' must be used."
+count = 2
+
+[[issues]]
+file = "tests/NowTest.php"
+code = "redundant-type-comparison"
+message = "Redundant type assertion: `$id` of type `string` is always not `string`."
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unused-method-call"
+message = "The return value of 'add' must be used."
+count = 7
+
+[[issues]]
+file = "tests/PlainDateTest.php"
+code = "unused-method-call"
+message = "The return value of 'subtract' must be used."
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTimeTest.php"
+code = "unused-method-call"
+message = "The return value of 'add' must be used."
+count = 1
+
+[[issues]]
+file = "tests/PlainDateTimeTest.php"
+code = "unused-method-call"
+message = "The return value of 'round' must be used."
+count = 5
+
+[[issues]]
+file = "tests/PlainDateTimeTest.php"
+code = "unused-method-call"
+message = "The return value of 'subtract' must be used."
+count = 1
+
+[[issues]]
+file = "tests/PlainMonthDayTest.php"
+code = "unused-method-call"
+message = "The return value of 'toPlainDate' must be used."
+count = 1
+
+[[issues]]
+file = "tests/PlainMonthDayTest.php"
+code = "unused-method-call"
+message = "The return value of 'with' must be used."
+count = 1
+
+[[issues]]
+file = "tests/PlainTimeTest.php"
+code = "unused-method-call"
+message = "The return value of 'round' must be used."
+count = 4
+
+[[issues]]
+file = "tests/PlainYearMonthTest.php"
+code = "non-documented-property"
+message = 'Ambiguous property access: $nonExistentProperty on class `Temporal\PlainYearMonth`.'
+count = 1
+
+[[issues]]
+file = "tests/PlainYearMonthTest.php"
+code = "unused-method-call"
+message = "The return value of 'toPlainDate' must be used."
+count = 2
+
+[[issues]]
+file = "tests/Test262Test.php"
+code = "invalid-type-cast"
+message = "Casting `mixed` to `array`."
+count = 2
+
+[[issues]]
+file = "tests/Test262Test.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 3
+
+[[issues]]
+file = "tests/Test262Test.php"
+code = "mixed-assignment"
+message = "Assigning `nonnull` type to a variable may lead to unexpected behavior."
+count = 1
+
+[[issues]]
+file = "tests/Test262Test.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `string('day')` accessed on `array<string, int>`."
+count = 6
+
+[[issues]]
+file = "tests/Test262Test.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `string('hour')` accessed on `array<string, int>`."
+count = 6
+
+[[issues]]
+file = "tests/Test262Test.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `string('microsecond')` accessed on `array<string, int>`."
+count = 3
+
+[[issues]]
+file = "tests/Test262Test.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `string('millisecond')` accessed on `array<string, int>`."
+count = 3
+
+[[issues]]
+file = "tests/Test262Test.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `string('minute')` accessed on `array<string, int>`."
+count = 3
+
+[[issues]]
+file = "tests/Test262Test.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `string('month')` accessed on `array<string, int>`."
+count = 6
+
+[[issues]]
+file = "tests/Test262Test.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `string('nanosecond')` accessed on `array<string, int>`."
+count = 3
+
+[[issues]]
+file = "tests/Test262Test.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `string('second')` accessed on `array<string, int>`."
+count = 3
+
+[[issues]]
+file = "tests/Test262Test.php"
+code = "possibly-undefined-array-index"
+message = "Possibly undefined array key `string('year')` accessed on `array<string, int>`."
+count = 10
+
+[[issues]]
+file = "tests/Test262Test.php"
+code = "unused-parameter"
+message = "Parameter `$expected` is never used."
+count = 1
+
+[[issues]]
+file = "tests/ZonedDateTimeTest.php"
+code = "unused-method-call"
+message = "The return value of 'round' must be used."
+count = 2

@@ -7,6 +7,7 @@ namespace Temporal\Tests;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Temporal\Exception\DateRangeException;
+use Temporal\Exception\MissingFieldException;
 use Temporal\PlainDate;
 
 class PlainDateTest extends TestCase
@@ -146,6 +147,13 @@ class PlainDateTest extends TestCase
         $this->assertSame('+010000-01-01', (string) $date);
     }
 
+    /** Year 0 is a valid ISO year and must format as the 4-digit string '0000'. */
+    public function testToStringYearZero(): void
+    {
+        $date = new PlainDate(0, 3, 1);
+        $this->assertSame('0000-03-01', (string) $date);
+    }
+
     // -------------------------------------------------------------------------
     // Computed properties
     // -------------------------------------------------------------------------
@@ -178,6 +186,17 @@ class PlainDateTest extends TestCase
     {
         $date = new PlainDate(2023, 12, 31);
         $this->assertSame(365, $date->dayOfYear);
+    }
+
+    /**
+     * February in a leap year must NOT get the leap-day +1 applied —
+     * only dates from March 1 onward receive the extra day.
+     */
+    public function testDayOfYearFebInLeapYear(): void
+    {
+        // 2024 is a leap year. Feb 15 = 31 (Jan) + 15 = day 46 — NOT 47.
+        $date = new PlainDate(2024, 2, 15);
+        $this->assertSame(46, $date->dayOfYear);
     }
 
     public function testDaysInMonthJanuary(): void
@@ -428,6 +447,14 @@ class PlainDateTest extends TestCase
         $c = new PlainDate(2024, 3, 16);
         $this->assertTrue($a->equals($b));
         $this->assertFalse($a->equals($c));
+    }
+
+    /** Same month+day but different year must NOT be equal. */
+    public function testEqualsYearDiffers(): void
+    {
+        $a = new PlainDate(2024, 3, 15);
+        $b = new PlainDate(2025, 3, 15);
+        $this->assertFalse($a->equals($b));
     }
 
     // -------------------------------------------------------------------------
@@ -719,6 +746,14 @@ class PlainDateTest extends TestCase
         $this->assertSame(0, $zdt->epochNanoseconds);
     }
 
+    /** Passing an array without a 'timeZone' key must throw MissingFieldException. */
+    public function testToZonedDateTimeMissingTimeZoneKey(): void
+    {
+        $date = new PlainDate(2024, 6, 1);
+        $this->expectException(MissingFieldException::class);
+        $_ = $date->toZonedDateTime([]);
+    }
+
     // -------------------------------------------------------------------------
     // toPlainDateTime()
     // -------------------------------------------------------------------------
@@ -861,6 +896,18 @@ class PlainDateTest extends TestCase
         $date = new PlainDate(2019, 12, 29);
         $this->assertSame(52, $date->weekOfYear);
         $this->assertSame(2019, $date->yearOfWeek);
+    }
+
+    /**
+     * 2011-01-01 (Saturday) falls in week 52 of 2010.
+     * yearOfWeek must therefore return 2010 (year - 1), not 2011.
+     * This distinguishes the ">= 52" boundary condition from "> 52".
+     */
+    public function testYearOfWeekJanInWeek52(): void
+    {
+        $date = new PlainDate(2011, 1, 1);
+        $this->assertSame(52, $date->weekOfYear);
+        $this->assertSame(2010, $date->yearOfWeek);
     }
 
     // -------------------------------------------------------------------------
