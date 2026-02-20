@@ -696,6 +696,62 @@ class PlainDateTimeTest extends TestCase
         $this->assertSame(9, $dt2->hour);
     }
 
+    public function testAddDurationObject(): void
+    {
+        $dt = new PlainDateTime(2024, 3, 15, 10, 0, 0);
+        $result = $dt->add(new Duration(hours: 3, minutes: 30));
+        $this->assertSame(13, $result->hour);
+        $this->assertSame(30, $result->minute);
+    }
+
+    public function testSubtractDurationObject(): void
+    {
+        $dt = new PlainDateTime(2024, 3, 15, 10, 30, 0);
+        $result = $dt->subtract(new Duration(hours: 2, minutes: 30));
+        $this->assertSame(8, $result->hour);
+        $this->assertSame(0, $result->minute);
+    }
+
+    public function testAddMonthsOverflowConstrain(): void
+    {
+        // Jan 31 + 1 month → Feb 28 (constrained, not Feb 31)
+        $dt = new PlainDateTime(2023, 1, 31, 12, 0, 0);
+        $result = $dt->add(['months' => 1]);
+        $this->assertSame(2, $result->month);
+        $this->assertSame(28, $result->day);
+        $this->assertSame(12, $result->hour);
+    }
+
+    public function testAddMonthsOverflowReject(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $dt = new PlainDateTime(2023, 1, 31, 12, 0, 0);
+        $dt->add(['months' => 1], 'reject');
+    }
+
+    public function testAddWithExplicitConstrainOverflow(): void
+    {
+        $dt = new PlainDateTime(2023, 1, 31, 6, 0, 0);
+        $result = $dt->add(['months' => 1], 'constrain');
+        $this->assertSame(2, $result->month);
+        $this->assertSame(28, $result->day);
+    }
+
+    public function testSubtractMonthsOverflowReject(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $dt = new PlainDateTime(2023, 3, 31, 12, 0, 0);
+        $dt->subtract(['months' => 1], 'reject');
+    }
+
+    public function testAddDurationObjectOverflowConstrain(): void
+    {
+        $dt = new PlainDateTime(2023, 1, 31, 12, 0, 0);
+        $result = $dt->add(new Duration(months: 1));
+        $this->assertSame(2, $result->month);
+        $this->assertSame(28, $result->day);
+    }
+
     // -------------------------------------------------------------------------
     // toZonedDateTime
     // -------------------------------------------------------------------------

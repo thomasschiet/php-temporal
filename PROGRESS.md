@@ -240,12 +240,28 @@ Implemented the `Temporal\Now` utility class and cross-type conversion methods:
 
 **Total: 734 tests passing (+40 new)**
 
+### 12. ZonedDateTime::round() + PlainDateTime::add() improvements (2026-02-20)
+
+#### `ZonedDateTime::round()` — new method
+- Accepts `string|array{smallestUnit, roundingMode?}` (same interface as `Instant::round()`)
+- For time units (`nanosecond` … `hour`): rounds epoch-nanosecond value directly using the same integer arithmetic as `Instant::round()` (halfExpand / ceil / floor / trunc)
+- For `day`: timezone-aware rounding — locates the exact epoch-nanosecond positions of the current and next midnight in the local timezone (respects DST transitions where the day may be 23h, 24h, or 25h), then picks between them based on `roundingMode`
+- Private helpers `roundHalfExpand()`, `floorDiv()`, `ceilDiv()` added to `ZonedDateTime` (parallel to `Instant`)
+- Added 21 tests to `tests/ZonedDateTimeTest.php` covering all units, all rounding modes, day-boundary crossing, and error cases
+
+#### `PlainDateTime::add()` / `subtract()` improvements
+- Both methods now accept `Duration|array` (previously array-only); a `Duration` argument is converted to an equivalent array before processing
+- Added optional `string $overflow = 'constrain'` parameter, forwarded to `PlainDate::add()` / `subtract()` for month-end clamping or rejection
+- Added 7 tests to `tests/PlainDateTimeTest.php` covering Duration object arguments and overflow constrain/reject modes
+
+**Total: 759 tests passing (+25 new)**
+
 ## Current Task
 
 - All planned tasks complete.
 
 ## Next Tasks
 
-- Additional edge cases (DST transitions in ZonedDateTime, Duration balancing with mixed units)
-- `ZonedDateTime.round()` — round to nearest unit
-- `PlainDateTime.add()` overflow option (delegates to PlainDate)
+- Additional DST-transition edge cases in `ZonedDateTime` (add/subtract across spring/fall transitions)
+- Duration balancing with mixed calendar + time units (`Duration::balance()`)
+- `PlainTime::round()` — round to nearest unit

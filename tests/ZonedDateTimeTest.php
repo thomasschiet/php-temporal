@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Temporal\Tests;
 
@@ -29,7 +29,7 @@ final class ZonedDateTimeTest extends TestCase
 
     public function testFromEpochNanosecondsWithTimeZoneObject(): void
     {
-        $tz  = TimeZone::from('+05:30');
+        $tz = TimeZone::from('+05:30');
         $zdt = ZonedDateTime::fromEpochNanoseconds(0, $tz);
         self::assertSame('+05:30', (string) $zdt->timeZone);
     }
@@ -132,9 +132,13 @@ final class ZonedDateTimeTest extends TestCase
     public function testFromArray(): void
     {
         $zdt = ZonedDateTime::from([
-            'year' => 2021, 'month' => 8, 'day' => 4,
-            'hour' => 12, 'minute' => 30, 'second' => 0,
-            'timeZone' => 'UTC',
+            'year' => 2021,
+            'month' => 8,
+            'day' => 4,
+            'hour' => 12,
+            'minute' => 30,
+            'second' => 0,
+            'timeZone' => 'UTC'
         ]);
         self::assertSame(2021, $zdt->year);
         self::assertSame(8, $zdt->month);
@@ -183,7 +187,7 @@ final class ZonedDateTimeTest extends TestCase
     public function testOffsetNanosecondsPositive(): void
     {
         $zdt = ZonedDateTime::fromEpochNanoseconds(0, '+05:30');
-        $expected = (5 * 3600 + 30 * 60) * 1_000_000_000;
+        $expected = ( ( 5 * 3600 ) + ( 30 * 60 ) ) * 1_000_000_000;
         self::assertSame($expected, $zdt->offsetNanoseconds);
     }
 
@@ -211,7 +215,7 @@ final class ZonedDateTimeTest extends TestCase
 
     public function testToInstant(): void
     {
-        $zdt     = ZonedDateTime::fromEpochNanoseconds(0, '+05:30');
+        $zdt = ZonedDateTime::fromEpochNanoseconds(0, '+05:30');
         $instant = $zdt->toInstant();
         self::assertSame(0, $instant->epochNanoseconds);
     }
@@ -219,7 +223,7 @@ final class ZonedDateTimeTest extends TestCase
     public function testToPlainDate(): void
     {
         // 2021-08-04T12:00:00+05:30
-        $zdt  = ZonedDateTime::from('2021-08-04T12:00:00+05:30');
+        $zdt = ZonedDateTime::from('2021-08-04T12:00:00+05:30');
         $date = $zdt->toPlainDate();
         self::assertSame(2021, $date->year);
         self::assertSame(8, $date->month);
@@ -228,7 +232,7 @@ final class ZonedDateTimeTest extends TestCase
 
     public function testToPlainTime(): void
     {
-        $zdt  = ZonedDateTime::from('2021-08-04T12:30:45+00:00[UTC]');
+        $zdt = ZonedDateTime::from('2021-08-04T12:30:45+00:00[UTC]');
         $time = $zdt->toPlainTime();
         self::assertSame(12, $time->hour);
         self::assertSame(30, $time->minute);
@@ -268,7 +272,7 @@ final class ZonedDateTimeTest extends TestCase
     public function testWithTimeZoneFromObjectToString(): void
     {
         $zdt1 = ZonedDateTime::from('2021-08-04T12:00:00+00:00[UTC]');
-        $tz   = TimeZone::from('-05:00');
+        $tz = TimeZone::from('-05:00');
         $zdt2 = $zdt1->withTimeZone($tz);
         self::assertSame(7, $zdt2->hour);
         self::assertSame(0, $zdt2->minute);
@@ -365,7 +369,7 @@ final class ZonedDateTimeTest extends TestCase
     {
         $zdt1 = ZonedDateTime::from('2021-08-04T12:00:00+00:00[UTC]');
         $zdt2 = ZonedDateTime::from('2021-08-04T15:30:00+00:00[UTC]');
-        $dur  = $zdt1->until($zdt2);
+        $dur = $zdt1->until($zdt2);
 
         self::assertSame(3, $dur->hours);
         self::assertSame(30, $dur->minutes);
@@ -375,7 +379,7 @@ final class ZonedDateTimeTest extends TestCase
     {
         $zdt1 = ZonedDateTime::from('2021-08-04T12:00:00+00:00[UTC]');
         $zdt2 = ZonedDateTime::from('2021-08-04T15:30:00+00:00[UTC]');
-        $dur  = $zdt2->since($zdt1);
+        $dur = $zdt2->since($zdt1);
 
         self::assertSame(3, $dur->hours);
         self::assertSame(30, $dur->minutes);
@@ -385,7 +389,7 @@ final class ZonedDateTimeTest extends TestCase
     {
         $zdt1 = ZonedDateTime::from('2021-08-04T12:00:00+00:00[UTC]');
         $zdt2 = ZonedDateTime::from('2021-08-06T12:00:00+00:00[UTC]');
-        $dur  = $zdt1->until($zdt2);
+        $dur = $zdt1->until($zdt2);
 
         // 2 days = 48 hours
         self::assertSame(48, $dur->hours);
@@ -395,7 +399,7 @@ final class ZonedDateTimeTest extends TestCase
     {
         $zdt1 = ZonedDateTime::from('2021-08-04T15:30:00+00:00[UTC]');
         $zdt2 = ZonedDateTime::from('2021-08-04T12:00:00+00:00[UTC]');
-        $dur  = $zdt1->until($zdt2);
+        $dur = $zdt1->until($zdt2);
 
         self::assertSame(-3, $dur->hours);
         self::assertSame(-30, $dur->minutes);
@@ -487,7 +491,7 @@ final class ZonedDateTimeTest extends TestCase
 
     public function testRoundTripFromEpochNanoseconds(): void
     {
-        $ns  = 1_628_072_400_000_000_000; // 2021-08-04T11:00:00Z
+        $ns = 1_628_072_400_000_000_000; // 2021-08-04T11:00:00Z
         $zdt = ZonedDateTime::fromEpochNanoseconds($ns, 'UTC');
         self::assertSame($ns, $zdt->epochNanoseconds);
     }
@@ -502,8 +506,8 @@ final class ZonedDateTimeTest extends TestCase
     public function testInstantAndTimeZoneRoundTrip(): void
     {
         $instant = Instant::from('2024-07-04T16:00:00Z');
-        $tz      = TimeZone::from('America/New_York');
-        $zdt     = ZonedDateTime::fromEpochNanoseconds($instant->epochNanoseconds, $tz);
+        $tz = TimeZone::from('America/New_York');
+        $zdt = ZonedDateTime::fromEpochNanoseconds($instant->epochNanoseconds, $tz);
 
         // Local time should be 12:00 EDT
         self::assertSame(12, $zdt->hour);
@@ -540,5 +544,173 @@ final class ZonedDateTimeTest extends TestCase
     {
         $zdt = ZonedDateTime::from('2021-07-04T00:00:00+00:00[UTC]');
         self::assertFalse($zdt->inLeapYear);
+    }
+
+    // -------------------------------------------------------------------------
+    // round()
+    // -------------------------------------------------------------------------
+
+    public function testRoundToHourUp(): void
+    {
+        // 12:45 → rounds up to 13:00
+        $zdt = ZonedDateTime::from('2021-08-04T12:45:00+00:00[UTC]');
+        $result = $zdt->round('hour');
+        self::assertSame(13, $result->hour);
+        self::assertSame(0, $result->minute);
+        self::assertSame(0, $result->second);
+    }
+
+    public function testRoundToHourDown(): void
+    {
+        // 12:14 → rounds down to 12:00
+        $zdt = ZonedDateTime::from('2021-08-04T12:14:00+00:00[UTC]');
+        $result = $zdt->round('hour');
+        self::assertSame(12, $result->hour);
+        self::assertSame(0, $result->minute);
+    }
+
+    public function testRoundToMinuteUp(): void
+    {
+        // 12:30:45 → rounds up to 12:31:00
+        $zdt = ZonedDateTime::from('2021-08-04T12:30:45+00:00[UTC]');
+        $result = $zdt->round('minute');
+        self::assertSame(12, $result->hour);
+        self::assertSame(31, $result->minute);
+        self::assertSame(0, $result->second);
+    }
+
+    public function testRoundToMinuteDown(): void
+    {
+        // 12:30:29 → rounds down to 12:30:00
+        $zdt = ZonedDateTime::from('2021-08-04T12:30:29+00:00[UTC]');
+        $result = $zdt->round('minute');
+        self::assertSame(30, $result->minute);
+        self::assertSame(0, $result->second);
+    }
+
+    public function testRoundToSecondHalfExpand(): void
+    {
+        // 12:30:00.500 → rounds up to 12:30:01
+        $ns = ZonedDateTime::from('2021-08-04T12:30:00+00:00[UTC]')->epochNanoseconds + 500_000_000;
+        $zdt = ZonedDateTime::fromEpochNanoseconds($ns, 'UTC');
+        $result = $zdt->round('second');
+        self::assertSame(1, $result->second);
+        self::assertSame(0, $result->millisecond);
+    }
+
+    public function testRoundToSecondTrunc(): void
+    {
+        // 12:30:00.999 with trunc → 12:30:00
+        $ns = ZonedDateTime::from('2021-08-04T12:30:00+00:00[UTC]')->epochNanoseconds + 999_000_000;
+        $zdt = ZonedDateTime::fromEpochNanoseconds($ns, 'UTC');
+        $result = $zdt->round(['smallestUnit' => 'second', 'roundingMode' => 'trunc']);
+        self::assertSame(0, $result->second);
+        self::assertSame(0, $result->millisecond);
+    }
+
+    public function testRoundToMillisecond(): void
+    {
+        // 12:30:00.0005 → rounds up to 12:30:00.001
+        $ns = ZonedDateTime::from('2021-08-04T12:30:00+00:00[UTC]')->epochNanoseconds + 500_000;
+        $zdt = ZonedDateTime::fromEpochNanoseconds($ns, 'UTC');
+        $result = $zdt->round('millisecond');
+        self::assertSame(1, $result->millisecond);
+        self::assertSame(0, $result->microsecond);
+    }
+
+    public function testRoundToMicrosecond(): void
+    {
+        // Sub-microsecond precision: 500 ns → rounds up to 1 µs
+        $ns = ZonedDateTime::from('2021-08-04T12:30:00+00:00[UTC]')->epochNanoseconds + 500;
+        $zdt = ZonedDateTime::fromEpochNanoseconds($ns, 'UTC');
+        $result = $zdt->round('microsecond');
+        self::assertSame(1, $result->microsecond);
+        self::assertSame(0, $result->nanosecond);
+    }
+
+    public function testRoundToNanosecondIsNoop(): void
+    {
+        $zdt = ZonedDateTime::from('2021-08-04T12:30:00.123456789+00:00[UTC]');
+        $result = $zdt->round('nanosecond');
+        self::assertSame($zdt->epochNanoseconds, $result->epochNanoseconds);
+    }
+
+    public function testRoundToDayDown(): void
+    {
+        // 10:00 (< 12:00) → rounds down to midnight same day
+        $zdt = ZonedDateTime::from('2021-08-04T10:00:00+00:00[UTC]');
+        $result = $zdt->round('day');
+        self::assertSame(2021, $result->year);
+        self::assertSame(8, $result->month);
+        self::assertSame(4, $result->day);
+        self::assertSame(0, $result->hour);
+        self::assertSame(0, $result->minute);
+    }
+
+    public function testRoundToDayUp(): void
+    {
+        // 14:00 (> 12:00) → rounds up to midnight next day
+        $zdt = ZonedDateTime::from('2021-08-04T14:00:00+00:00[UTC]');
+        $result = $zdt->round('day');
+        self::assertSame(2021, $result->year);
+        self::assertSame(8, $result->month);
+        self::assertSame(5, $result->day);
+        self::assertSame(0, $result->hour);
+    }
+
+    public function testRoundToDayFloor(): void
+    {
+        // floor always rounds down to start of current day
+        $zdt = ZonedDateTime::from('2021-08-04T23:59:59+00:00[UTC]');
+        $result = $zdt->round(['smallestUnit' => 'day', 'roundingMode' => 'floor']);
+        self::assertSame(4, $result->day);
+        self::assertSame(0, $result->hour);
+    }
+
+    public function testRoundToDayCeil(): void
+    {
+        // ceil always rounds up to next day (unless already at midnight)
+        $zdt = ZonedDateTime::from('2021-08-04T00:00:01+00:00[UTC]');
+        $result = $zdt->round(['smallestUnit' => 'day', 'roundingMode' => 'ceil']);
+        self::assertSame(5, $result->day);
+        self::assertSame(0, $result->hour);
+    }
+
+    public function testRoundToDayAtExactMidnightCeil(): void
+    {
+        // ceil of exact midnight should stay at midnight (not move to next day)
+        $zdt = ZonedDateTime::from('2021-08-04T00:00:00+00:00[UTC]');
+        $result = $zdt->round(['smallestUnit' => 'day', 'roundingMode' => 'ceil']);
+        self::assertSame(4, $result->day);
+        self::assertSame(0, $result->hour);
+    }
+
+    public function testRoundWithOptionsArray(): void
+    {
+        $zdt = ZonedDateTime::from('2021-08-04T12:45:00+00:00[UTC]');
+        $result = $zdt->round(['smallestUnit' => 'hour', 'roundingMode' => 'floor']);
+        self::assertSame(12, $result->hour);
+        self::assertSame(0, $result->minute);
+    }
+
+    public function testRoundInvalidUnitThrows(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        ZonedDateTime::from('2021-08-04T12:00:00+00:00[UTC]')->round('year');
+    }
+
+    public function testRoundMissingSmallestUnitThrows(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        ZonedDateTime::from('2021-08-04T12:00:00+00:00[UTC]')->round(['roundingMode' => 'floor']);
+    }
+
+    public function testRoundCrossesHourBoundary(): void
+    {
+        // 12:59:45 rounds up to 13:00 (not beyond)
+        $zdt = ZonedDateTime::from('2021-08-04T12:59:45+00:00[UTC]');
+        $result = $zdt->round('minute');
+        self::assertSame(13, $result->hour);
+        self::assertSame(0, $result->minute);
     }
 }

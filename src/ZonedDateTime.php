@@ -238,6 +238,55 @@ final class ZonedDateTime
     }
 
     /**
+     * Round this ZonedDateTime to the given smallest unit.
+     *
+     * For time units (nanosecond … hour) the epoch-nanosecond value is
+     * rounded directly (same as Instant::round()).
+     * For 'day' the rounding is timezone-aware: the duration of the current
+     * calendar day (in nanoseconds, respecting DST transitions) is used to
+     * determine the midpoint.
+     *
+     * @param string|array{smallestUnit:string,roundingMode?:string} $options
+     *   When a string is passed it is treated as the smallestUnit with the
+     *   default roundingMode ('halfExpand').
+     */
+    public function round(string|array $options): self
+    {
+        $unit = is_string($options)
+            ? $options
+            : $options['smallestUnit'] ?? throw new InvalidArgumentException('Missing required option: smallestUnit.');
+        $mode = is_string($options) ? 'halfExpand' : $options['roundingMode'] ?? 'halfExpand';
+
+        if ($unit === 'day' || $unit === 'days') {
+            return $this->roundToDay($mode);
+        }
+
+        $divisor = match ($unit) {
+            'nanosecond', 'nanoseconds' => 1,
+            'microsecond', 'microseconds' => 1_000,
+            'millisecond', 'milliseconds' => 1_000_000,
+            'second', 'seconds' => 1_000_000_000,
+            'minute', 'minutes' => 60_000_000_000,
+            'hour', 'hours' => 3_600_000_000_000,
+            default => throw new InvalidArgumentException("Unknown or unsupported unit for round(): '{$unit}'.")
+        };
+
+        if ($divisor === 1) {
+            return $this;
+        }
+
+        $rounded = match ($mode) {
+            'halfExpand' => self::roundHalfExpand($this->ns, $divisor),
+            'ceil' => self::ceilDiv($this->ns, $divisor) * $divisor,
+            'floor' => self::floorDiv($this->ns, $divisor) * $divisor,
+            'trunc' => intdiv($this->ns, $divisor) * $divisor,
+            default => throw new InvalidArgumentException("Unknown roundingMode: '{$mode}'.")
+        };
+
+        return new self($rounded, $this->timeZone);
+    }
+
+    /**
      * Returns a Duration (hours … nanoseconds) from this ZonedDateTime to $other.
      * Both operands are compared by their underlying Instants.
      */
@@ -478,6 +527,78 @@ final class ZonedDateTime
         $tz = TimeZone::from($tzId);
 
         return new self($epochNs, $tz);
+    }
+
+    /**
+     * Round this ZonedDateTime to the nearest calendar day in the local timezone.
+     *
+     * Finds the epoch-nanosecond positions of midnight at the start of the
+     * current and next calendar days (which may differ by 23, 24, or 25 hours
+     * due to DST transitions), then picks between them based on $mode.
+     */
+    private function roundToDay(string $mode): self
+    {
+        $pdt = $this->toPlainDateTime();
+
+        // Start of current calendar day (midnight) in this timezone.
+        $startOfDay = new PlainDateTime($pdt->year, $pdt->month, $pdt->day);
+        $startNs = $this->timeZone->getInstantFor($startOfDay)->epochNanoseconds;
+
+        // Start of the next calendar day.
+        $nextDate = $startOfDay->toPlainDate()->add(['days' => 1]);
+        $startOfNextDay = new PlainDateTime($nextDate->year, $nextDate->month, $nextDate->day);
+        $nextNs = $this->timeZone->getInstantFor($startOfNextDay)->epochNanoseconds;
+
+        $dayNs = $nextNs - $startNs;
+        $positionNs = $this->ns - $startNs;
+
+        $roundedNs = match ($mode) {
+            'halfExpand' => ( $positionNs * 2 ) >= $dayNs ? $nextNs : $startNs,
+            'ceil' => $positionNs > 0 ? $nextNs : $startNs,
+            'floor', 'trunc' => $startNs,
+            default => throw new InvalidArgumentException("Unknown roundingMode: '{$mode}'.")
+        };
+
+        return new self($roundedNs, $this->timeZone);
+    }
+
+    /** Round half away from zero using integer arithmetic only. */
+    private static function roundHalfExpand(int $ns, int $divisor): int
+    {
+        $quotient = intdiv($ns, $divisor);
+        $remainder = $ns % $divisor;
+
+        if ($remainder >= 0 && ( $remainder * 2 ) >= $divisor) {
+            $quotient++;
+        }
+
+        if ($remainder < 0 && ( -$remainder * 2 ) >= $divisor) {
+            $quotient--;
+        }
+
+        return $quotient * $divisor;
+    }
+
+    /** Floor division: rounds toward −∞. */
+    private static function floorDiv(int $ns, int $divisor): int
+    {
+        $q = intdiv($ns, $divisor);
+        if (( $ns % $divisor ) < 0) {
+            $q--;
+        }
+
+        return $q;
+    }
+
+    /** Ceiling division: rounds toward +∞. */
+    private static function ceilDiv(int $ns, int $divisor): int
+    {
+        $q = intdiv($ns, $divisor);
+        if (( $ns % $divisor ) > 0) {
+            $q++;
+        }
+
+        return $q;
     }
 
     /**

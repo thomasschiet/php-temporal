@@ -251,17 +251,33 @@ final class PlainDateTime
      * Date components (years, months, weeks, days) use calendar arithmetic.
      * Time components wrap around midnight and carry into/from the date.
      *
-     * @param array{years?:int,months?:int,weeks?:int,days?:int,hours?:int,minutes?:int,seconds?:int,milliseconds?:int,microseconds?:int,nanoseconds?:int} $duration
+     * @param Duration|array{years?:int,months?:int,weeks?:int,days?:int,hours?:int,minutes?:int,seconds?:int,milliseconds?:int,microseconds?:int,nanoseconds?:int} $duration
+     * @param string $overflow 'constrain' (default) or 'reject' — passed to PlainDate::add()
      */
-    public function add(array $duration): self
+    public function add(Duration|array $duration, string $overflow = 'constrain'): self
     {
+        if ($duration instanceof Duration) {
+            $duration = [
+                'years' => $duration->years,
+                'months' => $duration->months,
+                'weeks' => $duration->weeks,
+                'days' => $duration->days,
+                'hours' => $duration->hours,
+                'minutes' => $duration->minutes,
+                'seconds' => $duration->seconds,
+                'milliseconds' => $duration->milliseconds,
+                'microseconds' => $duration->microseconds,
+                'nanoseconds' => $duration->nanoseconds
+            ];
+        }
+
         // Apply date components via PlainDate (handles year/month/day arithmetic).
         $date = $this->toPlainDate()->add([
             'years' => $duration['years'] ?? 0,
             'months' => $duration['months'] ?? 0,
             'weeks' => $duration['weeks'] ?? 0,
             'days' => $duration['days'] ?? 0
-        ]);
+        ], $overflow);
 
         // Apply time components in nanoseconds.
         $dayNs = 86_400_000_000_000;
@@ -299,10 +315,15 @@ final class PlainDateTime
     /**
      * Subtract a duration from this datetime.
      *
-     * @param array{years?:int,months?:int,weeks?:int,days?:int,hours?:int,minutes?:int,seconds?:int,milliseconds?:int,microseconds?:int,nanoseconds?:int} $duration
+     * @param Duration|array{years?:int,months?:int,weeks?:int,days?:int,hours?:int,minutes?:int,seconds?:int,milliseconds?:int,microseconds?:int,nanoseconds?:int} $duration
+     * @param string $overflow 'constrain' (default) or 'reject' — passed to PlainDate::subtract()
      */
-    public function subtract(array $duration): self
+    public function subtract(Duration|array $duration, string $overflow = 'constrain'): self
     {
+        if ($duration instanceof Duration) {
+            return $this->add($duration->negated(), $overflow);
+        }
+
         return $this->add([
             'years' => -( $duration['years'] ?? 0 ),
             'months' => -( $duration['months'] ?? 0 ),
@@ -314,7 +335,7 @@ final class PlainDateTime
             'milliseconds' => -( $duration['milliseconds'] ?? 0 ),
             'microseconds' => -( $duration['microseconds'] ?? 0 ),
             'nanoseconds' => -( $duration['nanoseconds'] ?? 0 )
-        ]);
+        ], $overflow);
     }
 
     /**
