@@ -21,14 +21,25 @@ use InvalidArgumentException;
  */
 final class PlainDate
 {
+    /** Minimum epoch day: April 19, -271821 (inclusive). */
+    public const MIN_EPOCH_DAYS = -100_000_001;
+
+    /** Maximum epoch day: September 13, +275760 (inclusive). */
+    public const MAX_EPOCH_DAYS = 100_000_000;
+
     public readonly int $year;
     public readonly int $month;
     public readonly int $day;
 
+    /**
+     * @throws InvalidArgumentException if month or day are invalid.
+     * @throws \RangeException if the date is outside the supported range.
+     */
     public function __construct(int $year, int $month, int $day)
     {
         self::validateMonth($month);
         self::validateDay($year, $month, $day);
+        self::validateEpochDays(self::civilToEpochDays($year, $month, $day));
 
         $this->year = $year;
         $this->month = $month;
@@ -43,6 +54,8 @@ final class PlainDate
      * Create a PlainDate from a string, array, or another PlainDate.
      *
      * @param string|array{year:int,month:int,day:int}|PlainDate $item
+     * @throws InvalidArgumentException if the value is invalid.
+     * @throws \RangeException if the date is outside the supported range.
      */
     public static function from(string|array|self $item): self
     {
@@ -71,6 +84,9 @@ final class PlainDate
      * Extended years (±YYYYYY) are also accepted.
      * Annotations (e.g. [u-ca=iso8601]) and time/offset/timezone parts are
      * silently ignored — only the date part is extracted.
+     *
+     * @throws InvalidArgumentException
+     * @throws \RangeException
      */
     private static function fromString(string $str): self
     {
@@ -89,9 +105,13 @@ final class PlainDate
 
     /**
      * Create a PlainDate from a count of days since the Unix epoch (1970-01-01).
+     *
+     * @throws \RangeException if $epochDays is outside the supported range.
      */
     public static function fromEpochDays(int $epochDays): self
     {
+        self::validateEpochDays($epochDays);
+
         // Algorithm from https://howardhinnant.github.io/date_algorithms.html
         $z = $epochDays + 719468;
         $era = intdiv($z >= 0 ? $z : $z - 146096, 146097);
@@ -114,6 +134,10 @@ final class PlainDate
     // Computed properties (via __get for a clean public API)
     // -------------------------------------------------------------------------
 
+    /**
+     * @throws InvalidArgumentException
+     * @throws \RangeException
+     */
     public function __get(string $name): mixed
     {
         return match ($name) {
@@ -179,6 +203,8 @@ final class PlainDate
      * Return a new PlainDate with specified fields overridden.
      *
      * @param array{year?:int,month?:int,day?:int} $fields
+     * @throws InvalidArgumentException
+     * @throws \RangeException
      */
     public function with(array $fields): self
     {
@@ -189,9 +215,16 @@ final class PlainDate
      * Add a duration to this date.
      *
      * @param array{years?:int,months?:int,weeks?:int,days?:int} $duration
+     * @param string $overflow 'constrain' (default) or 'reject'
+     * @throws InvalidArgumentException if overflow is invalid or day overflows with 'reject'.
+     * @throws \RangeException if the resulting date is outside the supported range.
      */
-    public function add(array $duration): self
+    public function add(array $duration, string $overflow = 'constrain'): self
     {
+        if ($overflow !== 'constrain' && $overflow !== 'reject') {
+            throw new InvalidArgumentException("overflow must be 'constrain' or 'reject', got '{$overflow}'");
+        }
+
         $years = $duration['years'] ?? 0;
         $months = $duration['months'] ?? 0;
         $weeks = $duration['weeks'] ?? 0;
@@ -212,9 +245,15 @@ final class PlainDate
             $y--;
         }
 
-        // Constrain day to valid range for the resulting month
+        // Handle day overflow for the resulting month
         $maxDay = self::daysInMonthFor($y, $m);
         if ($d > $maxDay) {
+            if ($overflow === 'reject') {
+                throw new InvalidArgumentException(
+                    "Day {$d} is out of range for {$y}-{$m} (max {$maxDay}) with overflow: reject"
+                );
+            }
+
             $d = $maxDay;
         }
 
@@ -229,15 +268,18 @@ final class PlainDate
      * Subtract a duration from this date.
      *
      * @param array{years?:int,months?:int,weeks?:int,days?:int} $duration
+     * @param string $overflow 'constrain' (default) or 'reject'
+     * @throws InvalidArgumentException if overflow is invalid or day overflows with 'reject'.
+     * @throws \RangeException if the resulting date is outside the supported range.
      */
-    public function subtract(array $duration): self
+    public function subtract(array $duration, string $overflow = 'constrain'): self
     {
         return $this->add([
             'years' => -( $duration['years'] ?? 0 ),
             'months' => -( $duration['months'] ?? 0 ),
             'weeks' => -( $duration['weeks'] ?? 0 ),
             'days' => -( $duration['days'] ?? 0 )
-        ]);
+        ], $overflow);
     }
 
     /**
@@ -304,6 +346,21 @@ final class PlainDate
     // -------------------------------------------------------------------------
     // Private helpers
     // -------------------------------------------------------------------------
+
+    /** @throws \RangeException */
+    private static function validateEpochDays(int $epochDays): void
+    {
+        if ($epochDays < self::MIN_EPOCH_DAYS || $epochDays > self::MAX_EPOCH_DAYS) {
+            throw new \RangeException(
+                'PlainDate value is outside the supported range '
+                . "(epoch days {$epochDays} not in ["
+                . self::MIN_EPOCH_DAYS
+                . ', '
+                . self::MAX_EPOCH_DAYS
+                . '])'
+            );
+        }
+    }
 
     private static function validateMonth(int $month): void
     {
@@ -375,6 +432,9 @@ final class PlainDate
 
     /**
      * ISO week number (1–53).
+     *
+     * @throws InvalidArgumentException
+     * @throws \RangeException
      */
     private function computeWeekOfYear(): int
     {
@@ -393,6 +453,10 @@ final class PlainDate
         return $w;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     * @throws \RangeException
+     */
     private function computeWeeksInYear(int $year): int
     {
         // A year has 53 weeks if Jan 1 is Thursday, or if it's a leap year

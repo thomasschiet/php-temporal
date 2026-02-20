@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Temporal\Tests;
 
@@ -630,5 +630,244 @@ class DurationTest extends TestCase
         $result = $d1->add($d2);
         $this->assertNotSame($d1, $result);
         $this->assertNotSame($d2, $result);
+    }
+
+    // -------------------------------------------------------------------------
+    // total() with relativeTo (test262: relativeto-calendar-units-depend-on-relative-date)
+    // -------------------------------------------------------------------------
+
+    public function testTotalMonthsWith40DaysFromFeb2020(): void
+    {
+        // 40 days from Feb 1, 2020 (leap year) = 1 + 11/31 months
+        // Feb 2020 has 29 days, March has 31 days
+        $d = new Duration(days: 40);
+        $result = $d->total(['unit' => 'months', 'relativeTo' => '2020-02-01']);
+        $expected = 1.0 + ( 11.0 / 31.0 );
+        $this->assertEqualsWithDelta($expected, $result, 1e-10);
+    }
+
+    public function testTotalMonthsWith40DaysFromJan2020(): void
+    {
+        // 40 days from Jan 1, 2020 (leap year) = 1 + 9/29 months
+        // Jan has 31 days, Feb 2020 has 29 days
+        $d = new Duration(days: 40);
+        $result = $d->total(['unit' => 'months', 'relativeTo' => '2020-01-01']);
+        $expected = 1.0 + ( 9.0 / 29.0 );
+        $this->assertEqualsWithDelta($expected, $result, 1e-10);
+    }
+
+    public function testTotalMonthsNegative40DaysFromMarch2020(): void
+    {
+        // -40 days from Mar 1, 2020 → Jan 21, 2020
+        // Going back: Mar → Feb (29 days), remaining = 11 days out of Jan's 31
+        // = -(1 + 11/31)
+        $d = new Duration(days: -40);
+        $result = $d->total(['unit' => 'months', 'relativeTo' => '2020-03-01']);
+        $expected = -( 1.0 + ( 11.0 / 31.0 ) );
+        $this->assertEqualsWithDelta($expected, $result, 1e-10);
+    }
+
+    public function testTotalMonthsNegative40DaysFromApril2020(): void
+    {
+        // -40 days from Apr 1, 2020 → Feb 21, 2020
+        // Going back: Apr → Mar (31 days), remaining = 9 days out of Feb's 29 (leap)
+        // = -(1 + 9/29)
+        $d = new Duration(days: -40);
+        $result = $d->total(['unit' => 'months', 'relativeTo' => '2020-04-01']);
+        $expected = -( 1.0 + ( 9.0 / 29.0 ) );
+        $this->assertEqualsWithDelta($expected, $result, 1e-10);
+    }
+
+    public function testTotalMonthsZero(): void
+    {
+        $d = new Duration();
+        $result = $d->total(['unit' => 'months', 'relativeTo' => '2020-01-01']);
+        $this->assertSame(0.0, $result);
+    }
+
+    public function testTotalMonthsExactlyOneYear(): void
+    {
+        // 365 days from Jan 1, 2020 (leap year, 366 days) ≈ not exactly 12 months
+        // 366 days from Jan 1, 2020 = exactly 12 months
+        $d = new Duration(days: 366);
+        $result = $d->total(['unit' => 'months', 'relativeTo' => '2020-01-01']);
+        $this->assertEqualsWithDelta(12.0, $result, 1e-10);
+    }
+
+    public function testTotalYearsWith400DaysFromJan2020(): void
+    {
+        // 366 days from Jan 1, 2020 = exactly 1 year
+        $d = new Duration(days: 366);
+        $result = $d->total(['unit' => 'years', 'relativeTo' => '2020-01-01']);
+        $this->assertEqualsWithDelta(1.0, $result, 1e-10);
+    }
+
+    public function testTotalDaysWithYearMonthDuration(): void
+    {
+        // P1Y2M = 12 months + 2 months from 2020-01-01
+        // 2020-01-01 + 1 year = 2021-01-01 (366 days, leap year)
+        // 2021-01-01 + 2 months = 2021-03-01 (59 more days)
+        // Total = 366 + 59 = 425 days
+        $d = new Duration(years: 1, months: 2);
+        $result = $d->total(['unit' => 'days', 'relativeTo' => '2020-01-01']);
+        $this->assertSame(425.0, $result);
+    }
+
+    public function testTotalCalendarUnitWithoutRelativeToThrows(): void
+    {
+        $d = new Duration(days: 40);
+        $this->expectException(InvalidArgumentException::class);
+        $d->total(['unit' => 'months']);
+    }
+
+    public function testTotalYearsWithoutRelativeToThrows(): void
+    {
+        $d = new Duration(days: 365);
+        $this->expectException(InvalidArgumentException::class);
+        $d->total(['unit' => 'years']);
+    }
+
+    public function testTotalStringUnitStillWorks(): void
+    {
+        // Original string-based API still works
+        $d = new Duration(hours: 2, minutes: 30);
+        $result = $d->total('hours');
+        $this->assertEqualsWithDelta(2.5, $result, 1e-10);
+    }
+
+    public function testTotalOptionsArrayForTimeUnit(): void
+    {
+        // Options-array form also works for time units (no relativeTo needed)
+        $d = new Duration(hours: 1, minutes: 30);
+        $result = $d->total(['unit' => 'minutes']);
+        $this->assertEqualsWithDelta(90.0, $result, 1e-10);
+    }
+
+    // -------------------------------------------------------------------------
+    // round() with options object (test262: balances-up-to-weeks)
+    // -------------------------------------------------------------------------
+
+    public function testRoundOptionsSimpleHalfExpand(): void
+    {
+        // P1M1D with relativeTo=2024-01-01 → 32 days → ~4.57 weeks → rounds to 5
+        $d = new Duration(months: 1, days: 1);
+        $result = $d->round([
+            'relativeTo' => '2024-01-01',
+            'largestUnit' => 'weeks',
+            'smallestUnit' => 'weeks'
+        ]);
+        $this->assertSame(0, $result->years);
+        $this->assertSame(0, $result->months);
+        $this->assertSame(5, $result->weeks);
+        $this->assertSame(0, $result->days);
+    }
+
+    public function testRoundOptionsWithCeilIncrement6(): void
+    {
+        // P1M1D → 32 days → 4.57 weeks → ceil(4.57/6)*6 = 6 weeks
+        $d = new Duration(months: 1, days: 1);
+        $result = $d->round([
+            'relativeTo' => '2024-01-01',
+            'largestUnit' => 'weeks',
+            'smallestUnit' => 'weeks',
+            'roundingMode' => 'ceil',
+            'roundingIncrement' => 6
+        ]);
+        $this->assertSame(6, $result->weeks);
+    }
+
+    public function testRoundOptionsWithCeilIncrement99(): void
+    {
+        // P1M1D → 32 days → 4.57 weeks → ceil(4.57/99)*99 = 99 weeks
+        $d = new Duration(months: 1, days: 1);
+        $result = $d->round([
+            'relativeTo' => '2024-01-01',
+            'largestUnit' => 'weeks',
+            'smallestUnit' => 'weeks',
+            'roundingMode' => 'ceil',
+            'roundingIncrement' => 99
+        ]);
+        $this->assertSame(99, $result->weeks);
+    }
+
+    public function testRoundOptionsOneYearOneMonthOneDay(): void
+    {
+        // P1Y1M1D with relativeTo=2024-01-01 → 2025-02-02 → 398 days
+        // 398 / 7 = 56.857 weeks
+        // ceil(56.857/57)*57 = 57 weeks
+        $d = new Duration(years: 1, months: 1, days: 1);
+        $result = $d->round([
+            'relativeTo' => '2024-01-01',
+            'largestUnit' => 'weeks',
+            'smallestUnit' => 'weeks',
+            'roundingMode' => 'ceil',
+            'roundingIncrement' => 57
+        ]);
+        $this->assertSame(57, $result->weeks);
+    }
+
+    public function testRoundOptionsOneYearOneMonthOneDayIncrement99(): void
+    {
+        // P1Y1M1D → 398 days → 56.857 weeks → ceil(56.857/99)*99 = 99 weeks
+        $d = new Duration(years: 1, months: 1, days: 1);
+        $result = $d->round([
+            'relativeTo' => '2024-01-01',
+            'largestUnit' => 'weeks',
+            'smallestUnit' => 'weeks',
+            'roundingMode' => 'ceil',
+            'roundingIncrement' => 99
+        ]);
+        $this->assertSame(99, $result->weeks);
+    }
+
+    public function testRoundOptionsPureDays29ToWeeks(): void
+    {
+        // P29D with relativeTo=2024-01-01 → 4.14 weeks
+        // ceil(4.14/5)*5 = 5 weeks
+        $d = new Duration(days: 29);
+        $result = $d->round([
+            'relativeTo' => '2024-01-01',
+            'largestUnit' => 'weeks',
+            'smallestUnit' => 'weeks',
+            'roundingMode' => 'ceil',
+            'roundingIncrement' => 5
+        ]);
+        $this->assertSame(5, $result->weeks);
+    }
+
+    public function testRoundOptionsPureDays29ToWeeksIncrement8(): void
+    {
+        // P29D → 4.14 weeks → ceil(4.14/8)*8 = 8 weeks
+        $d = new Duration(days: 29);
+        $result = $d->round([
+            'relativeTo' => '2024-01-01',
+            'largestUnit' => 'weeks',
+            'smallestUnit' => 'weeks',
+            'roundingMode' => 'ceil',
+            'roundingIncrement' => 8
+        ]);
+        $this->assertSame(8, $result->weeks);
+    }
+
+    public function testRoundOptionsRequiresLargestUnitForCalendarWithSubMonthSmallest(): void
+    {
+        // Duration with months, smallestUnit='weeks', no largestUnit → RangeException
+        $d = new Duration(months: 1, days: 1);
+        $this->expectException(\RangeException::class);
+        $d->round([
+            'relativeTo' => '2024-01-01',
+            'smallestUnit' => 'weeks',
+            'roundingMode' => 'ceil',
+            'roundingIncrement' => 99
+        ]);
+    }
+
+    public function testRoundStringApiStillWorks(): void
+    {
+        // Original string-based round() API still works
+        $d = new Duration(hours: 1, minutes: 45);
+        $result = $d->round('hours');
+        $this->assertSame(2, $result->hours);
+        $this->assertSame(0, $result->minutes);
     }
 }

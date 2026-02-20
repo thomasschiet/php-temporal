@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Temporal;
 
@@ -31,13 +31,21 @@ final class Duration
         public readonly int $seconds = 0,
         public readonly int $milliseconds = 0,
         public readonly int $microseconds = 0,
-        public readonly int $nanoseconds = 0,
+        public readonly int $nanoseconds = 0
     ) {
         $pos = $neg = 0;
-        foreach (
-            [$years, $months, $weeks, $days, $hours, $minutes, $seconds, $milliseconds, $microseconds, $nanoseconds]
-            as $v
-        ) {
+        foreach ([
+            $years,
+            $months,
+            $weeks,
+            $days,
+            $hours,
+            $minutes,
+            $seconds,
+            $milliseconds,
+            $microseconds,
+            $nanoseconds
+        ] as $v) {
             if ($v > 0) {
                 $pos++;
             } elseif ($v < 0) {
@@ -51,7 +59,7 @@ final class Duration
             );
         }
 
-        $this->sign  = $pos > 0 ? 1 : ($neg > 0 ? -1 : 0);
+        $this->sign = $pos > 0 ? 1 : ( $neg > 0 ? -1 : 0 );
         $this->blank = $pos === 0 && $neg === 0;
     }
 
@@ -63,24 +71,31 @@ final class Duration
     {
         if ($value instanceof self) {
             return new self(
-                $value->years, $value->months, $value->weeks, $value->days,
-                $value->hours, $value->minutes, $value->seconds,
-                $value->milliseconds, $value->microseconds, $value->nanoseconds,
+                $value->years,
+                $value->months,
+                $value->weeks,
+                $value->days,
+                $value->hours,
+                $value->minutes,
+                $value->seconds,
+                $value->milliseconds,
+                $value->microseconds,
+                $value->nanoseconds
             );
         }
 
         if (is_array($value)) {
             return new self(
-                years:        $value['years']        ?? 0,
-                months:       $value['months']       ?? 0,
-                weeks:        $value['weeks']        ?? 0,
-                days:         $value['days']         ?? 0,
-                hours:        $value['hours']        ?? 0,
-                minutes:      $value['minutes']      ?? 0,
-                seconds:      $value['seconds']      ?? 0,
+                years: $value['years'] ?? 0,
+                months: $value['months'] ?? 0,
+                weeks: $value['weeks'] ?? 0,
+                days: $value['days'] ?? 0,
+                hours: $value['hours'] ?? 0,
+                minutes: $value['minutes'] ?? 0,
+                seconds: $value['seconds'] ?? 0,
                 milliseconds: $value['milliseconds'] ?? 0,
                 microseconds: $value['microseconds'] ?? 0,
-                nanoseconds:  $value['nanoseconds']  ?? 0,
+                nanoseconds: $value['nanoseconds'] ?? 0
             );
         }
 
@@ -94,34 +109,48 @@ final class Duration
     public function negated(): self
     {
         return new self(
-            -$this->years, -$this->months, -$this->weeks, -$this->days,
-            -$this->hours, -$this->minutes, -$this->seconds,
-            -$this->milliseconds, -$this->microseconds, -$this->nanoseconds,
+            -$this->years,
+            -$this->months,
+            -$this->weeks,
+            -$this->days,
+            -$this->hours,
+            -$this->minutes,
+            -$this->seconds,
+            -$this->milliseconds,
+            -$this->microseconds,
+            -$this->nanoseconds
         );
     }
 
     public function abs(): self
     {
         return new self(
-            abs($this->years), abs($this->months), abs($this->weeks), abs($this->days),
-            abs($this->hours), abs($this->minutes), abs($this->seconds),
-            abs($this->milliseconds), abs($this->microseconds), abs($this->nanoseconds),
+            abs($this->years),
+            abs($this->months),
+            abs($this->weeks),
+            abs($this->days),
+            abs($this->hours),
+            abs($this->minutes),
+            abs($this->seconds),
+            abs($this->milliseconds),
+            abs($this->microseconds),
+            abs($this->nanoseconds)
         );
     }
 
     public function with(array $fields): self
     {
         return new self(
-            years:        $fields['years']        ?? $this->years,
-            months:       $fields['months']       ?? $this->months,
-            weeks:        $fields['weeks']        ?? $this->weeks,
-            days:         $fields['days']         ?? $this->days,
-            hours:        $fields['hours']        ?? $this->hours,
-            minutes:      $fields['minutes']      ?? $this->minutes,
-            seconds:      $fields['seconds']      ?? $this->seconds,
+            years: $fields['years'] ?? $this->years,
+            months: $fields['months'] ?? $this->months,
+            weeks: $fields['weeks'] ?? $this->weeks,
+            days: $fields['days'] ?? $this->days,
+            hours: $fields['hours'] ?? $this->hours,
+            minutes: $fields['minutes'] ?? $this->minutes,
+            seconds: $fields['seconds'] ?? $this->seconds,
             milliseconds: $fields['milliseconds'] ?? $this->milliseconds,
             microseconds: $fields['microseconds'] ?? $this->microseconds,
-            nanoseconds:  $fields['nanoseconds']  ?? $this->nanoseconds,
+            nanoseconds: $fields['nanoseconds'] ?? $this->nanoseconds
         );
     }
 
@@ -134,16 +163,16 @@ final class Duration
         $other = self::from($other);
 
         return new self(
-            $this->years        + $other->years,
-            $this->months       + $other->months,
-            $this->weeks        + $other->weeks,
-            $this->days         + $other->days,
-            $this->hours        + $other->hours,
-            $this->minutes      + $other->minutes,
-            $this->seconds      + $other->seconds,
+            $this->years + $other->years,
+            $this->months + $other->months,
+            $this->weeks + $other->weeks,
+            $this->days + $other->days,
+            $this->hours + $other->hours,
+            $this->minutes + $other->minutes,
+            $this->seconds + $other->seconds,
             $this->milliseconds + $other->milliseconds,
             $this->microseconds + $other->microseconds,
-            $this->nanoseconds  + $other->nanoseconds,
+            $this->nanoseconds + $other->nanoseconds
         );
     }
 
@@ -175,28 +204,197 @@ final class Duration
     /**
      * Return the total value of this duration expressed in the given unit.
      *
-     * Supported units: nanosecond(s), microsecond(s), millisecond(s),
-     * second(s), minute(s), hour(s), day(s), week(s).
+     * Accepts either a unit string or an options array with keys:
+     *   - 'unit'       (required) — the target unit
+     *   - 'relativeTo' (optional) — a PlainDate, array, or date string;
+     *                  required when 'unit' is 'year(s)' or 'month(s)'.
      *
-     * Calendar units (months, years) are not supported and will throw.
+     * Supported units: nanosecond(s) … week(s) without relativeTo;
+     * additionally year(s) and month(s) with a PlainDate relativeTo.
+     *
+     * @param string|array{unit?:string,relativeTo?:PlainDate|array{year:int,month:int,day:int}|string} $unitOrOptions
+     * @throws InvalidArgumentException
+     * @throws \RangeException
      */
-    public function total(string $unit): float
+    public function total(string|array $unitOrOptions): float
+    {
+        if (is_string($unitOrOptions)) {
+            return $this->totalByUnit($unitOrOptions);
+        }
+
+        $unit = $unitOrOptions['unit'] ?? null;
+
+        if ($unit === null) {
+            throw new InvalidArgumentException("Duration.total() options must include 'unit'.");
+        }
+
+        $relativeTo = $unitOrOptions['relativeTo'] ?? null;
+
+        if ($relativeTo === null) {
+            if (in_array($unit, ['year', 'years', 'month', 'months'], true)) {
+                throw new InvalidArgumentException(
+                    "Duration.total() requires a 'relativeTo' option when unit is '{$unit}'."
+                );
+            }
+
+            return $this->totalByUnit($unit);
+        }
+
+        return $this->totalRelativeTo($unit, PlainDate::from($relativeTo));
+    }
+
+    /**
+     * Compute the total for a pure time-based unit (no calendar awareness needed).
+     */
+    private function totalByUnit(string $unit): float
     {
         $ns = (float) self::toTotalNanoseconds($this);
 
         return match ($unit) {
-            'nanosecond',  'nanoseconds'  => $ns,
+            'nanosecond', 'nanoseconds' => $ns,
             'microsecond', 'microseconds' => $ns / 1_000,
             'millisecond', 'milliseconds' => $ns / 1_000_000,
-            'second',      'seconds'      => $ns / 1_000_000_000,
-            'minute',      'minutes'      => $ns / (60 * 1_000_000_000),
-            'hour',        'hours'        => $ns / (3_600 * 1_000_000_000),
-            'day',         'days'         => $ns / (86_400 * 1_000_000_000),
-            'week',        'weeks'        => $ns / (7 * 86_400 * 1_000_000_000),
-            default => throw new InvalidArgumentException(
-                "Unknown or unsupported unit for total(): '$unit'."
-            ),
+            'second', 'seconds' => $ns / 1_000_000_000,
+            'minute', 'minutes' => $ns / ( 60 * 1_000_000_000 ),
+            'hour', 'hours' => $ns / ( 3_600 * 1_000_000_000 ),
+            'day', 'days' => $ns / ( 86_400 * 1_000_000_000 ),
+            'week', 'weeks' => $ns / ( 7 * 86_400 * 1_000_000_000 ),
+            default => throw new InvalidArgumentException("Unknown or unsupported unit for total(): '{$unit}'.")
         };
+    }
+
+    /**
+     * Compute the total relative to a reference PlainDate, supporting calendar units.
+     *
+     * @throws InvalidArgumentException
+     * @throws \RangeException
+     */
+    private function totalRelativeTo(string $unit, PlainDate $relativeTo): float
+    {
+        // Apply date components to get the end date.
+        $endDate = $relativeTo->add([
+            'years' => $this->years,
+            'months' => $this->months,
+            'weeks' => $this->weeks,
+            'days' => $this->days
+        ]);
+
+        // Time components as nanoseconds (fractional days).
+        $timeNs = $this->timeComponentNanoseconds();
+        $dateDays = $endDate->toEpochDays() - $relativeTo->toEpochDays();
+        $totalDaysFloat = (float) $dateDays + ( $timeNs / ( 86_400.0 * 1_000_000_000.0 ) );
+
+        return match ($unit) {
+            'nanosecond', 'nanoseconds' => $totalDaysFloat * 86_400.0 * 1_000_000_000.0,
+            'microsecond', 'microseconds' => $totalDaysFloat * 86_400.0 * 1_000_000.0,
+            'millisecond', 'milliseconds' => $totalDaysFloat * 86_400.0 * 1_000.0,
+            'second', 'seconds' => $totalDaysFloat * 86_400.0,
+            'minute', 'minutes' => $totalDaysFloat * 1_440.0,
+            'hour', 'hours' => $totalDaysFloat * 24.0,
+            'day', 'days' => $totalDaysFloat,
+            'week', 'weeks' => $totalDaysFloat / 7.0,
+            'month', 'months' => $this->daysToFractionalMonths($totalDaysFloat, $relativeTo),
+            'year', 'years' => $this->daysToFractionalYears($totalDaysFloat, $relativeTo),
+            default => throw new InvalidArgumentException("Unknown or unsupported unit for total(): '{$unit}'.")
+        };
+    }
+
+    /**
+     * Convert a floating-point day count to fractional months relative to a start date.
+     *
+     * Uses calendar-aware month lengths: 40 days from Feb 1, 2020 (leap year)
+     * = 1 + 11/31 months because February has 29 days and March has 31.
+     *
+     * @throws InvalidArgumentException
+     * @throws \RangeException
+     */
+    private function daysToFractionalMonths(float $totalDays, PlainDate $relativeTo): float
+    {
+        if ($totalDays === 0.0) {
+            return 0.0;
+        }
+
+        $sign = $totalDays > 0.0 ? 1 : -1;
+        $months = 0;
+
+        // Advance month by month until the next step would overshoot.
+        while (true) {
+            $nextDate = $relativeTo->add(['months' => $months + $sign]);
+            $nextDays = (float) ( $nextDate->toEpochDays() - $relativeTo->toEpochDays() );
+
+            if ($sign > 0 && $nextDays > $totalDays) {
+                break;
+            }
+
+            if ($sign < 0 && $nextDays < $totalDays) {
+                break;
+            }
+
+            $months += $sign;
+        }
+
+        $midDate = $relativeTo->add(['months' => $months]);
+        $nextDate = $relativeTo->add(['months' => $months + $sign]);
+        $midDays = (float) ( $midDate->toEpochDays() - $relativeTo->toEpochDays() );
+        $nextDays = (float) ( $nextDate->toEpochDays() - $relativeTo->toEpochDays() );
+        $monthLength = abs($nextDays - $midDays);
+        $remainingDays = $totalDays - $midDays;
+
+        return $monthLength > 0.0 ? (float) $months + ( $remainingDays / $monthLength ) : (float) $months;
+    }
+
+    /**
+     * Convert a floating-point day count to fractional years relative to a start date.
+     *
+     * @throws InvalidArgumentException
+     * @throws \RangeException
+     */
+    private function daysToFractionalYears(float $totalDays, PlainDate $relativeTo): float
+    {
+        if ($totalDays === 0.0) {
+            return 0.0;
+        }
+
+        $sign = $totalDays > 0.0 ? 1 : -1;
+        $years = 0;
+
+        while (true) {
+            $nextDate = $relativeTo->add(['years' => $years + $sign]);
+            $nextDays = (float) ( $nextDate->toEpochDays() - $relativeTo->toEpochDays() );
+
+            if ($sign > 0 && $nextDays > $totalDays) {
+                break;
+            }
+
+            if ($sign < 0 && $nextDays < $totalDays) {
+                break;
+            }
+
+            $years += $sign;
+        }
+
+        $midDate = $relativeTo->add(['years' => $years]);
+        $nextDate = $relativeTo->add(['years' => $years + $sign]);
+        $midDays = (float) ( $midDate->toEpochDays() - $relativeTo->toEpochDays() );
+        $nextDays = (float) ( $nextDate->toEpochDays() - $relativeTo->toEpochDays() );
+        $yearLength = abs($nextDays - $midDays);
+        $remainingDays = $totalDays - $midDays;
+
+        return $yearLength > 0.0 ? (float) $years + ( $remainingDays / $yearLength ) : (float) $years;
+    }
+
+    /**
+     * Return the nanosecond total of all time fields (hours … nanoseconds),
+     * ignoring any calendar fields (years, months, weeks, days).
+     */
+    private function timeComponentNanoseconds(): int
+    {
+        return (
+            ( ( ( $this->hours * 3_600 ) + ( $this->minutes * 60 ) + $this->seconds ) * 1_000_000_000 )
+            + ( $this->milliseconds * 1_000_000 )
+            + ( $this->microseconds * 1_000 )
+            + $this->nanoseconds
+        );
     }
 
     // -------------------------------------------------------------------------
@@ -204,24 +402,186 @@ final class Duration
     // -------------------------------------------------------------------------
 
     /**
-     * Round this duration to the given smallest unit using half-expand
-     * (round half away from zero). Returns a new Duration with all
-     * sub-unit fields zeroed.
+     * Round this duration.
+     *
+     * Accepts either a unit string (half-expand to that unit, no relativeTo),
+     * or an options array with keys:
+     *   - 'smallestUnit'      (required) — the target smallest unit
+     *   - 'largestUnit'       (optional) — the largest unit to balance into
+     *   - 'roundingMode'      (optional, default 'halfExpand') — halfExpand|ceil|floor|trunc
+     *   - 'roundingIncrement' (optional, default 1) — round to multiples of this
+     *   - 'relativeTo'        (optional) — PlainDate, array, or date string;
+     *                         required when duration has calendar units and
+     *                         smallestUnit is below 'month'
+     *
+     * @param string|array{smallestUnit?:string,largestUnit?:string,roundingMode?:string,roundingIncrement?:int,relativeTo?:PlainDate|array{year:int,month:int,day:int}|string} $smallestUnitOrOptions
+     * @throws InvalidArgumentException
+     * @throws \RangeException
      */
-    public function round(string $smallestUnit): self
+    public function round(string|array $smallestUnitOrOptions): self
+    {
+        if (is_string($smallestUnitOrOptions)) {
+            return $this->roundSimple($smallestUnitOrOptions);
+        }
+
+        $options = $smallestUnitOrOptions;
+        $smallestUnit = $options['smallestUnit'] ?? null;
+
+        if ($smallestUnit === null) {
+            throw new InvalidArgumentException("round() options must include 'smallestUnit'.");
+        }
+
+        $largestUnit = $options['largestUnit'] ?? null;
+        $roundingMode = $options['roundingMode'] ?? 'halfExpand';
+        $roundingIncrement = $options['roundingIncrement'] ?? 1;
+        $relativeTo = $options['relativeTo'] ?? null;
+
+        if ((int) $roundingIncrement < 1) {
+            throw new InvalidArgumentException('roundingIncrement must be at least 1.');
+        }
+
+        // When the duration has calendar units (years/months) and smallestUnit is
+        // a sub-month unit, largestUnit must be specified.
+        $hasCalendarUnits = $this->years !== 0 || $this->months !== 0;
+        $subMonthUnits = [
+            'week',
+            'weeks',
+            'day',
+            'days',
+            'hour',
+            'hours',
+            'minute',
+            'minutes',
+            'second',
+            'seconds',
+            'millisecond',
+            'milliseconds',
+            'microsecond',
+            'microseconds',
+            'nanosecond',
+            'nanoseconds'
+        ];
+
+        if ($hasCalendarUnits && in_array($smallestUnit, $subMonthUnits, true) && $largestUnit === null) {
+            throw new \RangeException(
+                'When the duration has calendar units (years/months), '
+                . "'largestUnit' is required when 'smallestUnit' is '{$smallestUnit}'."
+            );
+        }
+
+        if ($relativeTo === null) {
+            // No relativeTo: fall back to simple rounding (ignores largestUnit).
+            return $this->roundSimple($smallestUnit);
+        }
+
+        return $this->roundWithRelativeTo(
+            $smallestUnit,
+            $largestUnit,
+            $roundingMode,
+            (int) $roundingIncrement,
+            PlainDate::from($relativeTo)
+        );
+    }
+
+    /**
+     * Simple rounding (original behaviour): half-expand to the given unit,
+     * zeroing all sub-unit fields. No relativeTo needed.
+     */
+    private function roundSimple(string $smallestUnit): self
     {
         return match ($smallestUnit) {
-            'nanosecond',  'nanoseconds'  => $this,
+            'nanosecond', 'nanoseconds' => $this,
             'microsecond', 'microseconds' => $this->roundToMicroseconds(),
             'millisecond', 'milliseconds' => $this->roundToMilliseconds(),
-            'second',      'seconds'      => $this->roundToSeconds(),
-            'minute',      'minutes'      => $this->roundToMinutes(),
-            'hour',        'hours'        => $this->roundToHours(),
-            'day',         'days'         => $this->roundToDays(),
-            'week',        'weeks'        => $this->roundToWeeks(),
+            'second', 'seconds' => $this->roundToSeconds(),
+            'minute', 'minutes' => $this->roundToMinutes(),
+            'hour', 'hours' => $this->roundToHours(),
+            'day', 'days' => $this->roundToDays(),
+            'week', 'weeks' => $this->roundToWeeks(),
+            default => throw new InvalidArgumentException("Unknown or unsupported unit for round(): '{$smallestUnit}'.")
+        };
+    }
+
+    /**
+     * Round with a relativeTo date for calendar-aware rounding.
+     *
+     * When largestUnit === smallestUnit, the entire duration is collapsed
+     * into that single unit and rounded. Otherwise the result is balanced
+     * from largestUnit down to smallestUnit with rounding applied to the
+     * smallestUnit part.
+     *
+     * @throws InvalidArgumentException
+     * @throws \RangeException
+     */
+    private function roundWithRelativeTo(
+        string $smallestUnit,
+        ?string $largestUnit,
+        string $roundingMode,
+        int $roundingIncrement,
+        PlainDate $relativeTo
+    ): self {
+        // Compute total days using the reference date.
+        $endDate = $relativeTo->add([
+            'years' => $this->years,
+            'months' => $this->months,
+            'weeks' => $this->weeks,
+            'days' => $this->days
+        ]);
+
+        $timeNs = $this->timeComponentNanoseconds();
+        $dateDays = $endDate->toEpochDays() - $relativeTo->toEpochDays();
+        $totalDaysFloat = (float) $dateDays + ( $timeNs / ( 86_400.0 * 1_000_000_000.0 ) );
+
+        // Use largestUnit as the effective unit when both are the same,
+        // otherwise default to largestUnit for the conversion.
+        $effectiveUnit = $largestUnit ?? $smallestUnit;
+
+        // Convert total days to the effective unit.
+        $totalInUnit = match ($effectiveUnit) {
+            'week', 'weeks' => $totalDaysFloat / 7.0,
+            'day', 'days' => $totalDaysFloat,
+            'hour', 'hours' => $totalDaysFloat * 24.0,
+            'minute', 'minutes' => $totalDaysFloat * 1_440.0,
+            'second', 'seconds' => $totalDaysFloat * 86_400.0,
+            'millisecond', 'milliseconds' => $totalDaysFloat * 86_400_000.0,
+            'microsecond', 'microseconds' => $totalDaysFloat * 86_400_000_000.0,
+            'nanosecond', 'nanoseconds' => $totalDaysFloat * 86_400_000_000_000.0,
             default => throw new InvalidArgumentException(
-                "Unknown or unsupported unit for round(): '$smallestUnit'."
-            ),
+                "Unsupported largestUnit/smallestUnit for round(): '{$effectiveUnit}'."
+            )
+        };
+
+        // Apply rounding mode and increment.
+        $ratio = $totalInUnit / $roundingIncrement;
+        $rounded = $this->applyRoundingMode($ratio, $roundingMode);
+        $intRounded = (int) round($rounded * $roundingIncrement);
+
+        // Return a duration expressing the result in the effective unit only.
+        // Note: $effectiveUnit is guaranteed to match one of the arms below
+        // because the first match already validated the value.
+        return match ($effectiveUnit) {
+            'week', 'weeks' => new self(weeks: $intRounded),
+            'day', 'days' => new self(days: $intRounded),
+            'hour', 'hours' => new self(hours: $intRounded),
+            'minute', 'minutes' => new self(minutes: $intRounded),
+            'second', 'seconds' => new self(seconds: $intRounded),
+            'millisecond', 'milliseconds' => new self(milliseconds: $intRounded),
+            'microsecond', 'microseconds' => new self(microseconds: $intRounded),
+            default => new self(nanoseconds: $intRounded)
+        };
+    }
+
+    /**
+     * Apply a rounding mode to a ratio value (value already divided by increment).
+     */
+    private function applyRoundingMode(float $ratio, string $mode): float
+    {
+        return match ($mode) {
+            'halfExpand' => $ratio >= 0 ? floor($ratio + 0.5) : -floor(-$ratio + 0.5),
+            'ceil' => ceil($ratio),
+            'floor' => floor($ratio),
+            'trunc' => $ratio >= 0 ? floor($ratio) : ceil($ratio),
+            default => throw new InvalidArgumentException("Unknown roundingMode: '{$mode}'.")
         };
     }
 
@@ -232,16 +592,16 @@ final class Duration
     public function __toString(): string
     {
         // Work with absolute values; prepend '-' at the end if negative.
-        $yr  = abs($this->years);
-        $mo  = abs($this->months);
-        $wk  = abs($this->weeks);
-        $dy  = abs($this->days);
-        $hr  = abs($this->hours);
+        $yr = abs($this->years);
+        $mo = abs($this->months);
+        $wk = abs($this->weeks);
+        $dy = abs($this->days);
+        $hr = abs($this->hours);
         $min = abs($this->minutes);
         $sec = abs($this->seconds);
-        $ms  = abs($this->milliseconds);
-        $us  = abs($this->microseconds);
-        $ns  = abs($this->nanoseconds);
+        $ms = abs($this->milliseconds);
+        $us = abs($this->microseconds);
+        $ns = abs($this->nanoseconds);
 
         $result = 'P';
 
@@ -258,8 +618,8 @@ final class Duration
             $result .= $dy . 'D';
         }
 
-        $hasTime    = $hr || $min || $sec || $ms || $us || $ns;
-        $subSecNs   = $ms * 1_000_000 + $us * 1_000 + $ns;
+        $hasTime = $hr || $min || $sec || $ms || $us || $ns;
+        $subSecNs = ( $ms * 1_000_000 ) + ( $us * 1_000 ) + $ns;
 
         if ($hasTime) {
             $result .= 'T';
@@ -276,8 +636,8 @@ final class Duration
                     $result .= $sec . 'S';
                 } else {
                     // Format sub-second part as a 9-digit fraction, stripping trailing zeros.
-                    $frac    = str_pad((string) $subSecNs, 9, '0', STR_PAD_LEFT);
-                    $frac    = rtrim($frac, '0');
+                    $frac = str_pad((string) $subSecNs, 9, '0', STR_PAD_LEFT);
+                    $frac = rtrim($frac, '0');
                     $result .= $sec . '.' . $frac . 'S';
                 }
             }
@@ -307,107 +667,144 @@ final class Duration
     private static function toTotalNanoseconds(self $d): int
     {
         return (
-            $d->weeks * 7 * 86_400
-            + $d->days * 86_400
-            + $d->hours * 3_600
-            + $d->minutes * 60
-            + $d->seconds
-        ) * 1_000_000_000
-            + $d->milliseconds * 1_000_000
-            + $d->microseconds * 1_000
-            + $d->nanoseconds;
+            (
+                (
+                    ( $d->weeks * 7 * 86_400 )
+                    + ( $d->days * 86_400 )
+                    + ( $d->hours * 3_600 )
+                    + ( $d->minutes * 60 )
+                    + $d->seconds
+                )
+                * 1_000_000_000
+            )
+            + ( $d->milliseconds * 1_000_000 )
+            + ( $d->microseconds * 1_000 )
+            + $d->nanoseconds
+        );
     }
 
     private function roundToMicroseconds(): self
     {
-        $extra = (int) round(abs($this->nanoseconds) / 1_000) * ($this->sign === -1 ? -1 : 1);
+        $extra = (int) round(abs($this->nanoseconds) / 1_000) * ( $this->sign === -1 ? -1 : 1 );
 
         return new self(
-            $this->years, $this->months, $this->weeks, $this->days,
-            $this->hours, $this->minutes, $this->seconds,
-            $this->milliseconds, $this->microseconds + $extra, 0,
+            $this->years,
+            $this->months,
+            $this->weeks,
+            $this->days,
+            $this->hours,
+            $this->minutes,
+            $this->seconds,
+            $this->milliseconds,
+            $this->microseconds + $extra,
+            0
         );
     }
 
     private function roundToMilliseconds(): self
     {
-        $subNs = abs($this->microseconds) * 1_000 + abs($this->nanoseconds);
-        $extra = (int) round($subNs / 1_000_000) * ($this->sign === -1 ? -1 : 1);
+        $subNs = ( abs($this->microseconds) * 1_000 ) + abs($this->nanoseconds);
+        $extra = (int) round($subNs / 1_000_000) * ( $this->sign === -1 ? -1 : 1 );
 
         return new self(
-            $this->years, $this->months, $this->weeks, $this->days,
-            $this->hours, $this->minutes, $this->seconds,
-            $this->milliseconds + $extra, 0, 0,
+            $this->years,
+            $this->months,
+            $this->weeks,
+            $this->days,
+            $this->hours,
+            $this->minutes,
+            $this->seconds,
+            $this->milliseconds + $extra,
+            0,
+            0
         );
     }
 
     private function roundToSeconds(): self
     {
-        $subNs = abs($this->milliseconds) * 1_000_000
-            + abs($this->microseconds) * 1_000
-            + abs($this->nanoseconds);
-        $extra = (int) round($subNs / 1_000_000_000) * ($this->sign === -1 ? -1 : 1);
+        $subNs =
+            ( abs($this->milliseconds) * 1_000_000 ) + ( abs($this->microseconds) * 1_000 ) + abs($this->nanoseconds);
+        $extra = (int) round($subNs / 1_000_000_000) * ( $this->sign === -1 ? -1 : 1 );
 
         return new self(
-            $this->years, $this->months, $this->weeks, $this->days,
-            $this->hours, $this->minutes, $this->seconds + $extra, 0, 0, 0,
+            $this->years,
+            $this->months,
+            $this->weeks,
+            $this->days,
+            $this->hours,
+            $this->minutes,
+            $this->seconds + $extra,
+            0,
+            0,
+            0
         );
     }
 
     private function roundToMinutes(): self
     {
-        $subNs = (abs($this->seconds) * 1_000_000_000)
-            + abs($this->milliseconds) * 1_000_000
-            + abs($this->microseconds) * 1_000
+        $subNs =
+            ( abs($this->seconds) * 1_000_000_000 )
+            + ( abs($this->milliseconds) * 1_000_000 )
+            + ( abs($this->microseconds) * 1_000 )
             + abs($this->nanoseconds);
-        $extra = (int) round($subNs / (60 * 1_000_000_000)) * ($this->sign === -1 ? -1 : 1);
+        $extra = (int) round($subNs / ( 60 * 1_000_000_000 )) * ( $this->sign === -1 ? -1 : 1 );
 
         return new self(
-            $this->years, $this->months, $this->weeks, $this->days,
-            $this->hours, $this->minutes + $extra, 0, 0, 0, 0,
+            $this->years,
+            $this->months,
+            $this->weeks,
+            $this->days,
+            $this->hours,
+            $this->minutes + $extra,
+            0,
+            0,
+            0,
+            0
         );
     }
 
     private function roundToHours(): self
     {
-        $subNs = (abs($this->minutes) * 60 + abs($this->seconds)) * 1_000_000_000
-            + abs($this->milliseconds) * 1_000_000
-            + abs($this->microseconds) * 1_000
+        $subNs =
+            ( ( ( abs($this->minutes) * 60 ) + abs($this->seconds) ) * 1_000_000_000 )
+            + ( abs($this->milliseconds) * 1_000_000 )
+            + ( abs($this->microseconds) * 1_000 )
             + abs($this->nanoseconds);
-        $extra = (int) round($subNs / (3_600 * 1_000_000_000)) * ($this->sign === -1 ? -1 : 1);
+        $extra = (int) round($subNs / ( 3_600 * 1_000_000_000 )) * ( $this->sign === -1 ? -1 : 1 );
 
-        return new self(
-            $this->years, $this->months, $this->weeks, $this->days,
-            $this->hours + $extra, 0, 0, 0, 0, 0,
-        );
+        return new self($this->years, $this->months, $this->weeks, $this->days, $this->hours + $extra, 0, 0, 0, 0, 0);
     }
 
     private function roundToDays(): self
     {
-        $subNs = (abs($this->hours) * 3_600 + abs($this->minutes) * 60 + abs($this->seconds)) * 1_000_000_000
-            + abs($this->milliseconds) * 1_000_000
-            + abs($this->microseconds) * 1_000
+        $subNs =
+            ( ( ( abs($this->hours) * 3_600 ) + ( abs($this->minutes) * 60 ) + abs($this->seconds) ) * 1_000_000_000 )
+            + ( abs($this->milliseconds) * 1_000_000 )
+            + ( abs($this->microseconds) * 1_000 )
             + abs($this->nanoseconds);
-        $extra = (int) round($subNs / (86_400 * 1_000_000_000)) * ($this->sign === -1 ? -1 : 1);
+        $extra = (int) round($subNs / ( 86_400 * 1_000_000_000 )) * ( $this->sign === -1 ? -1 : 1 );
 
-        return new self(
-            $this->years, $this->months, $this->weeks, $this->days + $extra,
-            0, 0, 0, 0, 0, 0,
-        );
+        return new self($this->years, $this->months, $this->weeks, $this->days + $extra, 0, 0, 0, 0, 0, 0);
     }
 
     private function roundToWeeks(): self
     {
-        $subNs = (abs($this->days) * 86_400 + abs($this->hours) * 3_600 + abs($this->minutes) * 60 + abs($this->seconds)) * 1_000_000_000
-            + abs($this->milliseconds) * 1_000_000
-            + abs($this->microseconds) * 1_000
+        $subNs =
+            (
+                (
+                    ( abs($this->days) * 86_400 )
+                    + ( abs($this->hours) * 3_600 )
+                    + ( abs($this->minutes) * 60 )
+                    + abs($this->seconds)
+                )
+                * 1_000_000_000
+            )
+            + ( abs($this->milliseconds) * 1_000_000 )
+            + ( abs($this->microseconds) * 1_000 )
             + abs($this->nanoseconds);
-        $extra = (int) round($subNs / (7 * 86_400 * 1_000_000_000)) * ($this->sign === -1 ? -1 : 1);
+        $extra = (int) round($subNs / ( 7 * 86_400 * 1_000_000_000 )) * ( $this->sign === -1 ? -1 : 1 );
 
-        return new self(
-            $this->years, $this->months, $this->weeks + $extra,
-            0, 0, 0, 0, 0, 0, 0,
-        );
+        return new self($this->years, $this->months, $this->weeks + $extra, 0, 0, 0, 0, 0, 0, 0);
     }
 
     // -------------------------------------------------------------------------
@@ -420,15 +817,13 @@ final class Duration
 
         if (str_starts_with($s, '-')) {
             $negative = true;
-            $s        = substr($s, 1);
+            $s = substr($s, 1);
         } elseif (str_starts_with($s, '+')) {
             $s = substr($s, 1);
         }
 
         if (!str_starts_with($s, 'P')) {
-            throw new InvalidArgumentException(
-                "Invalid ISO 8601 duration string: missing 'P' designator in '$s'."
-            );
+            throw new InvalidArgumentException("Invalid ISO 8601 duration string: missing 'P' designator in '$s'.");
         }
         $s = substr($s, 1); // strip 'P'
 
@@ -443,28 +838,37 @@ final class Duration
         }
 
         if ($datePart === '' && $timePart === '') {
-            throw new InvalidArgumentException(
-                "Invalid ISO 8601 duration: empty duration after 'P'."
-            );
+            throw new InvalidArgumentException("Invalid ISO 8601 duration: empty duration after 'P'.");
         }
 
         [$years, $months, $weeks, $days] = self::parseDatePart($datePart);
         [$hours, $minutes, $seconds, $milliseconds, $microseconds, $nanoseconds] = self::parseTimePart($timePart);
 
         if ($negative) {
-            $years        = -$years;
-            $months       = -$months;
-            $weeks        = -$weeks;
-            $days         = -$days;
-            $hours        = -$hours;
-            $minutes      = -$minutes;
-            $seconds      = -$seconds;
+            $years = -$years;
+            $months = -$months;
+            $weeks = -$weeks;
+            $days = -$days;
+            $hours = -$hours;
+            $minutes = -$minutes;
+            $seconds = -$seconds;
             $milliseconds = -$milliseconds;
             $microseconds = -$microseconds;
-            $nanoseconds  = -$nanoseconds;
+            $nanoseconds = -$nanoseconds;
         }
 
-        return new self($years, $months, $weeks, $days, $hours, $minutes, $seconds, $milliseconds, $microseconds, $nanoseconds);
+        return new self(
+            $years,
+            $months,
+            $weeks,
+            $days,
+            $hours,
+            $minutes,
+            $seconds,
+            $milliseconds,
+            $microseconds,
+            $nanoseconds
+        );
     }
 
     /** @return array{int,int,int,int} [years, months, weeks, days] */
@@ -475,16 +879,14 @@ final class Duration
         }
 
         if (!preg_match('/^(?:(\d+)Y)?(?:(\d+)M)?(?:(\d+)W)?(?:(\d+)D)?$/', $part, $m) || $m[0] === '') {
-            throw new InvalidArgumentException(
-                "Invalid ISO 8601 duration date part: '$part'."
-            );
+            throw new InvalidArgumentException("Invalid ISO 8601 duration date part: '$part'.");
         }
 
         return [
             isset($m[1]) && $m[1] !== '' ? (int) $m[1] : 0,
             isset($m[2]) && $m[2] !== '' ? (int) $m[2] : 0,
             isset($m[3]) && $m[3] !== '' ? (int) $m[3] : 0,
-            isset($m[4]) && $m[4] !== '' ? (int) $m[4] : 0,
+            isset($m[4]) && $m[4] !== '' ? (int) $m[4] : 0
         ];
     }
 
@@ -496,12 +898,10 @@ final class Duration
         }
 
         if (!preg_match('/^(?:(\d+)H)?(?:(\d+)M)?(?:(\d+(?:\.\d+)?)S)?$/', $part, $m) || $m[0] === '') {
-            throw new InvalidArgumentException(
-                "Invalid ISO 8601 duration time part: '$part'."
-            );
+            throw new InvalidArgumentException("Invalid ISO 8601 duration time part: '$part'.");
         }
 
-        $hours   = isset($m[1]) && $m[1] !== '' ? (int) $m[1] : 0;
+        $hours = isset($m[1]) && $m[1] !== '' ? (int) $m[1] : 0;
         $minutes = isset($m[2]) && $m[2] !== '' ? (int) $m[2] : 0;
 
         $seconds = $milliseconds = $microseconds = $nanoseconds = 0;
@@ -514,13 +914,13 @@ final class Duration
                 $seconds = (int) substr($secStr, 0, $dotPos);
                 $fracRaw = substr($secStr, $dotPos + 1);
                 // Normalise to exactly 9 digits (nanosecond resolution).
-                $frac9   = str_pad(substr($fracRaw, 0, 9), 9, '0');
+                $frac9 = str_pad(substr($fracRaw, 0, 9), 9, '0');
                 $totalNs = (int) $frac9;
 
-                $milliseconds  = intdiv($totalNs, 1_000_000);
-                $totalNs      -= $milliseconds * 1_000_000;
-                $microseconds  = intdiv($totalNs, 1_000);
-                $nanoseconds   = $totalNs % 1_000;
+                $milliseconds = intdiv($totalNs, 1_000_000);
+                $totalNs -= $milliseconds * 1_000_000;
+                $microseconds = intdiv($totalNs, 1_000);
+                $nanoseconds = $totalNs % 1_000;
             } else {
                 $seconds = (int) $secStr;
             }

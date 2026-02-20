@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Temporal\Tests;
 
@@ -199,16 +199,16 @@ class PlainDateTest extends TestCase
 
     public function testDaysInYear(): void
     {
-        $this->assertSame(366, (new PlainDate(2024, 1, 1))->daysInYear);
-        $this->assertSame(365, (new PlainDate(2023, 1, 1))->daysInYear);
+        $this->assertSame(366, ( new PlainDate(2024, 1, 1) )->daysInYear);
+        $this->assertSame(365, ( new PlainDate(2023, 1, 1) )->daysInYear);
     }
 
     public function testInLeapYear(): void
     {
-        $this->assertTrue((new PlainDate(2024, 1, 1))->inLeapYear);
-        $this->assertFalse((new PlainDate(2023, 1, 1))->inLeapYear);
-        $this->assertFalse((new PlainDate(1900, 1, 1))->inLeapYear);
-        $this->assertTrue((new PlainDate(2000, 1, 1))->inLeapYear);
+        $this->assertTrue(( new PlainDate(2024, 1, 1) )->inLeapYear);
+        $this->assertFalse(( new PlainDate(2023, 1, 1) )->inLeapYear);
+        $this->assertFalse(( new PlainDate(1900, 1, 1) )->inLeapYear);
+        $this->assertTrue(( new PlainDate(2000, 1, 1) )->inLeapYear);
     }
 
     public function testWeekOfYear(): void
@@ -465,5 +465,182 @@ class PlainDateTest extends TestCase
         $days = $original->toEpochDays();
         $restored = PlainDate::fromEpochDays($days);
         $this->assertTrue($original->equals($restored));
+    }
+
+    // -------------------------------------------------------------------------
+    // add() overflow option (test262: constrain-days, overflow-reject)
+    // -------------------------------------------------------------------------
+
+    public function testAddMonthOverflowConstrainDefault(): void
+    {
+        // Jan 31 + 1 month → Feb 28 (common year, constrain by default)
+        $date = new PlainDate(2019, 1, 31);
+        $result = $date->add(['months' => 1]);
+        $this->assertSame(2019, $result->year);
+        $this->assertSame(2, $result->month);
+        $this->assertSame(28, $result->day);
+    }
+
+    public function testAddMonthOverflowConstrainExplicit(): void
+    {
+        $date = new PlainDate(2019, 1, 31);
+        $result = $date->add(['months' => 1], 'constrain');
+        $this->assertSame(2, $result->month);
+        $this->assertSame(28, $result->day);
+    }
+
+    public function testAddMonthLeapYearConstrainsFebTo29(): void
+    {
+        // Jan 31 + 1 month in a leap year → Feb 29
+        $date = new PlainDate(2016, 1, 31);
+        $result = $date->add(['months' => 1]);
+        $this->assertSame(2, $result->month);
+        $this->assertSame(29, $result->day);
+    }
+
+    public function testAddMonthOverflowRejectThrows(): void
+    {
+        // Jan 31 + 1 month in common year with reject throws
+        $date = new PlainDate(2019, 1, 31);
+        $this->expectException(InvalidArgumentException::class);
+        $date->add(['months' => 1], 'reject');
+    }
+
+    public function testAddMonthLeapYearOverflowRejectThrows(): void
+    {
+        // Jan 31 + 1 month in non-leap year with reject throws (Feb has 28 days)
+        $date = new PlainDate(2023, 1, 31);
+        $this->expectException(InvalidArgumentException::class);
+        $date->add(['months' => 1], 'reject');
+    }
+
+    public function testAddMonthLeapYearOverflowRejectAllowed(): void
+    {
+        // Jan 31 + 1 month in leap year (Feb has 29 days) with reject is allowed
+        // because Jan 31 only needs to fit into 29 days? Actually no —
+        // day 31 > 29, so it should still reject in a leap year.
+        $date = new PlainDate(2016, 1, 31);
+        $this->expectException(InvalidArgumentException::class);
+        $date->add(['months' => 1], 'reject');
+    }
+
+    public function testAddThreeMonthsConstrainNoOverflow(): void
+    {
+        // Jan 31 + 3 months → Apr 30 (constrain)
+        $date = new PlainDate(2019, 1, 31);
+        $result = $date->add(['months' => 3]);
+        $this->assertSame(4, $result->month);
+        $this->assertSame(30, $result->day);
+    }
+
+    public function testAddThreeMonthsRejectThrows(): void
+    {
+        // Jan 31 + 3 months → Apr 30 would constrain; with reject it throws
+        $date = new PlainDate(2019, 1, 31);
+        $this->expectException(InvalidArgumentException::class);
+        $date->add(['months' => 3], 'reject');
+    }
+
+    public function testSubtractMonthOverflowConstrainDefault(): void
+    {
+        // Mar 31 - 1 month → Feb 28 (common year, constrain)
+        $date = new PlainDate(2019, 3, 31);
+        $result = $date->subtract(['months' => 1]);
+        $this->assertSame(2, $result->month);
+        $this->assertSame(28, $result->day);
+    }
+
+    public function testSubtractMonthOverflowRejectThrows(): void
+    {
+        $date = new PlainDate(2019, 3, 31);
+        $this->expectException(InvalidArgumentException::class);
+        $date->subtract(['months' => 1], 'reject');
+    }
+
+    public function testAddInvalidOverflowThrows(): void
+    {
+        $date = new PlainDate(2024, 1, 1);
+        $this->expectException(InvalidArgumentException::class);
+        $date->add(['days' => 1], 'invalid');
+    }
+
+    // -------------------------------------------------------------------------
+    // Year bounds (test262: overflow-adding-months-to-max-year)
+    // -------------------------------------------------------------------------
+
+    public function testConstructMaxBoundary(): void
+    {
+        // September 13, +275760 is the maximum valid PlainDate
+        $date = new PlainDate(275760, 9, 13);
+        $this->assertSame(275760, $date->year);
+        $this->assertSame(9, $date->month);
+        $this->assertSame(13, $date->day);
+    }
+
+    public function testConstructMinBoundary(): void
+    {
+        // April 19, -271821 is the minimum valid PlainDate
+        $date = new PlainDate(-271821, 4, 19);
+        $this->assertSame(-271821, $date->year);
+        $this->assertSame(4, $date->month);
+        $this->assertSame(19, $date->day);
+    }
+
+    public function testConstructBeyondMaxThrows(): void
+    {
+        // September 14, +275760 is one day beyond the maximum
+        $this->expectException(\RangeException::class);
+        new PlainDate(275760, 9, 14);
+    }
+
+    public function testConstructBeyondMinThrows(): void
+    {
+        // April 18, -271821 is one day before the minimum
+        $this->expectException(\RangeException::class);
+        new PlainDate(-271821, 4, 18);
+    }
+
+    public function testAddExceedsMaxBoundsThrows(): void
+    {
+        // Max-year date + large positive duration throws RangeException
+        $maxDate = new PlainDate(275760, 1, 1);
+        $this->expectException(\RangeException::class);
+        $maxDate->add(['months' => 5432, 'weeks' => 5432]);
+    }
+
+    public function testAddExceedsMinBoundsThrows(): void
+    {
+        // Min-year date + large negative duration throws RangeException
+        $minDate = new PlainDate(-271821, 4, 19);
+        $this->expectException(\RangeException::class);
+        $minDate->add(['months' => -5432, 'weeks' => -5432]);
+    }
+
+    public function testFromEpochDaysMaxBoundary(): void
+    {
+        $date = PlainDate::fromEpochDays(PlainDate::MAX_EPOCH_DAYS);
+        $this->assertSame(275760, $date->year);
+        $this->assertSame(9, $date->month);
+        $this->assertSame(13, $date->day);
+    }
+
+    public function testFromEpochDaysMinBoundary(): void
+    {
+        $date = PlainDate::fromEpochDays(PlainDate::MIN_EPOCH_DAYS);
+        $this->assertSame(-271821, $date->year);
+        $this->assertSame(4, $date->month);
+        $this->assertSame(19, $date->day);
+    }
+
+    public function testFromEpochDaysBeyondMaxThrows(): void
+    {
+        $this->expectException(\RangeException::class);
+        PlainDate::fromEpochDays(PlainDate::MAX_EPOCH_DAYS + 1);
+    }
+
+    public function testFromEpochDaysBeyondMinThrows(): void
+    {
+        $this->expectException(\RangeException::class);
+        PlainDate::fromEpochDays(PlainDate::MIN_EPOCH_DAYS - 1);
     }
 }

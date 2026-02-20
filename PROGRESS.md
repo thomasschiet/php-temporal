@@ -168,10 +168,45 @@
 - Created `tests/CalendarTest.php` — 64 tests, all passing
 - Total: 652 tests, all passing
 
+### 10. test262 Edge Case Coverage (2026-02-20)
+
+Based on test262 reference tests, added the following improvements:
+
+#### PlainDate overflow option (test262: constrain-days, overflow-reject)
+- Added optional `$overflow` parameter to `PlainDate::add()` and `PlainDate::subtract()`
+  - `'constrain'` (default): clamps day to last day of resulting month (existing behaviour)
+  - `'reject'`: throws `InvalidArgumentException` when day overflows the resulting month
+- Added 10 tests covering common year, leap year, and explicit/default overflow modes
+
+#### PlainDate year bounds validation (test262: overflow-adding-months-to-max-year)
+- Added `MIN_EPOCH_DAYS = -100_000_001` (April 19, -271821) and `MAX_EPOCH_DAYS = 100_000_000` (September 13, +275760) public constants
+- Constructor and `fromEpochDays()` now validate epoch days against these bounds, throwing `\RangeException` on out-of-range values
+- `add()` inherits bounds checking via `fromEpochDays()`, so arithmetic past the boundaries throws automatically
+- Added 7 tests for boundary construction, arithmetic overflow, and `fromEpochDays` bounds
+
+#### Duration.total() with relativeTo (test262: relativeto-calendar-units-depend-on-relative-date)
+- Extended `total()` to accept an options array `['unit' => '...', 'relativeTo' => ...]` in addition to a plain string
+- Calendar units `'months'` and `'years'` now supported when `relativeTo` is provided; throws `InvalidArgumentException` when omitted
+- Algorithm: applies duration to `relativeTo` date, counts whole months/years, then computes fractional remainder based on the actual calendar month/year length
+- Example: 40 days from `2020-02-01` (leap year) = `1 + 11/31` months, because Feb 2020 has 29 days and March has 31
+- Added 10 tests covering positive/negative durations, zero, exact year/month boundaries, and options-array form for time units
+
+#### Duration.round() with options object (test262: balances-up-to-weeks)
+- Extended `round()` to accept an options array with:
+  - `'smallestUnit'` (required), `'largestUnit'` (optional), `'roundingMode'` (default `'halfExpand'`), `'roundingIncrement'` (default `1`), `'relativeTo'` (optional PlainDate)
+- When duration has calendar units (years/months) and `smallestUnit` is sub-month, `largestUnit` is required (throws `\RangeException` otherwise — matching TC39 spec)
+- With `relativeTo`, the entire duration is converted to total days then expressed in the effective unit and rounded using the given mode and increment
+- Supported rounding modes: `'halfExpand'`, `'ceil'`, `'floor'`, `'trunc'`
+- Example: `P1M1D.round({ relativeTo: '2024-01-01', largestUnit: 'weeks', smallestUnit: 'weeks', roundingMode: 'ceil', roundingIncrement: 6 })` → `P6W`
+- Added 10 tests covering all test262 cases
+
+**Total: 694 tests passing (+42 new)**
+
 ## Current Task
 
 - All planned tasks complete.
 
 ## Next Tasks
 
-10. Additional edge case coverage from test262 suite
+- Additional edge cases (DST transitions in ZonedDateTime, Duration balancing with mixed units)
+- Consider adding PlainDateTime.add() overflow option (delegates to PlainDate)
