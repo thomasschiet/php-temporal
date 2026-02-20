@@ -637,3 +637,24 @@ Fixed two mago static analysis errors introduced by the test262 bridge (`Test262
   by the 5210-test PHPUnit suite (1008 hand-written + 4202 data-driven from test262).
   The library has a complete typed exception hierarchy under `Temporal\Exception\`.
   mago passes with 0 errors.
+
+## Final State (2026-02-20)
+
+**Status: COMPLETE**
+
+- **5210 tests passing** (2 skipped — known polyfill precision edge cases), 11308 assertions
+- **0 mago errors** (fmt + lint + analyze all clean)
+- **All TC39 Temporal API surface covered**:
+  - `PlainDate`, `PlainTime`, `PlainDateTime` — full arithmetic, comparison, conversion
+  - `Duration` — balancing, rounding, total, ISO 8601 round-trip
+  - `Instant` — nanosecond-precision epoch timestamps, rounding
+  - `ZonedDateTime` — DST-aware arithmetic, all disambiguation modes
+  - `TimeZone` — IANA zones via OS, offset zones, DST transitions
+  - `Calendar` — ISO 8601 calendar (field helpers, arithmetic delegation)
+  - `PlainYearMonth`, `PlainMonthDay` — partial date types
+  - `Temporal\Now` — current time utilities
+  - ISO 8601 parsing for all types (extended years, calendar annotations, offset suffixes)
+- **Typed exception hierarchy** under `Temporal\Exception\` (9 exception classes)
+- **test262 data-driven bridge**: 44 fixture files, 4202 automated TC39 reference tests
+- **Fully immutable**: all public API returns new instances; 87 `return new …` sites
+- **No PHP extension dependencies** — pure PHP 8.4+
