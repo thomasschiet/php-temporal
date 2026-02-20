@@ -78,13 +78,38 @@
 - Created `tests/InstantTest.php` — 83 tests, all passing
 - Total: 360 tests, all passing
 
+### 6. TimeZone + ZonedDateTime (2026-02-20)
+- Created `src/TimeZone.php` — full implementation:
+  - Private constructor; stores a single `string $id`
+  - `from()` static constructor accepting IANA names (e.g. `America/New_York`), fixed offsets (`+05:30`, `-08:00`), `UTC`, or another TimeZone
+  - Validation via PHP's built-in `DateTimeZone` — no DateTime/DateTimeImmutable created
+  - `getOffsetNanosecondsFor(Instant)` — looks up the active UTC offset using `DateTimeZone::getTransitions()` with a 25-hour look-back window
+  - `getPlainDateTimeFor(Instant)` — converts an Instant to wall-clock PlainDateTime in this zone
+  - `getInstantFor(PlainDateTime, disambiguation?)` — converts local time to Instant; iterative two-pass refinement handles DST correctly; `'compatible'` / `'earlier'` / `'later'` / `'reject'` disambiguation modes
+  - `equals()` / `__toString()` (returns the ID)
+- Created `src/ZonedDateTime.php` — full implementation:
+  - Private constructor; stores `int $ns` (epoch nanoseconds) + `TimeZone`
+  - `fromEpochNanoseconds(int, TimeZone|string)` static constructor
+  - `from()` static constructor (accepts string, array, or ZonedDateTime)
+  - ISO 8601 parsing: `YYYY-MM-DDTHH:MM:SS[.frac](Z|±HH:MM)[TZID]` with optional bracket timezone
+  - Computed properties via `__get()`: local date-time fields (`year`…`nanosecond`), epoch fields, `offset`, `offsetNanoseconds`, plus PlainDate computed fields (`dayOfWeek`, `daysInMonth`, `inLeapYear`, etc.)
+  - `toInstant()` / `toPlainDate()` / `toPlainTime()` / `toPlainDateTime()` conversions
+  - `withTimeZone()` — same instant, different zone
+  - `with()` — same zone, new local fields (instant changes)
+  - `add()` / `subtract()` — calendar fields (years, months, weeks, days) use wall-clock arithmetic; time fields use Instant arithmetic
+  - `until()` / `since()` — Duration (hours…nanoseconds) between two instants
+  - `compare()` static / `equals()` instance — instant-based; `equals()` also checks timezone identity
+  - `__toString()` — `YYYY-MM-DDTHH:MM:SS[.frac]±HH:MM[TZ/ID]`
+- Created `tests/TimeZoneTest.php` — 30 tests, all passing
+- Created `tests/ZonedDateTimeTest.php` — 57 tests, all passing
+- Total: 447 tests, all passing
+
 ## Current Task
 
-- **ZonedDateTime** — Instant + TimeZone + Calendar
+- **PlainYearMonth + PlainMonthDay** — partial date types
 
 ## Next Tasks
 
-6. `TimeZone` — IANA time zones via OS
-7. `Calendar` — ISO 8601 calendar
-8. `PlainYearMonth`, `PlainMonthDay` — partial date types
-9. Parsing — ISO 8601 string parsing for all types
+7. `PlainYearMonth`, `PlainMonthDay` — partial date types
+8. Parsing improvements — ISO 8601 string parsing edge cases
+9. `Calendar` — ISO 8601 calendar (if needed for completeness)
