@@ -17,7 +17,7 @@ use Temporal\Exception\MissingFieldException;
  * Sub-second precision is stored separately as milliseconds, microseconds,
  * and nanoseconds — matching the JavaScript Temporal API.
  */
-final class Duration
+final class Duration implements \JsonSerializable
 {
     /** -1, 0, or 1 */
     public readonly int $sign;
@@ -844,6 +844,17 @@ final class Duration
         }
 
         return $result;
+    }
+
+    /**
+     * Returns the ISO 8601 string for JSON serialization.
+     *
+     * Implements \JsonSerializable so that json_encode() produces the
+     * same string as __toString().
+     */
+    public function jsonSerialize(): string
+    {
+        return (string) $this;
     }
 
     // -------------------------------------------------------------------------

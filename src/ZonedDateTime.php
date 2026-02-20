@@ -41,7 +41,7 @@ use Temporal\Exception\MissingFieldException;
  * @property-read int $daysInYear
  * @property-read bool $inLeapYear
  */
-final class ZonedDateTime
+final class ZonedDateTime implements \JsonSerializable
 {
     private readonly int $ns;
     public readonly TimeZone $timeZone;
@@ -197,6 +197,34 @@ final class ZonedDateTime
     public function toPlainMonthDay(): PlainMonthDay
     {
         return $this->toPlainDate()->toPlainMonthDay();
+    }
+
+    /**
+     * Returns the ISO 8601 field values as an associative array.
+     *
+     * Corresponds to Temporal.ZonedDateTime.prototype.getISOFields() in the TC39 proposal.
+     *
+     * @return array{isoYear: int, isoMonth: int, isoDay: int, isoHour: int, isoMinute: int, isoSecond: int, isoMillisecond: int, isoMicrosecond: int, isoNanosecond: int, offset: string, timeZone: string, calendar: string}
+     */
+    public function getISOFields(): array
+    {
+        $pdt = $this->toPlainDateTime();
+        $offsetNs = $this->timeZone->getOffsetNanosecondsFor($this->toInstant());
+
+        return [
+            'isoYear' => $pdt->year,
+            'isoMonth' => $pdt->month,
+            'isoDay' => $pdt->day,
+            'isoHour' => $pdt->hour,
+            'isoMinute' => $pdt->minute,
+            'isoSecond' => $pdt->second,
+            'isoMillisecond' => $pdt->millisecond,
+            'isoMicrosecond' => $pdt->microsecond,
+            'isoNanosecond' => $pdt->nanosecond,
+            'offset' => $this->formatOffset($offsetNs),
+            'timeZone' => $this->timeZone->id,
+            'calendar' => 'iso8601',
+        ];
     }
 
     /**
@@ -466,6 +494,17 @@ final class ZonedDateTime
         $offset = $this->formatOffset($this->timeZone->getOffsetNanosecondsFor($this->toInstant()));
 
         return (string) $pdt . $offset . '[' . $this->timeZone->id . ']';
+    }
+
+    /**
+     * Returns the ISO 8601 string for JSON serialization.
+     *
+     * Implements \JsonSerializable so that json_encode() produces the
+     * same string as __toString().
+     */
+    public function jsonSerialize(): string
+    {
+        return (string) $this;
     }
 
     // -------------------------------------------------------------------------

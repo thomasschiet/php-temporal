@@ -1,0 +1,18 @@
+The PROGRESS.md shows all planned tasks are complete. The project is in final state:
+
+- **5210 tests passing** (2 skipped — known polyfill precision edge cases)
+- **0 mago errors** (fmt + lint + analyze all clean)
+- **All TC39 Temporal API surface covered**
+
+All implementation work is done:
+1. `PlainDate`, `PlainTime`, `PlainDateTime` — full arithmetic, comparison, conversion
+2. `Duration` — balancing, rounding, total, ISO 8601 round-trip
+3. `Instant` — nanosecond-precision epoch timestamps
+4. `ZonedDateTime` + `TimeZone` — DST-aware arithmetic, all disambiguation modes
+5. `Calendar` — ISO 8601 calendar
+6. `PlainYearMonth`, `PlainMonthDay` — partial date types
+7. `Temporal\Now` — current time utilities
+8. Typed exception hierarchy (`Temporal\Exception\`)
+9. test262 data-driven bridge (4202 automated TC39 reference tests)
+
+No further tasks remain. Stopping as directed.

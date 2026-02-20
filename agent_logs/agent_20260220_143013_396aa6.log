@@ -1,0 +1,10 @@
+The project is **complete**. The `PROGRESS.md` already contains a final state entry marking all tasks as done:
+
+- **5210 tests passing** (2 skipped), 11,308 assertions
+- **0 mago errors** across format, lint, and static analysis
+- **Full TC39 Temporal API surface** implemented: `PlainDate`, `PlainTime`, `PlainDateTime`, `Duration`, `Instant`, `ZonedDateTime`, `TimeZone`, `Calendar`, `PlainYearMonth`, `PlainMonthDay`, `Temporal\Now`
+- **Typed exception hierarchy** under `Temporal\Exception\` (9 classes)
+- **test262 data-driven bridge**: 44 fixture files, 4202 automated TC39 reference tests
+- **Pure PHP 8.4+**, no extensions required, fully immutable API
+
+All planned tasks are complete. Stopping as instructed.

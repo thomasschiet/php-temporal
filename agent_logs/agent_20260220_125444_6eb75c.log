@@ -1,0 +1,21 @@
+All tasks are complete. Here's a summary of what was accomplished in this session:
+
+## Summary
+
+**New features implemented:**
+
+### `yearOfWeek` property (TC39 gap)
+- Added to `PlainDate`, `PlainDateTime`, and `ZonedDateTime`
+- Returns the ISO week-numbering year (may differ from calendar year near year boundaries)
+- Example: `2021-01-01` → `yearOfWeek = 2020` (it's in week 53 of 2020)
+
+### `largestUnit` option for `until()`/`since()` (TC39 gap)
+- **`PlainDate`**: supports `'day'` (default), `'week'`, `'month'`, `'year'` — calendar-aware counting
+- **`PlainTime`**: supports `'hour'` (default) through `'nanosecond'` — rolls up smaller units
+- **`PlainDateTime`**: supports all date and time units; date-unit mode keeps sub-day time components; time-unit mode collapses everything
+
+**Test results:** 933 tests passing (+32 new), all green
+
+**Verified pre-existing claims:**
+- All 11 source classes are immutable (readonly properties + new-instance return pattern)
+- test262 behaviors are covered throughout the 933-test PHPUnit suite

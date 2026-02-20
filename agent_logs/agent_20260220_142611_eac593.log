@@ -1,0 +1,11 @@
+All planned tasks are already complete. The `PROGRESS.md` documents 22 completed tasks covering the entire TC39 Temporal API surface area:
+
+- All 11 core types: `PlainDate`, `PlainTime`, `PlainDateTime`, `Duration`, `Instant`, `ZonedDateTime`, `TimeZone`, `Calendar`, `PlainYearMonth`, `PlainMonthDay`, and `Now`
+- Full ISO 8601 parsing for all types
+- DST-aware timezone handling
+- Typed exception hierarchy under `Temporal\Exception\`
+- test262 data extraction pipeline with 4,202 data-driven tests
+- 1,009 hand-written unit tests (1,897 assertions) — all passing
+- 0 mago errors
+
+The library is complete. The stopping condition has been met.

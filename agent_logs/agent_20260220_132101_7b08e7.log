@@ -1,0 +1,21 @@
+Done. Here's a summary of what was accomplished this session:
+
+## Summary
+
+### Bug Fixed: `Duration::add()` Balancing
+
+The `Duration::add()` method had a significant spec-conformance bug — it did simple field-by-field addition without balancing the result. This caused two categories of failures confirmed by TC39 test262 reference tests:
+
+1. **Overflow not propagated**: `P50DT50H50M50.500500500S + itself` returned `{days:100, hours:100, minutes:100, …}` instead of the correct balanced `P104DT5H41M41.001001S`
+
+2. **Mixed-sign intermediate crash**: `Duration({hours:-1, seconds:-60}).add({minutes:122})` threw `InvalidArgumentException` because the naive sum had mixed signs — even though the mathematically correct result `PT1H1M` is perfectly valid
+
+**Fix**: The new algorithm computes the combined nanosecond total from all non-calendar fields, determines the `largestUnit` from the largest non-zero non-calendar unit in either input, then balances using the new `balanceNanosecondsByUnit()` helper.
+
+### New Test Coverage (+75 tests)
+
+- **8 tests** from `Duration.prototype.add/basic.js` (all 8 TC39 test262 cases)
+- **3 tests** from `Duration.prototype.total/balance-negative-result.js` and `balance-subseconds.js`
+- **62 data-driven tests** from `PlainDate.prototype.add/basic.js` covering leap years, month-end constraining, cross-year arithmetic, and week combinations
+
+**Final: 1008 tests, 1895 assertions — all passing**

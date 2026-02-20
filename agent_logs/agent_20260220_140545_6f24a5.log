@@ -1,0 +1,19 @@
+All tasks complete. Here's a summary of what was accomplished:
+
+## Task 21: test262 Data Extraction Pipeline
+
+Implemented a complete bridge from the TC39 test262 test suite to PHP data-driven tests:
+
+### Infrastructure Built
+- **`tools/extract-test262.mjs`** — Node.js extractor that runs 606 test262 test files against the `@js-temporal/polyfill` and captures 4,942 assertions into JSON fixtures
+- **44 JSON fixture files** in `tests/fixtures/` covering all 8 Temporal types and their key methods (add, subtract, with, until, since, equals, from, round, total, etc.)
+- **`tests/Test262Test.php`** — PHPUnit test class with 4,201 data-driven tests loaded from those fixtures
+
+### Bug Fixes Discovered
+- **`PlainMonthDay::__toString()`**: Updated from `--MM-DD` to `MM-DD` format (current TC39 spec)
+- **`PlainTime::__toString()`**: Fixed trailing zero stripping — now strips ALL trailing zeros from the fractional seconds string (e.g. `ms=123,us=460,ns=0` → `.12346` not `.123460`)
+
+### Results
+- **5,210 tests passing** (1,008 hand-written + 4,202 data-driven from test262)
+- 2 auto-skipped (known precision bugs in `@js-temporal/polyfill` v0.5.1 with `Number.MAX_SAFE_INTEGER`)
+- 0 mago errors

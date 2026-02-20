@@ -23,7 +23,7 @@ use Temporal\Exception\MissingFieldException;
  * @property-read int $epochMilliseconds
  * @property-read int $epochSeconds
  */
-final class Instant
+final class Instant implements \JsonSerializable
 {
     /**
      * @param int $ns Nanoseconds since 1970-01-01T00:00:00Z.
@@ -287,6 +287,17 @@ final class Instant
         $time = PlainTime::fromNanosecondsSinceMidnight(( $secondOfDay * 1_000_000_000 ) + $subNs);
 
         return (string) $date . 'T' . (string) $time . 'Z';
+    }
+
+    /**
+     * Returns the ISO 8601 string for JSON serialization.
+     *
+     * Implements \JsonSerializable so that json_encode() produces the
+     * same string as __toString().
+     */
+    public function jsonSerialize(): string
+    {
+        return (string) $this;
     }
 
     // -------------------------------------------------------------------------

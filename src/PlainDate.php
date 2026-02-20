@@ -23,7 +23,7 @@ use Temporal\Exception\MissingFieldException;
  * @property-read int    $daysInYear  Number of days in the year (365 or 366).
  * @property-read bool   $inLeapYear  Whether the year is a leap year.
  */
-final class PlainDate
+final class PlainDate implements \JsonSerializable
 {
     /** Minimum epoch day: April 19, -271821 (inclusive). */
     public const MIN_EPOCH_DAYS = -100_000_001;
@@ -270,6 +270,23 @@ final class PlainDate
     }
 
     /**
+     * Returns the ISO 8601 field values as an associative array.
+     *
+     * Corresponds to Temporal.PlainDate.prototype.getISOFields() in the TC39 proposal.
+     *
+     * @return array{isoYear: int, isoMonth: int, isoDay: int, calendar: string}
+     */
+    public function getISOFields(): array
+    {
+        return [
+            'isoYear' => $this->year,
+            'isoMonth' => $this->month,
+            'isoDay' => $this->day,
+            'calendar' => 'iso8601',
+        ];
+    }
+
+    /**
      * Returns the number of days since the Unix epoch (1970-01-01).
      */
     public function toEpochDays(): int
@@ -453,6 +470,17 @@ final class PlainDate
         }
 
         return sprintf('%s-%02d-%02d', $yearStr, $this->month, $this->day);
+    }
+
+    /**
+     * Returns the ISO 8601 string for JSON serialization.
+     *
+     * Implements \JsonSerializable so that json_encode() produces the
+     * same string as __toString().
+     */
+    public function jsonSerialize(): string
+    {
+        return (string) $this;
     }
 
     // -------------------------------------------------------------------------

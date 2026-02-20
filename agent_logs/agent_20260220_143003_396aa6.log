@@ -1,0 +1,9 @@
+The project is marked as **COMPLETE** in `PROGRESS.md`. All planned tasks are done:
+
+- **5210 tests passing** (2 skipped), 11308 assertions
+- **0 mago errors** across fmt, lint, and analyze
+- **All TC39 Temporal API surface covered** — PlainDate, PlainTime, PlainDateTime, Duration, Instant, ZonedDateTime, TimeZone, Calendar, PlainYearMonth, PlainMonthDay, Now
+- **Typed exception hierarchy** under `Temporal\Exception\`
+- **test262 data-driven bridge** with 4202 automated TC39 reference tests
+
+There are no remaining tasks. The implementation is complete.

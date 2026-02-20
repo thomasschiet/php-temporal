@@ -19,7 +19,7 @@ use Temporal\Exception\MissingFieldException;
  * @property-read bool   $inLeapYear   Whether the year is a leap year.
  * @property-read int    $monthsInYear Number of months in the year (always 12).
  */
-final class PlainYearMonth
+final class PlainYearMonth implements \JsonSerializable
 {
     public readonly int $year;
     public readonly int $month;
@@ -229,9 +229,38 @@ final class PlainYearMonth
         return $this->year === $other->year && $this->month === $other->month;
     }
 
+    /**
+     * Returns the ISO 8601 field values as an associative array.
+     *
+     * Corresponds to Temporal.PlainYearMonth.prototype.getISOFields() in the TC39 proposal.
+     * The isoDay is always 1 (the reference day used internally for ISO calendar year-months).
+     *
+     * @return array{isoYear: int, isoMonth: int, isoDay: int, calendar: string}
+     */
+    public function getISOFields(): array
+    {
+        return [
+            'isoYear' => $this->year,
+            'isoMonth' => $this->month,
+            'isoDay' => 1,
+            'calendar' => 'iso8601',
+        ];
+    }
+
     // -------------------------------------------------------------------------
     // String representation
     // -------------------------------------------------------------------------
+
+    /**
+     * Returns the ISO 8601 string for JSON serialization.
+     *
+     * Implements \JsonSerializable so that json_encode() produces the
+     * same string as __toString().
+     */
+    public function jsonSerialize(): string
+    {
+        return (string) $this;
+    }
 
     public function __toString(): string
     {

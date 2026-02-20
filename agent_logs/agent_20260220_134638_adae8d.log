@@ -1,0 +1,8 @@
+The project is complete. The PROGRESS.md confirms all planned tasks are done:
+
+- **1008 tests passing** with 1895 assertions
+- **0 mago errors** (81 warnings/helps remain, which are informational only)
+- All 11 TC39 Temporal types implemented: `PlainDate`, `PlainTime`, `PlainDateTime`, `Duration`, `Instant`, `ZonedDateTime`, `TimeZone`, `Calendar`, `PlainYearMonth`, `PlainMonthDay`, plus `Now` utility
+- Full ISO 8601 parsing, DST handling, test262 coverage, immutability
+
+The PROGRESS.md already contains the stopping condition entry ("All planned tasks complete. None — all planned tasks are complete."). The implementation is finished.

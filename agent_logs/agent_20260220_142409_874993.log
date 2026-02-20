@@ -1,0 +1,15 @@
+The composer.json scripts were already included in the last commit. The current working tree is clean with respect to the Temporal library source. 
+
+All tasks are complete:
+
+- **5210 tests passing** (1009 hand-written + 4201 data-driven from test262, 2 skipped)
+- **0 mago errors** (lint + analyze)
+- All 10 TC39 Temporal types fully implemented and immutable:
+  - `PlainDate`, `PlainTime`, `PlainDateTime`, `Duration`, `Instant`
+  - `ZonedDateTime`, `TimeZone`, `Calendar`
+  - `PlainYearMonth`, `PlainMonthDay`
+  - `Temporal\Now` utility class
+- Complete typed exception hierarchy under `Temporal\Exception\`
+- test262 data extraction pipeline with 44 fixture files from TC39 reference tests
+
+The `PROGRESS.md` already records the final completed state. Stopping as the stopping condition has been met.

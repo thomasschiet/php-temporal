@@ -1,0 +1,19 @@
+All done. Here's what was accomplished in this session:
+
+**Task 20: Typed Exception Hierarchy**
+
+Created 9 exception classes under `Temporal\Exception\` and updated all source and test files to use them:
+
+| Exception | Extends | Use case |
+|---|---|---|
+| `TemporalException` | *(interface)* | Catch any Temporal error |
+| `MissingFieldException` | `\InvalidArgumentException` | Missing required field/option |
+| `InvalidOptionException` | `\InvalidArgumentException` | Unknown unit, rounding mode, overflow, etc. |
+| `InvalidTemporalStringException` | `\InvalidArgumentException` | ISO 8601 parse failures |
+| `InvalidDurationException` | `\InvalidArgumentException` | Mixed-sign Duration |
+| `DateRangeException` | `\RangeException` | Field/epoch value out of range |
+| `AmbiguousTimeException` | `\RuntimeException` | DST disambiguation='reject' |
+| `UnknownTimeZoneException` | `\InvalidArgumentException` | Unrecognised IANA zone ID |
+| `UnsupportedCalendarException` | `\InvalidArgumentException` | Non-iso8601 calendar |
+
+**Result:** 1008 tests pass, 0 mago errors, committed as `6f24a58`.

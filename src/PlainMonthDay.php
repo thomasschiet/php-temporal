@@ -17,7 +17,7 @@ use Temporal\Exception\MissingFieldException;
  *
  * @property-read string $calendarId Always 'iso8601'.
  */
-final class PlainMonthDay
+final class PlainMonthDay implements \JsonSerializable
 {
     public readonly int $month;
     public readonly int $day;
@@ -147,9 +147,38 @@ final class PlainMonthDay
         return $this->month === $other->month && $this->day === $other->day;
     }
 
+    /**
+     * Returns the ISO 8601 field values as an associative array.
+     *
+     * Corresponds to Temporal.PlainMonthDay.prototype.getISOFields() in the TC39 proposal.
+     * The isoYear is the reference year (1972 — a leap year, so Feb 29 is valid).
+     *
+     * @return array{isoYear: int, isoMonth: int, isoDay: int, calendar: string}
+     */
+    public function getISOFields(): array
+    {
+        return [
+            'isoYear' => self::REFERENCE_YEAR,
+            'isoMonth' => $this->month,
+            'isoDay' => $this->day,
+            'calendar' => 'iso8601',
+        ];
+    }
+
     // -------------------------------------------------------------------------
     // String representation
     // -------------------------------------------------------------------------
+
+    /**
+     * Returns the ISO 8601 string for JSON serialization.
+     *
+     * Implements \JsonSerializable so that json_encode() produces the
+     * same string as __toString().
+     */
+    public function jsonSerialize(): string
+    {
+        return (string) $this;
+    }
 
     public function __toString(): string
     {

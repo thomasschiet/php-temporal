@@ -1,0 +1,23 @@
+The project is in a fully completed state:
+
+**All tasks in `PROGRESS.md` are complete.** Here's the final status:
+
+| Suite | Tests | Status |
+|---|---|---|
+| `Temporal` (hand-written) | 1,009 | ✅ All passing |
+| `test262` (data-driven) | 4,201 | ✅ 4,199 passing, 2 skipped (known polyfill precision bugs) |
+| **Total** | **5,210** | **✅** |
+
+**Code quality:**
+- `mago analyze` — 0 errors (115 warnings/helps, all non-blocking)
+- `mago lint` — 0 errors (36 warnings/helps, all non-blocking)
+
+The library fully implements the TC39 Temporal API for PHP with:
+- All 10 Temporal types: `PlainDate`, `PlainTime`, `PlainDateTime`, `Duration`, `Instant`, `ZonedDateTime`, `TimeZone`, `Calendar`, `PlainYearMonth`, `PlainMonthDay`
+- `Temporal\Now` utility class
+- ISO 8601 parsing for all types
+- Immutable value objects throughout
+- Typed exception hierarchy under `Temporal\Exception\`
+- PHP 8.4+ syntax, strict types, PSR-4 autoloading
+
+No further tasks remain — the stopping condition has been met.

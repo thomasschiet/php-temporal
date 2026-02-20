@@ -1,0 +1,10 @@
+The typed exceptions work was already committed in `6f24a58`. All tasks are complete:
+
+- ✅ Created 9 typed exception classes in `src/Exception/`
+- ✅ Updated all 10 source files to throw typed exceptions
+- ✅ Updated tests to use specific exception types
+- ✅ mago fmt/lint/analyze — all files formatted, no new errors
+- ✅ PROGRESS.md updated with task 20
+- ✅ Committed as `feat: replace generic exceptions with typed Temporal exception hierarchy`
+
+The 1008-test suite passes with no regressions. All planned tasks for `php-temporal` are complete.

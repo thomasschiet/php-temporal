@@ -15,7 +15,7 @@ use Temporal\Exception\MissingFieldException;
  *
  * Immutable. Corresponds to the Temporal.PlainTime type in the TC39 proposal.
  */
-final class PlainTime
+final class PlainTime implements \JsonSerializable
 {
     public readonly int $hour;
     public readonly int $minute;
@@ -144,6 +144,26 @@ final class PlainTime
             $this->microsecond,
             $this->nanosecond
         );
+    }
+
+    /**
+     * Returns the ISO 8601 field values as an associative array.
+     *
+     * Corresponds to Temporal.PlainTime.prototype.getISOFields() in the TC39 proposal.
+     *
+     * @return array{isoHour: int, isoMinute: int, isoSecond: int, isoMillisecond: int, isoMicrosecond: int, isoNanosecond: int, calendar: string}
+     */
+    public function getISOFields(): array
+    {
+        return [
+            'isoHour' => $this->hour,
+            'isoMinute' => $this->minute,
+            'isoSecond' => $this->second,
+            'isoMillisecond' => $this->millisecond,
+            'isoMicrosecond' => $this->microsecond,
+            'isoNanosecond' => $this->nanosecond,
+            'calendar' => 'iso8601',
+        ];
     }
 
     // -------------------------------------------------------------------------
@@ -316,6 +336,17 @@ final class PlainTime
     // -------------------------------------------------------------------------
     // String representation
     // -------------------------------------------------------------------------
+
+    /**
+     * Returns the ISO 8601 string for JSON serialization.
+     *
+     * Implements \JsonSerializable so that json_encode() produces the
+     * same string as __toString().
+     */
+    public function jsonSerialize(): string
+    {
+        return (string) $this;
+    }
 
     public function __toString(): string
     {

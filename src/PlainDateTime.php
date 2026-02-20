@@ -23,7 +23,7 @@ use Temporal\Exception\MissingFieldException;
  * @property-read int    $daysInYear  Number of days in the year (365 or 366).
  * @property-read bool   $inLeapYear  Whether the year is a leap year.
  */
-final class PlainDateTime
+final class PlainDateTime implements \JsonSerializable
 {
     public readonly int $year;
     public readonly int $month;
@@ -211,6 +211,29 @@ final class PlainDateTime
     public function toPlainMonthDay(): PlainMonthDay
     {
         return new PlainMonthDay($this->month, $this->day);
+    }
+
+    /**
+     * Returns the ISO 8601 field values as an associative array.
+     *
+     * Corresponds to Temporal.PlainDateTime.prototype.getISOFields() in the TC39 proposal.
+     *
+     * @return array{isoYear: int, isoMonth: int, isoDay: int, isoHour: int, isoMinute: int, isoSecond: int, isoMillisecond: int, isoMicrosecond: int, isoNanosecond: int, calendar: string}
+     */
+    public function getISOFields(): array
+    {
+        return [
+            'isoYear' => $this->year,
+            'isoMonth' => $this->month,
+            'isoDay' => $this->day,
+            'isoHour' => $this->hour,
+            'isoMinute' => $this->minute,
+            'isoSecond' => $this->second,
+            'isoMillisecond' => $this->millisecond,
+            'isoMicrosecond' => $this->microsecond,
+            'isoNanosecond' => $this->nanosecond,
+            'calendar' => 'iso8601',
+        ];
     }
 
     // -------------------------------------------------------------------------
@@ -521,6 +544,17 @@ final class PlainDateTime
     public function __toString(): string
     {
         return $this->toPlainDate() . 'T' . $this->toPlainTime();
+    }
+
+    /**
+     * Returns the ISO 8601 string for JSON serialization.
+     *
+     * Implements \JsonSerializable so that json_encode() produces the
+     * same string as __toString().
+     */
+    public function jsonSerialize(): string
+    {
+        return (string) $this;
     }
 
     // -------------------------------------------------------------------------
