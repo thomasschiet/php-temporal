@@ -51,7 +51,7 @@ final class PlainTime
     /**
      * Create a PlainTime from a string, array, or another PlainTime.
      *
-     * @param string|array{hour:int,minute:int,second?:int,millisecond?:int,microsecond?:int,nanosecond?:int}|PlainTime $item
+     * @param string|array<string, mixed>|PlainTime $item
      */
     public static function from(string|array|self $item): self
     {
@@ -233,7 +233,7 @@ final class PlainTime
      *
      * Wraps around midnight when rounding up past 23:59:59.999999999.
      *
-     * @param string|array{smallestUnit:string,roundingMode?:string,roundingIncrement?:int} $options
+     * @param string|array<string, mixed> $options
      *   When a string is passed it is treated as the smallestUnit with
      *   roundingMode='halfExpand' and roundingIncrement=1.
      */

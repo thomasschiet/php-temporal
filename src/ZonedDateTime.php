@@ -13,6 +13,31 @@ use InvalidArgumentException;
  * time zone, and derives all local date-time components on demand.
  *
  * Corresponds to the Temporal.ZonedDateTime type in the TC39 proposal.
+ *
+ * @property-read string $calendarId
+ * @property-read int $epochNanoseconds
+ * @property-read int $epochMicroseconds
+ * @property-read int $epochMilliseconds
+ * @property-read int $epochSeconds
+ * @property-read int $offsetNanoseconds
+ * @property-read string $offset
+ * @property-read int|float $hoursInDay
+ * @property-read int $year
+ * @property-read int $month
+ * @property-read int $day
+ * @property-read int $hour
+ * @property-read int $minute
+ * @property-read int $second
+ * @property-read int $millisecond
+ * @property-read int $microsecond
+ * @property-read int $nanosecond
+ * @property-read int $dayOfWeek
+ * @property-read int $dayOfYear
+ * @property-read int $weekOfYear
+ * @property-read int $yearOfWeek
+ * @property-read int $daysInMonth
+ * @property-read int $daysInYear
+ * @property-read bool $inLeapYear
  */
 final class ZonedDateTime
 {
@@ -346,7 +371,7 @@ final class ZonedDateTime
      * calendar day (in nanoseconds, respecting DST transitions) is used to
      * determine the midpoint.
      *
-     * @param string|array{smallestUnit:string,roundingMode?:string} $options
+     * @param string|array<string, mixed> $options
      *   When a string is passed it is treated as the smallestUnit with the
      *   default roundingMode ('halfExpand').
      */
@@ -354,8 +379,10 @@ final class ZonedDateTime
     {
         $unit = is_string($options)
             ? $options
-            : $options['smallestUnit'] ?? throw new InvalidArgumentException('Missing required option: smallestUnit.');
-        $mode = is_string($options) ? 'halfExpand' : $options['roundingMode'] ?? 'halfExpand';
+            : (string) (
+                $options['smallestUnit'] ?? throw new InvalidArgumentException('Missing required option: smallestUnit.')
+            );
+        $mode = is_string($options) ? 'halfExpand' : (string) ( $options['roundingMode'] ?? 'halfExpand' );
 
         if ($unit === 'day' || $unit === 'days') {
             return $this->roundToDay($mode);
@@ -521,7 +548,7 @@ final class ZonedDateTime
     // -------------------------------------------------------------------------
 
     /**
-     * @param array<string,mixed> $item
+     * @param array<array-key, mixed> $item
      */
     private static function fromArray(array $item): self
     {

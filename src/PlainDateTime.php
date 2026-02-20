@@ -70,7 +70,7 @@ final class PlainDateTime
     /**
      * Create a PlainDateTime from a string, array, or another PlainDateTime.
      *
-     * @param string|array{year:int,month:int,day:int,hour?:int,minute?:int,second?:int,millisecond?:int,microsecond?:int,nanosecond?:int}|PlainDateTime $item
+     * @param string|array<string, mixed>|PlainDateTime $item
      */
     public static function from(string|array|self $item): self
     {
@@ -253,20 +253,20 @@ final class PlainDateTime
     /**
      * Return a new PlainDateTime with specified fields overridden.
      *
-     * @param array{year?:int,month?:int,day?:int,hour?:int,minute?:int,second?:int,millisecond?:int,microsecond?:int,nanosecond?:int} $fields
+     * @param array<string, mixed> $fields
      */
     public function with(array $fields): self
     {
         return new self(
-            $fields['year'] ?? $this->year,
-            $fields['month'] ?? $this->month,
-            $fields['day'] ?? $this->day,
-            $fields['hour'] ?? $this->hour,
-            $fields['minute'] ?? $this->minute,
-            $fields['second'] ?? $this->second,
-            $fields['millisecond'] ?? $this->millisecond,
-            $fields['microsecond'] ?? $this->microsecond,
-            $fields['nanosecond'] ?? $this->nanosecond
+            (int) ( $fields['year'] ?? $this->year ),
+            (int) ( $fields['month'] ?? $this->month ),
+            (int) ( $fields['day'] ?? $this->day ),
+            (int) ( $fields['hour'] ?? $this->hour ),
+            (int) ( $fields['minute'] ?? $this->minute ),
+            (int) ( $fields['second'] ?? $this->second ),
+            (int) ( $fields['millisecond'] ?? $this->millisecond ),
+            (int) ( $fields['microsecond'] ?? $this->microsecond ),
+            (int) ( $fields['nanosecond'] ?? $this->nanosecond )
         );
     }
 
@@ -370,7 +370,7 @@ final class PlainDateTime
      * rounded and any overflow carries into the date. For 'day' the datetime
      * is rounded to the nearest midnight (halfExpand: noon rounds up).
      *
-     * @param string|array{smallestUnit:string,roundingMode?:string,roundingIncrement?:int} $options
+     * @param string|array<string, mixed> $options
      *   When a string is passed it is treated as the smallestUnit with
      *   roundingMode='halfExpand' and roundingIncrement=1.
      */

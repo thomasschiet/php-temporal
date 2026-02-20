@@ -484,6 +484,32 @@ The 933 tests (1787 assertions) provide comprehensive coverage of the behaviors 
 
 **Total: 1008 tests passing (+75 new)**
 
+### 19. Static Analysis Cleanup (2026-02-20)
+
+Fixed 23 `possibly-invalid-argument` errors from `mago analyze` across all source files.
+All errors were caused by overly strict PHPDoc array shape types on factory/utility methods —
+the methods validate their inputs at runtime, so the PHPDoc types should reflect the
+permissive input accepted (and validated) rather than the ideal shape.
+
+#### Changes made (PHPDoc `@param` types widened to `array<string, mixed>`)
+
+- `PlainYearMonth::from()` — accepts partial arrays at call sites that test error handling
+- `PlainMonthDay::from()` — same
+- `Calendar::dateFromFields()`, `yearMonthFromFields()`, `monthDayFromFields()` — same
+- `PlainTime::from()`, `round()` — same
+- `PlainDateTime::from()`, `with()`, `round()` — same
+- `PlainDate::from()`, `add()` — same
+- `Instant::round()`, `toZonedDateTime()` — same
+- `ZonedDateTime::round()` — same
+- `Duration::balance()` — same
+
+Where necessary, `(int)` and `(string)` casts were added when extracting values from
+`array<string, mixed>` for use in strictly-typed contexts.
+
+`mago fmt` also reformatted 2 files.
+
+**Total: 1008 tests passing — 0 mago errors (lint: 70 warnings/notes/helps; analyze: 81 warnings/helps)**
+
 ## Current Task
 
 - All planned tasks complete.
@@ -496,3 +522,4 @@ The 933 tests (1787 assertions) provide comprehensive coverage of the behaviors 
   `Temporal\Now` utility class. All classes are immutable. test262 behaviours are covered
   by the 1008-test PHPUnit suite (including the full `PlainDate.add` matrix and
   `Duration.add` balancing tests from the TC39 test262 repository).
+  mago passes with 0 errors.

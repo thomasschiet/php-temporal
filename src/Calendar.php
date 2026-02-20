@@ -79,7 +79,7 @@ final class Calendar
     /**
      * Create a PlainDate from a fields array.
      *
-     * @param array{year:int,month:int,day:int} $fields
+     * @param array<string, mixed> $fields
      * @param string $overflow 'constrain' (default) or 'reject'
      */
     public function dateFromFields(array $fields, string $overflow = 'constrain'): PlainDate
@@ -92,7 +92,7 @@ final class Calendar
     /**
      * Create a PlainYearMonth from a fields array.
      *
-     * @param array{year:int,month:int} $fields
+     * @param array<string, mixed> $fields
      * @param string $overflow 'constrain' (default) or 'reject'
      */
     public function yearMonthFromFields(array $fields, string $overflow = 'constrain'): PlainYearMonth
@@ -105,7 +105,7 @@ final class Calendar
     /**
      * Create a PlainMonthDay from a fields array.
      *
-     * @param array{month:int,day:int} $fields
+     * @param array<string, mixed> $fields
      * @param string $overflow 'constrain' (default) or 'reject'
      */
     public function monthDayFromFields(array $fields, string $overflow = 'constrain'): PlainMonthDay

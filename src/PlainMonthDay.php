@@ -46,7 +46,7 @@ final class PlainMonthDay
     /**
      * Create a PlainMonthDay from a string, array, or another PlainMonthDay.
      *
-     * @param string|array{month:int,day:int}|PlainMonthDay $item
+     * @param string|array<string, mixed>|PlainMonthDay $item
      */
     public static function from(string|array|self $item): self
     {

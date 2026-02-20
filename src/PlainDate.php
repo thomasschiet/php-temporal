@@ -54,7 +54,7 @@ final class PlainDate
     /**
      * Create a PlainDate from a string, array, or another PlainDate.
      *
-     * @param string|array{year:int,month:int,day:int}|PlainDate $item
+     * @param string|array<string, mixed>|PlainDate $item
      * @throws InvalidArgumentException if the value is invalid.
      * @throws \RangeException if the date is outside the supported range.
      */
@@ -307,7 +307,7 @@ final class PlainDate
     /**
      * Add a duration to this date.
      *
-     * @param array{years?:int,months?:int,weeks?:int,days?:int} $duration
+     * @param array<string, mixed> $duration
      * @param string $overflow 'constrain' (default) or 'reject'
      * @throws InvalidArgumentException if overflow is invalid or day overflows with 'reject'.
      * @throws \RangeException if the resulting date is outside the supported range.
@@ -318,10 +318,10 @@ final class PlainDate
             throw new InvalidArgumentException("overflow must be 'constrain' or 'reject', got '{$overflow}'");
         }
 
-        $years = $duration['years'] ?? 0;
-        $months = $duration['months'] ?? 0;
-        $weeks = $duration['weeks'] ?? 0;
-        $days = $duration['days'] ?? 0;
+        $years = (int) ( $duration['years'] ?? 0 );
+        $months = (int) ( $duration['months'] ?? 0 );
+        $weeks = (int) ( $duration['weeks'] ?? 0 );
+        $days = (int) ( $duration['days'] ?? 0 );
 
         // Add years and months first (calendar arithmetic)
         $y = $this->year + $years;
@@ -529,6 +529,7 @@ final class PlainDate
 
     private function computeDayOfYear(): int
     {
+        /** @var array<int, int> $cumulative */
         $cumulative = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
         $doy = $cumulative[$this->month - 1] + $this->day;
 

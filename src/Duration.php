@@ -510,7 +510,7 @@ final class Duration
      * sub-year portion (weeks, days, hours … nanoseconds) is re-expressed
      * starting from largestUnit.
      *
-     * @param string|array{largestUnit:string,smallestUnit?:string} $largestUnitOrOptions
+     * @param string|array<string, mixed> $largestUnitOrOptions
      * @throws InvalidArgumentException
      */
     public function balance(string|array $largestUnitOrOptions): self
@@ -519,10 +519,12 @@ final class Duration
             $largestUnit = $largestUnitOrOptions;
             $smallestUnit = 'nanosecond';
         } else {
-            $largestUnit = $largestUnitOrOptions['largestUnit'] ?? throw new InvalidArgumentException(
-                'Missing required option: largestUnit.'
+            $largestUnit = (string) (
+                $largestUnitOrOptions['largestUnit'] ?? throw new InvalidArgumentException(
+                    'Missing required option: largestUnit.'
+                )
             );
-            $smallestUnit = $largestUnitOrOptions['smallestUnit'] ?? 'nanosecond';
+            $smallestUnit = (string) ( $largestUnitOrOptions['smallestUnit'] ?? 'nanosecond' );
         }
 
         return $this->roundWithBalance($smallestUnit, $largestUnit, 'trunc', 1);

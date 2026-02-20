@@ -39,7 +39,7 @@ final class PlainYearMonth
     /**
      * Create a PlainYearMonth from a string, array, or another PlainYearMonth.
      *
-     * @param string|array{year:int,month:int}|PlainYearMonth $item
+     * @param string|array<string, mixed>|PlainYearMonth $item
      */
     public static function from(string|array|self $item): self
     {

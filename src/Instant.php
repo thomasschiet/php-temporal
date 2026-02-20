@@ -15,6 +15,11 @@ use InvalidArgumentException;
  * precision. The wider range is available at millisecond/second granularity.
  *
  * Corresponds to the Temporal.Instant type in the TC39 proposal.
+ *
+ * @property-read int $epochNanoseconds
+ * @property-read int $epochMicroseconds
+ * @property-read int $epochMilliseconds
+ * @property-read int $epochSeconds
  */
 final class Instant
 {
@@ -158,7 +163,7 @@ final class Instant
     /**
      * Round this Instant to the given smallest unit.
      *
-     * @param string|array{smallestUnit:string,roundingMode?:string} $options
+     * @param string|array<string, mixed> $options
      *   When a string is passed it is treated as the smallestUnit with the
      *   default roundingMode ('halfExpand').
      */
@@ -230,7 +235,7 @@ final class Instant
      * Corresponds to Temporal.Instant.prototype.toZonedDateTime() in the
      * TC39 proposal.
      *
-     * @param TimeZone|string|array{timeZone:TimeZone|string,calendar?:string} $options
+     * @param TimeZone|string|array<string, mixed> $options
      */
     public function toZonedDateTime(TimeZone|string|array $options): ZonedDateTime
     {
