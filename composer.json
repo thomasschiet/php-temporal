@@ -27,5 +27,10 @@
       "carthage-software/mago": true
     }
   },
-  "minimum-stability": "stable"
+  "minimum-stability": "stable",
+  "scripts": {
+    "test": "./vendor/bin/phpunit --testsuite Temporal",
+    "test262:run": "./vendor/bin/phpunit --testsuite test262",
+    "test262:update": "node tools/extract-test262.mjs && ./vendor/bin/phpunit --testsuite test262"
+  }
 }

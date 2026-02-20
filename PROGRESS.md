@@ -604,6 +604,26 @@ pulling in TC39 test data as PHP data-driven tests.
 
 **Total: 5210 tests passing (+4202 new), 2 skipped — 0 mago errors**
 
+### 22. Static Analysis Fixes for test262 Bridge (2026-02-20)
+
+Fixed two mago static analysis errors introduced by the test262 bridge (`Test262Test.php`):
+
+#### `TemporalException extends \Throwable`
+- `TemporalException` is a marker interface; all concrete exception classes extend PHP
+  built-in exceptions (`\InvalidArgumentException`, `\RangeException`, etc.) which
+  implement `\Throwable`.
+- `Test262Test.php` catches `TemporalException` and calls `$e->getMessage()`, but mago's
+  static analysis couldn't see `getMessage()` on the interface itself.
+- Fix: `interface TemporalException extends \Throwable` — now all `TemporalException`
+  values provably have `getMessage()` (and the full `\Throwable` contract).
+
+#### PHPDoc return types on data provider methods
+- Data providers returned `array<string, array<int, mixed>>` (actual type from `loadKind()`)
+  but were annotated with specific tuple shapes like `array{string, array<string, int>, string}`.
+- Fix: Updated all 7 data provider PHPDoc annotations to `array<string, array<int, mixed>>`.
+
+**Total: 5210 tests passing, 2 skipped — 0 mago errors**
+
 ## Current Task
 
 - All planned tasks complete.
